@@ -1,0 +1,304 @@
+<div *ngIf="formData" class="modify-wrapper">
+    <form [formGroup]="formData" autocomplete="off" class="form-wrapper" [perfectScrollbar]>
+        <div class="row custom-row">
+            <ng-container
+                *ngTemplateOutlet="
+                    inputControl;
+                    context: { control: dataFields.BRANCH_NUMBER, customClass: 'col-md-6' }
+                "
+            >
+            </ng-container>
+            <ng-container
+                *ngTemplateOutlet="
+                    selectControl;
+                    context: { control: dataFields.TITLE, customClass: 'col-md-6', dataList: titleDefaultList }
+                "
+            >
+            </ng-container>
+            <ng-container
+                *ngTemplateOutlet="inputControl; context: { control: dataFields.BRANCH_NAME, customClass: 'col-md-6' }"
+            >
+            </ng-container>
+            <ng-container
+                *ngTemplateOutlet="inputControl; context: { control: dataFields.FIRST_NAME, customClass: 'col-md-6' }"
+            >
+            </ng-container>
+            <ng-container
+                *ngTemplateOutlet="
+                    inputControl;
+                    context: { control: dataFields.BRANCH_ADDITION, customClass: 'col-md-6' }
+                "
+            >
+            </ng-container>
+            <ng-container
+                *ngTemplateOutlet="inputControl; context: { control: dataFields.LAST_NAME, customClass: 'col-md-6' }"
+            >
+            </ng-container>
+            <ng-container
+                *ngTemplateOutlet="inputControl; context: { control: dataFields.RAYON, customClass: 'col-md-6' }"
+            >
+            </ng-container>
+            <ng-container
+                *ngTemplateOutlet="
+                    selectControl;
+                    context: { control: dataFields.POSITION, dataList: positionDefaultList, customClass: 'col-md-6' }
+                "
+            >
+            </ng-container>
+            <ng-container
+                *ngTemplateOutlet="
+                    toggleControl;
+                    context: { control: dataFields.IS_ADDRESS_SAME_HQ, customClass: 'col-md-6' }
+                "
+            >
+            </ng-container>
+            <ng-container
+                *ngTemplateOutlet="inputControl; context: { control: dataFields.DIRECT_PHONE, customClass: 'col-md-6' }"
+            >
+            </ng-container>
+            <ng-container
+                *ngTemplateOutlet="inputControl; context: { control: dataFields.STREET, customClass: 'col-md-6' }"
+            >
+            </ng-container>
+            <ng-container
+                *ngTemplateOutlet="inputControl; context: { control: dataFields.MOBILE_PHONE, customClass: 'col-md-6' }"
+            >
+            </ng-container>
+            <ng-container
+                *ngTemplateOutlet="
+                    inputControl;
+                    context: { control: dataFields.STREET_ADDITION, customClass: 'col-md-6' }
+                "
+            >
+            </ng-container>
+            <ng-container
+                *ngTemplateOutlet="inputControl; context: { control: dataFields.EMAIL, customClass: 'col-md-6' }"
+            >
+            </ng-container>
+        </div>
+        <div class="row custom-row">
+            <div class="col-xs-12 col-md-6 pad-0">
+                <ng-container *ngTemplateOutlet="inputControl; context: { control: dataFields.ZIP }"> </ng-container>
+                <ng-container *ngTemplateOutlet="inputControl; context: { control: dataFields.PLACE }"> </ng-container>
+                <ng-container *ngTemplateOutlet="inputControl; context: { control: dataFields.AREA }"> </ng-container>
+                <ng-container
+                    *ngTemplateOutlet="
+                        selectControl;
+                        context: { control: dataFields.LANGUAGE, dataList: languageDefaultList }
+                    "
+                >
+                </ng-container>
+                <ng-container
+                    *ngTemplateOutlet="
+                        selectControl;
+                        context: { control: dataFields.COUNTRY, dataList: countryCodeDefaultList }
+                    "
+                >
+                </ng-container>
+                <ng-container *ngTemplateOutlet="inputControl; context: { control: dataFields.OFFICE_PHONE }">
+                </ng-container>
+                <ng-container *ngTemplateOutlet="inputControl; context: { control: dataFields.OFFICE_EMAIL }">
+                </ng-container>
+            </div>
+            <div class="col-xs-12 col-md-6 pad-0">
+                <ng-container *ngTemplateOutlet="textAreaControl; context: { control: dataFields.NOTE, cols: 10 }">
+                </ng-container>
+                <div class="form-group col-xs-12">
+                    <widget-qr-code
+                        [value]="
+                            formData.controls[dataFields.BRANCH_NUMBER.controlName].value
+                                ? formData.controls[dataFields.BRANCH_NUMBER.controlName].value
+                                : {}
+                        "
+                    >
+                    </widget-qr-code>
+                </div>
+            </div>
+        </div>
+    </form>
+    <div class="wrapper-button text-right">
+        <button type="button" class="btn-cmd btn-cmd-default" (click)="closeDialog()">
+            <label-translation [keyword]="'WIDGET_USER_UPDATION__Cancel_Btn'"></label-translation>
+        </button>
+        <button
+            type="button"
+            class="btn-cmd btn-cmd-primary"
+            [class.disabled-custom]="!formData?.valid"
+            (click)="submit()"
+            [disabled]="!formData?.valid"
+        >
+            <label-translation [keyword]="'WIDGET_USER_UPDATION__Save_Btn'"></label-translation>
+        </button>
+    </div>
+</div>
+
+<ng-template #inputControl let-control="control" let-customClass="customClass">
+    <div class="form-group col-xs-12 {{ customClass }}">
+        <form [formGroup]="formData">
+            <mat-form-field
+                class="dms-custom-control skin-light clear-wrapper"
+                (mouseenter)="changeValueHover(control.controlName, true)"
+                (mouseleave)="changeValueHover(control.controlName, false)"
+            >
+                <input
+                    matInput
+                    xnEnteBreakDown
+                    [xnControlsData]="controlDataList"
+                    type="text"
+                    class="input-have-clear"
+                    [attr.name]="control.controlName"
+                    id="{{ control.controlName }}"
+                    [formControlName]="control.controlName"
+                    [required]="control.isRequired"
+                    autocomplete="off"
+                    (focus)="changeValueFocus(control.controlName, true)"
+                    (blur)="changeValueFocus(control.controlName, false)"
+                    [readonly]="control.isReadOnly"
+                />
+                <mat-label>
+                    <label-translation [keyword]="control.displayName"></label-translation>
+                </mat-label>
+                <img
+                    *ngIf="
+                        formData.controls[control.controlName].value &&
+                        (isFocus[control.controlName] || isHover[control.controlName]) &&
+                        !control.isReadOnly
+                    "
+                    class="clear-text-icon"
+                    src="public/imgs/standard_action_cross-circle.svg"
+                    alt="clear text"
+                    (click)="clearText(control.controlName)"
+                />
+            </mat-form-field>
+            <xn-error-message
+                *ngIf="control.isRequired"
+                [condition]="xnErrorMessageHelper.isRequired(formData, control.controlName)"
+                [fieldName]="control.displayName"
+                [typeErr]="ERR_MES_TYPE_ENUM.REQUIRED"
+            >
+            </xn-error-message>
+            <xn-error-message
+                *ngIf="control.pattern"
+                [condition]="xnErrorMessageHelper.isInvalidPattern(formData, control.controlName)"
+                [typeErr]="ERR_MES_TYPE_ENUM.PATTERN_EMAIL"
+            ></xn-error-message>
+        </form>
+    </div>
+</ng-template>
+
+<ng-template #textAreaControl let-control="control" let-customClass="customClass" let-cols="cols">
+    <div class="form-group custom-height col-xs-12 {{ customClass }}">
+        <form [formGroup]="formData">
+            <mat-form-field
+                class="dms-custom-control skin-light clear-wrapper"
+                (mouseenter)="changeValueHover(control.controlName, true)"
+                (mouseleave)="changeValueHover(control.controlName, false)"
+                [class.read-only]="control.isReadOnly"
+            >
+                <textarea
+                    matInput
+                    xnEnteBreakDown
+                    [xnControlsData]="controlDataList"
+                    rows="{{ cols }}"
+                    class="input-have-clear"
+                    [attr.name]="control.controlName"
+                    id="{{ control.controlName }}"
+                    [formControlName]="control.controlName"
+                    [required]="control.isRequired"
+                    autocomplete="off"
+                    (focus)="changeValueFocus(control.controlName, true)"
+                    (blur)="changeValueFocus(control.controlName, false)"
+                    [readonly]="control.isReadOnly"
+                ></textarea>
+                <mat-label>
+                    <label-translation [keyword]="control.displayName"></label-translation>
+                </mat-label>
+                <img
+                    *ngIf="
+                        formData.controls[control.controlName].value &&
+                        (isFocus[control.controlName] || isHover[control.controlName]) &&
+                        !control.isReadOnly
+                    "
+                    class="clear-text-icon"
+                    src="public/imgs/standard_action_cross-circle.svg"
+                    alt="clear text"
+                    (click)="clearText(control.controlName)"
+                />
+            </mat-form-field>
+            <xn-error-message
+                *ngIf="control.isRequired"
+                [condition]="xnErrorMessageHelper.isRequired(formData, control.controlName)"
+                [fieldName]="control.displayName"
+                [typeErr]="ERR_MES_TYPE_ENUM.REQUIRED"
+            >
+            </xn-error-message>
+        </form>
+    </div>
+</ng-template>
+
+<ng-template #selectControl let-control="control" let-customClass="customClass" let-dataList="dataList">
+    <div class="form-group col-xs-12 {{ customClass }}">
+        <form [formGroup]="formData">
+            <mat-form-field class="dms-custom-control" [class.read-only]="control.isReadOnly">
+                <mat-label>
+                    <label-translation [keyword]="control.displayName"></label-translation>
+                </mat-label>
+                <mat-select
+                    xnEnteBreakDown
+                    [xnControlsData]="controlDataList"
+                    id="{{ control.controlName }}"
+                    [formControlName]="control.controlName"
+                    [attr.name]="control.controlName"
+                    #selectControl
+                    [required]="control.isRequired"
+                    [disabled]=""
+                >
+                    <mat-option *ngFor="let item of dataList" [value]="item.idValue">
+                        {{ item.textValue }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <xn-error-message
+                *ngIf="control.isRequired"
+                [condition]="xnErrorMessageHelper.isRequired(formData, control.controlName)"
+                [fieldName]="control.displayName"
+                [typeErr]="ERR_MES_TYPE_ENUM.REQUIRED"
+            >
+            </xn-error-message>
+        </form>
+    </div>
+</ng-template>
+
+<ng-template #toggleControl let-control="control" let-customClass="customClass">
+    <div class="form-group col-xs-12 active-control {{ customClass }}">
+        <form [formGroup]="formData">
+            <div class="row">
+                <div class="col-xs-2">
+                    <mat-slide-toggle
+                        xnEnteBreakDown
+                        [xnControlsData]="controlDataList"
+                        color="primary"
+                        id="{{ control.controlName }}"
+                        [formControlName]="control.controlName"
+                        #radioButtonControl
+                    >
+                    </mat-slide-toggle>
+                </div>
+                <div class="col-xs-9 text-name">
+                    <label-translation [keyword]="control.displayName"></label-translation>
+                </div>
+                <xn-error-message
+                    *ngIf="control.pattern"
+                    [condition]="xnErrorMessageHelper.isRequired(formData, control.controlName)"
+                    [fieldName]="control.displayName"
+                    [typeErr]="ERR_MES_TYPE_ENUM.REQUIRED"
+                >
+                </xn-error-message>
+            </div>
+        </form>
+    </div>
+</ng-template>
+
+<div *ngIf="isLoading" class="xn-loading">
+    <i class="fa fa-spinner fa-spin fa-2x"></i>
+</div>

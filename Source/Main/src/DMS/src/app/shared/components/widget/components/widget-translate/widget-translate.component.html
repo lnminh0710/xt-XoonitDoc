@@ -1,0 +1,92 @@
+<div class="widget-translate">
+    <div class="wt-body  col-xs-12  no-padding">
+        <div class="wt-left-side  col-xs-4  no-padding" *ngIf="!isTranslateDataTextOnly">
+            <div *ngIf="isSupportedTranslateValue" class="col-xs-12  no-padding  wt-rs__apply-for  margin-bottom--sm">
+                <span class="wt-rs__apply-for__text">Trasnlate for: </span>
+                <mat-radio-group name="translate-text-radio"
+                                 [(ngModel)]="translateDataType">
+                    <mat-radio-button color="primary"
+                                      name="translate-text-radio"
+                                      [value]="1"
+                                      (change)="changeTranslateDataType(1)">
+                        Label
+                    </mat-radio-button>
+                    <mat-radio-button color="primary"
+                                      name="translate-text-radio"
+                                      [value]="2"
+                                      (change)="changeTranslateDataType(2)">
+                        Value
+                    </mat-radio-button>
+                </mat-radio-group>
+            </div>
+            <div class="col-xs-12  no-padding container-left-content"
+                 [perfectScrollbar]="perfectScrollbarConfig">
+                <div *ngFor="let item of translateData; let i=index; trackBy: itemsTrackBy"
+                     class="wt-ls-item  col-xs-12  no-padding  margin-bottom--sd"
+                     [ngClass]="{'lnk-active' : item.isActive,
+                                 'translate-label' : translateDataType == 1,
+                                 'translate-data' : translateDataType == 2 }"
+                     id="{{item.id}}">
+                    <div *ngIf="translateDataType != 1"
+                         class="wt-label-text-disabled  col-xs-6  no-padding-left text-ellipsis"
+                         [ngClass]="{'font-bold': item.isGroupName}">{{item.text}}</div>
+                    <div *ngIf="translateDataType == 1"
+                         class="wt-label-text  col-xs-6  no-padding-left text-ellipsis"
+                         [ngClass]="{'font-bold': item.isGroupName}"
+                         (click)="translateTextClicked(item.id, item.text, 1, item)">{{item.text}}</div>
+                    <div *ngIf="isSupportedTranslateValue">
+                        <div class="wt-label-value  col-xs-6  no-padding"
+                             (click)="translateTextClicked(item.id, item.value, 2, item)"
+                             *ngIf="translateDataType == 2 && item.dataType=='nvarchar' && item.value">{{item.value}}</div>
+                        <div class="wt-label-value-empty  col-xs-6  no-padding"
+                             *ngIf="(item.dataType!='nvarchar' || translateDataType != 2) && item.dataType!='bit' && item.value">{{item.value}}</div>
+                        <div class="wt-label-value-empty  col-xs-6  no-padding" *ngIf="item.dataType!='bit' && !item.value">_ _ _ _ _</div>
+                        <div class="wt-label-value  col-xs-6  no-padding" *ngIf="item.dataType=='bit'">
+                            <i class="fa fa-circle" [ngClass]="{'active' : item.value == 'true', 'in-active' : (!item.value ||  item.value == 'false') }"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="!isTranslateDataTextOnly" class="translate-popup__separate-line"></div>
+        <div class="wt-right-side"
+             [ngClass]="{'col-xs-12 no-padding':isTranslateDataTextOnly, 'col-xs-8 no-padding-right':!isTranslateDataTextOnly}">
+            <div class="wt-rs-header  margin-bottom--sm">
+                <span class="wt-rs-header__label">Translate for text: </span> <span class="wt-rs-header__text-value">{{editingText}}</span>
+            </div>
+            <div *ngIf="enableApplyFor">
+                <span class="wt-rs__apply-for__text">Apply for: </span>
+                <mat-radio-group name="apply-for-radio"
+                                 [(ngModel)]="applyFor">
+                    <mat-radio-button color="primary"
+                                      name="apply-for-radio"
+                                      [value]="1"
+                                      (change)="changeTranslateMode(1)">
+                        All
+                    </mat-radio-button>
+                    <mat-radio-button color="primary"
+                                      name="apply-for-radio"
+                                      [value]="2"
+                                      (change)="changeTranslateMode(2)">
+                        Only this widget
+                    </mat-radio-button>
+                </mat-radio-group>
+            </div>
+            <div class="wt-rs-grid">               
+
+                <xn-ag-grid #translateTextGrid
+                            *ngIf="gridData && gridData.columns && gridData.columns.length"
+                            [id]="translateTextGridId"
+                            [readOnly]="false"
+                            [isEditting]="true"
+                            [dataSource]="gridData"
+                            [allowAddNew]="false"
+                            [allowDelete]="false"
+                            (cellValueChanged)="onTableEditSuccess($event)">
+                </xn-ag-grid>
+
+            </div>
+        </div>
+    </div>
+    <div class="wt-footer"></div>
+</div>

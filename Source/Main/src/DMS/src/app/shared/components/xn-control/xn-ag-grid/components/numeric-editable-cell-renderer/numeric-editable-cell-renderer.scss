@@ -1,0 +1,16 @@
+::ng-deep wj-input-number {
+    &.ag-number {
+        border: 1px solid !important;
+
+        .wj-input {
+            margin-left: 0;
+
+            .wj-input-group .wj-form-control.wj-numeric {
+                text-align: left;
+            }
+        }
+    }
+}
+:host {
+    width: 100%;
+}

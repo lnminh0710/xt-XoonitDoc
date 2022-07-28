@@ -1,0 +1,157 @@
+<div class="inlineEditWrapper" id="inlineEditWrapper" *ngIf="!control.isHidden">
+    <!-- Editable value -->
+    <a #self (dblclick)="edit(value, self)" [hidden]="editing && !control.readOnly">
+        <div [ngSwitch]="control.controlType" class="{{editingClass}}">
+            <label class="control-label" [ngStyle]="dataStyle" *ngSwitchCase="'checkbox'">
+                <i class="fa fa-circle" [ngClass]="{'active' : value == true, 'in-active' :  value != true }">
+                </i>
+            </label>
+
+            <div *ngSwitchCase="'date'">
+                <label class="control-label" [ngStyle]="dataStyle" *ngIf="value">
+                    {{ formatDate(value) }}
+                </label>
+                <label class="control-label empty-value" *ngIf="!value">_ _ _ _ _</label>
+            </div>
+
+            <div *ngSwitchCase="'dropdown'">
+                <label class="control-label" [ngStyle]="dataStyle" *ngIf="control.displayValue">
+                    {{ control.displayValue }}
+                </label>
+                <label class="control-label empty-value" *ngIf="!control.displayValue">_ _ _ _ _</label>
+            </div>
+
+            <div *ngSwitchCase="'textbox'">
+                <label class="control-label" [ngStyle]="dataStyle" *ngIf="value || tempValue">
+                    {{ tempValue || value }}
+                </label>
+                <label class="control-label empty-value" *ngIf="!value && !tempValue">_ _ _ _ _</label>
+            </div>
+
+            <div *ngSwitchCase="'button'">
+                <button type="button" class="btn btn-primary btn-xs" (click)="control.clickFunc()">
+                    <i *ngIf="control.label == 'Tracking'" class="fa fa-truck"></i>
+                    <i *ngIf="control.label == 'InvoicePDF' || control.label == 'PDF'" class="fa fa-file-pdf-o"></i>
+                    <i *ngIf="control.label == 'Return'" class="fa fa-exchange"></i>
+                </button>
+            </div>
+
+            <div *ngSwitchCase="'numberbox'">
+                <label class="control-label" [ngStyle]="dataStyle" *ngIf="value || tempValue">
+                    {{ tempValue || value | displaySeparator:globalFormatNumber }}
+                </label>
+                <label class="control-label empty-value" *ngIf="!value && !tempValue">_ _ _ _ _</label>
+            </div>
+
+            <div *ngSwitchDefault>
+                <label class="control-label" [ngStyle]="dataStyle" *ngIf="value">
+                    {{ value }}
+                </label>
+                <label class="control-label empty-value" *ngIf="!value">_ _ _ _ _</label>
+            </div>
+
+        </div>
+    </a>
+    <!-- inline edit form -->
+    <div class="inline-edit-form form-inline" *ngIf="editing && !control.readOnly">
+        <div class="form-group"
+            [ngClass]="{'has-error':!form.controls[control.key].valid && (form.controls[control.key].touched || errorShow) }">
+
+            <!-- inline edit control  -->
+            <div [ngSwitch]="control.controlType" [ngStyle]="appendDataStyle({'max-width': defaultMaxWidth + 'px'})"
+                class="control-container">
+                <div *ngSwitchCase="'textbox'" contenteditable="true" #inlineEditControl
+                    [perfectScrollbar]="perfectScrollbarConfig" class="form-control textarea content-editable"
+                    [ngStyle]="appendDataStyle({'overflow': tempValue == preValue ? 'hidden':'auto',
+                        'padding-right': tempValue == preValue ? '':'20px'})" [id]="control.key"
+                    (keypress.out-zone)="keypress($event)" (keyup.out-zone)="keyup($event)"
+                    (mouseenter)="mouseenter(pop)" (mouseleave)="mouseleave(pop)" (paste)="keypress($event)"
+                    (focusin)="focusin()" tooltip="" triggers="" #pop="bs-tooltip" [textContent]="value">
+                </div>
+                <wj-input-mask *ngSwitchCase="'textboxMask'" #inlineEditControl class="form-control no-padding"
+                    [id]="control.key" [mask]="control.mask" [value]="value" [isRequired]="false"
+                    (keypress.out-zone)="keypress($event)" (keyup.out-zone)="keyup($event)"
+                    (mouseenter)="mouseenter(pop)" (mouseleave)="mouseleave(pop)" (focusin)="focusin()" tooltip=""
+                    triggers="" container="body" placement="right" #pop="bs-tooltip">
+                </wj-input-mask>
+                <wj-input-number [(value)]="value" #inlineEditControl *ngSwitchCase="'numberbox'" [isRequired]="false"
+                    [ngStyle]="appendDataStyle({'max-width': defaultMaxWidth + 'px'})" class="form-control"
+                    (focusin)="focusin()" [format]="globalFormatNumber" (valueChanged)="onNumberValueChanged($event)"
+                    (mouseenter)="mouseenter(pop)" (mouseleave)="mouseleave(pop)" tooltip="" triggers="" #pop="bs-tooltip">
+                </wj-input-number>
+
+                <div *ngSwitchCase="'checkbox'" class="width-pc-100">
+                    <mat-checkbox color="primary" class="inline-checkbox" #inlineEditControl [ngModel]="value"
+                        (change)="onCheckboxChange($event)" (keypress)="keypress($event)">
+                    </mat-checkbox>
+                </div>
+
+                <div *ngSwitchCase="'dropdown'" class="width-pc-100">
+                    <ng-container [ngSwitch]="control.type">
+                        <ng-container *ngSwitchCase="'multi-select'">
+                            <wj-multi-select #inlineEditControl
+                                             [itemsSource]="control.options"
+                                             class="custom-wj-input-control no-padding-left no-padding-right small-size drop-down"
+                                             [displayMemberPath]="'value'"
+                                             [checkedMemberPath]="'selected'"
+                                             [isEditable]="false"
+                                             (checkedItemsChanged)="onChangeValue()">
+                            </wj-multi-select>
+                        </ng-container>
+                        <ng-container *ngSwitchCase="'table'">
+                            <wj-combo-box #inlineEditControl selectFirstIfOnlyOne id="control.key"
+                                          class="custom-wj-input-control no-padding-left no-padding-right small-size drop-down"
+                                          [ngStyle]="appendDataStyle({'max-width': defaultMaxWidth + 'px'})"
+                                          *ngIf="control.options && (control.options.length >= 0)" [itemsSource]="control.options"
+                                          [displayMemberPath]="'value'" [selectedValuePath]="'key'" [selectedValue]="value"
+                                          [isEditable]="true" [isRequired]="false" [isContentHtml]="true"
+                                          [itemFormatter]="control.itemFormatter" [dropDownCssClass]="'wjmo-ddl'"
+                                          [headerPath]="'value'" placeholder="Please select" (keyup)="comboboxKeyup($event)"
+                                          (selectedIndexChanged)="onChangeValue()" (gotFocus)="inlineEditControl.isDroppedDown = true"
+                                          (focusin)="focusin()" [xnAppendStyle]="dataStyle">
+                            </wj-combo-box>
+                        </ng-container>
+                        <ng-container *ngSwitchDefault>
+                            <wj-combo-box #inlineEditControl selectFirstIfOnlyOne id="control.key"
+                                          class="custom-wj-input-control no-padding-left no-padding-right small-size drop-down"
+                                          [ngStyle]="appendDataStyle({'max-width': defaultMaxWidth + 'px'})"
+                                          *ngIf="control.options && (control.options.length >= 0)" [itemsSource]="control.options"
+                                          [displayMemberPath]="'value'" [selectedValuePath]="'key'" [selectedValue]="value"
+                                          [isEditable]="true" [isRequired]="false" placeholder="Please select"
+                                          (keyup)="comboboxKeyup($event)" (selectedIndexChanged)="onChangeValue()"
+                                          (gotFocus)="inlineEditControl.isDroppedDown = true" (focusin)="focusin()"
+                                          [xnAppendStyle]="dataStyle">
+                            </wj-combo-box>
+                        </ng-container>
+                    </ng-container>
+                </div>
+                <div *ngSwitchCase="'date'" class="width-pc-100">
+                    <xn-date-picker #inlineEditControl (keypress)="keypress($event)"
+                        class="no-padding-left no-padding-right small-size drop-down"
+                        [ngStyle]="appendDataStyle({'max-width': defaultMaxWidth + 'px'})" [min]="'1900-01-01' | toDate"
+                        [max]="lastDayOfThisYear" [placeholder]="getDateFormatForDOB()" [format]="getDateFormatForDOB()"
+                        [isRequired]="false" [isInGrid]="true" [dontAutoFillDateWhenEnter]="isDateOfBirth"
+                        (valueChanged)="onChangeValue()" [(ngModel)]="value" [xnAppendStyle]="dataStyle">
+                    </xn-date-picker>
+                </div>
+
+                <!-- inline cancel buttons -->
+                <a *ngIf="value != preValue || (control.controlType == 'textbox' && tempValue != preValue) "
+                    class="btn-cancel"
+                    [ngClass]="{'btn-cancel-checkbox':control.controlType == 'checkbox',
+                               'btn-cancel-combobox':control.controlType == 'dropdown' || control.controlType == 'date'}"
+                    (click)="cancel()" role="button">
+                    <i class="fa fa-undo"></i>
+                </a>
+            </div>
+
+            <!--<label class="error-message" *ngIf="!form.controls[control.key].valid && form.controls[control.key].touched && errorShow">
+                {{ control.label }}  is invalid
+            </label>-->
+
+        </div>
+    </div>
+
+
+
+</div>

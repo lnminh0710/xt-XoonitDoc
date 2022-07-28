@@ -1,0 +1,69 @@
+.file {
+    display: flex;
+    width: 100%;
+    .file-icon {
+        width: 30px;
+        height: 36px;
+        margin-right: 15px;
+        background-repeat: no-repeat;
+        background-size: contain;
+        background-image: url('src/public/imgs/file.png');
+
+        &.pdf {
+            background-image: url('src/public/imgs/pdf-icon.png');
+        }
+
+        &.svg {
+            background-image: url('src/public/imgs/svg.png');
+        }
+
+        &.doc,
+        &.docx {
+            background-image: url('src/public/imgs/doc.png');
+        }
+
+        &.json {
+            background-image: url('src/public/imgs/json.png');
+        }
+
+        &.image {
+            background-image: url('src/public/imgs/image.png');
+        }
+        &.txt {
+            background-image: url('src/public/imgs/txt.png');
+        }
+
+        &.xls,
+        &.xlsx {
+            background-image: url('src/public/imgs/xls.png');
+        }
+
+        &.zip,
+        &.rar {
+            background-image: url('src/public/imgs/zip.png');
+        }
+
+        &.media {
+            background-image: url('src/public/imgs/media.png');
+        }
+
+        &.html,
+        &.htm {
+            background-image: url('src/public/imgs/html.png');
+        }
+
+        &.ppt,
+        &.pptx {
+            background-image: url('src/public/imgs/ppt.png');
+        }
+        .file-name {
+            line-height: 1.5em;
+            max-height: 85px;
+            font-size: 14px;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            width: 100%;
+            white-space: nowrap;
+        }
+    }
+}

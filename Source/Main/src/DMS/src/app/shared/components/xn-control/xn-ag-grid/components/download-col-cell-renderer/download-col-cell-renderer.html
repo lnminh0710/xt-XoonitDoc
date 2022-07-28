@@ -1,0 +1,27 @@
+<div class="cell-download-file">
+    <ng-container *ngIf="downloadInfoList.length == 1">
+        <div class="icon single">
+            <i class="fa {{icon}}"></i>
+        </div>
+        <a class="file"
+           [title]="downloadInfoList[0].value"
+           (click)="downloadFile($event,downloadInfoList[0])">{{downloadInfoList[0].value}}</a>
+    </ng-container>
+    <ng-container *ngIf="downloadInfoList.length > 1">
+        <div class="icon">
+            <i class="fa {{icon}}"></i>
+            <span class="badge"> {{downloadInfoList.length}} </span>
+        </div>
+        <wj-combo-box #cellCombo
+                      class="no-border"
+                      [itemsSource]="downloadInfoList"
+                      [displayMemberPath]="'value'"
+                      [selectedValuePath]="'id'"
+                      [isRequired]="false"
+                      placeholder="Please select"
+                      [selectedIndex]="-1"
+                      (gotFocus)="cellCombo.isDroppedDown = true"
+                      (selectedIndexChanged)="selectedIndexChanged(cellCombo.selectedItem)">
+        </wj-combo-box>
+    </ng-container>
+</div>

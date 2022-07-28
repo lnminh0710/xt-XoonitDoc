@@ -1,0 +1,204 @@
+<div class="note-container">
+    <ng-template #Remove>
+        <label-translation [keyword]="'Remove'"></label-translation>
+    </ng-template>
+    <ng-template #Save>
+        <label-translation [keyword]="'Save'"></label-translation>
+    </ng-template>
+    <ng-template #Add>
+        <label-translation [keyword]="'Add'"></label-translation>
+    </ng-template>
+    <ng-template #Cancel>
+        <label-translation [keyword]="'Cancel'"></label-translation>
+    </ng-template>
+    <div class="note-header px-2 widget-header approval">
+        <span class="note-label"><label-translation [keyword]="'Note'"></label-translation></span>
+        <div class="d-flex align-items-center">
+            <ng-container
+                *ngIf="
+                    isDetail &&
+                    (formArrays.controls[formArrays.controls.length - 1]?.get('idInvoiceApprovalNotes')?.value ||
+                        formArrays.controls[formArrays.controls.length - 1]?.get('idMainDocumentNotes')?.value)
+                "
+            >
+                <!-- <div
+                    *ngIf="!loading.share; else spinner"
+                    class="toolbar-icon with-fa icon-transform"
+                    container="body"
+                    tooltip="Share"
+                    data-placement="bottom"
+                    (click)="share()"
+                    #popUpload="bs-tooltip"
+                >
+                    <i class="fal fa-share-alt"></i>
+                </div> -->
+                <!-- <div
+                    *ngIf="!loading.download; else spinner"
+                    class="toolbar-icon with-fa icon-transform"
+                    container="body"
+                    tooltip="Download"
+                    data-placement="bottom"
+                    (click)="download()"
+                    #popUpload="bs-tooltip"
+                >
+                    <i class="fal fa-download"></i>
+                </div> -->
+                <!-- <div
+                    *ngIf="!loading.print; else spinner"
+                    class="toolbar-icon with-fa icon-transform"
+                    container="body"
+                    tooltip="Print"
+                    data-placement="bottom"
+                    (click)="print()"
+                    #popPrint="bs-tooltip"
+                >
+                    <i class="fal fa-print"></i>
+                </div> -->
+            </ng-container>
+
+            <ng-container *ngIf="addingForm">
+                <div
+                    *ngIf="addingForm.get('removeable')?.value"
+                    class="toolbar-icon with-fa icon-transform"
+                    container="body"
+                    [tooltip]="Remove"
+                    (click)="removeForm(0)"
+                    [attr.control-key]="'group-note-form-btn_remove'"
+                >
+                    <i class="fal fa-eraser"></i>
+                </div>
+                <div
+                    *ngIf="addingForm.get('editing')?.value && isDetail"
+                    class="toolbar-icon with-fa icon-transform"
+                    container="body"
+                    [tooltip]="Save"
+                    [class.disabled]="!addingForm.get('notes')?.value?.trim()"
+                    (click)="saveForm(addingForm, NoteEnum.ZERO)"
+                >
+                    <i class="fal fa-save"></i>
+                </div>
+            </ng-container>
+            <ng-container *ngIf="!addingForm && !isHideAddButton && !isHistoryDetail">
+                <button
+                    mat-icon-button
+                    class="button"
+                    (click)="addNote()"
+                    [attr.control-key]="'group-note-form-btn_add'"
+                >
+                    <i [tooltip]="Add" container="body" class="icon icon-transform fa fa-plus-circle"></i>
+                </button>
+            </ng-container>
+        </div>
+    </div>
+    <div class="content mini-scrollbar" *ngIf="formArrays.controls.length">
+        <form [formGroup]="formArrays">
+            <ng-container *ngFor="let rowForm of formArrays.controls; let i = index">
+                <div
+                    class="note-record"
+                    [formGroupName]="i"
+                    [class.not-owner]="rowForm.get('idLogin')?.value != currentUser.id"
+                >
+                    <ng-container *ngFor="let formName of Object.keys(rowForm['controls']); let idx = index">
+                        <ng-container *ngIf="formName === 'date' || formName === 'notes'">
+                            <mat-form-field
+                                *ngIf="rowForm.get('editing')?.value"
+                                class="{{ formName }}-form"
+                                appearance="outline"
+                                [class.d-none]="formName === 'date'"
+                            >
+                                <textarea
+                                    matInput
+                                    [formControlName]="formName"
+                                    [attr.control-key]="'group-note-form-text_note'"
+                                    (focus)="onFocus($event, rowForm.get(formName, i))"
+                                ></textarea>
+                            </mat-form-field>
+                            <div
+                                *ngIf="!rowForm.get('editing')?.value"
+                                class="{{ formName }}-form"
+                                [class.deleted]="
+                                    rowForm.get('isDeleted')?.value === NoteEnum.ONE ||
+                                    rowForm.get('isDeleted')?.value === true
+                                "
+                                [class.d-none]="formName === 'date'"
+                            >
+                                <div [innerHTML]="rowForm.get(formName)?.value"></div>
+                            </div>
+                        </ng-container>
+                        <ng-container *ngIf="formName === 'date'">
+                            <div class="d-flex align-items-center position-relative">
+                                <!-- <xn-material-datepicker-control
+                                    *ngIf="rowForm.get('editing')?.value"
+                                    class="date-picker-form"
+                                    [formGroup]="rowForm"
+                                    [config]="datepickerConfig"
+                                ></xn-material-datepicker-control> -->
+                                <span class="date-value ml-3 mr-1">
+                                    {{ rowForm.get('date').value | date: 'dd.MM.yyyy' }}
+                                </span>
+                                <div
+                                    *ngIf="rowForm.get('loginName')"
+                                    class="position-relative login-name"
+                                    [class.adding]="rowForm.get('removeable')?.value"
+                                    [class.editing]="rowForm.get('editing')?.value"
+                                >
+                                    &nbsp;-&nbsp;
+                                    <span>
+                                        {{ rowForm.get('loginName')?.value }}
+                                    </span>
+                                </div>
+                                <span
+                                    *ngIf="
+                                        rowForm.get('isDeleted')?.value === NoteEnum.ZERO ||
+                                        rowForm.get('isDeleted')?.value === false
+                                    "
+                                    class="icon-list"
+                                >
+                                    <i
+                                        *ngIf="!rowForm.get('editing')?.value && !isHistoryDetail"
+                                        class="icon icon-transform fal fa-trash"
+                                        container="body"
+                                        [class.not-owner]="rowForm.get('idLogin')?.value != currentUser.id"
+                                        [tooltip]="Remove"
+                                        (click)="
+                                            rowForm.get('idLogin')?.value == currentUser.id &&
+                                                saveForm(rowForm, NoteEnum.ONE)
+                                        "
+                                    ></i>
+                                    <!-- <i
+                                        *ngIf="!rowForm.get('editing')?.value"
+                                        class="icon icon-transform fal fa-pencil"
+                                        container="body"
+                                        [class.not-owner]="rowForm.get('idLogin')?.value != currentUser.id"
+                                        [tooltip]="'Edit'"
+                                        (click)="rowForm.get('idLogin')?.value == currentUser.id && editForm(rowForm, true, i)"
+                                    ></i> -->
+                                    <i
+                                        *ngIf="rowForm.get('cancelable')?.value"
+                                        class="icon icon-transform fal fa-undo"
+                                        container="body"
+                                        [tooltip]="Cancel"
+                                        (click)="editForm(rowForm, false, i)"
+                                    ></i>
+                                    <i
+                                        *ngIf="rowForm.get('editing')?.value && !rowForm.get('removeable')?.value"
+                                        class="icon icon-transform fal fa-save"
+                                        container="body"
+                                        [class.disabled]="!rowForm.get('notes')?.value?.trim()"
+                                        [tooltip]="Save"
+                                        (click)="saveForm(rowForm, NoteEnum.ZERO)"
+                                    ></i>
+                                    <!-- <i [tooltip]="'Remove'" container="body" *ngIf="rowForm.get('removeable')?.value" class="icon icon-transform fal fa-eraser" (click)="removeForm(i)"></i> -->
+                                </span>
+                            </div>
+                        </ng-container>
+                    </ng-container>
+                </div>
+            </ng-container>
+        </form>
+    </div>
+</div>
+
+<ng-template #spinner>
+    <img class="spinner" src="public/assets/img/loading-spinner.gif" />
+</ng-template>

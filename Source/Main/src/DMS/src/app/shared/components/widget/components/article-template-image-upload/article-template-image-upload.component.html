@@ -1,0 +1,12 @@
+<div class="article_import_container">
+    <file-upload #fileUpload
+                 [uploadFileMode]="uploadFileMode"
+                 [statusTemplate]="statusTemplateRef"
+                 [acceptExtensionFiles]="'zip'"
+                 (onCompleteItem)="onCompleteUploadItem($event)">
+    </file-upload>
+</div>
+
+<ng-template #statusTemplate let-data>
+    <article-upload-status [data]="data"></article-upload-status>
+</ng-template>

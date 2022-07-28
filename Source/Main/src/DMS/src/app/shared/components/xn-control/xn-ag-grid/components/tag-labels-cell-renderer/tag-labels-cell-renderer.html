@@ -1,0 +1,14 @@
+<div class="tag-labels">
+    <ng-template ngFor let-button [ngForOf]="buttonList" let-i="index">
+        <div class="square-box {{button.class}}"
+             [ngStyle]="{'border-color': button.borderColor }"
+             [ngClass]="{'disabled': !button.isActive}"
+             [title]="button.text">
+            <div class="bg" [ngStyle]="{'background-color': button.bgColor}"></div>
+            <div class="content">
+                <i class="fa {{button.icon}} icon" [ngStyle]="{'color': button.iconColor}"></i>
+                <span class="title" [ngStyle]="{'color': button.textColor}">{{button.text}}</span>
+            </div>
+        </div>
+    </ng-template>
+</div>

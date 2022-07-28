@@ -1,0 +1,130 @@
+.ui-galleria {
+    overflow: hidden;
+    visibility: hidden;
+    position: relative;
+}
+
+.disabled {
+    opacity: 0.2;
+    background-color: #847e7e;
+}
+
+.ui-galleria-panel-wrapper {
+    position: relative;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.ui-galleria-panel {
+    filter: inherit;
+    position: absolute;
+    top: 0;
+    left: 0;
+    list-style-type: none;
+    width: 100%;
+    height: 100%;
+}
+
+.ui-galleria-filmstrip-wrapper {
+    overflow: hidden;
+    margin: .25em auto;
+    position: relative;
+}
+
+.ui-galleria-filmstrip {
+    list-style: none outside none;
+    margin: 0;
+    padding: 0;
+    width: 2340px;
+    z-index: 900;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.ui-galleria-frame {
+    float: left;
+    margin-right: 5px;
+    cursor: pointer;
+    opacity: 1;
+}
+
+.ui-panel-content,
+.ui-galleria-frame-content {
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.ui-panel-images,
+.ui-galleria-frame-image {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.ui-panel-images {
+    position: absolute;
+}
+
+.ui-galleria-caption {
+    position: absolute;
+    left: 1px;
+    background-color: rgba(0,0,0,0.5);
+    display: none;
+    color: #ededed;
+    padding: 0.2em 1em;
+}
+
+.ui-galleria-caption h4 {
+    color: #ededed;
+}
+
+.ui-galleria-nav-next, .ui-galleria-nav-prev {
+    cursor: pointer;
+    position: absolute;
+}
+
+.ui-galleria-nav-prev {
+    left: 0px;
+}
+
+.ui-galleria-nav-next {
+    right: 0px;
+}
+
+.fa-chevron-left {
+    right: 5px;
+}
+
+.fa-chevron-right {
+    left: 5px;
+}
+
+.image-navigate-icon {
+    height: 40px;
+    bottom: 3px;
+    width: 20px;
+    z-index: 901;
+
+    i {
+        color: #fff;
+        font-size: 17px;
+        top: 12px;
+        position: absolute;
+    }
+}
+
+.image-navigate-icon-left {
+    border-radius: 3px 0 0 3px;
+    margin-left: 0;
+}
+
+.image-navigate-icon-right {
+    border-radius: 0 3px 3px 0;
+    margin-right: 0;
+}

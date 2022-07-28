@@ -1,0 +1,121 @@
+<div class="image-slider">
+    <div class="image-slider__header">
+        <!-- <input
+                type="text"
+                placeholder="Search document"
+                [ngModel]="searchText"
+                (ngModelChange)="changeSearchText($event)"
+            />
+            <div class="toolbar-icon delete-mini-icon--red icon-transform"></div> -->
+        <app-xn-input-debounce
+            delayTimer="400"
+            [placeholder]="'Search document'"
+            [hasIndicator]="true"
+            [hasSearchButton]="false"
+            [isSearchBoxControl]="false"
+            [value]="searchText"
+            [isLoading]="isSearching"
+            (onValueChanged)="changeSearchText($event)"
+            cssClass="image-slider__header-input"
+            [id]="'image-slider__header-input'"
+        >
+        </app-xn-input-debounce>
+        <div
+            class="toolbar-icon delete-mini-icon--red icon-transform"
+            *ngIf="!isSearching && !!searchText"
+            (click)="clearInput()"
+        ></div>
+        <div class="image-slider__header-info"><label-translation [keyword]="'IMAGE_SLIDER__TotalDocuments'"></label-translation>: {{ totalImage }}</div>
+    </div>
+    <!-- <div class="image-slider__detail item--display-center">The next documents ({{ imageList.length }})</div> -->
+    <div
+        class="image-slider__content mini-scrollbar"
+        [id]="listId"
+        infiniteScroll
+        [infiniteScrollDistance]="2"
+        [infiniteScrollThrottle]="50"
+        [scrollWindow]="false"
+        (scrolled)="onScroll()"
+    >
+        <image-slider-item
+            *ngFor="let image of imageShow; let i = index"
+            dnd-draggable
+            [dropZones]="['document-image-ocr']"
+            [dragEnabled]="true"
+            [dragData]="{ data: image, callback: removeItem.bind(this) }"
+            [index]="i"
+            [image]="image"
+            [width]="width"
+            [height]="height"
+            [type]="ImageThumbnailType.slider"
+            (viewThumbnailDetail)="viewImageDetail($event)"
+            (deleteThumbnail)="deleteThumbnail($event)"
+            (dblClickItem)="onDblClickItem($event)"
+        ></image-slider-item>
+        <div class="image-slider__empty item--display-center" *ngIf="!totalImage">
+            <div class="image-slider__empty-title"><label-translation [keyword]="'IMAGE_SLIDER__NoDocument'"></label-translation>.</div>
+        </div>
+    </div>
+    <!-- <div (click)="reloadDocument()" class="image-slider__reload-button"></div> -->
+</div>
+<image-viewer-dialog
+    *ngIf="image && isShowDialog"
+    [isShowDialog]="isShowDialog"
+    [image]="image"
+    (onClose)="isShowDialog = false; index = -1; image = ''"
+></image-viewer-dialog>
+<p-dialog
+    header=""
+    [(visible)]="isShowConfirm"
+    [styleClass]="'prime-dialog ui-dialog-flat'"
+    appendTo="body"
+    modal="true"
+    [width]="isConfirmDelete ? 329 : 400"
+    [draggable]="true"
+    [resizable]="true"
+    responsive="true"
+>
+    <p-header>
+        <div class="confirm-dialog__header">
+            <div class="image-icon warning-icon" *ngIf="isConfirmDelete"></div>
+            <span class="confirm-dialog__title"><label-translation [keyword]="'POPUP_action__Confirm'"></label-translation></span>
+            <!-- <div class="confirm-dialog__close-button" aria-label="Close" (click)="isShowConfirm = false; image = null">
+                <span class="fa fa-fw fa-close"></span>
+            </div> -->
+            <div
+                class="toolbar-icon icon-transform close-dialog-icon"
+                #popHand="bs-tooltip"
+                container="body"
+                data-placement="bottom"
+                tooltip="Close"
+                aria-label="Close"
+                (click)="isShowConfirm = false; image = null"
+            ></div>
+        </div>
+    </p-header>
+    <div class="confirm-dialog__content" *ngIf="!isConfirmDelete"><label-translation [keyword]="'POPUP_action__AskSave'"></label-translation>?</div>
+    <div class="confirm-dialog__content" *ngIf="isConfirmDelete">
+        <b style="color: red"><label-translation [keyword]="'POPUP_action__Delete'"></label-translation></b>
+        <label-translation [keyword]="'POPUP_action__document'"></label-translation>?
+    </div>
+    <div class="confirm-dialog__footer" *ngIf="!isConfirmDelete">
+        <div class="confirm-dialog__button-cancel" (click)="!isLoadingDialog && confirmDeleteDoc(false)"><label-translation [keyword]="'POPUP_action__Cancel'"></label-translation></div>
+        <div class="confirm-dialog__space"></div>
+        <div class="confirm-dialog__button-no-save" (click)="openDocument()"><label-translation [keyword]="'POPUP_action__No'"></label-translation></div>
+        <div class="confirm-dialog__button-save" (click)="openDocument(true)"><label-translation [keyword]="'POPUP_action__Yes'"></label-translation></div>
+    </div>
+    <div class="confirm-dialog__footer" *ngIf="isConfirmDelete">
+        <div class="confirm-dialog__space"></div>
+        <div class="confirm-dialog__button-cancel" (click)="!isLoadingDialog && confirmDeleteDoc(false)"><label-translation [keyword]="'POPUP_action__No'"></label-translation></div>
+        <div
+            class="confirm-dialog__button-no-save"
+            [ngClass]="{ ajaxing: isLoadingDialog }"
+            *ngIf="isConfirmDelete"
+            (click)="!isLoadingDialog && confirmDeleteDoc(true)"
+        >
+            <div class="confirm-dialog__button-save-title"><label-translation [keyword]="'POPUP_action__Yes_Delete'"></label-translation></div>
+            <div *ngIf="isLoadingDialog" class="confirm-dialog__button-progress"></div>
+        </div>
+        <div class="confirm-dialog__space"></div>
+    </div>
+</p-dialog>

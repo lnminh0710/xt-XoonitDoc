@@ -1,0 +1,164 @@
+<ng-template #uploadBranch>
+    <div class="upload-content">
+        <div
+            class="drop-files"
+            [ngClass]="{ 'has-file': getMapFiles().length }"
+            dnd-droppable
+            [dropZones]="['import-document']"
+            (onDropSuccess)="dropFilesFromTree($event)"
+        >
+            <form [formGroup]="formGroup" class="box" enctype="multipart/form-data" novalidate #form>
+                <div class="box__input">
+                    <input
+                        class="box__file"
+                        type="file"
+                        name="files"
+                        [attr.accept]="acceptFileTypes"
+                        id="files"
+                        formControlName="files"
+                        data-multiple-caption="{count} files selected"
+                        multiple
+                        (change)="onFileChange($event)"
+                    />
+                    <label for="file" (click)="openFilesDialog($event)">
+                        <div class="box__image"></div>
+                        <div class="box__title">
+                            <div class="box__title--primary">
+                                <label-translation
+                                    [keyword]="'WIDGET_IMPORT_UPLOAD_FILE__Choose_File'"
+                                ></label-translation>
+                            </div>
+                            <label-translation [keyword]="'WIDGET_IMPORT_UPLOAD_FILE__Drag_Here'"></label-translation>
+                        </div>
+                    </label>
+                    <!-- <button class="box__button" type="submit">Upload</button> -->
+                </div>
+            </form>
+        </div>
+
+        <div class="action-buttons-wrapper d-flex flex-row justify-content-between" *ngIf="getMapFiles().length">
+            <div class="actions-files-list d-flex justify-content-end" [class.hidden]="!filesMap.size">
+                <div>
+                    <div
+                        class="import__button default"
+                        [ngClass]="{ disabled: disabledButton || hasDataNotComplete }"
+                        (click)="removeAll()"
+                        [attr.control-key]="'Import_Upload_File__CancelAll'"
+                    >
+                        <label-translation [keyword]="'WIDGET_IMPORT_UPLOAD_FILE__Cancel_All'"></label-translation>
+                    </div>
+                </div>
+                <div>
+                    <div
+                        class="import__button primary"
+                        [ngClass]="{
+                            disabled: disabledButton && !hasDataNotComplete
+                        }"
+                        (click)="confirmUploadAll()"
+                        [attr.control-key]="'Import_Upload_File__Upload'"
+                    >
+                        <label-translation [keyword]="'WIDGET_IMPORT_UPLOAD_FILE__Upload_Finish'"></label-translation>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="upload-files-wrapper" *ngIf="getMapFiles().length">
+            <div class="upload-files-title item">
+                <div class="item-inline-flex item-checkbox check-all text-center">
+                    <mat-checkbox
+                        color="warn"
+                        #ckboxAll
+                        [attr.control-key]="'Import_Upload_File__CheckAll'"
+                    ></mat-checkbox>
+                </div>
+                <div class="item-inline-flex item-name">
+                    <label-translation [keyword]="'WIDGET_IMPORT_UPLOAD_FILE__Name'"></label-translation>
+                </div>
+                <!-- <div class="item-inline-flex item-path">FileType</div> -->
+                <div class="item-inline-flex item-size">
+                    <label-translation [keyword]="'WIDGET_IMPORT_UPLOAD_FILE__Size'"></label-translation>
+                </div>
+                <div class="item-inline-flex item-progress">
+                    <label-translation [keyword]="'WIDGET_IMPORT_UPLOAD_FILE__Progress'"></label-translation>
+                </div>
+                <div class="item-inline-flex actions-list">
+                    <label-translation [keyword]="'WIDGET_IMPORT_UPLOAD_FILE__Active'"></label-translation>
+                </div>
+            </div>
+            <div class="upload-files-list">
+                <div
+                    class="files-list-container"
+                    [perfectScrollbar]="{ suppressScrollX: true, suppressScrollY: false }"
+                >
+                    <div
+                        *ngFor="let fileUploadProgress of getMapFiles(); let i = index"
+                        class="item"
+                        [ngClass]="{ even: i % 2 }"
+                    >
+                        <div class="item-inline-flex item-checkbox check-single text-center">
+                            <mat-checkbox
+                                color="warn"
+                                [checked]="fileUploadProgress.checked"
+                                [disabled]="fileUploadProgress.status == FILE_UPLOAD_STATUS_ENUM.UPLOADED"
+                                (change)="onCheckedFile($event, fileUploadProgress)"
+                                [attr.control-key]="'Import_Upload_File__checkbox'"
+                            ></mat-checkbox>
+                        </div>
+                        <div class="item-inline-flex item-name" title="{{ fileUploadProgress.file.name }}">
+                            {{ fileUploadProgress.file.name }}
+                        </div>
+                        <!-- <div class="item-inline-flex item-path" title="{{ fileUploadProgress.documentPath }}">
+                      {{ fileUploadProgress.documentPath }}
+                  </div> -->
+                        <div class="item-inline-flex item-size">
+                            <div class="content-size">{{ formatByte(fileUploadProgress.file.size) }}</div>
+                        </div>
+                        <div class="item-inline-flex item-progress">
+                            <ng-container
+                                *ngTemplateOutlet="
+                                    fileUploadStatusTemplate;
+                                    context: { fileUploadProgress: fileUploadProgress }
+                                "
+                            ></ng-container>
+                        </div>
+                        <div class="item-inline-flex actions-list flex-end">
+                            <div>
+                                <button
+                                    mat-icon-button
+                                    *ngIf="showButtonRetryToUpload(fileUploadProgress)"
+                                    class="item-action icon cursor-pointer item-retry"
+                                    (click)="retryToUpload(fileUploadProgress)"
+                                    #popHand="bs-tooltip"
+                                    container="body"
+                                    data-placement="right"
+                                    tooltip="Retry"
+                                    [attr.control-key]="'Import_Upload_File__Retry'"
+                                >
+                                    <i class="fal fa-refresh"></i>
+                                </button>
+                            </div>
+                            <div>
+                                <button
+                                    mat-icon-button
+                                    class="item-action icon item-remove"
+                                    (click)="removeItem(fileUploadProgress)"
+                                    [disabled]="fileUploadProgress.status == FILE_UPLOAD_STATUS_ENUM.UPLOADED"
+                                    #popHand="bs-tooltip"
+                                    container="body"
+                                    data-placement="right"
+                                    tooltip="Delete"
+                                >
+                                    <i class="fal fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="upload-action">
+        <div class="import__button default" (click)="close()">Close</div>
+    </div>
+</ng-template>

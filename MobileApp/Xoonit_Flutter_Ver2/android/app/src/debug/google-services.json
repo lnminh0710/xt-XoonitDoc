@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "16663853052",
+    "firebase_url": "https://xoonitdebug.firebaseio.com",
+    "project_id": "xoonitdebug",
+    "storage_bucket": "xoonitdebug.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:16663853052:android:8c7348c0bbacd24a48a479",
+        "android_client_info": {
+          "package_name": "com.xoonit.camera.debug"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "16663853052-u5ajjrnhpn8an625k8gt3oog1flrvna3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB1SwDJMRno8Mzc_HMI989Yd_sVBF56X2s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "16663853052-u5ajjrnhpn8an625k8gt3oog1flrvna3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,35 @@
+﻿.list-box-container {
+    height: 100%;
+    overflow-y: scroll;
+    padding: 5px 0;
+    margin: 2px 0 0;
+    text-align: left;
+    list-style: none;
+    background-color: #fff;
+    -webkit-background-clip: padding-box;
+    background-clip: padding-box;
+    border: 1px solid #ccc;
+    border: 1px solid rgba(0,0,0,.15);
+    border-radius: 4px;
+}
+
+.list-box-item {
+    line-height: 25px;
+
+    span {
+        padding: 0 10px;
+    }
+
+    &:hover {
+        background-color: #eee;
+    }
+
+    &.active-item {
+        font-weight: bold;
+        color: #3c8dbc;
+    }
+}
+
+.button-container {
+    margin-top: 3px;
+}

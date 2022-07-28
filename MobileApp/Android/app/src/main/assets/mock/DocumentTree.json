@@ -1,0 +1,751 @@
+{
+    "statusCode": 1,
+    "resultDescription": null,
+    "item": [
+        {
+            "children": [
+                {
+                    "children": null,
+                    "data": {
+                        "idDocumentTree": 462,
+                        "idDocumentTreeParent": 10,
+                        "idRepDocumentGuiType": 3,
+                        "groupName": "S 2",
+                        "sortingIndex": 2,
+                        "iconName": null,
+                        "quantity": 0,
+                        "quantityParent": 0,
+                        "isActive": true,
+                        "isReadOnly": false
+                    },
+                    "root": null
+                }
+            ],
+            "data": {
+                "idDocumentTree": 10,
+                "idDocumentTreeParent": null,
+                "idRepDocumentGuiType": 3,
+                "groupName": "Notizen",
+                "sortingIndex": 1,
+                "iconName": null,
+                "quantity": 1,
+                "quantityParent": 1,
+                "isActive": true,
+                "isReadOnly": true
+            },
+            "root": null
+        },
+        {
+            "children": [
+                {
+                    "children": null,
+                    "data": {
+                        "idDocumentTree": 70,
+                        "idDocumentTreeParent": 20,
+                        "idRepDocumentGuiType": 1,
+                        "groupName": "Abonnements",
+                        "sortingIndex": 1,
+                        "iconName": null,
+                        "quantity": 0,
+                        "quantityParent": 0,
+                        "isActive": true,
+                        "isReadOnly": true
+                    },
+                    "root": null
+                },
+                {
+                    "children": null,
+                    "data": {
+                        "idDocumentTree": 80,
+                        "idDocumentTreeParent": 20,
+                        "idRepDocumentGuiType": 1,
+                        "groupName": "Auto  leasing",
+                        "sortingIndex": 2,
+                        "iconName": null,
+                        "quantity": 1,
+                        "quantityParent": 1,
+                        "isActive": true,
+                        "isReadOnly": true
+                    },
+                    "root": null
+                },
+                {
+                    "children": [
+                        {
+                            "children": null,
+                            "data": {
+                                "idDocumentTree": 140,
+                                "idDocumentTreeParent": 90,
+                                "idRepDocumentGuiType": 1,
+                                "groupName": "Miete - Hypothek",
+                                "sortingIndex": 1,
+                                "iconName": null,
+                                "quantity": 0,
+                                "quantityParent": 0,
+                                "isActive": true,
+                                "isReadOnly": true
+                            },
+                            "root": null
+                        },
+                        {
+                            "children": null,
+                            "data": {
+                                "idDocumentTree": 150,
+                                "idDocumentTreeParent": 90,
+                                "idRepDocumentGuiType": 1,
+                                "groupName": "Strom",
+                                "sortingIndex": 2,
+                                "iconName": null,
+                                "quantity": 0,
+                                "quantityParent": 0,
+                                "isActive": true,
+                                "isReadOnly": true
+                            },
+                            "root": null
+                        },
+                        {
+                            "children": null,
+                            "data": {
+                                "idDocumentTree": 160,
+                                "idDocumentTreeParent": 90,
+                                "idRepDocumentGuiType": 1,
+                                "groupName": "Unterhalt",
+                                "sortingIndex": 3,
+                                "iconName": null,
+                                "quantity": 0,
+                                "quantityParent": 0,
+                                "isActive": true,
+                                "isReadOnly": true
+                            },
+                            "root": null
+                        },
+                        {
+                            "children": null,
+                            "data": {
+                                "idDocumentTree": 170,
+                                "idDocumentTreeParent": 90,
+                                "idRepDocumentGuiType": 1,
+                                "groupName": "Diverses",
+                                "sortingIndex": 4,
+                                "iconName": null,
+                                "quantity": 0,
+                                "quantityParent": 0,
+                                "isActive": true,
+                                "isReadOnly": true
+                            },
+                            "root": null
+                        },
+                        {
+                            "children": null,
+                            "data": {
+                                "idDocumentTree": 443,
+                                "idDocumentTreeParent": 90,
+                                "idRepDocumentGuiType": 1,
+                                "groupName": "Wasser",
+                                "sortingIndex": 5,
+                                "iconName": null,
+                                "quantity": 0,
+                                "quantityParent": 0,
+                                "isActive": true,
+                                "isReadOnly": false
+                            },
+                            "root": null
+                        }
+                    ],
+                    "data": {
+                        "idDocumentTree": 90,
+                        "idDocumentTreeParent": 20,
+                        "idRepDocumentGuiType": 1,
+                        "groupName": "Gebäude",
+                        "sortingIndex": 3,
+                        "iconName": null,
+                        "quantity": 0,
+                        "quantityParent": 0,
+                        "isActive": true,
+                        "isReadOnly": true
+                    },
+                    "root": null
+                },
+                {
+                    "children": null,
+                    "data": {
+                        "idDocumentTree": 100,
+                        "idDocumentTreeParent": 20,
+                        "idRepDocumentGuiType": 1,
+                        "groupName": "Hobby",
+                        "sortingIndex": 4,
+                        "iconName": null,
+                        "quantity": 1,
+                        "quantityParent": 0,
+                        "isActive": true,
+                        "isReadOnly": true
+                    },
+                    "root": null
+                },
+                {
+                    "children": null,
+                    "data": {
+                        "idDocumentTree": 110,
+                        "idDocumentTreeParent": 20,
+                        "idRepDocumentGuiType": 1,
+                        "groupName": "Telefon, TV & Internet",
+                        "sortingIndex": 5,
+                        "iconName": null,
+                        "quantity": 1,
+                        "quantityParent": 0,
+                        "isActive": true,
+                        "isReadOnly": true
+                    },
+                    "root": null
+                },
+                {
+                    "children": null,
+                    "data": {
+                        "idDocumentTree": 120,
+                        "idDocumentTreeParent": 20,
+                        "idRepDocumentGuiType": 1,
+                        "groupName": "Schule - Studium",
+                        "sortingIndex": 6,
+                        "iconName": null,
+                        "quantity": 1,
+                        "quantityParent": 0,
+                        "isActive": true,
+                        "isReadOnly": true
+                    },
+                    "root": null
+                },
+                {
+                    "children": null,
+                    "data": {
+                        "idDocumentTree": 130,
+                        "idDocumentTreeParent": 20,
+                        "idRepDocumentGuiType": 1,
+                        "groupName": "Diverses",
+                        "sortingIndex": 7,
+                        "iconName": null,
+                        "quantity": 0,
+                        "quantityParent": 0,
+                        "isActive": true,
+                        "isReadOnly": true
+                    },
+                    "root": null
+                },
+                {
+                    "children": null,
+                    "data": {
+                        "idDocumentTree": 439,
+                        "idDocumentTreeParent": 20,
+                        "idRepDocumentGuiType": 1,
+                        "groupName": "Versicherungen",
+                        "sortingIndex": 8,
+                        "iconName": null,
+                        "quantity": 1,
+                        "quantityParent": 0,
+                        "isActive": true,
+                        "isReadOnly": false
+                    },
+                    "root": null
+                },
+                {
+                    "children": [
+                        {
+                            "children": null,
+                            "data": {
+                                "idDocumentTree": 441,
+                                "idDocumentTreeParent": 440,
+                                "idRepDocumentGuiType": 1,
+                                "groupName": "Software",
+                                "sortingIndex": 1,
+                                "iconName": null,
+                                "quantity": 0,
+                                "quantityParent": 0,
+                                "isActive": true,
+                                "isReadOnly": false
+                            },
+                            "root": null
+                        },
+                        {
+                            "children": null,
+                            "data": {
+                                "idDocumentTree": 442,
+                                "idDocumentTreeParent": 440,
+                                "idRepDocumentGuiType": 1,
+                                "groupName": "Hardware",
+                                "sortingIndex": 2,
+                                "iconName": null,
+                                "quantity": 0,
+                                "quantityParent": 0,
+                                "isActive": true,
+                                "isReadOnly": false
+                            },
+                            "root": null
+                        }
+                    ],
+                    "data": {
+                        "idDocumentTree": 440,
+                        "idDocumentTreeParent": 20,
+                        "idRepDocumentGuiType": 1,
+                        "groupName": "Computer",
+                        "sortingIndex": 9,
+                        "iconName": null,
+                        "quantity": 0,
+                        "quantityParent": 0,
+                        "isActive": true,
+                        "isReadOnly": false
+                    },
+                    "root": null
+                },
+                {
+                    "children": null,
+                    "data": {
+                        "idDocumentTree": 444,
+                        "idDocumentTreeParent": 20,
+                        "idRepDocumentGuiType": 1,
+                        "groupName": "Parkplatz Motobike",
+                        "sortingIndex": 10,
+                        "iconName": null,
+                        "quantity": 0,
+                        "quantityParent": 0,
+                        "isActive": true,
+                        "isReadOnly": false
+                    },
+                    "root": null
+                }
+            ],
+            "data": {
+                "idDocumentTree": 20,
+                "idDocumentTreeParent": null,
+                "idRepDocumentGuiType": 1,
+                "groupName": "Rechnungen",
+                "sortingIndex": 2,
+                "iconName": null,
+                "quantity": 5,
+                "quantityParent": 0,
+                "isActive": true,
+                "isReadOnly": true
+            },
+            "root": null
+        },
+        {
+            "children": [
+                {
+                    "children": null,
+                    "data": {
+                        "idDocumentTree": 180,
+                        "idDocumentTreeParent": 30,
+                        "idRepDocumentGuiType": 2,
+                        "groupName": "Abonnements",
+                        "sortingIndex": 1,
+                        "iconName": null,
+                        "quantity": 2,
+                        "quantityParent": 2,
+                        "isActive": true,
+                        "isReadOnly": true
+                    },
+                    "root": null
+                },
+                {
+                    "children": null,
+                    "data": {
+                        "idDocumentTree": 190,
+                        "idDocumentTreeParent": 30,
+                        "idRepDocumentGuiType": 2,
+                        "groupName": "Auto - Leasing",
+                        "sortingIndex": 2,
+                        "iconName": null,
+                        "quantity": 0,
+                        "quantityParent": 0,
+                        "isActive": true,
+                        "isReadOnly": true
+                    },
+                    "root": null
+                },
+                {
+                    "children": [
+                        {
+                            "children": null,
+                            "data": {
+                                "idDocumentTree": 250,
+                                "idDocumentTreeParent": 200,
+                                "idRepDocumentGuiType": 2,
+                                "groupName": "Miete - Hypothek",
+                                "sortingIndex": 1,
+                                "iconName": null,
+                                "quantity": 0,
+                                "quantityParent": 0,
+                                "isActive": true,
+                                "isReadOnly": true
+                            },
+                            "root": null
+                        }
+                    ],
+                    "data": {
+                        "idDocumentTree": 200,
+                        "idDocumentTreeParent": 30,
+                        "idRepDocumentGuiType": 2,
+                        "groupName": "Gebäude",
+                        "sortingIndex": 3,
+                        "iconName": null,
+                        "quantity": 0,
+                        "quantityParent": 0,
+                        "isActive": false,
+                        "isReadOnly": true
+                    },
+                    "root": null
+                },
+                {
+                    "children": [
+                        {
+                            "children": null,
+                            "data": {
+                                "idDocumentTree": 260,
+                                "idDocumentTreeParent": 210,
+                                "idRepDocumentGuiType": 2,
+                                "groupName": "Fahrzeug",
+                                "sortingIndex": 1,
+                                "iconName": null,
+                                "quantity": 0,
+                                "quantityParent": 0,
+                                "isActive": true,
+                                "isReadOnly": true
+                            },
+                            "root": null
+                        },
+                        {
+                            "children": null,
+                            "data": {
+                                "idDocumentTree": 270,
+                                "idDocumentTreeParent": 210,
+                                "idRepDocumentGuiType": 2,
+                                "groupName": "Hausrat",
+                                "sortingIndex": 2,
+                                "iconName": null,
+                                "quantity": 0,
+                                "quantityParent": 0,
+                                "isActive": true,
+                                "isReadOnly": true
+                            },
+                            "root": null
+                        },
+                        {
+                            "children": null,
+                            "data": {
+                                "idDocumentTree": 280,
+                                "idDocumentTreeParent": 210,
+                                "idRepDocumentGuiType": 2,
+                                "groupName": "Haftpflicht",
+                                "sortingIndex": 3,
+                                "iconName": null,
+                                "quantity": 0,
+                                "quantityParent": 0,
+                                "isActive": true,
+                                "isReadOnly": true
+                            },
+                            "root": null
+                        },
+                        {
+                            "children": null,
+                            "data": {
+                                "idDocumentTree": 290,
+                                "idDocumentTreeParent": 210,
+                                "idRepDocumentGuiType": 2,
+                                "groupName": "Krankenkasse - Unfall",
+                                "sortingIndex": 4,
+                                "iconName": null,
+                                "quantity": 0,
+                                "quantityParent": 0,
+                                "isActive": true,
+                                "isReadOnly": true
+                            },
+                            "root": null
+                        },
+                        {
+                            "children": null,
+                            "data": {
+                                "idDocumentTree": 300,
+                                "idDocumentTreeParent": 210,
+                                "idRepDocumentGuiType": 2,
+                                "groupName": "Pensionskasse",
+                                "sortingIndex": 5,
+                                "iconName": null,
+                                "quantity": 0,
+                                "quantityParent": 0,
+                                "isActive": true,
+                                "isReadOnly": true
+                            },
+                            "root": null
+                        },
+                        {
+                            "children": null,
+                            "data": {
+                                "idDocumentTree": 310,
+                                "idDocumentTreeParent": 210,
+                                "idRepDocumentGuiType": 2,
+                                "groupName": "Rechtsschutz",
+                                "sortingIndex": 6,
+                                "iconName": null,
+                                "quantity": 0,
+                                "quantityParent": 0,
+                                "isActive": true,
+                                "isReadOnly": true
+                            },
+                            "root": null
+                        }
+                    ],
+                    "data": {
+                        "idDocumentTree": 210,
+                        "idDocumentTreeParent": 30,
+                        "idRepDocumentGuiType": 2,
+                        "groupName": "Versicherungen - Policen",
+                        "sortingIndex": 4,
+                        "iconName": null,
+                        "quantity": 0,
+                        "quantityParent": 0,
+                        "isActive": true,
+                        "isReadOnly": true
+                    },
+                    "root": null
+                },
+                {
+                    "children": null,
+                    "data": {
+                        "idDocumentTree": 220,
+                        "idDocumentTreeParent": 30,
+                        "idRepDocumentGuiType": 2,
+                        "groupName": "Schule - Studium",
+                        "sortingIndex": 5,
+                        "iconName": null,
+                        "quantity": 1,
+                        "quantityParent": 0,
+                        "isActive": true,
+                        "isReadOnly": true
+                    },
+                    "root": null
+                },
+                {
+                    "children": null,
+                    "data": {
+                        "idDocumentTree": 230,
+                        "idDocumentTreeParent": 30,
+                        "idRepDocumentGuiType": 2,
+                        "groupName": "Telefon, TV & Internet",
+                        "sortingIndex": 6,
+                        "iconName": null,
+                        "quantity": 0,
+                        "quantityParent": 0,
+                        "isActive": true,
+                        "isReadOnly": true
+                    },
+                    "root": null
+                },
+                {
+                    "children": null,
+                    "data": {
+                        "idDocumentTree": 240,
+                        "idDocumentTreeParent": 30,
+                        "idRepDocumentGuiType": 2,
+                        "groupName": "Diverses",
+                        "sortingIndex": 7,
+                        "iconName": null,
+                        "quantity": 1,
+                        "quantityParent": 1,
+                        "isActive": true,
+                        "isReadOnly": true
+                    },
+                    "root": null
+                }
+            ],
+            "data": {
+                "idDocumentTree": 30,
+                "idDocumentTreeParent": null,
+                "idRepDocumentGuiType": 2,
+                "groupName": "Verträge",
+                "sortingIndex": 3,
+                "iconName": null,
+                "quantity": 4,
+                "quantityParent": 0,
+                "isActive": true,
+                "isReadOnly": true
+            },
+            "root": null
+        },
+        {
+            "children": null,
+            "data": {
+                "idDocumentTree": 40,
+                "idDocumentTreeParent": null,
+                "idRepDocumentGuiType": 3,
+                "groupName": "Garantiescheine",
+                "sortingIndex": 4,
+                "iconName": null,
+                "quantity": 0,
+                "quantityParent": 0,
+                "isActive": true,
+                "isReadOnly": true
+            },
+            "root": null
+        },
+        {
+            "children": [
+                {
+                    "children": null,
+                    "data": {
+                        "idDocumentTree": 320,
+                        "idDocumentTreeParent": 50,
+                        "idRepDocumentGuiType": 3,
+                        "groupName": "Freunde & Familie",
+                        "sortingIndex": 1,
+                        "iconName": null,
+                        "quantity": 0,
+                        "quantityParent": 0,
+                        "isActive": true,
+                        "isReadOnly": true
+                    },
+                    "root": null
+                },
+                {
+                    "children": null,
+                    "data": {
+                        "idDocumentTree": 330,
+                        "idDocumentTreeParent": 50,
+                        "idRepDocumentGuiType": 3,
+                        "groupName": "Geschäft",
+                        "sortingIndex": 2,
+                        "iconName": null,
+                        "quantity": 0,
+                        "quantityParent": 0,
+                        "isActive": true,
+                        "isReadOnly": true
+                    },
+                    "root": null
+                },
+                {
+                    "children": null,
+                    "data": {
+                        "idDocumentTree": 340,
+                        "idDocumentTreeParent": 50,
+                        "idRepDocumentGuiType": 3,
+                        "groupName": "Lieferanten",
+                        "sortingIndex": 3,
+                        "iconName": null,
+                        "quantity": 0,
+                        "quantityParent": 0,
+                        "isActive": true,
+                        "isReadOnly": true
+                    },
+                    "root": null
+                },
+                {
+                    "children": null,
+                    "data": {
+                        "idDocumentTree": 350,
+                        "idDocumentTreeParent": 50,
+                        "idRepDocumentGuiType": 3,
+                        "groupName": "Schule",
+                        "sortingIndex": 4,
+                        "iconName": null,
+                        "quantity": 0,
+                        "quantityParent": 0,
+                        "isActive": true,
+                        "isReadOnly": true
+                    },
+                    "root": null
+                }
+            ],
+            "data": {
+                "idDocumentTree": 50,
+                "idDocumentTreeParent": null,
+                "idRepDocumentGuiType": 3,
+                "groupName": "Briefe",
+                "sortingIndex": 5,
+                "iconName": null,
+                "quantity": 0,
+                "quantityParent": 0,
+                "isActive": true,
+                "isReadOnly": true
+            },
+            "root": null
+        },
+        {
+            "children": [
+                {
+                    "children": null,
+                    "data": {
+                        "idDocumentTree": 360,
+                        "idDocumentTreeParent": 60,
+                        "idRepDocumentGuiType": 3,
+                        "groupName": "ID Karte",
+                        "sortingIndex": 1,
+                        "iconName": null,
+                        "quantity": 0,
+                        "quantityParent": 0,
+                        "isActive": true,
+                        "isReadOnly": true
+                    },
+                    "root": null
+                },
+                {
+                    "children": null,
+                    "data": {
+                        "idDocumentTree": 370,
+                        "idDocumentTreeParent": 60,
+                        "idRepDocumentGuiType": 3,
+                        "groupName": "Bank - Kreditkarten",
+                        "sortingIndex": 2,
+                        "iconName": null,
+                        "quantity": 0,
+                        "quantityParent": 0,
+                        "isActive": true,
+                        "isReadOnly": true
+                    },
+                    "root": null
+                },
+                {
+                    "children": null,
+                    "data": {
+                        "idDocumentTree": 380,
+                        "idDocumentTreeParent": 60,
+                        "idRepDocumentGuiType": 3,
+                        "groupName": "Mitgliedsausweise",
+                        "sortingIndex": 3,
+                        "iconName": null,
+                        "quantity": 0,
+                        "quantityParent": 0,
+                        "isActive": true,
+                        "isReadOnly": true
+                    },
+                    "root": null
+                },
+                {
+                    "children": null,
+                    "data": {
+                        "idDocumentTree": 390,
+                        "idDocumentTreeParent": 60,
+                        "idRepDocumentGuiType": 3,
+                        "groupName": "Passfotos",
+                        "sortingIndex": 4,
+                        "iconName": null,
+                        "quantity": 0,
+                        "quantityParent": 0,
+                        "isActive": true,
+                        "isReadOnly": true
+                    },
+                    "root": null
+                }
+            ],
+            "data": {
+                "idDocumentTree": 60,
+                "idDocumentTreeParent": null,
+                "idRepDocumentGuiType": 3,
+                "groupName": "Portemonnaie",
+                "sortingIndex": 6,
+                "iconName": null,
+                "quantity": 0,
+                "quantityParent": 0,
+                "isActive": true,
+                "isReadOnly": true
+            },
+            "root": null
+        }
+    ]
+}

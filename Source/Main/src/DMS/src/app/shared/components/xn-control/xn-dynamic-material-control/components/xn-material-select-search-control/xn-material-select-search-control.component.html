@@ -1,0 +1,59 @@
+<div
+    enterNextFocus
+    class="form-control-wrapper"
+    [ngStyle]="config?.style"
+    [formGroup]="formGroup"
+    [class.ctrl-valid]="formGroup.controls[config.formControlName].valid"
+    [class.ctrl-invalid]="formGroup.controls[config.formControlName].invalid"
+    [class.ctrl-untouched]="formGroup.controls[config.formControlName].untouched"
+    [class.ctrl-touched]="formGroup.controls[config.formControlName].touched"
+    [class.ctrl-pristine]="formGroup.controls[config.formControlName].pristine"
+    [class.ctrl-dirty]="formGroup.controls[config.formControlName].dirty"
+>
+    <mat-form-field
+        class="w-100"
+        (mouseenter)="onMouseEnter(formGroup.controls[config.formControlName])"
+        (mouseleave)="onMouseLeave(formGroup.controls[config.formControlName])"
+        (mouseover)="onMouseOver(formGroup.controls[config.formControlName])"
+    >
+        <mat-label>{{ config.label }}</mat-label>
+        <input
+            matInput
+            style="padding-right: 20px"
+            type="text"
+            #autocompleteInput
+            [matAutocomplete]="autoCompleteRef"
+            [formControlName]="config.formControlName"
+            (focus)="onInputFocus(formGroup.controls[config.formControlName])"
+            (blur)="onInputBlur(formGroup.controls[config.formControlName])"
+            (keydown)="onKeydown.emit($event)"
+            (keyup)="onKeyup.emit($event)"
+            (keydown.enter)="closePanel()"
+        />
+        <mat-autocomplete
+            #autoCompleteRef="matAutocomplete"
+            [displayWith]="displayFn.bind(this)"
+            (optionSelected)="select($event)"
+            (closed)="onClose(formGroup.controls[config.formControlName])"
+        >
+            <mat-option *ngFor="let option of filteredOptions | async" [value]="option[valueMember]" [title]="option[displayMember]">
+                {{ option[displayMember] }}
+            </mat-option>
+        </mat-autocomplete>
+        <button
+            mat-button
+            *ngIf="config.showBtnClearValue"
+            matSuffix
+            mat-icon-button
+            aria-label="Clear"
+            tabIndex="-1"
+            (mousedown)="clearCtrlValue(formGroup.controls[config.formControlName])"
+        >
+            <mat-icon [ngStyle]="ngStyleMatIcon">close</mat-icon>
+        </button>
+        <mat-icon [ngStyle]="{ position: 'absolute', right: 0, color: '#757575' }">arrow_drop_down</mat-icon>
+        <mat-error *ngIf="formGroup.controls[config.formControlName].errors?.required">
+            {{ config.label }} <label-translation [keyword]="'COMMON_LABEL__is_required'"></label-translation>
+        </mat-error>
+    </mat-form-field>
+</div>

@@ -1,0 +1,26 @@
+<ag-grid-angular
+    #agGrid
+    class="ag-theme-balham"
+    [gridOptions]="gridOptions"
+    [columnDefs]="gridColumns"
+    [rowData]="scheduleEventGridData"
+    [defaultColDef]="defaultColDef"
+    [animateRows]="true"
+    [enableRangeSelection]="true"
+    [suppressContextMenu]="false"
+    [popupParent]="popupParent"
+    [getContextMenuItems]="buildContextMenuItems"
+    [groupMultiAutoColumn]="true"
+    [groupSuppressAutoColumn]="true"
+    (gridReady)="onReady($event)"
+></ag-grid-angular>
+<ng-template #deleteButton let-data>
+    <a tooltip="Delete Item"
+       [hidden]="data==null||data==undefined"
+       placement="top"
+       container="body"
+       class="red-color  margin-left--sm"
+       (click)="scheduleEventGridDeleteRow(data)">
+        <i class="fa fa-trash-o" aria-hidden="true"></i>
+    </a>
+</ng-template>

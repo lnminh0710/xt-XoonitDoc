@@ -1,0 +1,26 @@
+<div class="cloud-configuration__item">
+    <div class="cloud-configuration__item-image">
+        <div class="cloud-icon {{ cloud.Image }}"></div>
+    </div>
+    <div class="cloud-configuration__item-text">
+        <div class="cloud-configuration__item-main-text">{{ cloud.Title }}</div>
+        <div class="cloud-configuration__item-secondary-text"><label-translation [keyword]="cloud.Description"></label-translation></div>
+    </div>
+    <div class="cloud-configuration__item-action">
+        <mat-slide-toggle [checked]="cloud.IsActive" (change)="changeActivateAction(cloud)" #popActive="bs-tooltip"
+            container="body" data-placement="bottom" [tooltip]="tooltipToggleActiveOrUnActiveButton">
+        </mat-slide-toggle>
+        <div class="cloud-configuration__item-menu-icon icon-transform" (click)="openSharingDialogAction(cloud)"
+            #popHand="bs-tooltip" container="body" data-placement="bottom" [tooltip]="tooltipSettingButton"></div>
+    </div>
+    <div class="cloud-configuration__item-email" *ngIf="cloud.UserEmail && cloud.Title !== 'Remote Connection'">
+        <label-translation [keyword]="'CLOUD_ITEM__Connected'"></label-translation> : {{ cloud.UserEmail }}
+    </div>
+</div>
+
+<ng-template #tooltipToggleActiveOrUnActiveButton>
+    <label-translation [keyword]="'CLOUD_ITEM__ToggleActiveOrUnActive'"></label-translation>
+</ng-template>
+<ng-template #tooltipSettingButton>
+    <label-translation [keyword]="'CLOUD_ITEM__Setting'"></label-translation>
+</ng-template>

@@ -1,0 +1,30 @@
+.compressed-file-breadcrumb {
+    border-bottom: 1px solid #f5f5f5;
+    font-size: 20px;
+    margin-bottom: 10px;
+    align-items: center;
+
+    & > .compressed-file-breadcrumb-button {
+        border-right: 1px solid #f5f5f5;
+        padding: 0 10px;
+    }
+
+    & > .compressed-file-breadcrumb-path {
+        border-left: 1px solid #f5f5f5;
+        padding-left: 5px;
+        font-size: 1.2vmin;
+    }
+}
+
+.compressed-container {
+    max-height: 100%;
+
+    & > .compressed-file {
+        margin: 8px 5px;
+    }
+
+    & > .empty-folder-message {
+        text-align: center;
+        width: 100%;
+    }
+}

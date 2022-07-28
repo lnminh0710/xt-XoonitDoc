@@ -1,0 +1,75 @@
+<div class="ai-tab-header-container">
+    <div class="ai-scroller ai-scroller-left"
+         (click)="scrollerLeftClick($event)">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+    </div>
+    <div class="ai-scroller ai-scroller-right"
+         (click)="scrollerRightClick($event)">
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+    </div>
+    <div class="ai-tab-summary-wrapper">
+        <ul class="nav nav-tabs ai-tab-summary-list">
+            <ng-template ngFor let-tabz [ngForOf]="tabs" [ngForTrackBy]="itemsTrackBy">
+                <li *ngIf="tabz.Visible"
+                    class="nav-item ai-tab-summary"
+                    [ngClass]="{'active': tabz.Active, 'disabled': tabz.Disabled}"
+                    tooltip="{{tabz.TabName.length > 12 ? tabz.TabName : ''}}"
+                    placement="top"
+                    container="body">
+                    <a mat-button
+                       data-toggle="tab"
+                       href="#{{tabz.TabID}}"
+                       class="nav-link cursor-pointer"
+                       [ngClass]="{'active': tabz.Active, 'disabled': tabz.Disabled}"
+                       (click)="selectTab(tabz)">
+                        <div class="panel">
+                            <div class="panel-heading">
+                                <span class="margin-top--sm  font-size-14px">
+                                    {{tabz.TabName}}
+                                </span>
+                                <span class="refresh-btn-container cursor-pointer"
+                                      tooltip="Refresh Widgets"
+                                      placement="{{tabz.TabName.length > 12 ? 'right' : 'top'}}"
+                                      container="body">
+                                    <i class="fa fa-undo"
+                                       *ngIf="tabz.Active"
+                                       (click)="refreshTab(tabz)"></i>
+                                </span>
+                                <span [hidden]="!tabz.Removable || !tabz.Active"
+                                      class="close-btn-container">
+                                    <a mat-raised-button
+                                       class="mat-btn-red--icon  mat-tab-close-icon  mat-btn-small--icon"
+                                       (click)="removeTab(tabz)">
+                                        <i class="fa fa-times-circle"></i>
+                                    </a>
+                                </span>
+                            </div>
+                        </div>
+                    </a>
+                </li>
+            </ng-template>
+            <li class="nav-item"
+                *ngIf="showAddTabButton">
+                <a class="nav-link cursor-pointer  ai-tab-plus">
+                    <app-xn-ai-tab-plus [tabs]="tabs"
+                                        (dropdownItemClicked)="dropdownItemClickedHandler($event)"></app-xn-ai-tab-plus>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+<div class="tab-content ai-tab-content-container"
+     [ngStyle]="tabContainerStyle">
+    <ng-template ngFor let-tabz [ngForOf]="tabs" [ngForTrackBy]="itemsTrackBy">
+        <div id="{{tabz.TabID}}"
+             class="tab-pane"
+             [ngClass]="{'active': tabz.Active }"
+             *ngIf="tabz.Visible">
+
+            <app-xn-ai-tab-content [data]="tabz.TabContent"
+                                   [tabID]="tabz.TabID"
+                                   *ngIf="tabz.Active || tabz.Loaded"></app-xn-ai-tab-content>
+
+        </div>
+    </ng-template>
+</div>

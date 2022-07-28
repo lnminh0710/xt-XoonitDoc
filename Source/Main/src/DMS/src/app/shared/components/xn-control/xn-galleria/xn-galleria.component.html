@@ -1,0 +1,56 @@
+<div [ngClass]="{'ui-galleria ui-widget ui-widget-content ui-corner-all':true}"
+     [ngStyle]="style"
+     [class]="styleClass">
+    <ul class="ui-galleria-panel-wrapper"
+        [style.width.px]="panelWidth"
+        [style.height.px]="panelHeight">
+        <li *ngFor="let image of images;let i=index"
+            class="ui-galleria-panel"
+            [ngClass]="{'ui-helper-hidden':i!=activeIndex}"
+            (click)="clickImage($event,image,i)">
+            <div class="ui-panel-content">
+                <img class="ui-panel-images"
+                     id="{{(imageShowPrefixId || 'xn-galleria-image-display') + '-' + i}}"
+                     [imageLoader]="image.bigImageUrl"
+                     [alt]="image.alt || image.title"
+                     [title]="image.title" />
+            </div>
+        </li>
+    </ul>
+    <div [ngClass]="{'ui-galleria-filmstrip-wrapper':true}"
+         *ngIf="showFilmstrip">
+        <ul class="ui-galleria-filmstrip"
+            style="transition:left 1s"
+            [style.left.px]="stripLeft">
+            <li #frame
+                *ngFor="let image of images;let i=index"
+                [ngClass]="{'ui-galleria-frame-active':i==activeIndex}"
+                class="ui-galleria-frame"
+                (click)="frameClick(frame, image)"
+                [style.width.px]="frameWidth"
+                [style.height.px]="frameHeight"
+                [style.transition]="'opacity 0.75s ease'">
+                <div class="ui-galleria-frame-content">
+                    <img [imageLoader]="image.thumbnailImageUrl"
+                         [alt]="image.alt || image.title"
+                         [title]="image.title"
+                         class="ui-galleria-frame-image">
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div class="ui-galleria-nav-prev  image-navigate-icon image-navigate-icon-left"
+         (click)="clickNavLeft()"
+         [ngClass]="{'disabled': activeIndex == 0}">
+        <i class="fa  fa-chevron-left"></i>
+    </div>
+    <div class="ui-galleria-nav-next  image-navigate-icon image-navigate-icon-right"
+         (click)="clickNavRight()">
+        <i class="fa  fa-chevron-right"></i>
+    </div>
+    <div class="ui-galleria-caption"
+         *ngIf="showCaption&&images"
+         style="display:block">
+        <h4>{{images[activeIndex]?.title}}</h4><p>{{images[activeIndex]?.alt}}</p>
+    </div>
+</div>

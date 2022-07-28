@@ -1,0 +1,17 @@
+<div class="xn-form-container height-pc-100 center">
+    <div class="avata-box">
+        <div class="avata-wraper">
+            <label class="btn no-padding no-outline">
+                <i *ngIf="imageLoaded" class="user-profile-plus-icon fa fa-camera"></i>
+                <img class="avata"
+                     [imageLoader]="imageUrl"
+                     [imageNameDefault]="'avata-default.png'"
+                     (loaded)="avataLoaded($event)"
+                     alt="Avatar" />
+                <input type="file" accept="image/*" style="display: none">
+            </label>
+        </div>
+        <i *ngIf="imageLoaded" class="avata-hint">(Click to change avatar)</i>
+        <div *ngIf="uploadMessage" class="alert alert-danger">{{uploadMessage}}</div>
+    </div>
+</div>

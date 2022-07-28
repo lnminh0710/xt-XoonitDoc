@@ -1,0 +1,82 @@
+{
+  "_from": "dwt@^15.3.1",
+  "_id": "dwt@15.3.2",
+  "_inBundle": false,
+  "_integrity": "sha512-QpCMZi3ggK1Kf0/lNaoQ7cwwObnrfpsJov07+Kt8MSiUM+ETQoKLHtYzLhfFpY7SKsSfv/JEtP0mviDgfEnsvg==",
+  "_location": "/dwt",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "range",
+    "registry": true,
+    "raw": "dwt@^15.3.1",
+    "name": "dwt",
+    "escapedName": "dwt",
+    "rawSpec": "^15.3.1",
+    "saveSpec": null,
+    "fetchSpec": "^15.3.1"
+  },
+  "_requiredBy": [
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/dwt/-/dwt-15.3.2.tgz",
+  "_shasum": "8f96d5a287fe85501269f0e1f1b2fee339c50537",
+  "_spec": "dwt@^15.3.1",
+  "_where": "D:\\SourceCode\\Xoontec\\DMS-GIT\\Source\\Main\\src\\DMS",
+  "author": {
+    "name": "Dynamsoft",
+    "url": "https://www.dynamsoft.com"
+  },
+  "bugs": {
+    "url": "https://github.com/Dynamsoft/Dynamic-Web-TWAIN/issues"
+  },
+  "bundleDependencies": false,
+  "dependencies": {},
+  "deprecated": false,
+  "description": "Dynamic Web TWAIN is a TWAIN/ICA/SANE-based scanning SDK software specifically designed for web applications running on Windows/macOS/Linux. With just a few lines of code, you can develop robust applications to scan documents from TWAIN/ICA/SANE-compatible scanners, edit the scanned images and save them to a local/server file system or document repository.",
+  "devDependencies": {},
+  "directories": {},
+  "files": [
+    "dist",
+    "samples"
+  ],
+  "homepage": "https://www.dynamsoft.com/Products/WebTWAIN_Overview.aspx",
+  "keywords": [
+    "TWAIN",
+    "JavaScript",
+    "document",
+    "scanning",
+    "web",
+    "browser",
+    "cross-platform",
+    "scanner",
+    "document management",
+    "HTML5 scan",
+    "JavaScript scan",
+    "Web scan",
+    "HTML5 scanner",
+    "JavaScript scanner",
+    "web scanner",
+    "HTML5 scanning",
+    "JavaScript scanning",
+    "Web scanning",
+    "TWAIN",
+    "WIA",
+    "Web TWAIN",
+    "document scanning",
+    "SANE"
+  ],
+  "main": "dist/dynamsoft.webtwain.min.js",
+  "maintainers": [
+    {
+      "name": "Dynamsoft Support Team",
+      "email": "support@dynamsoft.com"
+    }
+  ],
+  "name": "dwt",
+  "optionalDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Dynamsoft/Dynamic-Web-TWAIN.git"
+  },
+  "version": "15.3.2"
+}

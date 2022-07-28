@@ -1,0 +1,13 @@
+.favourite-folder-tree-wrapper {
+    height: 100%;
+
+    .tree-folder {
+        height: 100%;
+
+        ::ng-deep .document-tree-container {
+            height: calc(100vh - 149px);
+            max-height: calc(100vh - 149px);
+            min-height: calc(100vh - 149px);
+        }
+    }
+}

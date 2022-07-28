@@ -1,0 +1,193 @@
+<div class="widget-scanning-history-container">
+    <div class="container-wrapper">
+        <!--Website-->
+        <div class="hidden-xs hidden-sm top-panel" [class.show-along-with-detail]="isShownHistoryDetailPage">
+            <div class="top-panel-group statistic-total-wrapper" #topPanelStatisticScanning>
+                <div class="statistic-total-container">
+                    <div class="row">
+                        <div class="col-md-3 label-total">TOTAL</div>
+                        <div class="col-md-9 row statistic-scanning">
+                            <div class="col-md-6 scanning-item scan-total">
+                                Scan: <span class="counting">{{ totalSummary.scan }}</span>
+                            </div>
+                            <div class="col-md-6 scanning-item transferring-total">
+                                Tranferring: <span class="counting">{{ totalSummary.transferring }}</span>
+                            </div>
+                            <div class="col-md-6 scanning-item import-total">
+                                Import: <span class="counting">{{ totalSummary.import }}</span>
+                            </div>
+                            <div class="col-md-6 scanning-item transferred-total">
+                                Tranfferred: <span class="counting">{{ totalSummary.transferred }}</span>
+                            </div>
+                            <div class="col-md-6 scanning-item mobile-total">
+                                Upload: <span class="counting">{{ totalSummary.mobile }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="top-panel-group controls-filter-wrapper">
+                <div class="eraser" [class.show]="hasFiltered" (click)="clearFilter($event)">
+                </div>
+                <div class="controls-filter-container">
+                    <div class="control-filter from-datepicker">
+                        <div class="label-control">
+                            From
+                        </div>
+
+                        <xn-bs-datepicker [bsConfig]="bsConfig" formControlClassStyle="no-only-border"
+                            (onDatepickerChanged)="onChangedDatepickerFrom($event)" #dpFrom></xn-bs-datepicker>
+                    </div>
+                    <div class="control-filter to-datepicker">
+                        <div class="label-control">
+                            To
+                        </div>
+                        <xn-bs-datepicker [bsConfig]="bsConfig" [disabled]="dpTo.disabled"
+                            formControlClassStyle="no-only-border" (onDatepickerChanged)="onChangedDatepickerTo($event)"
+                            #dpTo></xn-bs-datepicker>
+                    </div>
+                    <div class="control-filter categories-dropdown">
+                        <div class="label-control">
+                            Categories
+                        </div>
+                        <xn-ngx-dropdown [dataSource]="docTypes" [displayFieldMember]="'name'"
+                            [displayNameDefaultOption]="'All Category'" formControlClassStyle="no-only-border"
+                            (onSelectedDataChanged)="selectDocType($event)">
+                        </xn-ngx-dropdown>
+                    </div>
+                </div>
+            </div>
+
+            <div class="top-panel-group pagination-wrapper">
+                <xn-paginator [page]="page" [pageSize]="pageSize" [totalPages]="totalPages"
+                    formControlClassStyle="no-only-border" btnNavigationClassStyle="no-only-border"
+                    (pageChangedEvent)="onPaginatorChanged($event)"></xn-paginator>
+            </div>
+        </div>
+        <!--Mobile-->
+        <div class="hidden-md hidden-lg mobile-wrapper" [class.show-along-with-detail]="isShownHistoryDetailPage">
+            <div class="dropdown">
+                <button class="btn btn-default dropdown-toggle" type="button" id="history-filter" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="true">
+                    <div class="dropdown-total">
+                        Import: <span class="counting">{{ totalSummary.import }}</span>
+                        <span class="caret"></span>
+                    </div>
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="history-filter">
+                    <div class="block-filter row">
+                        <div class="eraser" [class.show]="hasFiltered" (click)="clearFilter($event)">
+                        </div>
+                        <div class="dropdown-menu__row">
+                            <div class="dropdown-menu__row-label">
+                                From
+                            </div>
+                            <div class="dropdown-menu__row-control">
+                                <xn-bs-datepicker [bsConfig]="bsConfig" formControlClassStyle="no-only-border"
+                                    (onDatepickerChanged)="onChangedDatepickerFrom($event)" #dpFrom>
+                                </xn-bs-datepicker>
+                            </div>
+                        </div>
+                        <div class="dropdown-menu__row">
+                            <div class="dropdown-menu__row-label">
+                                To
+                            </div>
+                            <div class="dropdown-menu__row-control">
+                                <xn-bs-datepicker [bsConfig]="bsConfig" [disabled]="dpTo.disabled"
+                                    formControlClassStyle="no-only-border"
+                                    (onDatepickerChanged)="onChangedDatepickerTo($event)" #dpTo></xn-bs-datepicker>
+                            </div>
+                        </div>
+                        <div class="dropdown-menu__row">
+                            <div class="dropdown-menu__row-label">
+                                Categories
+                            </div>
+                            <div class="dropdown-menu__row-control">
+                                <xn-ngx-dropdown [dataSource]="docTypes" [displayFieldMember]="'name'"
+                                    [displayNameDefaultOption]="'All Category'" formControlClassStyle="no-only-border"
+                                    (onSelectedDataChanged)="selectDocType($event)">
+                                </xn-ngx-dropdown>
+                            </div>
+                        </div>
+                    </div>
+                </ul>
+            </div>
+            <div class="pagination-wrapper">
+                <xn-paginator [page]="page" [pageSize]="pageSize" [totalPages]="totalPages"
+                    formControlClassStyle="no-only-border" btnNavigationClassStyle="no-only-border"
+                    (pageChangedEvent)="onPaginatorChanged($event)"></xn-paginator>
+            </div>
+        </div>
+
+        <div class="grid-panel xoonit-grid">
+            <div class="scanning-history"
+                [class.is-open-detail]="dataSourceDetail && dataSourceDetail.columns.length > 0">
+                <xn-ag-grid #xnAgGrid [id]="'a18d30c2-14da-4054-8023-b2f812b799d1'"
+                    [globalProperties]="globalProperties" [serverPaging]="false" [suppressContextMenu]="false"
+                    [dataSource]="dataSource" [readOnly]="true" [autoSelectCurrentRowAfterChangingData]="false"
+                    (rowClick)="onResultSelect($event)" (editClick)="onEditClick($event)"
+                    (rowDoubleClicked)="onRowDoubleClick($event)" (pageChanged)="onPageChanged($event)"
+                    (pageNumberChanged)="onPageNumberChanged($event)" (mousedown)="gridMouseDown($event)"
+                    (mouseup)="gridMouseUp($event)" (dataSourceChanged)="onDataSourceChanged($event)">
+                </xn-ag-grid>
+            </div>
+            <div *ngIf="dataSourceDetail && dataSourceDetail.columns.length > 0" class="scanning-history-detail"
+                [class.is-open-detail]="dataSourceDetail && dataSourceDetail.columns.length > 0">
+                <div class="detail-title row">
+                    <div class="col-xs-6 col-md-9 d-left">
+                        <span class="text">Detail </span><span class="number">{{detailTitle}}</span>
+                    </div>
+                    <div class="col-xs-6 col-md-3 d-right">
+                        <img class="icon-close icon-transform" alt="close detail"
+                            src="/public/imgs/standard_action_cross-circle.svg" (click)="closeDetail()">
+                    </div>
+                </div>
+                <xn-ag-grid #xnAgGrid [id]="'6f01ca30-cf3f-458c-8efc-9ebf700ebeb3'"
+                    [globalProperties]="globalProperties" [serverPaging]="false" [suppressContextMenu]="false"
+                    [dataSource]="dataSourceDetail" [readOnly]="true" [autoSelectCurrentRowAfterChangingData]="false"
+                    [sheetName]="'Global Search'" (rowClick)="onResultSelectDetail($event)"
+                    (rowDoubleClicked)="onRowDoubleClickDetail($event)" (pageChanged)="onPageChangedDetail($event)"
+                    (pageNumberChanged)="onPageNumberChangedDetail($event)" (mousedown)="gridMouseDownDetail($event)"
+                    (mouseup)="gridMouseUpDetail($event)"></xn-ag-grid>
+            </div>
+        </div>
+    </div>
+</div>
+<div *ngIf="isLoading" class="xn-loading">
+    <i class="fa fa-spinner fa-spin fa-2x"></i>
+</div>
+
+<!--
+<ng-template #datepickerTemplate let-control="control">
+    <div class="control-filter {{control.columnName}}-datepicker">
+        <div class="label-control"><label-translation [allowUpdateLanguage]="false"
+            [keyword]="'COMMON_LABEL__' + control.columnHeader"></label-translation></div>
+        <xn-bs-datepicker [bsConfig]="control.setting"
+                        [disabled]="control.setting.displayField.readOnly"
+                        (onDatepickerChanged)="onChangedDatepicker($event, control)" #dpTo></xn-bs-datepicker>
+    </div>
+</ng-template>
+
+<ng-template #dropdownTemplate let-control="control">
+    <div class="control-filter categories-dropdown">
+        <div class="label-control"><label-translation [allowUpdateLanguage]="false"
+            [keyword]="'COMMON_LABEL__Categories'"></label-translation></div>
+        <xn-ngx-dropdown [dataSource]="control.value"
+            [displayFieldOption]="'name'"
+            (onSelectedDataChanged)="selectDocType($event)"></xn-ngx-dropdown>
+    </div>
+</ng-template>
+
+<ng-template #autoCompleteTemplate let-control="control">
+    <div class="control-filter {{control.columnName}}-typeahead">
+        <div class="label-control"><label-translation [allowUpdateLanguage]="false"
+            [keyword]="'COMMON_LABEL__' + control.columnHeader"></label-translation></div>
+        <xn-input-typeahead [(typeaheadValue)]="typeaheadValue"
+            [typeaheadOptionField]="'fullName'"
+            [typeaheadWaitMs]="500"
+            [dataSource]="dataSourceUsers$"
+            (onSelectedItemChanged)="selectUser($event)"
+            (onEmptyTypeahead)="changeInputUserNull($event)"></xn-input-typeahead>
+    </div>
+</ng-template> -->

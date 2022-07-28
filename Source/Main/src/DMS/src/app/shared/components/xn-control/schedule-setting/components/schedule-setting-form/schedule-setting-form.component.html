@@ -1,0 +1,141 @@
+<div class="col-xs-4  no-padding  height-pc-100"
+     [ngClass]="{'submitted': (scheduleEventForm && scheduleEventForm['submitted'])}">
+    <form [formGroup]="scheduleEventForm"
+          class="form-horizontal"
+          id="scheduleEventForm"
+          novalidate>
+        <div class="col-xs-12  no-padding">
+            <label class="control-label  col-xs-3  no-padding-left">Start date</label>
+            <div class="col-xs-9  no-padding">
+                <xn-date-picker #startDateCtr
+                                [isRequired]="false"
+                                formControlName="startDate">
+                </xn-date-picker>
+                <control-messages [control]="scheduleEventForm.controls['startDate']"
+                                  [showIcon]="false">
+                </control-messages>
+                <div *ngIf="isStartDateGreaterThanStopDate" class="alert  alert-danger text-left">Start date must be less than or equal stop date</div>
+            </div>
+        </div>
+        <div class="col-xs-12  no-padding">
+            <label class="control-label  col-xs-3  no-padding-left">Stop date</label>
+            <div class="col-xs-9  no-padding">
+                <xn-date-picker #stopDateCtr
+                                [isRequired]="false"
+                                formControlName="stopDate">
+                </xn-date-picker>
+                <control-messages [control]="scheduleEventForm.controls['stopDate']"
+                                  [showIcon]="false">
+                </control-messages>
+            </div>
+        </div>
+        <div class="col-xs-12  no-padding"
+             *ngIf="localScheduleType == SCHEDULE_TYPE[0]
+        		|| localScheduleType == SCHEDULE_TYPE[4]">
+            <label class="control-label  col-xs-3  no-padding-left">Run date</label>
+            <div class="col-xs-9  no-padding">
+                <xn-date-picker #runDateCtr
+                                [isRequired]="false"
+                                formControlName="runDate">
+                </xn-date-picker>
+                <control-messages [control]="scheduleEventForm.controls['runDate']"
+                                  [showIcon]="false">
+                </control-messages>
+            </div>
+        </div>
+        <div class="col-xs-12  no-padding">
+            <label class="control-label  col-xs-3  no-padding-left">Run time</label>
+            <div class="col-xs-9  no-padding">
+                <wj-input-time #scheduleTime
+                               formControlName="runTime"
+                               [format]="'HH:mm'"
+                               [step]="1">
+                </wj-input-time>
+                <control-messages [control]="scheduleEventForm.controls['runTime']"
+                                  [showIcon]="false">
+                </control-messages>
+            </div>
+        </div>
+        <div class="col-xs-12  no-padding  margin-bottom--sm"
+             [ngClass]="{'e-o': localScheduleType == SCHEDULE_TYPE[0],
+                        'e-d': localScheduleType == SCHEDULE_TYPE[1],
+                        'e-w': localScheduleType == SCHEDULE_TYPE[2],
+                        'e-m': localScheduleType == SCHEDULE_TYPE[3],
+                        'e-y': localScheduleType == SCHEDULE_TYPE[4]}">
+            <label class="control-label  col-xs-3  no-padding-left">Email</label>
+            <div class="col-xs-9  no-padding">
+                <textarea #email
+                          class="form-control  xn-input"
+                          id="email"
+                          name="email"
+                          formControlName="email"
+                          autocomplete="off">
+                </textarea>
+                <control-messages [control]="scheduleEventForm.controls['email']"
+                                  [showIcon]="false">
+                </control-messages>
+            </div>
+        </div>
+        <span class="pull-right">* Send multiple email with comma separetor</span>
+        <div class="col-xs-12  no-padding  margin-bottom--sm  margin-top--sd"
+             [ngClass]="{'p-o': localScheduleType == SCHEDULE_TYPE[0],
+                        'p-d': localScheduleType == SCHEDULE_TYPE[1],
+                        'p-w': localScheduleType == SCHEDULE_TYPE[2],
+                        'p-m': localScheduleType == SCHEDULE_TYPE[3],
+                        'p-y': localScheduleType == SCHEDULE_TYPE[4]}">
+            <label class="control-label  col-xs-3  no-padding-left" for="parameter">Parameter</label>
+            <div class="col-xs-9  no-padding">
+                <textarea #parameter
+                          class="form-control  xn-input"
+                          id="parameter"
+                          name="parameter"
+                          formControlName="parameter"
+                          autocomplete="off">
+                </textarea>
+            </div>
+        </div>
+    </form>
+    <div class="col-xs-12  no-padding  week-day-items-wrapper"
+         [hidden]="localScheduleType != SCHEDULE_TYPE[2]">
+        <label class="control-label  col-xs-12  no-padding-left  text-left">Choose days in week</label>
+        <div class="col-xs-12  no-padding  week-day-items"
+             [perfectScrollbar]="{suppressScrollX: true, suppressScrollY: false}">
+            <div *ngFor="let weekDayItem of weekDayItems"
+                 class="col-sm-offset-5">
+                <mat-checkbox color="primary"
+                              [(ngModel)]="weekDayItem.select">
+                    {{weekDayItem.name}}
+                </mat-checkbox>
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-12  no-padding  week-day-items-wrapper"
+         [hidden]="localScheduleType != SCHEDULE_TYPE[3]">
+        <label class="control-label  col-xs-12  no-padding-left  text-left">Choose days in month</label>
+        <div class="col-xs-12  no-padding  week-day-items"
+             [perfectScrollbar]="{suppressScrollX: true, suppressScrollY: false}">
+            <div *ngFor="let dayItem of dayItems"
+                 class="col-sm-offset-5">
+                <mat-checkbox color="primary"
+                              [(ngModel)]="dayItem.select">
+                    {{dayItem.name}}
+                </mat-checkbox>
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-9  no-padding  pull-right">
+        <button type="button" mat-raised-button
+                class="mat-btn-blue  width-pc-100"
+                (click)="addScheduleEvent()">
+            Add event
+        </button>
+    </div>
+</div>
+<div class="col-xs-8  no-padding-right  height-pc-100">
+    <schedule-setting-grid #scheduleSettingGrid
+                           [scheduleEventGridData]="scheduleEventGridData"
+                           [scheduleType]="localScheduleType"
+                           [globalDateFormat]="globalDateFormat"
+                           (onDeleteAction)="onDeleteHandle($event)">
+    </schedule-setting-grid>
+</div>

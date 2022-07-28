@@ -1,0 +1,16 @@
+<div
+    class="form-design-wrapper w-100 h-100"
+    [perfectScrollbar]="{}"
+    cdkDropList
+    [cdkDropListData]="controls"
+    (cdkDropListDropped)="drop($event)"
+>
+    <div class="form-designer-content">
+        <ng-container *ngFor="let item of controls">
+            <draggable-item-container
+                [dragItem]="item"
+                (onDropped)="dropComponentDone($event)"
+            ></draggable-item-container>
+        </ng-container>
+    </div>
+</div>

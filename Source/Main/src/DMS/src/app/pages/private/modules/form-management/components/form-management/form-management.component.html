@@ -1,0 +1,65 @@
+<div class="form-management">
+  <div class="form-management__doctype">
+    <div class="form-management__title text--ellipsis">Document Type List</div>
+    <div class="form-management__card">
+      <form-management-card
+        [dataSource]="listDocumentType"
+        [name]="'DocumentType'"
+        [isSort]="false"
+        [isCardMode]="isCardMode"
+        [isAssignMode]="isAssignMode"
+        (actionSelectItem)="onClickDocumentType($event)"
+        (actionAddItem)="addDocumentType($event)"
+      ></form-management-card>
+    </div>
+  </div>
+  <div class="form-management__module" *ngIf="listModule.length > 0">
+    <div class="form-management__title text--ellipsis">Module List</div>
+    <div class="form-management__card">
+      <form-management-card
+        [dataSource]="listModule"
+        [name]="'module'"
+        [isSort]="false"
+        [isShowField]="fields.length > 0"
+        [isCardMode]="isCardMode"
+        [isAssignMode]="isAssignMode"
+        (actionSelectItem)="onClickModule($event)"
+        (actionDrop)="saveModuleOrder($event)"
+        (actionAddItem)="addModule($event)"
+      ></form-management-card>
+    </div>
+  </div>
+  <div class="form-management__field">
+    <div class="form-management__action">
+      <div
+        class="form-management__action-button"
+        [ngClass]="{ disabled: isAssignMode && isDisabledAssign }"
+        (click)="saveAssignMode()"
+        *ngIf="isAssignMode"
+      >
+        <h5>
+          Assign
+        </h5>
+      </div>
+      <div
+        class="form-management__action-button"
+        [ngClass]="{ 'is-assign': isAssignMode }"
+        (click)="changeAssignMode()"
+      >
+        <h5>
+          {{ !isAssignMode ? 'Assign' : 'Cancel' }}
+        </h5>
+      </div>
+    </div>
+    <form-management-detail
+      [dataSource]="fields"
+      *ngIf="fields.length > 0"
+      [isCardMode]="isCardMode"
+      [isAssignMode]="isAssignMode"
+      [fieldChanged]="fieldChanged"
+      (onEditField)="changeField($event)"
+      (onChangeModuleName)="changeModuleName($event)"
+      (saveFieldOrder)="saveFieldOrder($event)"
+    ></form-management-detail>
+  </div>
+</div>

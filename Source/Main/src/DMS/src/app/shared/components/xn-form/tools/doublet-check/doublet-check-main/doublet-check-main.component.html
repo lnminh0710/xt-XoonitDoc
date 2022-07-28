@@ -1,0 +1,383 @@
+<div class="doublet-check-main clearfix">
+    <div class="col-md-2 height-pc-100 padding-top--sm">
+        <div class="left-grid">
+            <xn-ag-grid
+                *ngIf="countryGridData && countryGridData.columns && countryGridData.columns.length"
+                #countryGrid
+                [id]="countryGridId"
+                [dataSource]="countryGridData"
+                [isShowedHeader]="true"
+                headerTitle="Country"
+                [readOnly]="false"
+                [isEditting]="true"
+                (cellEditingStopped)="onCountryGridRowEditEnded($event)"
+                (onMarkedAsSelectedAll)="onCountryGridMarkedAsSelectedAll($event)"
+            >
+            </xn-ag-grid>
+        </div>
+    </div>
+    <div class="col-xs-3 height-pc-100 padding-top--sm">
+        <div class="left-grid">
+            <xn-ag-grid
+                *ngIf="countryGridData && countryGridData.columns && countryGridData.columns.length"
+                #columnsGrid
+                [id]="columnsGridId"
+                [dataSource]="columnsGridData"
+                [isShowedHeader]="true"
+                headerTitle="Columns"
+                [readOnly]="false"
+                [isEditting]="true"
+                (cellEditingStopped)="onColumnsGridRowEditEnded($event)"
+                (hasValidationError)="columnsGridHasValidationError($event)"
+                (onMarkedAsSelectedAll)="onColumnsGridMarkedAsSelectedAll($event)"
+            >
+            </xn-ag-grid>
+        </div>
+    </div>
+    <div class="col-xs-2 height-pc-100 padding-top--sm">
+        <div>Group name</div>
+        <div class="doublet-check-row" [ngClass]="{ submitted: showRequire }">
+            <input
+                class="form-control xn-input"
+                [(ngModel)]="groupName"
+                (keydown)="groupNameKeyDown()"
+                [ngClass]="{ 'ng-invalid': showRequire }"
+                type="text"
+                autocomplete="off"
+            />
+            <div *ngIf="showRequire" class="alert alert-danger">Please enter the group name</div>
+        </div>
+        <mat-checkbox
+            color="primary"
+            class="de__ag__command-check"
+            [(ngModel)]="isAutoMatching"
+            (change)="onCheckboxChanged()"
+        >
+            Auto Matching
+        </mat-checkbox>
+        <div class="doublet-check-row">
+            <button
+                *ngIf="widgetButtonAccessRight && widgetButtonAccessRight.all && widgetButtonAccessRight.createGroup"
+                type="button"
+                mat-raised-button
+                class="mat-btn-blue doublet-check-button"
+                (click)="createGroup()"
+            >
+                <i class="fa fa-plus" aria-hidden="true"></i>
+                <span>Create group</span>
+            </button>
+        </div>
+        <div class="doublet-check-row">
+            <button
+                *ngIf="widgetButtonAccessRight && widgetButtonAccessRight.all && widgetButtonAccessRight.updateGroup"
+                type="button"
+                mat-raised-button
+                class="mat-btn-blue doublet-check-button"
+                (click)="updateGroup()"
+                [disabled]="!matchingGroup"
+            >
+                <i class="fa fa-arrow-circle-o-down" aria-hidden="true"></i>
+                <span>Update group</span>
+            </button>
+        </div>
+        <div class="doublet-check-row">
+            <button
+                *ngIf="widgetButtonAccessRight && widgetButtonAccessRight.all && widgetButtonAccessRight.deleteGroup"
+                type="button"
+                mat-raised-button
+                class="mat-btn-red doublet-check-button"
+                (click)="deleteGroup()"
+                [disabled]="!matchingGroup"
+            >
+                <i class="fa fa-trash" aria-hidden="true"></i>
+                <span>Delete group</span>
+            </button>
+        </div>
+        <div class="doublet-check-row margin-top--lg">
+            <button
+                *ngIf="
+                    widgetButtonAccessRight &&
+                    widgetButtonAccessRight.all &&
+                    (widgetButtonAccessRight.createGroup ||
+                        widgetButtonAccessRight.updateGroup ||
+                        widgetButtonAccessRight.deleteGroup)
+                "
+                type="button"
+                mat-raised-button
+                class="mat-btn-orange doublet-check-button"
+                (click)="saveConfig()"
+                [disabled]="!isDirty"
+            >
+                <i class="fa fa-floppy-o" aria-hidden="true"></i>
+                <span>Save config</span>
+            </button>
+        </div>
+        <div class="doublet-check-row margin-top--lg">
+            <button
+                type="button"
+                mat-raised-button
+                class="mat-btn-green doublet-check-button"
+                [ngClass]="{ 'blinking-button': hasDataChanged }"
+                (click)="refreshData()"
+                [disabled]="!hasDataChanged"
+            >
+                <i class="fa fa-refresh" aria-hidden="true"></i>
+                <span>Refresh&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            </button>
+        </div>
+    </div>
+    <div class="col-md-3 group-tab padding-top--sm">
+        <tabset #groupTab class="tab-with-right-border">
+            <tab heading="Auto" (select)="selectTab(1, $event)">
+                <xn-ag-grid
+                    *ngIf="autoMatchingGridData && autoMatchingGridData.columns && autoMatchingGridData.columns.length"
+                    #autoMatchingGrid
+                    [id]="autoMatchingGridId"
+                    [dataSource]="autoMatchingGridData"
+                    [isShowedHeader]="true"
+                    [hasHeaderBorder]="false"
+                    [readOnly]="false"
+                    [isEditting]="true"
+                    (rowDoubleClicked)="matchingGroupGridRowDoubleClick($event)"
+                    (onCheckAllChecked)="onMatchingGridCheckAllChecked($event, 'autoMatchingGridData')"
+                    (cellEditingStopped)="onMatchingGridCheckChanged($event)"
+                >
+                </xn-ag-grid>
+            </tab>
+            <tab heading="Manual" (select)="selectTab(2, $event)">
+                <xn-ag-grid
+                    *ngIf="
+                        manualMatchingGridData &&
+                        manualMatchingGridData.columns &&
+                        manualMatchingGridData.columns.length
+                    "
+                    #manualMatchingGrid
+                    [id]="manualMatchingGridId"
+                    [dataSource]="manualMatchingGridData"
+                    [isShowedHeader]="true"
+                    [hasHeaderBorder]="false"
+                    [readOnly]="false"
+                    [isEditting]="true"
+                    (rowDoubleClicked)="matchingGroupGridRowDoubleClick($event)"
+                    (onCheckAllChecked)="onMatchingGridCheckAllChecked($event, 'manualMatchingGridData')"
+                    (cellEditingStopped)="onMatchingGridCheckChanged($event)"
+                >
+                </xn-ag-grid>
+            </tab>
+        </tabset>
+    </div>
+    <div class="col-md-2">
+        <div class="doublet-check-header">
+            <div>Schedule Setting</div>
+            <div>
+                <button
+                    *ngIf="
+                        widgetButtonAccessRight &&
+                        widgetButtonAccessRight.all &&
+                        widgetButtonAccessRight.scheduleSetting
+                    "
+                    type="button"
+                    mat-raised-button
+                    class="mat-btn-blue show-window-dialog-button"
+                    (click)="openWindowDialog($event)"
+                >
+                    <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
+                </button>
+            </div>
+        </div>
+        <div class="doublet-check-next-event-container">
+            <div class="doublet-check-next-event-title">Next event:</div>
+            <div class="doublet-check-next-event-row">
+                <div class="doublet-check-next-event-lable">On:</div>
+                <div class="doublet-check-next-event-value">{{ nextScheduleEvent.on }}</div>
+            </div>
+            <div class="doublet-check-next-event-row">
+                <div class="doublet-check-next-event-lable">At:</div>
+                <div class="doublet-check-next-event-value">{{ nextScheduleEvent.at }}</div>
+            </div>
+        </div>
+        <div class="doublet-check-row">
+            <button
+                *ngIf="widgetButtonAccessRight && widgetButtonAccessRight.all && widgetButtonAccessRight.start"
+                type="button"
+                mat-raised-button
+                class="{{
+                    matchingStatus == 1 ? 'mat-btn-red' : 'mat-btn-green'
+                }}  doublet-check-start-button  mat-raised-button"
+                (click)="start()"
+            >
+                <i class="fa {{ matchingStatus == 1 ? 'fa-ban' : 'fa-play' }}" aria-hidden="true"></i>
+                <span>{{ matchingStatus == 1 ? 'Stop' : 'Start' }}</span>
+            </button>
+        </div>
+    </div>
+</div>
+<!--<schedule-setting #scheduleSetting
+                  *ngIf="isShowScheduleSetting"
+                  [globalProperties]="globalProperties"
+                  (closedAction)="closedScheduleSettingHandle($event)">
+</schedule-setting>-->
+
+<p-dialog
+    header=""
+    [(visible)]="showDialog"
+    modal="true"
+    positionTop="150"
+    responsive="true"
+    appendTo="body"
+    [resizable]="false"
+    [draggable]="false"
+    [contentStyle]="{ 'padding-bottom': 0, 'padding-top': 0 }"
+>
+    <p-header>
+        <div class="modal-header--information">
+            <span class="header-text">Schedule Setting</span>
+            <div
+                class="toolbar-icon icon-transform close-dialog-icon"
+                #popHand="bs-tooltip"
+                container="body"
+                data-placement="bottom"
+                [tooltip]="'Close'"
+                aria-label="Close"
+                (click)="closeWindowDialog($event)"
+            ></div>
+        </div>
+    </p-header>
+    <div class="row">
+        <perfect-scrollbar>
+            <div class="container doublet-check-window-dialog-content">
+                <form [formGroup]="scheduleEventForm">
+                    <div class="row">
+                        <div class="col-md-4 col lg-4">
+                            <div class="doublet-check-header">
+                                <div>Schedule Setting</div>
+                            </div>
+                            <div>
+                                <mat-checkbox color="primary" class="de__ag__command-check" formControlName="Sunday">
+                                    Sunday
+                                </mat-checkbox>
+                            </div>
+                            <div>
+                                <mat-checkbox color="primary" class="de__ag__command-check" formControlName="Monday">
+                                    Monday
+                                </mat-checkbox>
+                            </div>
+                            <div>
+                                <mat-checkbox color="primary" class="de__ag__command-check" formControlName="Tuesday">
+                                    Tuesday
+                                </mat-checkbox>
+                            </div>
+                            <div>
+                                <mat-checkbox color="primary" class="de__ag__command-check" formControlName="Wednesday">
+                                    Wednesday
+                                </mat-checkbox>
+                            </div>
+                            <div>
+                                <mat-checkbox color="primary" class="de__ag__command-check" formControlName="Thursday">
+                                    Thursday
+                                </mat-checkbox>
+                            </div>
+                            <div>
+                                <mat-checkbox color="primary" class="de__ag__command-check" formControlName="Friday">
+                                    Friday
+                                </mat-checkbox>
+                            </div>
+                            <div>
+                                <mat-checkbox color="primary" class="de__ag__command-check" formControlName="Saturday">
+                                    Saturday
+                                </mat-checkbox>
+                            </div>
+                            <div class="doublet-check-input-time-group">
+                                <div>Time</div>
+                                <div class="doublet-check-input-time">
+                                    <wj-input-time #scheduleTime formControlName="Time" [format]="'HH:mm'" [step]="1">
+                                    </wj-input-time>
+                                </div>
+                            </div>
+                            <div class="">
+                                <button
+                                    type="button"
+                                    mat-raised-button
+                                    class="mat-btn-blue width-pc-100"
+                                    (click)="addScheduleEvent()"
+                                >
+                                    Add event
+                                </button>
+                            </div>
+                        </div>
+                        <div class="col-md-8 col lg-8">
+                            <wj-flex-grid
+                                #scheduleEventGrid
+                                [allowMerging]="allowMerging"
+                                [itemsSource]="scheduleEventGridData"
+                                class="doublet-check-schedule-event"
+                            >
+                                <wj-flex-grid-column
+                                    [header]="'On'"
+                                    [binding]="'on'"
+                                    [width]="'*'"
+                                    [isReadOnly]="true"
+                                    [allowMerging]="true"
+                                    [allowSorting]="false"
+                                    [cssClass]="'doublet-check-wj-row-cell'"
+                                >
+                                    <ng-template wjFlexGridCellTemplate [cellType]="'Cell'" let-cell="cell">
+                                        {{ cell.item['on'] }}
+                                    </ng-template>
+                                </wj-flex-grid-column>
+                                <wj-flex-grid-column
+                                    [header]="'At'"
+                                    [binding]="'at'"
+                                    [align]="'center'"
+                                    [isReadOnly]="true"
+                                    [allowSorting]="false"
+                                    [width]="'*'"
+                                    [cssClass]="'doublet-check-wj-row-cell'"
+                                >
+                                    <ng-template wjFlexGridCellTemplate [cellType]="'Cell'" let-cell="cell">
+                                        {{ cell.item['at'] }}
+                                    </ng-template>
+                                </wj-flex-grid-column>
+                                <wj-flex-grid-column
+                                    [header]="' '"
+                                    [binding]="'id'"
+                                    [align]="'center'"
+                                    [isReadOnly]="true"
+                                    [allowSorting]="false"
+                                    [width]="'*'"
+                                >
+                                    <ng-template wjFlexGridCellTemplate [cellType]="'Cell'" let-cell="cell">
+                                        <a
+                                            tooltip="Delete Item"
+                                            placement="top"
+                                            container="body"
+                                            class="red-color"
+                                            (click)="scheduleEventGridDeleteRow(cell.item['id'])"
+                                        >
+                                            <i class="fa fa-trash-o" aria-hidden="true"></i>
+                                        </a>
+                                    </ng-template>
+                                </wj-flex-grid-column>
+                            </wj-flex-grid>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </perfect-scrollbar>
+    </div>
+
+    <p-footer>
+        <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+            <button
+                label="Cancel"
+                pbutton=""
+                type="button"
+                mat-raised-button
+                class="mat-btn-red"
+                (click)="closeWindowDialog($event)"
+            >
+                <span class="ui-button-text ui-c">Close</span>
+            </button>
+        </div>
+    </p-footer>
+</p-dialog>

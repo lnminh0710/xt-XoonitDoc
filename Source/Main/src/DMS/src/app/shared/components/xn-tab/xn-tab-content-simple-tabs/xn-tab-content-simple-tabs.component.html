@@ -1,0 +1,78 @@
+<div class="simple-tab-header-container">
+    <!--<div class="simple-tab-summary-wrapper">
+        <ul class="nav nav-tabs simple-tab-summary-list">
+            <ng-template ngFor let-simpleTab [ngForOf]="simpleTabs">
+                <li class="nav-item simple-tab-summary"
+                    [ngClass]="{'active': simpleTab.Active, 'disabled': simpleTab.Disabled}">
+                    <a [attr.data-toggle]="simpleTab.Disabled ? '' : 'tab'"
+                       href="#{{simpleTab.TabID}}"
+                       class="nav-link cursor-pointer"
+                       [ngClass]="{'active': simpleTab.Active, 'disabled': simpleTab.Disabled}"
+                       (click)="simpleTab.Disabled ? false : selectTab(simpleTab)">
+                        <div class="panel">
+                            <div class="panel-heading">
+                                <span #tab class="margin-top--sm font-size-14px"
+                                      [ngStyle]="{'color': simpleTab.TabColor ? simpleTab.TabColor : ''}"><i *ngIf="simpleTab.TabIcon" class="fa {{simpleTab.TabIcon}} tab-icon"></i>{{simpleTab.TabName}}</span>
+                                <control-messages [componentControl]="tab"
+                                                  [hotKeyValue]="hotKeySettingService.getHotKeyTab(simpleTab.TabID) | async"
+                                                  (onClickComponentControl)="simpleTab.Disabled ? false : selectTab(simpleTab)">
+                                </control-messages>
+                            </div>
+                        </div>
+                    </a>
+                </li>
+            </ng-template>
+        </ul>
+    </div>-->
+    <svg class="hidden">
+        <defs>
+            <path id="tabshape" d="M80,60C34,53.5,64.417,0,0,0v60H80z" />
+        </defs>
+    </svg>
+    <div class="tabs tabs-style-shape">
+        <nav>
+            <ul>
+                <ng-template ngFor let-simpleTab [ngForOf]="simpleTabs" let-idx="index">
+                    <li [ngClass]="{'active': simpleTab.Active, 'disabled': simpleTab.Disabled}">
+                        <a [attr.data-toggle]="simpleTab.Disabled ? '' : 'tab'" href="#{{simpleTab.TabID}}"
+                            (click)="simpleTab.Disabled ? false : selectTab(simpleTab)">
+                            <!-- <svg viewBox="0 0 80 60" preserveAspectRatio="none"><use xlink:href="#tabshape"></use></svg> -->
+                            <!-- <svg viewBox="0 0 80 60" preserveAspectRatio="none"
+                                 [ngClass]="{'first-corner': idx === 0, 'last-corner': idx === simpleTabs.length - 1}"><use xlink:href="#tabshape"></use></svg> -->
+                            <span><label-translation [keyword]="simpleTab.TabName"></label-translation></span>
+                        </a>
+                    </li>
+                </ng-template>
+            </ul>
+        </nav>
+    </div><!-- /tabs -->
+</div>
+<div class="tab-content simple-tab-content-container">
+    <ng-template ngFor let-simpleTab [ngForOf]="simpleTabs">
+        <div *ngIf="(!isSelectionProject && !config) || (isSelectionProject && simpleTab.Loaded && !config)"
+            id="{{simpleTab.TabID}}" class="tab-pane" [ngClass]="{'active': simpleTab.Active }">
+            <app-xn-tab-page-view #xnTabPageViewCtrl [data]="simpleTab" [tabID]="tabID"
+                [isSplitterDragging]="isSplitterDragging"
+                [isActivated]="isSelectionProject ? simpleTab.Active : isActivated"></app-xn-tab-page-view>
+        </div>
+
+        <div *ngIf="config" id="{{simpleTab.TabID}}" class="tab-pane"
+            [ngSwitch]="config.moduleTabCombineName[simpleTab.TabID]" [perfectScrollbar]="perfectScrollbarConfig"
+            [ngStyle]="contentStyle" [ngClass]="{'active': simpleTab.Active }">
+            <ng-template [ngSwitchCase]="'32-MovedArticles'">
+
+            </ng-template>
+            <ng-template [ngSwitchCase]="'32-SortingGoods'">
+                <!--<sorting-goods-edit-form [globalProperties]="globalProperties"
+                                         (outputData)="onChanged($event)"></sorting-goods-edit-form>-->
+            </ng-template>
+            <ng-template [ngSwitchCase]="'32-Costs'">
+                <!--<warehouse-movement-cost [globalProperties]="globalProperties"
+                                         (outputData)="onChanged($event)"></warehouse-movement-cost>-->
+            </ng-template>
+            <ng-template [ngSwitchCase]="'32-Advanced'">
+
+            </ng-template>
+        </div>
+    </ng-template>
+</div>

@@ -1,0 +1,31 @@
+<div type="button" *ngIf="hasIcon && !isButtonControl"
+     (click)="onClickGroupAddon($event)"
+     class="input-group-addon {{_cssClass}} {{styleClass}}"
+     [ngStyle]="{'border-right': boderStyle ? boderStyle : ''}">
+    <i *ngIf="showIcon" class="fa fa-{{iconClass}}">{{iconContent}}</i>
+</div>
+<button type="button" *ngIf="hasIcon && isButtonControl"
+        tabindex="-1"
+        (click)="onClickGroupAddon($event)"
+        mat-raised-button
+        class="input-group-addon {{_cssClass}} {{styleClass}}"
+        [ngStyle]="{'border-right': boderStyle ? boderStyle : ''}">
+    <i *ngIf="showIcon" class="fa fa-{{iconClass}}"></i>
+</button>
+<span *ngIf="controlType=='textbox' && isShown && control && control.value && (control.value + '').trim().length > 0"
+      class="clear-textbox"
+      (click)="clearText($event)">
+    <i class="fa fa-times-circle" aria-hidden="true"></i>
+</span>
+<div *ngIf="(!!_errorMessage && isShowMessage && !isHotKeyActive)"
+     class="alert  alert-danger text-left">{{_errorMessage}}</div>
+
+<div #hotKey class="hot-key_suggestion"
+     *ngIf="isHotKeyActive && deferHotKeyDisplay"
+     (dblclick)="editHotkey($event)"><label>{{hotKeyValue.value}}</label></div>
+<!--<hot-key-setting-dialog [controlKey]="hotKeyValue.key"
+                        [hotKey]="hotKeyValue.value"
+                        [showDialog]="isShowHotkeyDialog"
+                        (onClose)="onClose($event)"
+                        *ngIf="isHotKeyActive && isShowHotkeyDialog">
+</hot-key-setting-dialog>-->

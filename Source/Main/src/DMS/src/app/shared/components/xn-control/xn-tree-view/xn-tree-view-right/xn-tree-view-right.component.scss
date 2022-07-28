@@ -1,0 +1,63 @@
+$line-height: 21px;
+
+.tree-view__child--collapse {
+    display: none;
+}
+
+.tree-view__child--expand {
+    display: block;
+}
+
+.checkbox label::before {
+    margin-left: -15px !important;
+}
+
+.checkbox label::after {
+    margin-left: -15px !important;
+}
+
+.tree-view__right-side {
+    width: 215px;
+    height: 24px;
+    padding-left: 10px;
+
+    .tree-view__percent {
+        margin-left: 10px;
+        float: right;
+    }
+
+    .tree-view__node-is-main {
+        float: right;
+
+        label {
+            line-height: $line-height;
+        }
+
+        label::after {
+            top: -2px;
+        }
+    }
+
+    .tree-view__percent-text {
+        float: left;
+        line-height: 22px;
+    }
+
+    .tree-view__percent-input-main {
+        float: left;
+        margin-left: -20px;
+    }
+
+    .tree-view__node-is-main--view {
+        float: left;
+        margin-left: 15px;
+
+        i {
+            margin-right: 5px;
+        }
+
+        span {
+            line-height: $line-height;
+        }
+    }
+}

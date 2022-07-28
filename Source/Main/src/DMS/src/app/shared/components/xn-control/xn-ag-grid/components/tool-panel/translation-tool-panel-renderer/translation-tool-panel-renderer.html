@@ -1,0 +1,21 @@
+<div class="ag-column-panel">
+    <div class="ag-column-select-panel">
+        <div class="ag-primary-cols-list-panel" ref="eToolPanelColumnsContainerComp">
+            <ng-container *ngFor="let colDef of columnDefs">
+                <div class="ag-column-tool-panel-column ag-toolpanel-indent-0" *ngIf="!colDef.hide"
+                     [xnDraggable]="{zone: 'widget', data: {
+                                                 fieldColumn: colDef.field,
+                                                 fieldText: colDef.headerName,
+                                                 fieldValue: colDef.field,
+                                                 srcWidgetDetail: translateData,
+                                                 mode: 'translate'
+                                             },
+                                             callBack: dragDataTransferCallback
+                                    }">
+                    <span class="ag-column-drag" ref="eDragHandle"></span>
+                    <span class="ag-column-tool-panel-column-label" ref="eLabel">{{ colDef.headerName }}</span>
+                </div>
+            </ng-container>
+        </div>
+    </div>
+</div>

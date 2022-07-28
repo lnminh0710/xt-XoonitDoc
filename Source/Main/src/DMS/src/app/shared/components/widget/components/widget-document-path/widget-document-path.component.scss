@@ -1,0 +1,33 @@
+.document-path-container {
+    .document-path-wrapper > * {
+        font-size: 1.231em !important;
+    }
+
+    .document-path-wrapper {
+        display: inherit;
+
+        .label-document-path {
+            font-family: 'rbt_Medium';
+        }
+
+        .value-document-path {
+            text-transform: uppercase;
+            font-family: 'rbt_Bold';
+
+            > span {
+                &::after {
+                    content: '\00a0';
+                }
+
+                &:not(:first-of-type)::before {
+                    content: '/ ';
+                }
+
+                &:last-of-type {
+                    font-weight: bolder;
+                    color: #fa6400;
+                }
+            }
+        }
+    }
+}

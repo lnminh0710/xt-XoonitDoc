@@ -1,0 +1,75 @@
+@import 'src/sass_files/color.scss';
+
+
+.dropdown-menu {
+    min-width: 200px;
+
+    li {
+        a {
+            padding: 5px;
+        }
+    }
+
+    .divider {
+        margin: 2px 0;
+    }
+
+    .fa-window-restore {
+        color: #de820c;
+    }
+
+    .save-setting {
+        &.has-changed {
+            .icon-save, .title {
+                color: #d89429;
+            }
+        }
+        .icon-save, .title {
+            color: #dbdbdb;
+        }
+    }
+}
+
+.hasSubMenu:before {
+    content: '>' !important;
+}
+
+.menu-item {
+    height: 18px;
+    width: 18px;
+    cursor: pointer;
+
+    &.rotate-left-icon {
+        background: url('src/public/imgs/icons/rotate-left.svg') center no-repeat;
+    }
+
+    &.fullscreen-icon {
+        background: url('src/public/imgs/icons/fullscreen.svg') center no-repeat;
+    }
+
+    &.rotate-left-icon {
+        background: url('src/public/imgs/icons/rotate-left.svg') center no-repeat;
+    }
+
+    &.tlbar-icon {
+        background: url('src/public/imgs/icons/toolbar.svg') center no-repeat;
+    }
+
+    &.setting-icon {
+        background: url('src/public/imgs/icons/setting.svg') center no-repeat;
+    }
+
+    &.save-icon {
+        background: url('src/public/imgs/icons/save.svg') center no-repeat;
+    }
+
+    &.print-icon {
+        background: url('src/public/imgs/icons/printer.svg') center no-repeat;
+    }
+    &.copy-icon {
+        background: url('src/public/imgs/icons/copy.svg') center no-repeat;
+    }
+    &.paste-icon {
+        background: url('src/public/imgs/icons/paste.svg') center no-repeat;
+    }
+}

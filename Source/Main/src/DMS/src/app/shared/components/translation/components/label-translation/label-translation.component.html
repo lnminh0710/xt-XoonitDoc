@@ -1,0 +1,6 @@
+<ng-container *ngIf="!isHtml">
+    {{ keyword | translate:params }}
+</ng-container>
+<ng-container *ngIf="isHtml">
+    <div [innerHTML]="keyword | translate:params"></div>
+</ng-container>

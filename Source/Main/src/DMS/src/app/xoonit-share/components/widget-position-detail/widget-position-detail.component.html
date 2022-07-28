@@ -1,0 +1,10 @@
+<div class="position-detail">
+    <div *ngIf="dataSource?.columns?.length" class="xoonit-grid">
+        <xn-ag-grid #xnAgGrid [id]="'7a3916cf-adb0-4c55-b8e7-8e8ca6fc92b4'" [globalProperties]="globalProperties"
+            [serverPaging]="false" [suppressContextMenu]="false" [dataSource]="dataSource" [readOnly]="isDisabled"
+            [autoSelectCurrentRowAfterChangingData]="false" (update1ForAll)="update1ForAllAction($event)"
+            (deleteClick)="deleteRow($event)" (addRowClick)="addRow($event)"
+            (cellValueChanged)="onCellValueChanged($event)" (cellEditingStarted)="onFocusedCell($event)">
+        </xn-ag-grid>
+    </div>
+</div>

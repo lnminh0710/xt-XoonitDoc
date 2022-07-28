@@ -1,0 +1,9 @@
+.simple-octopus-form-container {
+    position: relative;
+    max-width: 100%;
+    max-height: 100%;
+
+    ::ng-deep .form-control-wrapper.ctrl-touched.ctrl-invalid {
+        margin-bottom: 10px;
+    }
+}

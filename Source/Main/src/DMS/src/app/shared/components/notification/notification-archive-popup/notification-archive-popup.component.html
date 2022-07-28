@@ -1,0 +1,36 @@
+<p-dialog
+    [styleClass]="'prime-dialog prime-dialog-archived-list'"
+    [(visible)]="isShow"
+    modal="true"
+    width="500"
+    height="600"
+    positionTop="150"
+    responsive="true"
+    appendTo="body"
+    [resizable]="false"
+    [draggable]="true"
+    [contentStyle]="{ 'padding-bottom': 0, 'padding-top': 0 }"
+>
+    <p-header>
+        <div class="modal-header--information">
+            <span class="header-text"
+                ><label-translation [keyword]="'NotificationArchivePopup__Archive_Notification'"></label-translation
+            ></span>
+            <div class="toolbar-icon close-dialog-icon" (click)="close($event)"></div>
+        </div>
+    </p-header>
+    <div class="height-pc-100">
+        <notification-archive-view (showDetailAction)="showDetailActionHandler($event)" [typeArchive]="typeArchive">
+        </notification-archive-view>
+    </div>
+    <p-footer>
+        <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix no-border no-padding">
+            <button label="Close" type="button" class="min-width--100" mat-raised-button (click)="close($event)">
+                <span class="bt-t-i ui-button-text ui-c"
+                    ><label-translation [keyword]="'NotificationArchivePopup__Close'"></label-translation
+                ></span>
+            </button>
+        </div>
+        <div class="widget-info__resize_bottom xn-icon__resize icon-black"></div>
+    </p-footer>
+</p-dialog>

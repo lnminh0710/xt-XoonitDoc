@@ -1,0 +1,29 @@
+<!-- [isMove]="true" -->
+<app-image-toolbar
+    [viewAllPage]="viewAllPage"
+    [IdDocumentContainerScans]="IdDocumentContainerScans"
+    [isRotation]="isRotation"
+    [isShowRotateMode]="isShowRotateMode"
+    [isViewOnly]="true"
+    [isBase64]="isBase64"
+    [toolbarConfig]="toolbarConfig"
+    [isSelectDocType]="isSelectDocType && !isEmpty && !isLoading"
+    (viewActualSize)="viewActualSize()"
+    (rotateImage)="rotateImage($event)"
+    (zoomImage)="zoomImage($event)"
+    (toggleViewImageInfo)="onToggleViewImageInfo($event)"
+    (toggleRotation)="saveRotation($event)"
+    (onUngroup)="unGroupImage()"
+    (openSharing)="share()"
+    *ngIf="imageSrc && !hideToolbar"
+    ><ng-content></ng-content>
+</app-image-toolbar>
+<div class="image-viewer-loading" *ngIf="isLoading">
+    <img src="public/assets/img/loading-spinner.gif" />
+</div>
+<image-empty-state *ngIf="isEmpty" title="No image available"></image-empty-state>
+<div class="canvas-container">
+    <canvas [id]="widgetId + idData + 'viewer'"></canvas>
+</div>
+
+<div class="image-viewer__rotation" *ngIf="isRotation">{{ angle.toFixed(2) }}</div>

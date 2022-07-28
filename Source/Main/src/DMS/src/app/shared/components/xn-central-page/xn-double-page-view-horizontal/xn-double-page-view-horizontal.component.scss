@@ -1,0 +1,21 @@
+.xn__double-page-view__horizontal, .horizontal-page_content {
+    height: 100%;
+}
+
+:host ::ng-deep {
+    > as-split > .as-split-gutter {
+        &.hidden {
+            visibility: hidden !important;
+        }
+    }
+
+    .as-split-gutter {
+        &.gutter-hidden {
+            visibility: hidden !important;
+        }
+    }
+
+    /*.as-split-area {
+        border: 1px solid #ff8eec;
+    }*/
+}

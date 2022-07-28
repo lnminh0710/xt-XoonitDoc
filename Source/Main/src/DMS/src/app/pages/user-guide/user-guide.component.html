@@ -1,0 +1,38 @@
+<toaster-container [toasterconfig]="toastrConfig"></toaster-container>
+
+<div class="user-guide-container">
+    <div class="user-guide-wrapper w-100 h-100">
+        <as-split #horizontalSplit
+               direction="horizontal"
+               (dragEnd)="dragEnd($event)"
+               (dragProgress)="dragProgress($event)"
+               [gutterSize]="5"
+               [ngStyle]="userGuideContainerStyle">
+            <as-split-area [size]="splitterConfig.leftHorizontal"
+                           [minSize]="3">
+                <widget-container [pageId]="'a6ffaa18-417d-40b1-9b2f-9605271320ef'"
+                        [tabID]="'UserGuide'"></widget-container>
+            </as-split-area>
+            <as-split-area [size]="splitterConfig.rightHorizontal"
+                           [minSize]="3">
+                <router-outlet></router-outlet>
+            </as-split-area>
+        </as-split>
+    </div>
+</div>
+<xn-message-modal></xn-message-modal>
+
+<app-aside (onToggleWidgetTemplate)="handleToggleWidgetTemplate($event)">Loading control sidebar...</app-aside>
+<property-panel [isExpand]="isExpand"
+                [isGlobal]="isGlobal"
+                [properties]="properties"
+                [parentData]="propertiesParentData"
+                (onClose)="onPropertyPanelClose($event)"
+                (onSave)="onPropertyPanelSave($event)"
+                (onChange)="onPropertyPanelChange($event)"
+                (onApply)="onPropertyPanelApply($event)"></property-panel>
+
+<div *ngIf="xnLoading.loading"
+     class="xn-loading">
+    <i class="fa fa-spinner fa-spin fa-2x"></i>
+</div>

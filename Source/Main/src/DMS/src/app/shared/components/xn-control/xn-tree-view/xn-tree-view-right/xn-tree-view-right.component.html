@@ -1,0 +1,54 @@
+<div class="tree-node  xn-tree-node"
+	*ngFor="let treeNode of treeViewData"
+	id="{{treeNode.id}}">
+	<div class="tree-view__right-side"
+		(click)="treeNodeClick(treeNode)"
+		[ngClass]="{'tree-view-selected': treeNode.isSelected}">
+		<div class="tree-view__percent">
+			<span class="tree-view__percent-text"
+				(click)="treeNodeClick(treeNode)">
+				{{treeNode.percentText}}
+			</span>
+			<div class="tree-view__percent-input-main">
+				<xn-numeric-textbox
+					[(ngModel)]="treeNode.percent"
+					id="txt-{{treeNode.id}}-percent"
+					name="txt-{{treeNode.id}}-percent"
+					[maxlength]="3"
+					[isInteger]="true"
+					[maxValue]="100"
+					[noInForm]="true"
+					[disabled]="!treeNode.select || (config && !config.editMode)"
+					(change)="percentChange()"
+					(focus)="treeNodeClick(treeNode)"
+					customClassInput="tree-view__percent-input"
+					customClassAddOn="tree-view__percent-input__addon"
+					fontIcon="percent">
+				</xn-numeric-textbox>
+			</div>
+		</div>
+		<mat-checkbox
+			color="primary"
+		    class="tree-view__node-is-main"
+		    [(ngModel)]="treeNode.isMain"
+            [disabled]="!treeNode.select || (config && !config.editMode)"
+			value="{{treeNode.isMain}}"
+		    (change)="isMainCheckboxChange(treeNode)">
+		    {{treeNode.isMainText}}
+		</mat-checkbox>
+		<div *ngIf="config && !config.editMode"
+			class="tree-view__node-is-main--view"
+			(click)="treeNodeClick(treeNode)">
+			<i class="fa  fa-circle" [ngClass]="{'active':treeNode.isMain, 'in-active':!treeNode.isMain}"></i>
+			<span>{{treeNode.isMainText}}</span>
+		</div>
+	</div>
+	<app-xn-tree-view-right
+		*ngIf="treeNode.children && treeNode.children.length"
+		[data]="treeNode.children"
+		[config]="config"
+		[ngClass]="{'tree-view__child--expand':treeNode.expand, 'tree-view__child--collapse':!treeNode.expand}"
+		(dataChange)="onDataChange($event)"
+		(itemSelect)="treeNodeClick($event)">
+	</app-xn-tree-view-right>
+</div>

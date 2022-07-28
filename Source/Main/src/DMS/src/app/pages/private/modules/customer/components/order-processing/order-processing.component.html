@@ -1,0 +1,22 @@
+<div class="order-processing-container">
+    <div class="col-xs-2 text-center header-icon-container" *ngFor="let orderProcessing of orderProcessingList; let i = index">
+        <div class="header-icon" [title]="orderProcessing.toolTip">
+            <i *ngIf="orderProcessing.icon" class="fa {{orderProcessing.icon}} {{orderProcessing.type}}"></i>
+            <label *ngIf="orderProcessing.title" class="{{orderProcessing.type}}">
+                {{orderProcessing.title}}
+            </label>
+        </div>
+        <div class="square-box text-center font-size-11px overdue">
+            <span>{{orderProcessing.orderProcessingDetail.overdue}}</span>
+        </div>
+        <div class="square-box text-center font-size-11px shipped">
+            <span>{{orderProcessing.orderProcessingDetail.shipped}}</span>
+        </div>
+        <div class="square-box text-center font-size-11px in-progress">
+            <span>{{orderProcessing.orderProcessingDetail.inProgress}}</span>
+        </div>
+        <div class="square-box text-center font-size-11px total">
+            <span>{{orderProcessing.orderProcessingDetail.total}}</span>
+        </div>
+    </div>
+</div>

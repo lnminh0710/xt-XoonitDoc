@@ -1,0 +1,14 @@
+<resources>
+  <dimen name="activity_vertical_margin">
+    21.33dp
+  </dimen>
+  <dimen name="activity_horizontal_margin">
+    21.33dp
+  </dimen>
+  <dimen name="scan_padding">
+    24.0dp
+  </dimen>
+  <dimen name="text_size_18">
+    24.0sp
+  </dimen>
+</resources>

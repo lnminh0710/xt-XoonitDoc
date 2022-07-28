@@ -1,0 +1,123 @@
+:host ::ng-deep {
+    .mat-form-field-appearance-legacy .mat-form-field-infix {
+        padding: 1px 0;
+    }
+    .mat-form-field-appearance-legacy .mat-form-field-label {
+        top: 0;
+        color: #181c2f;
+        font-size: 0.875rem;
+        font-weight: bold;
+    }
+
+    input + .mat-form-field-label-wrapper,
+    mat-datepicker + .mat-form-field-label-wrapper {
+        left: 15px;
+        top: 0;
+    }
+
+    input + .mat-form-field-label-wrapper {
+        top: 0;
+    }
+
+    mat-datepicker + .mat-form-field-label-wrapper {
+        top: 5px;
+    }
+
+    .mat-form-field-appearance-legacy.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label,
+    .mat-form-field-appearance-legacy.mat-form-field-can-float
+        .mat-input-server:focus
+        + .mat-form-field-label-wrapper
+        .mat-form-field-label {
+        -webkit-transform: translateY(0) scale(1) perspective(100px) translateZ(0.001px);
+        transform: translateY(0) scale(1) perspective(100px) translateZ(0.001px);
+        -ms-transform: translateY(0) scale(1);
+    }
+
+    .mat-form-field-appearance-legacy .mat-form-field-underline {
+        background-color: rgba(16, 27, 79, 0.1);
+    }
+
+    .mat-input-element {
+        font-size: 0.875rem;
+        color: #181c2f;
+    }
+
+    input.mat-input-element {
+        padding-left: 30%;
+        text-align: right;
+    }
+
+    .mat-form-field-appearance-fill .mat-form-field-flex {
+        background-color: #ffffff;
+    }
+
+    .mat-form-field-prefix {
+        flex: 0 0 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .combobox {
+        .mat-select-value {
+            text-align: right;
+            font-size: 14px;
+        }
+        .mat-form-field-flex {
+            height: 33.5px;
+            align-items: flex-end;
+        }
+        .title {
+            position: absolute;
+            font-size: 0.875rem;
+            color: #181c2f;
+            left: 16px;
+            font-weight: bold;
+            top: 5px;
+            &.readonly-mode {
+                top: -15px;
+            }
+        }
+        .value {
+            position: absolute;
+            font-size: 0.875rem;
+            color: #181c2f;
+            right: 0px;
+            top: -15px;
+            text-align: right;
+        }
+    }
+}
+
+.textarea-item {
+    flex: 1;
+    display: flex;
+    align-items: flex-end;
+    color: #181c2f;
+    font-size: 0.875rem;
+    min-height: 40px;
+
+    .icon {
+        flex: 0 0 30px;
+    }
+
+    .label {
+        font-weight: bold;
+    }
+}
+
+.icon-picker {
+    position: absolute;
+    z-index: 1;
+    right: -18px;
+    top: 3px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.cursor-pointer * {
+    cursor: pointer;
+}
+.w-100 {
+    width: 100% !important;
+}

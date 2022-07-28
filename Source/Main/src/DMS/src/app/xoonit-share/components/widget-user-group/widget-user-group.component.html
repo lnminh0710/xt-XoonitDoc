@@ -1,0 +1,58 @@
+<div class="widget-user-group d-flex">
+    <as-split #horizontalSplit direction="horizontal" [gutterSize]="5">
+        <as-split-area [size]="splitterConfig.leftHorizontal" [minSize]="3">
+            <div class="user-group">
+                <management-list
+                    [widgetId]="'widget-user-group'"
+                    [headerTitle]="'User Group'"
+                    [list]="userGroups"
+                    [iconTemplateForAll]="userGroupTemplate"
+                    (onAdd)="openPopupToEdit()"
+                    (onEdit)="openPopupToEdit($event)"
+                    (onDelete)="deleteUserGroup($event)"
+                    (onRowClickItem)="rowClickItem($event)"
+                >
+                </management-list>
+            </div>
+        </as-split-area>
+        <as-split-area [size]="splitterConfig.rightHorizontal" [minSize]="3">
+            <div class="single-user" [ngClass]="{ 'h-100': loading }">
+                <ng-container *ngIf="selectedUserGroupItem">
+                    <div class="tab-content" [class.d-none]="loading">
+                        <management-list
+                            [widgetId]="'widget-single-user'"
+                            [headerTitle]="'Add Single User'"
+                            [list]="singleUserList"
+                            [iconTemplateForAll]="singleUserTemplate"
+                            [hideAllEditButton]="true"
+                            (onAdd)="addSingleUser()"
+                            (onDelete)="deleteUser($event)"
+                        >
+                        </management-list>
+                    </div>
+                    <ng-container *ngIf="loading">
+                        <div class="h-75 d-flex align-items-center justify-content-center">
+                            <i class="fa fa-spinner fa-spin fa-2x"></i>
+                        </div>
+                    </ng-container>
+                </ng-container>
+            </div>
+        </as-split-area>
+    </as-split>
+</div>
+<ng-template #userGroupTemplate>
+    <i class="icon fal fa-users"></i>
+</ng-template>
+<ng-template #singleUserTemplate>
+    <i class="icon fal fa-user"></i>
+</ng-template>
+<ng-template #addEditPopup let-close="close">
+    <user-management-popup
+        [nameInput]="'User Group'"
+        [optionShowPopup]="typeShowPopup"
+        [listName]="userGroups"
+        [nameEditing]="userGroupItem"
+        [closeFunc]="close"
+        (onSendValue)="addSuccess($event)"
+    ></user-management-popup>
+</ng-template>

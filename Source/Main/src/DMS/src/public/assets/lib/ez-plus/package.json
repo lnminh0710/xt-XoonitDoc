@@ -1,0 +1,55 @@
+{
+  "_from": "@types/ez-plus",
+  "_id": "@types/ez-plus@1.2.1",
+  "_inBundle": false,
+  "_integrity": "sha512-zeu2rnxoOr7k4mNqfalZ5EMm62Bf6Z/BmXtNAtXDce7LQMZAumvQgRYpQw5TET7HJa9YwrNiZbpwjMpyQdjHdQ==",
+  "_location": "/@types/ez-plus",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "tag",
+    "registry": true,
+    "raw": "@types/ez-plus",
+    "name": "@types/ez-plus",
+    "escapedName": "@types%2fez-plus",
+    "scope": "@types",
+    "rawSpec": "",
+    "saveSpec": null,
+    "fetchSpec": "latest"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/@types/ez-plus/-/ez-plus-1.2.1.tgz",
+  "_shasum": "c3b04d7333071545478f80e2134afc809e2b22b8",
+  "_spec": "@types/ez-plus",
+  "_where": "D:\\Projects\\Order Processing\\Source Code\\Main\\src\\DMS",
+  "bugs": {
+    "url": "https://github.com/DefinitelyTyped/DefinitelyTyped/issues"
+  },
+  "bundleDependencies": false,
+  "contributors": [
+    {
+      "name": "Anderson Friaça",
+      "url": "https://github.com/AndersonFriaca"
+    }
+  ],
+  "dependencies": {
+    "@types/jquery": "*"
+  },
+  "deprecated": false,
+  "description": "TypeScript definitions for jQuery ElevateZoom Plus Plugin",
+  "homepage": "https://github.com/DefinitelyTyped/DefinitelyTyped#readme",
+  "license": "MIT",
+  "main": "",
+  "name": "@types/ez-plus",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DefinitelyTyped/DefinitelyTyped.git"
+  },
+  "scripts": {},
+  "typeScriptVersion": "2.3",
+  "types": "index",
+  "typesPublisherContentHash": "da413d83a451ba82d65a1ad512ebc880f5ff4a7474e36b9c043b5142a88f38d0",
+  "version": "1.2.1"
+}

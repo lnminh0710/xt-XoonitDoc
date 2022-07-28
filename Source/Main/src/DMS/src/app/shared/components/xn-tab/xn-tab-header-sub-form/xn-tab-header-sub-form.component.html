@@ -1,0 +1,16 @@
+﻿<div class="xn-edit-form__tab-progress"
+     [ngClass]="{'need-margin-top': !isTabCollapsed}">
+    <div class="xn-ef__tp--child  xn-ef__tp-main margin-right-2px"
+         (click)="onClickMainStep(textData.main)"
+         (dblclick)="onClickMainStep(textData.main)"
+         [ngClass]="{'xn-low-view': !isMainActive}">
+        <span class="xn-ef__tp-text">{{textData.main.title}}</span>
+    </div>
+    <div class="xn-ef__tp--child  xn-ef__tp-detail"
+         (click)="onClickDetailStep(textData.detail)"
+         (dblclick)="onClickDetailStep(textData.detail)"
+         [ngClass]="{'xn-low-view': isMainActive,
+                   'disabled-tab': currentAction == 'NEW_MAIN_TAB'}">
+        <span class="xn-ef__tp-text">{{textData.detail.title}}</span>
+    </div>
+</div>

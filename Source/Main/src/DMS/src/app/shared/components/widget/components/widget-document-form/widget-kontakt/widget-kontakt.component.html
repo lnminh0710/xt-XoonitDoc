@@ -1,0 +1,45 @@
+<div class="widget-header"></div>
+<div *ngIf="dynamicFormList && formGroup && formArray" [formGroup]="formGroup"
+    class="dms-list-widget scroll-bar-custom">
+    <div formArrayName="controls" class="dms-widget" *ngFor="let kontakt of formArray.controls; let i=index">
+        <form [formGroupName]="i" *ngIf="i === 0 || (i > 0 && isShowPersonal)">
+            <div class="row dms-header">
+                <div class="col-xs-12">
+                    <div>{{dynamicFormList[i].nameForm}}</div>
+                </div>
+            </div>
+
+            <div class="row">
+                <ng-container
+                    *ngFor="let item of getListControlWithoutHiddenAndReadOnly(dynamicFormList[i].listControl)">
+                    <div class="form-group col-md-12"
+                        *ngIf="item.originalColumnName.includes(colNameZip) || item.originalColumnName.includes(colNamePlace), else otherTemplate">
+                        <div class="row" *ngIf="!item.originalColumnName.includes(colNamePlace)">
+                            <div class="col-md-4 form-group">
+                                <control-dynamic [controlData]="item" [form]="kontakt"
+                                    [listControlData]="getListControlWithoutHiddenAndReadOnly(dynamicFormList)">
+                                </control-dynamic>
+                            </div>
+                            <div class="col-md-8 form-group">
+                                <control-dynamic [controlData]="placeData[i]" [form]="kontakt"
+                                    [listControlData]="getListControlWithoutHiddenAndReadOnly(dynamicFormList)">
+                                </control-dynamic>
+                            </div>
+                        </div>
+                    </div>
+                    <ng-template #otherTemplate>
+                        <div class="form-group col-md-12">
+                            <control-dynamic [controlData]="item" [form]="kontakt"
+                                [listControlData]="getListControlWithoutHiddenAndReadOnly(dynamicFormList)">
+                            </control-dynamic>
+                        </div>
+                    </ng-template>
+                </ng-container>
+            </div>
+        </form>
+
+        <div *ngIf="(i !== formArray.length - 1) && isShowPersonal" class="xn-line" (click)="switchData(i)">
+            <img src="public/imgs/iconspace_Refresh.svg" alt="swap icon" class="swap-icon" />
+        </div>
+    </div>
+</div>

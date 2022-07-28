@@ -1,0 +1,35 @@
+.widget-translate {
+    height: 100%;
+}
+
+.wt-rs-header__label,
+.wt-rs-header__text-value {
+    font-weight: 700;
+}
+
+.wt-rs-header__label {
+    padding-left: 10px;
+}
+
+.wt-rs-grid {
+    height: calc(100% - 24px);
+}
+
+.wt-rs__apply-for__text {
+    font-weight: 700;
+    float: left;
+    margin-right: 10px;
+}
+
+.wt-rs__apply-for__radio {
+    float: left;
+    padding-left: 30px;
+}
+
+.wt-rs-header__text-value {
+    font-size: 15px;
+}
+
+.wt-rs-header {
+    height: 25px;
+}

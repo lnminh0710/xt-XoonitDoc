@@ -1,0 +1,86 @@
+<div class="widget-header w-100 d-flex flex-row flex-nowrap">
+    <div class="left w-100 d-flex flex-row flex-nowrap">
+        <button
+            mat-icon-button
+            class="btn-action icon-transform color-blue"
+            style="top: -9px;"
+            #popUpload="bs-tooltip"
+            container="body"
+            data-placement="bottom"
+            [tooltip]="isFullScreen ? 'Minimize' : 'Full screen'"
+            (click)="expandWidget()"
+            [attr.control-key]="'email-viewer__fullscreen-minimize'"
+        >
+            <mat-icon
+                aria-hidden="false"
+                [svgIcon]="isFullScreen ? IconNamesEnum.FULL_SCREEN_MINIMIZE : IconNamesEnum.FULL_SCREEN"
+            ></mat-icon>
+        </button>
+        <label-translation [keyword]="'WIDGET_EMAIL_VIEWER__Header'"></label-translation>
+    </div>
+    <div class="actions-list right w-100 d-flex flex-row flex-nowrap" *ngIf="emailContent">
+        <button
+            mat-icon-button
+            class="btn-action icon-transform"
+            #popUpload="bs-tooltip"
+            container="body"
+            data-placement="bottom"
+            [tooltip]="labelPrintEmail"
+            (click)="print()"
+        >
+            <mat-icon aria-hidden="false" [svgIcon]="svgPrint"></mat-icon>
+        </button>
+        <button
+            mat-icon-button
+            class="btn-action icon-transform"
+            #popUpload="bs-tooltip"
+            container="body"
+            data-placement="bottom"
+            [tooltip]="labelDownload"
+            (click)="downloadEmail()"
+        >
+            <mat-icon aria-hidden="false" [svgIcon]="svgDownload"></mat-icon>
+        </button>
+        <button
+            mat-icon-button
+            class="btn-action icon-transform"
+            #popUpload="bs-tooltip"
+            container="body"
+            data-placement="bottom"
+            [tooltip]="'Refresh'"
+            (click)="onChangedSelectedSearchResult()"
+            [attr.control-key]="'email-viewer__refresh'"
+        >
+            <mat-icon aria-hidden="false" [svgIcon]="IconNamesEnum.WIDGET_MYDM_FORM_Reset"></mat-icon>
+        </button>
+    </div>
+</div>
+<div class="widget-email-container w-100" *ngIf="emailContent">
+    <div class="email-content">
+        <div class="title">
+            {{ emailContent?.subject }}
+        </div>
+        <div class="email-header">
+            <div class="avatar">
+                <img src="/public/assets/avatar/large-avatar-default.svg" alt="..." class="img-circle sender-img" />
+            </div>
+            <div class="detail">
+                <div>
+                    <span class="name"> {{ emailContent?.sender }}</span>
+                    <span class="time"><i class="fa fa-calendar"></i> {{ emailContent?.sentDate }}</span>
+                </div>
+                <div class="email-to">To: {{ emailContent?.recipientsTo }}</div>
+                <div class="email-cc" *ngIf="emailContent?.recipientsCc">CC: {{ emailContent?.recipientsCc }}</div>
+            </div>
+        </div>
+        <div class="email-body">
+            <div class="box" [innerHtml]="emailContent?.body | sanitizeHtml"></div>
+        </div>
+    </div>
+</div>
+<ng-template #labelPrintEmail>
+    <label-translation [keyword]="'WIDGET_EMAIL_VIEWER__PrintEmail'"></label-translation>
+</ng-template>
+<ng-template #labelDownload>
+    <label-translation [keyword]="'WIDGET_EMAIL_VIEWER__Download'"></label-translation>
+</ng-template>

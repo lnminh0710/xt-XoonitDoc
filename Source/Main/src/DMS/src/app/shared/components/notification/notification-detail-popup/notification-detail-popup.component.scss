@@ -1,0 +1,24 @@
+.circle-border {
+    width: 17px;
+    height: 17px;
+    border-radius: 50%;
+    text-align: center;
+    opacity: 0.6;
+    padding: 0;
+
+    i {
+        cursor: pointer;
+        padding-left: 1px;
+        padding-top: 1px;
+        padding-left: 1px;
+        font-size: 11px !important;
+        float: left;
+    }
+    i::before {
+        padding-right: 5px;
+    }
+}
+
+.button-archive {
+    width: 90px;
+}

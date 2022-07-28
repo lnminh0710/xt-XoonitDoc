@@ -1,0 +1,16 @@
+<div class="document-path-container w-100 h-100 d-flex flex-row nowrap"
+    *ngIf="folder || (pathDirectArray && pathDirectArray.length)">
+    <div class="document-path-wrapper my-auto">
+        <h5 class="label-document-path">
+            <label-translation [keyword]="'WIDGET_DOCUMENT_PATH_Document_Path'"></label-translation>:
+        </h5>
+        <div class="value-document-path my-auto px-3">
+            <ng-container *ngIf="!(pathDirectArray && pathDirectArray.length); else pathDirectTemplte">
+                <span *ngFor="let path of folder.path.split(SEPARATOR_PATH)">{{ path }}</span>
+            </ng-container>
+        </div>
+        <ng-template #pathDirectTemplte>
+            <span *ngFor="let path of pathDirectArray">{{ path }}</span>
+        </ng-template>
+    </div>
+</div>

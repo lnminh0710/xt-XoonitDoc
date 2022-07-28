@@ -1,0 +1,35 @@
+<div class="cloud-configuration">
+    <div class="cloud-configuration__title row display-flex">
+        <div class="col-xs-6 cloud-configuration__title-text flex-middle"><label-translation [keyword]="'CLOUD_CONFIGURATION__Title'"></label-translation></div>
+        <div class="col-xs-6 cloud-configuration__title-buttonWrapper">
+            <button class="btn-xoonit grey" (click)="openAddConnectionPopup()">
+                <img class="img-plus" src="public/imgs/icon_add.svg" alt="add-icon"> <label-translation [keyword]="'CLOUD_CONFIGURATION__AddConnection'"></label-translation></button>
+        </div>
+    </div>
+    <div class="cloud-configuration__item-list" *ngFor="let item of cloudsHasUserSetting">
+        <cloud-item [cloud]="item" (changeActivate)="changeActivate(item)"
+            (openSharingDialog)="openSharingDialog(item)"></cloud-item>
+    </div>
+</div>
+<cloud-share-folder [isShowDialog]="isShowShareDialog && titleCloud === 'MyCloud'"
+    *ngIf="isShowShareDialog && titleCloud === 'MyCloud'" [linkCloud]="linkCloud" [oldItemActivate]="oldItemActivate"
+    [idCloud]="idCloud" [titleCloud]="titleCloud" (onClose)="closeSharingDialog()"
+    (pushCloudNotification)="pushCloudNotification($event)"></cloud-share-folder>
+<cloud-connect-dialog [isShowDialog]="isShowShareDialog && titleCloud !== 'MyCloud'"
+    *ngIf="isShowShareDialog && titleCloud !== 'MyCloud'" [linkCloud]="linkCloud" [oldItemActivate]="oldItemActivate"
+    [idCloud]="idCloud" [titleCloud]="titleCloud" (onClose)="closeSharingDialog()"
+    (pushCloudNotification)="pushCloudNotification($event)"></cloud-connect-dialog>
+<div class="cloud-configuration__notification {{ notificationType }}"
+    [ngClass]="{ 'show-notification': !!notificationType }" (click)="notificationType = ''; notificationTitle = ''">
+    <div class="cloud-configuration__notification-title">
+        {{ notificationTitle }}
+    </div>
+</div>
+
+
+<ng-template #cloudListItemTemplate let-close="close">
+    <div class="cloud-configuration__item-list" *ngFor="let item of cloudsOfPopup">
+        <cloud-item [cloud]="item" (changeActivate)="changeActivate(item)"
+            (openSharingDialog)="openSharingDialog(item)"></cloud-item>
+    </div>
+</ng-template>

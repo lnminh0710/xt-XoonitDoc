@@ -1,0 +1,11 @@
+<div class="checkbox-list-container mini-scrollbar">
+    <ng-container *ngFor="let item of list">
+        <div class="item-row">
+            <mat-checkbox
+                color="primary"
+                [checked]="item.isActive"
+                (change)="changeStatus(item)"
+            >{{item.name}}</mat-checkbox>
+        </div>
+    </ng-container>
+</div>

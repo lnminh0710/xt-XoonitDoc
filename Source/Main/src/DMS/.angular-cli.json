@@ -1,0 +1,85 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "project": {
+    "name": "dms"
+  },
+  "apps": [
+    {
+      "root": "src",
+      "outDir": "wwwroot",
+      "assets": ["public", "favicon.ico"],
+      "index": "index.html",
+      "main": "main.ts",
+      "polyfills": "polyfills.ts",
+      "test": "test.ts",
+      "tsconfig": "tsconfig.app.json",
+      "testTsconfig": "tsconfig.spec.json",
+      "prefix": "app",
+      "styles": [
+        "styles.scss",
+        "sass_files/common.scss",
+        "public/assets/lib/material/xn-app-theme.scss",
+        "../node_modules/quill/dist/quill.core.css",
+        "../node_modules/quill/dist/quill.bubble.css",
+        "../node_modules/quill/dist/quill.snow.css",
+        "../node_modules/golden-layout/src/css/goldenlayout-base.css",
+        "../node_modules/golden-layout/src/css/goldenlayout-light-theme.css",
+        "../node_modules/ag-grid-community/dist/styles/ag-grid.css",
+        "../node_modules/ag-grid-community/dist/styles/ag-theme-balham.css",
+        "../node_modules/bootstrap-slider/dist/css/bootstrap-slider.min.css",
+        "public/assets/lib/stimulsoft/stimulsoft.designer.office2013.whiteblue.css",
+        "public/assets/lib/stimulsoft/stimulsoft.viewer.office2013.whiteblue.css",
+        "../node_modules/@swimlane/ngx-charts/release/index.css",
+        "../node_modules/ng2-tree/styles.css"
+      ],
+      "stylePreprocessorOptions": {
+        "includePaths": ["sass_files"]
+      },
+      "scripts": [
+        "../node_modules/jquery/dist/jquery.min.js",
+        "../node_modules/bootstrap/dist/js/bootstrap.min.js",
+        "public/assets/lib/adminlte/app.js",
+        "../node_modules/perfect-scrollbar/dist/js/perfect-scrollbar.jquery.min.js",
+        "../node_modules/golden-layout/dist/goldenlayout.min.js",
+        "public/assets/lib/zip.js",
+        "public/assets/lib/ez-plus/jquery.ez-plus.js"
+      ],
+      "environmentSource": "environments/environment.ts",
+      "environments": {
+        "dev": "environments/environment.ts",
+        "prod": "environments/environment.prod.ts"
+      }
+    }
+  ],
+  "e2e": {
+    "protractor": {
+      "config": "./protractor.conf.js"
+    }
+  },
+  "lint": [
+    {
+      "project": "src/tsconfig.app.json"
+    },
+    {
+      "project": "src/tsconfig.spec.json"
+    },
+    {
+      "project": "e2e/tsconfig.e2e.json"
+    }
+  ],
+  "test": {
+    "karma": {
+      "config": "./karma.conf.js"
+    }
+  },
+  "defaults": {
+    "styleExt": "scss",
+    "component": {
+      "spec": true,
+      "inlineTemplate": false
+    },
+    "build": {
+      "showCircularDependencies": false
+    }
+  }
+}

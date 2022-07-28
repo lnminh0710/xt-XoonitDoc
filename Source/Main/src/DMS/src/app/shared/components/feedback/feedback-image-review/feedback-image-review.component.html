@@ -1,0 +1,23 @@
+<div class="col-xs-12  image-list">
+	<xn-galleria
+		[images]="images"
+		[panelWidth]="config.panelWidth"
+		[panelHeight]="config.panelHeight"
+		[activeIndex]="config.activeIndex"
+		[autoPlay]="config.autoPlay"
+		[sourceIsBase64]="true"
+		[imageShowPrefixId]="'xn-galleria-image-display-feedback'"
+		(onImageClicked)="onImageClickedHandle($event)"></xn-galleria>
+</div>
+<div class="col-xs-12  image-description">
+	<label class="col-xs-1"><label-translation [keyword]="'Feedback_Image_Review__Description'"></label-translation>:</label>
+	<div *ngIf="currentIndex > -1" class="col-xs-11  form-group">
+        <textarea class="form-control  xn-input"
+                  id="notes"
+                  name="notes"
+                  [(ngModel)]="imageTemps[currentIndex].text"></textarea>
+        <control-messages icon="comment  fa-2"
+                          styleClass="for-notes-sm">
+        </control-messages>
+    </div>
+</div>

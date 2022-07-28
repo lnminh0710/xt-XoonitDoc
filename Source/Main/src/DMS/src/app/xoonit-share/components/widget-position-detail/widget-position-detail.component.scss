@@ -1,0 +1,44 @@
+.position-detail {
+    height: calc(100% - 15px);
+
+    .widget-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        font-family: rbt_Bold;
+        font-weight: 500;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+
+        .txt-label {
+            margin-left: 1rem;
+            font-size: 16px;
+        }
+        & > div {
+            margin-right: 1rem;
+            .icon,
+            .toolbar-icon {
+                cursor: pointer;
+                margin: 0 8px 0 0;
+                & > i {
+                    font-size: 19px;
+                }
+            }
+        }
+        .button {
+            margin-right: -5px;
+            border: 0;
+            background: inherit;
+            .icon {
+                font-size: 28px;
+                color: #0091ff;
+            }
+            &.disabled {
+                pointer-events: none;
+            }
+        }
+    }
+    .xoonit-grid {
+        height: 100%;
+    }
+}

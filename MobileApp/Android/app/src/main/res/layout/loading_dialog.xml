@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_margin="16dp"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="16dp"
+    android:padding="16dp"
+    android:background="@drawable/bg_white_round_corner"
+    android:layout_marginRight="16dp">
+
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18dp"
+        android:textColor="@color/orange"
+        tools:text="This is title" />
+
+    <ProgressBar
+        android:id="@+id/pbProgressBar"
+        android:layout_width="match_parent"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvTitle"
+        android:backgroundTint="@color/orange"
+        android:layout_marginTop="32dp" />
+
+    <TextView
+        android:id="@+id/tvCount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/pbProgressBar"
+        android:textAlignment="textEnd"
+        android:textSize="16dp"
+        android:textColor="@color/orange"
+        android:textStyle="italic"
+        tools:text="1/10" />
+</RelativeLayout>

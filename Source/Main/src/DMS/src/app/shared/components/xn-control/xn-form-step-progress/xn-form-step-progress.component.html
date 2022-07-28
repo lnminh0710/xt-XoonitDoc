@@ -1,0 +1,35 @@
+<div *ngIf="!!headerLeftText || !!headerRightText" class="progress-text-main">
+	<div class="progress-text-sub  left-progress-text">
+		{{headerLeftText}}
+	</div>
+	<div class="progress-text-sub  right-progress-text">
+		{{headerRightText}}
+	</div>
+</div>
+<div class="progress-main">
+	<div class="progress-sub  left-progress">
+		<div class="progress-sub__child  left-progress__first  {{leftProcessFirstClass}}"></div>
+		<div class="progress-sub__center  left-progress__center  {{leftProcessCenterClass}}">
+			<span class="fa fa-circle-o" (click)="step1ItemClick($event)"></span>
+		</div>
+		<div class="progress-sub__child  left-progress__last  {{leftProcessLastClass}}"></div>
+		<div class="progress-sub__child  progress-bow  {{leftProcessBowClass}}"></div>
+	</div>
+	<div class="progress-sub  right-progress">
+		<div class="progress-sub__child  progress-bow  progress-bow--first  {{rightProcessFirstClass}}"></div>
+		<div class="progress-sub__child  right-progress__first  {{rightProcessFirstClass}}"></div>
+		<div class="progress-sub__center  right-progress__center  {{rightProcessCenterClass}}">
+			<span class="fa fa-circle-o" (click)="step2ItemClick($event)"></span>
+		</div>
+		<div class="progress-sub__child  right-progress__last  {{rightProcessLastClass}}"></div>
+		<div class="progress-sub__child  progress-bow  {{rightProcessBowClass}}"></div>
+	</div>
+</div>
+<div *ngIf="!!footerLeftText || !!footerRightText" class="progress-text-main">
+	<div class="progress-text-sub  left-progress-text">
+		{{footerLeftText}}
+	</div>
+	<div class="progress-text-sub  right-progress-text">
+		{{footerRightText}}
+	</div>
+</div>

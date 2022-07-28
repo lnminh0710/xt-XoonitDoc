@@ -1,0 +1,58 @@
+<div *ngIf="isDisplayWidget" class="dms-actions-wrapper flex-container">
+    <div *ngIf="isDisplayToggle" class="child-wrapper left" [class.open]="isExpanded">
+        <div class="box" [attr.control-key]="'global_save'">
+            <button
+                mat-icon-button                
+                class="btn btn-icon toggle-captured-form-btn"
+                (click)="expandDocumentFormGlobal($event)"
+                #popUpload="bs-tooltip"
+                container="body"
+                data-placement="bottom"
+                [tooltip]="tooltipToggleButton"
+                #btnExpandDocumentForm
+            >
+                <mat-icon [svgIcon]="svgToggleCapturedForm" aria-hidden="false" inline="true"></mat-icon>
+            </button>
+        </div>
+    </div>
+    <div class="flex-container flex-flow child-wrapper right">
+        <div>
+            <div class="box" [class.disabled]="isSaving" [attr.control-key]="'global_save'">
+                <button mat-icon-button
+                        id="DokumentErfassen-save-button"
+                        class="btn btn-icon next-btn"
+                        (click)="saveGlobal($event)"
+                        #popUpload="bs-tooltip"
+                        container="body"
+                        data-placement="bottom"
+                        [tooltip]="tooltipSaveButton"
+                        #btnSave>
+                    <i class="fal fa-save"></i>
+                </button>
+            </div>
+        </div>
+        <div>
+            <div class="box" *ngIf="!isApprovalModule && (!isDocumentModule || isSuperAdminRole)" [attr.control-key]="'global_delete'">
+                <button mat-icon-button
+                        class="btn btn-icon delete-btn"
+                        #popUpload="bs-tooltip"
+                        container="body"
+                        data-placement="bottom"
+                        [tooltip]="tooltipDeleteThisDocumentButton"
+                        (click)="deleteGlobal($event)"
+                        #btnDelete>
+                    <i class="fal fa-trash"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<ng-template #tooltipToggleButton>
+    <label-translation [keyword]="'WIDGET_DMS_ACTIONS__Toggle'"></label-translation>
+</ng-template>
+<ng-template #tooltipSaveButton>
+    <label-translation [keyword]="'WIDGET_DMS_ACTIONS__Save'"></label-translation>
+</ng-template>
+<ng-template #tooltipDeleteThisDocumentButton>
+    <label-translation [keyword]="'WIDGET_DMS_ACTIONS__DeleteThisDocument'"></label-translation>
+</ng-template>

@@ -1,0 +1,180 @@
+@import "src/sass_files/variables.scss";
+
+:host {
+    position: relative;
+    float: left;
+    padding-top: 5px;
+    width: 100%;
+}
+
+#tab-container {
+    border-radius: 12px;
+
+    .tab-header {
+        padding: 0 10px;
+        padding-left: 15px;
+        padding-right: 0;
+        display: flex;
+        align-items: center;
+        font-weight: bold;
+        border-top-left-radius: 12px;
+        border-top-right-radius: 12px;
+        font-size: 14px;
+        font-weight: 500;
+        letter-spacing: 1px;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .toggle-collapse-tree {
+        margin-right: 12px;
+        margin-top: 3px;
+        margin-bottom: auto;
+        transition: all .1s;
+
+        &:hover {
+            background-color: rgba(16,27,79,0.1);
+            border-radius: 50%;
+            cursor: pointer;
+        }
+    }
+
+    .toggle-collapse-folders {
+        margin-right: 12px;
+        margin-top: 3px;
+        margin-bottom: auto;
+        margin-right: 0;
+
+        i {
+            transition: all .1s;
+            border-radius: 50%;
+            background-color: #FFC107;
+            color: white;
+            width: 20px;
+            height: 20px;
+            line-height: 20px;
+            font-size: 9px;
+            text-align: center;
+            vertical-align: sub;
+        }
+    }
+
+    .title {
+        font-size: 16px;
+        font-family: "rbt_Bold";
+        text-transform: uppercase;
+        color: var(--blue-navy);
+    }
+
+    .path-folder-panel-wrapper {
+        align-items: center;
+        height: 26px;
+        margin: 5px 15px;
+
+        & .path-folder {
+            margin: 0px 8px;
+            overflow: hidden;
+            white-space: nowrap;
+
+            &::ng-deep ul.path.ps-active-x .ps-scrollbar-x-rail {
+                display: none !important;
+            }
+
+            & > ul.path {
+                list-style: none;
+                display: flex;
+                margin: 0;
+                padding: 0;
+                width: inherit;
+
+
+                & > li.folder-name {
+
+                    &::after {
+                        content: '\00a0';
+                    }
+
+                    &:not(:first-of-type)::before {
+                        content: '/ ';
+                    }
+
+                    &:last-of-type {
+                        font-weight: bolder;
+                    }
+                }
+            }
+        }
+    }
+
+    // &.highlight-in-modal-window {
+    //     position: relative;
+    //     z-index: 999;
+
+    //     & .tree-widget {
+    //         &::before {
+    //             content: 'Double or Right click to save into the folder.';
+    //             margin-left: 5.5%;
+    //             font-style: italic;
+    //             font-size: 0.70vw;
+    //         }
+    //     }
+    // }
+
+    .tree-widget {
+        border-radius: 0px;
+        border-bottom-left-radius: 12px;
+        border-bottom-right-radius: 12px;
+
+        xn-document-tree ::ng-deep .document-tree-container {
+            height: calc(100vh - 110px);
+            max-height: calc(100vh - 110px);
+            min-height: calc(100vh - 110px);
+
+            & .xn-tree-node {
+                & .node-content-wrapper .node-expander {
+                    &::before {
+                        left: 2.5px;
+                    }
+
+                    &::after {
+                        left: 2.5px;
+                    }
+                }
+            }
+
+            & tree-node-collection > div > tree-node:not(:first-child) > .xn-tree-node.leaf-node:not(.after-adjacent-root) {
+                & .node-content-wrapper .node-expander::after {
+                    left: 0.5px !important;
+                }
+            }
+        }
+    }
+
+    .header-container {
+        &.collapsed-height {
+            height: 0px;
+            min-height: 0px !important;
+        }
+
+        &.expanded-height {
+            height: auto;
+        }
+
+        ul {
+            list-style: none;
+            text-align: center;
+            padding: 0;
+
+            li {
+                background-color: transparent;
+                margin: 10px;
+                height: 180px;
+                cursor: pointer;
+            }
+        }
+    }
+}
+
+.confirm-dialog__button-cancel {
+    margin-right: 20px;
+}

@@ -1,0 +1,13 @@
+.ui-dialog-buttonpane {
+    padding: 0 0 !important;
+    border: none !important;
+
+    button {
+        width: 100px;
+    }
+}
+
+.note {
+    height: calc(100% - 25px);
+    margin-bottom: 2px;
+}

@@ -1,0 +1,59 @@
+<div
+    class="invoice-form-container h-100 position-relative d-flex flex-column flex-nowrap"
+>
+    <div class="form-wrapper position-relative" *ngIf="formGroup" [formGroup]="formGroup">
+        <ng-container *ngFor="let controlConfig of controls; let i = index">
+            <ng-container *ngIf="controlConfig.setting?.DisplayField?.GroupHeader === '0'">
+                <div class="grid-item"
+                    [class.d-none]="controlConfig.setting?.DisplayField?.Hidden === '1' && controlConfig.formControlName !== AddonOriginalColumnName.GUARANTEEE_EXPIRY_DATE"
+                    [class.invisible]="controlConfig.setting?.DisplayField?.Hidden === '1'"
+                    [class.guarantee-expiry]="controlConfig.formControlName === AddonOriginalColumnName.GUARANTEEE_EXPIRY_DATE"
+                >
+                    <xn-dynamic-material-control
+                        [config]="controlConfig"
+                        formControlName="{{ controlConfig.formControlName }}"
+                        [formGroup]="formGroup"
+                        [class.hidden]="controlConfig.setting?.DisplayField?.Hidden === '1'"
+                        (onControlFocus)="onFocusChanged($event)"
+                    >
+                    </xn-dynamic-material-control>
+                    <ng-container *ngIf="controlConfig.formControlName === AddonOriginalColumnName.IS_TODO">
+                        <!-- <i
+                            class="icon fal fa-info-circle"
+                            [class.invisible]="!isTodo || viewRef.node"
+                            container="body"
+                            [tooltip]="note.value"
+                            (click)="toggleNote($event, noteTemplate)"
+                            #iconNote
+                        ></i> -->
+
+                        <ng-template #noteTemplate>
+                            <div class="invoice-addon-note">
+                                <mat-form-field class="w-100">
+                                    <mat-label><label-translation [keyword]="'WIDGET_INVOICE_ADDON__LabelIsTodoLater'"></label-translation></mat-label>
+                                    <input
+                                        matInput
+                                        class="image-toolbar-secondary__input"
+                                        [formControl]="note"
+                                    />
+                                </mat-form-field>
+                            </div>
+                        </ng-template>
+                    </ng-container>
+                </div>
+                <div class="grid-item invoice-addon-note" [class.d-none]="!isShowNote" *ngIf="controlConfig.formControlName === AddonOriginalColumnName.IS_TODO" #noteForm>
+                    <mat-form-field class="w-100">
+                        <mat-label>
+                            <label-translation [keyword]="'WIDGET_INVOICE_ADDON__LabelIsTodo'"></label-translation>
+                        </mat-label>
+                        <input
+                            matInput
+                            class="image-toolbar-secondary__input"
+                            [formControl]="note"
+                        />
+                    </mat-form-field>
+                </div>
+            </ng-container>
+        </ng-container>
+    </div>
+</div>

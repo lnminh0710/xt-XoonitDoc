@@ -1,0 +1,51 @@
+<perfect-scrollbar>
+    <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
+        <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle matTreeNodePadding>
+            <!-- <button mat-icon-button disabled></button> -->
+            <mat-checkbox
+                [disabled]="!node?.editable"
+                class="checklist-leaf-node"
+                [checked]="checklistSelection.isSelected(node)"
+                (change)="leafItemSelectionToggle(node)"
+                (mouseover)="onMouseOver($event, node)"
+                >{{ node.name }}
+                <i
+                    *ngIf="
+                        isUpdate &&
+                        ((isHoverEmail && node.name === 'Email') || (isHoverIndexing && node.name === 'Indexing'))
+                    "
+                    class="fa fa-ellipsis-h btn-more"
+                    (click)="showMorePermission($event, node)"
+                ></i>
+            </mat-checkbox>
+        </mat-tree-node>
+
+        <!-- <mat-tree-node *matTreeNodeDef="let node; when: hasNoContent" matTreeNodePadding>
+            <button mat-icon-button disabled></button>
+            <mat-form-field>
+                <mat-label>New item...</mat-label>
+                <input matInput #itemValue placeholder="Ex. Lettuce">
+            </mat-form-field>
+            <button mat-button (click)="saveNode(node, itemValue.value)">Save</button>
+        </mat-tree-node> -->
+
+        <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding>
+            <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'Toggle ' + node.name">
+                <mat-icon class="mat-icon-rtl-mirror">
+                    {{ treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right' }}
+                </mat-icon>
+            </button>
+            <mat-checkbox
+                [disabled]="!node?.editable"
+                [checked]="descendantsAllSelected(node)"
+                [indeterminate]="descendantsPartiallySelected(node)"
+                (change)="itemSelectionToggle(node)"
+                >{{ node.name }}
+            </mat-checkbox>
+            <!-- <button mat-icon-button (click)="addNewItem(node)">
+                <mat-icon>add</mat-icon>
+            </button> -->
+        </mat-tree-node>
+    </mat-tree>
+</perfect-scrollbar>
+<!-- ((isHoverEmail && node.name === 'Email') || (isHoverIndexing && node.name === 'Indexing')) -->

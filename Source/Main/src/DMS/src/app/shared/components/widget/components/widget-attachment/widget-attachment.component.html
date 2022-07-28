@@ -1,0 +1,27 @@
+<div class="widget-attachment">
+    <div class="widget-header">
+        ATTACHMENT
+    </div>
+    <div class="attachment-wrapper table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Type</th>
+                    <th>Modifiled Date</th>
+                </tr>
+            </thead>
+            <tbody *ngIf="data.length > 0">
+                <tr *ngFor="let item of data" (click)="loadDocToWidgetDocumentProcessing(item)"
+                    (dblclick)="viewDocument(item)">
+                    <td>{{item.localFileName}}</td>
+                    <td>{{item.cloudMediaPath}}</td>
+                    <td>{{item.createDate}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <image-viewer-dialog *ngIf="currentDoc && isShowDialog" [isShowDialog]="isShowDialog" [image]="currentDoc"
+        (onClose)="isShowDialog = false; index = -1; currentDoc = null"></image-viewer-dialog>
+</div>

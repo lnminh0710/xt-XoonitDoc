@@ -1,0 +1,22 @@
+<div class="dms-actions-wrapper flex-container flex-flow">
+  <div class="box">
+    <button mat-icon-button class="btn btn-icon toggle-captured-form-btn" (click)="toggleCapturedForm($event)" matTooltip="Toggle captured document form" #btnToggleCapturedForm>
+      <mat-icon [svgIcon]="svgToggleCapturedForm" aria-hidden="false" inline="true"></mat-icon>
+    </button>
+  </div>
+  <!-- <div class="box" *ngIf="!this.isUpdateMode">
+    <button mat-icon-button class="btn btn-icon next-btn" (click)="nextCapturedDocument($event)" matTooltip="Skip this document" #btnNext>
+      <mat-icon [svgIcon]="svgSkip" aria-hidden="false" inline="true"></mat-icon>
+    </button>
+  </div> -->
+  <div class="box">
+    <button mat-icon-button id="DokumentErfassen-save-button" class="btn btn-icon next-btn" (click)="saveDocument($event)" matTooltip="Save captured document" #btnSave>
+      <mat-icon [svgIcon]="svgSave" aria-hidden="false" aria-la inline="true"></mat-icon>
+    </button>
+  </div>
+  <div class="box">
+    <button mat-icon-button class="btn btn-icon delete-btn" (click)="deleteScanDocument($event)" matTooltip="Delete this captured document" #btnDelete>
+      <mat-icon [svgIcon]="svgDelete" aria-hidden="false" inline="true"></mat-icon>
+    </button>
+  </div>
+</div>

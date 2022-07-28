@@ -1,0 +1,7 @@
+<div class="text-center">
+    <mat-checkbox color="primary"
+                  [(ngModel)]="value"
+                  [disabled]="params && params.data && params.data.IsEditable == 0"
+                  (change)="onCheckboxChange($event)">
+    </mat-checkbox>
+</div>

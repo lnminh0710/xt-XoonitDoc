@@ -1,0 +1,59 @@
+<div class="member-permission-wrapper">
+    <div class="group-btn-wrapper display-flex">
+        <div class="title-name flex-middle">Add member</div>
+        <div class="add-new-icon ml-auto">
+            <i
+                class="icon icon-transform fa fa-plus-circle add"
+                container="body"
+                (click)="addNew()"
+                [tooltip]="'Add new'"
+            ></i>
+        </div>
+    </div>
+    <div class="data-wrapper w-100 xoonit-grid" *ngIf="dataSource?.columns?.length">
+        <xn-ag-grid
+            #xnAgGrid
+            [id]="'97761aeb-3c01-496b-b005-b92dec3f7d6b'"
+            [globalProperties]="globalProperties"
+            [dataSource]="dataSource"
+            [readOnly]="false"
+            [isEditting]="true"
+            [autoSelectCurrentRowAfterChangingData]="false"
+            (deleteUser)="showConfirmDelete($event)"
+            (moreAction)="showPermissionConfig($event)"
+        >
+        </xn-ag-grid>
+    </div>
+    <div class="bottom-wrapper display-flex">
+        <div class="flex-middle chk-wrapper">
+            <mat-checkbox
+                name="applyForChild"
+                color="primary"
+                [checked]="isApplyForChild"
+                (change)="isApplyForChild = !isApplyForChild"
+            >
+                Apply for child
+            </mat-checkbox>
+        </div>
+        <div class="btn-wrapper">
+            <button type="button" class="btn-cmd btn-cmd-default" (click)="closeDialog()">
+                <label-translation [keyword]="'Cancel'"></label-translation>
+            </button>
+            <button type="button" class="btn-cmd btn-cmd-primary" (click)="save()" [disabled]="">
+                <label-translation [keyword]="'Save'"></label-translation>
+            </button>
+        </div>
+    </div>
+</div>
+<popup-user-selection></popup-user-selection>
+<ng-template #confirmDelete let-selectedRow="selectedRow" let-close="close">
+    <div class="popup-content">
+        <div class="popup-content__title">
+            <label>Do you want delete this member?</label>
+        </div>
+        <div class="popup-action">
+            <div class="popup-action__button ml-4" (click)="close()">No</div>
+            <div class="popup-action__button primary" (click)="delete(close, selectedRow)">Yes</div>
+        </div>
+    </div>
+</ng-template>

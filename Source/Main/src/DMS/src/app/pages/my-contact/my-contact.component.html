@@ -1,0 +1,31 @@
+<toaster-container [toasterconfig]="toastrConfig"></toaster-container>
+
+<div class="content-wrapper module-container">
+    <section class="content">
+        <div *ngIf="isShowSearchPage">
+            <widget-search-page [searchPageType]="searchPageContactParam"></widget-search-page>
+        </div>
+
+        <div class="module-management w-100" [style.visibility]="isShowSearchPage ? 'hidden' : 'visible'">
+            <xn-tab *ngIf="ofModule.idSettingsGUI != menuModuleId.orderDataEntry"
+                    class="xn-tab--general"
+                    [headerData]="headerData"
+                    [tabSetting]="tabSetting"></xn-tab>
+        </div>
+
+    </section>
+</div>
+<xn-message-modal></xn-message-modal>
+<app-aside (onToggleWidgetTemplate)="handleToggleWidgetTemplate($event)">Loading control sidebar...</app-aside>
+<property-panel [isExpand]="isExpand"
+                [isGlobal]="isGlobal"
+                [properties]="properties"
+                [parentData]="propertiesParentData"
+                (onClose)="onPropertyPanelClose($event)"
+                (onSave)="onPropertyPanelSave($event)"
+                (onChange)="onPropertyPanelChange($event)"
+                (onApply)="onPropertyPanelApply($event)"></property-panel>
+<div *ngIf="xnLoading.loading"
+     class="xn-loading">
+    <i class="fa fa-spinner fa-spin fa-2x"></i>
+</div>

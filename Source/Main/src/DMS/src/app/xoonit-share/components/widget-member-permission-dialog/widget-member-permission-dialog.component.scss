@@ -1,0 +1,68 @@
+@import 'src/sass_files/color.scss';
+
+%displayCenter {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+%text {
+    font-family: 'rbt_Regular';
+    color: #030d3c;
+    font-size: 14px;
+    letter-spacing: 0;
+    line-height: 16px;
+}
+
+.member-permission-wrapper {
+    height: 100%;
+    padding: 12px 15px;
+    .group-btn-wrapper {
+        .title-name {
+            font-size: 14px;
+            font-family: 'rbt_Medium';
+        }
+        .add-new-icon {
+            z-index: 1;
+            & > i {
+                cursor: pointer;
+                font-size: 28px;
+                color: $blue-azure-radiance;
+            }
+        }
+    }
+    .data-wrapper {
+        margin-top: 5px;
+        height: calc(100% - 28px - 5px - 45px);
+    }
+    .bottom-wrapper {
+        margin-top: 10px;
+
+        .chk-wrapper {
+            font-size: 14px;
+        }
+        .btn-wrapper {
+            margin-left: auto;
+        }
+    }
+}
+
+.popup-content {
+    // width: 300px;
+    max-height: 400px;
+    padding: 10px;
+    &__title {
+        @extend %displayCenter;
+        @extend %text;
+        margin-bottom: 10px;
+        font-size: 16px;
+        margin-top: 6px;
+        b {
+            margin: 0 5px;
+        }
+    }
+    &__title-secondary {
+        @extend %text;
+        @extend %displayCenter;
+        font-size: 15px;
+    }
+}

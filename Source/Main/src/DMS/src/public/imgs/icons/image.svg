@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="52px" height="60px" viewBox="0 0 52 60" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>BA19EE4C-82A2-494F-8D37-E57C379C4E3C</title>
+    <defs>
+        <linearGradient x1="50%" y1="0.453111342%" x2="50%" y2="100%" id="linearGradient-1">
+            <stop stop-color="#B3B3B3" offset="0%"></stop>
+            <stop stop-color="#939393" offset="100%"></stop>
+        </linearGradient>
+        <path d="M30,0 L42.6464466,0 C46.5124399,0 50,3.48756014 50,7.35355339 L50,20 L30,0 Z" id="path-2"></path>
+        <filter x="-20.0%" y="-30.0%" width="140.0%" height="140.0%" filterUnits="objectBoundingBox" id="filter-3">
+            <feOffset dx="0" dy="-2" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="1" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feComposite in="shadowBlurOuter1" in2="SourceAlpha" operator="out" result="shadowBlurOuter1"></feComposite>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.0909637238 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="Page-2" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="L39.-Email" transform="translate(-740.000000, -592.000000)">
+            <g id="files-icon-picture-copy-4" transform="translate(740.000000, 592.000000)">
+                <g id="PDF">
+                    <path d="M30,0 L50,20 L50,53 C50,56.8659932 46.8659932,60 43,60 L7,60 C3.13400675,60 0,56.8659932 0,53 L0,7 C0,3.13400675 3.13400675,0 7,0 L30,0 Z" id="Combined-Shape" fill="url(#linearGradient-1)"></path>
+                    <g id="Path" transform="translate(40.000000, 10.000000) scale(-1, -1) translate(-40.000000, -10.000000) ">
+                        <use fill="black" fill-opacity="1" filter="url(#filter-3)" xlink:href="#path-2"></use>
+                        <use fill-opacity="0.4" fill="#FFFFFF" fill-rule="evenodd" xlink:href="#path-2"></use>
+                    </g>
+                </g>
+                <g id="image" transform="translate(13.000000, 26.682566)" fill="#FFFFFF" fill-rule="nonzero">
+                    <path d="M6.23762141,17.4811041 C4.63974272,17.4811041 3.21841101,16.4668975 2.70229417,14.9570014 L2.66738687,14.8432248 C2.54566807,14.4433759 2.49467776,14.1071187 2.49467776,13.7706804 L2.49467776,7.02452153 L0.0732783411,15.0370799 C-0.238146267,16.2156105 0.471514398,17.4374414 1.66220181,17.7630093 L17.0961788,21.8604185 C17.2888088,21.9098788 17.4814388,21.9336124 17.6711446,21.9336124 C18.6651813,21.9336124 19.573503,21.2795778 19.828089,20.3157373 L20.7272727,17.4811041 L6.23762141,17.4811041 Z" id="Path"></path>
+                    <path d="M8.90918246,7.02452153 C10.0122266,7.02452153 10.9090909,6.1275152 10.9090909,5.02452153 C10.9090909,3.92152782 10.0122266,3.02452153 8.90918246,3.02452153 C7.80613829,3.02452153 6.90909091,3.92152782 6.90909091,5.02452153 C6.90909091,6.1275152 7.80613829,7.02452153 8.90918246,7.02452153 Z" id="Path"></path>
+                    <path d="M21.4998856,0.115430622 L6.49993137,0.115430622 C5.12206689,0.115430622 4,1.23749238 4,2.6155336 L4,13.6153276 C4,14.9933689 5.12206689,16.1154306 6.49993137,16.1154306 L21.4998856,16.1154306 C22.8779331,16.1154306 24,14.9933689 24,13.6153276 L24,2.6155336 C24,1.23749238 22.8779331,0.115430622 21.4998856,0.115430622 Z M6.49993137,2.11547637 L21.4998856,2.11547637 C21.7760078,2.11547637 21.9999451,2.33941266 21.9999451,2.6155336 L21.9999451,9.71447849 L18.8410192,6.02841041 C18.5059372,5.63546905 18.0208923,5.42544871 17.4999588,5.41354691 C16.981955,5.41647658 16.4959946,5.64645529 16.1640254,6.04452357 L12.4499254,10.5023753 L11.2399682,9.29535324 C10.5560713,8.61145956 9.44297657,8.61145956 8.75999528,9.29535324 L6.00005494,12.0543654 L6.00005494,2.6155336 C6.00005494,2.33941266 6.22399226,2.11547637 6.49993137,2.11547637 Z" id="Shape"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

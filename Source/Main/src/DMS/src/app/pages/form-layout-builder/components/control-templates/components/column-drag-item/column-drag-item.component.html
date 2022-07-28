@@ -1,0 +1,31 @@
+<div
+    class="column-drag-item-wrapper"
+    [class.empty-control]="!dragItem.children.length"
+    cdkDropList
+    [cdkDropListData]="dragItem.children"
+    (cdkDropListDropped)="drop($event)"
+>
+    <div
+        class="column-content"
+        *ngIf="dragItem.children && dragItem.children.length"
+        cdkDrag
+        (cdkDragStarted)="dragStarted($event)"
+    >
+        <div class="column-drag-handle" cdkDragHandle>
+            <button
+                mat-icon-button
+                aria-label="Example icon button with a vertical three dot icon"
+                style="width: inherit; height: inherit; line-height: var(--size-drag-handle)"
+            >
+                <mat-icon inline="true" style="line-height: inherit; font-size: var(--size-drag-handle)"
+                    >drag_indicator</mat-icon
+                >
+            </button>
+        </div>
+        <div class="column-drag-preview" *cdkDragPreview></div>
+        <div class="column-drag-placeholder" *cdkDragPlaceholder>
+            {{ dragItem.children[0].title }}
+        </div>
+        <draggable-item-container [dragItem]="dragItem.children[0]"></draggable-item-container>
+    </div>
+</div>

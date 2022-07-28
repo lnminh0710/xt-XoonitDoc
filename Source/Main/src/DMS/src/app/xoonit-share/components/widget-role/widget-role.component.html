@@ -1,0 +1,72 @@
+<div class="role-management">
+    <as-split #horizontalSplit direction="horizontal" [gutterSize]="5">
+        <as-split-area [size]="splitterConfig.leftHorizontal" [minSize]="3">
+            <management-list
+                #roleManagement
+                class="role"
+                [widgetId]="'widget-role'"
+                [type]="TypeOfList.ICON"
+                [headerTitle]="'Role'"
+                [list]="roles"
+                (onAdd)="addRoleItem()"
+                (onEdit)="editRoleItem($event)"
+                (onDelete)="deleteRoleItem($event)"
+            ></management-list>
+        </as-split-area>
+        <as-split-area [size]="splitterConfig.rightHorizontal" [minSize]="3">
+            <div class="tab-wrapper" [ngClass]="{ 'h-100': loading }">
+                <div class="tab-header">
+                    <div
+                        class="header-label"
+                        [class.active]="selectedTab === RolesTab.PERMISSION"
+                        (click)="selectedTab = RolesTab.PERMISSION"
+                    >
+                        <label-translation [keyword]="'WIDGET_ROLE_GROUP_Permission'"></label-translation>
+                    </div>
+                    <div
+                        class="header-label"
+                        [class.active]="selectedTab === RolesTab.MEMBER"
+                        (click)="selectedTab = RolesTab.MEMBER"
+                    >
+                        <label-translation [keyword]="'WIDGET_ROLE_GROUP_Member'"></label-translation>
+                    </div>
+                </div>
+                <ng-container *ngIf="selectedRolesItem">
+                    <div class="tab-content" *ngIf="!loading">
+                        <xn-checkbox-tree
+                            (getSelectedList)="changeStatusRole($event)"
+                            [data]="permissions"
+                            [class.d-none]="selectedTab !== RolesTab.PERMISSION"
+                        >
+                        </xn-checkbox-tree>
+                        <management-list
+                            [class.d-none]="selectedTab !== RolesTab.MEMBER"
+                            [widgetId]="'widget-role-member'"
+                            [type]="TypeOfList.ICON"
+                            [headerTitle]="'Add User'"
+                            [list]="members"
+                            [hideAllEditButton]="true"
+                            (onAdd)="addMember()"
+                            (onDelete)="deleteMember($event)"
+                        ></management-list>
+                    </div>
+                    <ng-container *ngIf="loading">
+                        <div class="h-75 d-flex align-items-center justify-content-center">
+                            <i class="fa fa-spinner fa-spin fa-2x"></i>
+                        </div>
+                    </ng-container>
+                </ng-container></div
+        ></as-split-area>
+    </as-split>
+</div>
+
+<ng-template #addEditPopup let-close="close">
+    <user-management-popup
+        [closeFunc]="close"
+        [nameInput]="'Role'"
+        [nameEditing]="editingRoleItem"
+        [optionShowPopup]="optionShowPopup"
+        [listName]="roles"
+        (onSendValue)="addSuccess($event)"
+    ></user-management-popup>
+</ng-template>

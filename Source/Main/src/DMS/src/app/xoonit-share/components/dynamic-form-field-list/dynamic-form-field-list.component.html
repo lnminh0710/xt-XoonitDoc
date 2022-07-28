@@ -1,0 +1,24 @@
+<!--<div class="title">
+    {{formDefinition?.groupSetting?.groupTitle}}
+</div>-->
+<div class="form-group">
+    <ng-container *ngFor="let formDef of formDefinition?.formDefinitions; let i=index">
+        <div class="item">
+            <ng-container [ngSwitch]="formDef.type">
+                <ng-container *ngSwitchCase="FORM_DEF_TYPE.FORM_FIELDS">
+                    <simple-form [formDefinition]="formDef"
+                                 [showTitle]="false"
+                                 (outputData)="dataFormChanged($event)"
+                                 (onControlClick)="onClickChanged($event)"
+                                 (onControlIconClick)="onIconClickChanged($event)">
+                    </simple-form>
+                </ng-container>
+                <ng-container *ngSwitchCase="FORM_DEF_TYPE.DATA_TABLE">
+                    <dynamic-form-table [formDefinition]="formDef"
+                                        [showTitle]="false">
+                    </dynamic-form-table>
+                </ng-container>
+            </ng-container>
+        </div>
+    </ng-container>
+</div>

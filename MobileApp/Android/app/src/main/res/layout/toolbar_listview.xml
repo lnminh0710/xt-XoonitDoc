@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<androidx.appcompat.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="bottom"
+    android:background="#FFFFFF"
+    android:elevation="4dp"
+    android:theme="@style/MyPopupMenu"
+    app:popupTheme="@style/MyPopupMenu">
+
+    <GridLayout
+        android:id="@+id/layoutBottomAction"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#FFFFFF"
+        android:columnCount="3"
+        android:rowCount="1">
+
+        <ImageButton
+            android:id="@+id/btnSendInvisible"
+            android:layout_height="match_parent"
+            android:layout_row="0"
+            android:layout_column="0"
+            android:layout_columnWeight="1"
+            android:background="@android:color/transparent"
+            android:visibility="invisible"
+            android:src="@drawable/xt_sendimage" />
+
+        <ImageButton
+            android:id="@+id/btnAddDocFromList"
+            android:layout_height="match_parent"
+            android:layout_row="0"
+            android:layout_column="1"
+            android:layout_columnWeight="1"
+            android:background="@android:color/transparent"
+            android:onClick="ReloadCamera"
+            android:src="@drawable/camera_single" />
+
+        <ImageButton
+            android:id="@+id/btnSend"
+            android:layout_height="match_parent"
+            android:paddingTop="15dp"
+            android:layout_row="0"
+            android:layout_column="2"
+            android:layout_columnWeight="1"
+            android:background="@android:color/transparent"
+            android:onClick="SendAll"
+            android:src="@drawable/upload_cloud" />
+
+    </GridLayout>
+
+</androidx.appcompat.widget.Toolbar>

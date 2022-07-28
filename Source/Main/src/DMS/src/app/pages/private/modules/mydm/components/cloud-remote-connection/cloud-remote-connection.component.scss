@@ -1,0 +1,312 @@
+@import '../cloud-share-folder/cloud-share-folder.component.scss';
+
+.mat-dialog-container {
+    padding: 5px 24px !important;
+}
+
+.cloud-remote-connection {
+    position: relative;
+    font-family: 'rbt_Regular';
+    font-size: 16px;
+
+    &__button_action {
+        width: 100%;
+    }
+
+    &__button-done,
+    &__button-test,
+    &__progress {
+        cursor: pointer;
+        font-size: 14px;
+        height: 32px;
+        width: 115px;
+        border-radius: 3px;
+        background-color: $blue-cobalt1;
+        color: $white;
+        margin-left: 10px;
+
+        &.disabled {
+            background-color: $grey-3;
+            cursor: unset;
+            pointer-events: none;
+        }
+    }
+
+    .close-dialog-icon {
+        position: absolute;
+        right: 0;
+        top: -10px;
+    }
+
+    &__header {
+        @extend %displayCenter;
+        padding: 0 30px;
+        height: 30px;
+        width: 100%;
+        border-radius: 4px 4px 0 0;
+        background: $white;
+    }
+
+    &__title {
+        @extend %fontRobotoMedium;
+        color: $blue-4;
+        flex: 1;
+        text-align: center;
+        letter-spacing: 1px;
+        font-weight: bold;
+        margin-top: -20px;
+    }
+
+    &__connection-error {
+        font-size: 14px;
+        color: #ff0000;
+        margin-left: 10px;
+        margin-top: 13px;
+
+        i.fa {
+            margin-right: 8px;
+        }
+    }
+
+    ::ng-deep .mat-select-value {
+        color: #1378c5 !important;
+        font-weight: bold;
+    }
+
+    .mat-form-field-wrapper {
+        height: 36px !important;
+    }
+
+    .mat-select {
+        height: 20px;
+        color: #1378c5 !important;
+        font-size: 14px;
+        font-weight: 500;
+        letter-spacing: 0;
+        line-height: 20px;
+    }
+
+    &-text {
+        flex: 1;
+    }
+
+    .border {
+        border-top: 1px solid #beced7;
+        margin: 0px -24px;
+    }
+
+    &-main-text {
+        height: 19px;
+        width: 100%;
+        font-size: 16px;
+        font-weight: bold;
+        line-height: 19px;
+        margin-bottom: 8px;
+        text-transform: uppercase;
+    }
+
+    &-secondary-text {
+        height: 19px;
+        width: 100%;
+        font-size: 14px;
+        line-height: 19px;
+    }
+
+    &-menu-icon {
+        cursor: pointer;
+        margin-left: 10px;
+        height: 28px;
+        width: 28px;
+        background: url('../../styles/icons/menu.png') center no-repeat;
+        filter: brightness(0);
+
+        &.disabled {
+            cursor: unset;
+            opacity: 0.3;
+        }
+    }
+
+    &-email {
+        position: absolute;
+        right: 40px;
+        bottom: 16px;
+        opacity: 0.5;
+        color: #030d3c;
+        font-size: 16px;
+        letter-spacing: 0.15px;
+        line-height: 21px;
+    }
+
+    &-folder-name {
+        box-sizing: border-box;
+        height: 44px;
+        border: 1px solid rgba(0, 0, 0, 0.25);
+        border-radius: 10px;
+    }
+
+    &-type {
+        color: #1378c5;
+    }
+
+    &-remote-form {
+        color: #646b8a;
+        font-size: 14px;
+        letter-spacing: 0;
+        margin-top: 8px;
+
+        .form-group {
+            margin-bottom: 8px !important;
+        }
+
+        ::ng-deep .mat-form-field-infix {
+            padding: 0.7em 0 !important;
+        }
+    }
+
+    &__action {
+        margin-top: 10px;
+        display: inline-flex;
+    }
+
+    &__buttons-right {
+        float: right;
+        width: calc(100% - 115px);
+    }
+
+
+    &__button-cancel {
+        @extend %displayCenter;
+        margin-left: 0px !important;
+        background-color: #f5f6f8;
+        color: $blue-4;
+        cursor: pointer;
+        font-size: 14px;
+        height: 32px;
+        width: 115px;
+        border-radius: 3px;
+        float: left;
+    }
+
+    &__button-done {
+        background-color: #56637a;
+        @extend %displayCenter;
+        cursor: pointer;
+        font-size: 14px;
+        height: 32px;
+        width: 115px;
+        border-radius: 3px;
+        color: $white;
+        margin-left: 10px;
+
+        &.disabled {
+            background-color: $grey-3;
+            cursor: unset;
+        }
+    }
+
+    &__button-done,
+    &__button-test,
+    &__save-connection,
+    &__connection {
+        float: right;
+        margin-bottom: 5px;
+    }
+
+    &__button-test,
+    &__connection,
+    &__save-connection {
+        @extend %displayCenter;
+        cursor: pointer;
+        font-size: 14px;
+        height: 32px;
+        width: 115px;
+        border-radius: 3px;
+        background-color: $blue-cobalt1;
+        color: $white;
+        margin-left: 10px;
+
+        &.disabled {
+            background-color: $grey-3;
+            cursor: unset;
+        }
+    }
+
+    &__connection {
+        justify-content: flex-start;
+        background-color: $white;
+        cursor: default;
+
+        &-progress {
+            border-radius: 3px;
+            @extend %displayCenter;
+            height: 100%;
+            background: -webkit-linear-gradient( 135deg, $blue-cobalt1 25%, $blue-cobalt2 25%, $blue-cobalt2 50%, $blue-cobalt1 50%, $blue-cobalt1 75%, $blue-cobalt2 75% );
+            background-size: 30px 30px;
+            animation: bar-animation 3s linear infinite;
+        }
+    }
+
+    &__connection-error {
+        font-size: 14px;
+        color: #ff0000;
+        align-items: center;
+        justify-content: flex-end;
+
+        i.fa {
+            margin-right: 8px;
+        }
+    }
+
+    &__connection-success {
+        font-size: 14px;
+        color: $green-success;
+
+        i.fa {
+            margin-right: 10px;
+        }
+    }
+
+    .isDisabled {
+        background-color: #bfbfbf;
+        cursor: unset;
+        pointer-events: none;
+    }
+
+    ::ng-deep .mat-form-field {
+        font-size: 12px; // example
+    }
+
+    ::ng-deep .col-xs-2,
+    ::ng-deep .col-xs-10 {
+        padding-left: 0px !important;
+    }
+}
+
+.row {
+    margin-left: 0px !important;
+}
+
+.col-xs-2 {
+    width: 22% !important;
+}
+
+.col-xs-10 {
+    width: 78% !important;
+}
+
+.d-flex {
+    display: inline-flex;
+}
+
+.d-flex-label {
+    width: 10%;
+    margin: auto;
+}
+
+.d-flex-input {
+    margin-left: 10%;
+}
+
+.btn-test-connection {
+    text-align: right;
+}

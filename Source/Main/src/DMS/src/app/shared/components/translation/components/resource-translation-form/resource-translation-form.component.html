@@ -1,0 +1,20 @@
+<div class="rt-h">
+    <div class="rt-h-t">
+        Translate for text
+    </div>
+    <div class="rt-h-d">
+        {{defaultValue}}
+    </div>
+</div>
+<div class="rt-b xoonit-grid">
+    <xn-ag-grid #xnAgGridComponent
+                [id]="'e98aba70-c4dc-47f3-a7e4-16dbe77e740d'"
+                [dataSource]="translateData"
+                [readOnly]="false"
+                [isShowedHeader]="false"
+                [isEditting]="true"
+                [allowDelete]="false"
+                [fitWidthColumn]="true"
+                (cellEditting)="cellEdittingHandler($event)">
+    </xn-ag-grid>
+</div>

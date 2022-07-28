@@ -1,0 +1,16 @@
+<form class="form-inline" [formGroup]="form" *ngIf="form">
+    <div class="form-group" *ngFor="let control of groupContentList">
+        <div [ngClass]="{'hidden': control.isHidden}">
+            <label>{{ control.label }}</label>
+            <div class="edit-control">
+                <inline-edit [editing]="!readonly"
+                             [errorShow]="errorShow"
+                             [form]="form"
+                             [control]="control"
+                             (onEditField)="editField($event)"
+                             formControlName="{{control.key}}">
+                </inline-edit>
+            </div>
+        </div>
+    </div>
+</form>

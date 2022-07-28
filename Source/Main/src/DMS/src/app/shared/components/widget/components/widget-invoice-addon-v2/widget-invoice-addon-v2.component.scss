@@ -1,0 +1,49 @@
+@import "src/sass_files/color.scss";
+
+.title {
+    font-size: 14px;
+    font-weight: bold;
+}
+
+
+
+:host {
+    .widget_content {
+        margin-top: 5px;
+        height: calc(100% - 5px);
+        overflow-x: hidden;
+        ::ng-deep {
+            & > .ps__rail-x {
+                display: none;
+                pointer-events: none;
+            }
+        }
+    }
+    ::ng-deep {
+        .widget-octopus-form-container {
+            padding: 10px;
+            overflow-wrap: break-word;
+            max-width: 350px;
+            .form-control-wrapper {
+                position: relative;
+                &:after {
+                    content: ' ';
+                    display: block;
+                    position: absolute;
+                    width: 100vw;
+                    height: 1px;
+                    bottom: 0;
+                    background-color: $blue-link-water2;
+                }
+            }
+            xn-material-checkbox-control {
+                .form-control-wrapper {
+                    padding: 3px 0 0 3px;
+                    i {
+                        color: $blue-5;
+                    }
+                }
+            }
+        }
+    }
+}

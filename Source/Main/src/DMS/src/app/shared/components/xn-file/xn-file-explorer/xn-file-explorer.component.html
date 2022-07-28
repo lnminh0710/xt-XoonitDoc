@@ -1,0 +1,171 @@
+<div
+    ng2FileDrop
+    [ngClass]="{ 'nv-file-over': hasBaseDropZoneOver }"
+    (fileOver)="fileOverBase($event)"
+    (onFileDrop)="onFileDrop($event)"
+    [acceptExtensionFiles]="allowUploadeExtension"
+    [allowSelectDuplicateFile]="false"
+    [checkFileCorrect]="checkFileCorrect"
+    (dontAllowFileExtension)="dontAllowFileExtensionHander()"
+    (fileDuplicateAction)="fileDuplicateHandler($event)"
+    (fileDuplicateOnQueueAction)="fileDuplicateOnQueueHandler($event)"
+    class="col-xs-12 file-explorer-container well my-drop-zone"
+    *ngIf="dataSourceTable"
+>
+    <div *ngIf="isShowHeader" class="col-xs-12 no-padding-right header">
+        File Attachments
+        <div class="no-margin float-right no-padding">
+            <button
+                type="button"
+                mat-raised-button
+                class="mat-btn-icon mat-btn-small--icon cursor-pointer"
+                (click)="onClickUploadFiles()"
+            >
+                <i class="fa fa-upload"></i>
+            </button>
+            <button
+                type="button"
+                mat-raised-button
+                class="mat-btn-icon mat-btn-small--icon cursor-pointer"
+                [disabled]="!isEnableDeleteButton"
+                (click)="onClickDeleteFiles()"
+                [ngClass]="{ 'mat-btn-transparent-red  btn-hover-red': isEnableDeleteButton }"
+            >
+                <i class="fa fa-trash-o"></i>
+            </button>
+        </div>
+    </div>
+    <as-split
+        direction="horizontal"
+        [ngClass]="{ 'gutter-disabled': isHideTreeView, 'file-explorer-with-header': isShowHeader }"
+        (dragStart)="dragStart()"
+        (dragEnd)="dragSplitterEnd($event)"
+        [gutterSize]="5"
+    >
+        <as-split-area
+            [size]="25"
+            [minSize]="3"
+            [ngClass]="{ 'hidden-split-area': isHideTreeView }"
+            *ngIf="
+                fileUploadModuleType === fileUploadModuleTypeView.BusinessCost ||
+                fileUploadModuleType === fileUploadModuleTypeView.ToolsFileTemplate
+            "
+        >
+            <div class="col-xs-12 no-padding height-pc-100">
+                <app-file-tree-view
+                    [data]="dataFileTree"
+                    (dataChange)="onChangeSelectedFileTree($event)"
+                    (showFileUploadDialog)="showFileUploadDialog($event)"
+                >
+                </app-file-tree-view>
+            </div>
+        </as-split-area>
+        <as-split-area
+            [ngClass]="{ 'full-split-area': isHideTreeView }"
+            [size]="75"
+            [minSize]="3"
+            *ngIf="showFileUploadGird"
+        >
+            <div class="col-xs-12 no-padding height-pc-100">
+                <xn-table-uploaded-files
+                    #xnTableUploadedFilesComponent
+                    [gridId]="xnTableUploadedFilesGridId"
+                    [dataSource]="dataSourceTable"
+                    [fileUploadModuleType]="fileUploadModuleType"
+                    [gridStyle]="gridStyle"
+                    [showTotalRow]="showTotalRow"
+                    [rowGrouping]="rowGrouping"
+                    [pivoting]="pivoting"
+                    [columnFilter]="columnFilter"
+                    [uploadFileMode]="uploadFileMode"
+                    [idFolder]="parkedItemId"
+                    [campaignEditingData]="campaignEditingData"
+                    [globalProperties]="globalProperties"
+                    [columnsLayoutSettings]="columnsLayoutSettings"
+                    [isShowToolPanels]="isShowToolPanels"
+                    [allowEdit]="allowEdit"
+                    [parentInstance]="that"
+                    [sheetName]="sheetName"
+                    (onRowMarkedAsDeleted)="rowMarkedAsDeleted($event)"
+                    (onDeleteFiles)="onDeleteFiles(event)"
+                    (onDeleteFilesCompleted)="onDeleteFilesCompleted($event)"
+                    (onRowClickAction)="onRowClickHandler($event)"
+                    (onDownloadCampaignFileAction)="onDownloadCampaignFileHandler($event)"
+                    (changeColumnLayout)="changeColumnLayoutHandler($event)"
+                >
+                </xn-table-uploaded-files>
+            </div>
+        </as-split-area>
+        <as-split-area
+            [size]="25"
+            [minSize]="3"
+            *ngIf="fileUploadModuleType === fileUploadModuleTypeView.Campaign && isShowTemplateList"
+            [perfectScrollbar]="{ suppressScrollX: false, suppressScrollY: false }"
+        >
+            <div class="col-xs-12 list-template-of-file">
+                <div [hidden]="!showArrowText || isEditing" class="arrow-text">
+                    <div>
+                        <span>Select one template file</span>
+                        <img src="public/assets/img/arrow.png" alt="" />
+                    </div>
+                </div>
+                <list-template-of-file
+                    #listTemplateOfFile
+                    [hidden]="showArrowText && !isEditing"
+                    [inputData]="templateId"
+                    [isEditing]="isEditing"
+                    [uploadFileMode]="UploadFileModeView.Printing"
+                    [allowEdit]="allowEdit"
+                    [waitDataLoadingWhenDownload]="waitDataLoadingWhenDownload"
+                    [listenKeyRequestItem]="listenKeyRequestItem"
+                    (onTemplateFileChangeAction)="onTemplateFileChangeHandler($event)"
+                    (outputData)="templateOutputData($event)"
+                    (onDataLoadedAction)="onDataLoadedHandler()"
+                    (outTemplatesAction)="outTemplatesHandle($event)"
+                >
+                </list-template-of-file>
+            </div>
+        </as-split-area>
+        <!-- <div class="gutter-horizontal-disabled"></div> -->
+    </as-split>
+</div>
+<div class="table-upload-disabled disabled" [hidden]="!disabled">&nbsp;&nbsp;</div>
+
+<p-dialog
+    [styleClass]="'upload-file-dialog'"
+    header=""
+    [(visible)]="showDialog"
+    modal="modal"
+    width="900"
+    height="500"
+    responsive="true"
+    appendTo="body"
+    (onAfterHide)="close()"
+>
+    <p-header>
+        <div class="modal-header--information">
+            <span class="fa fa-upload header-icon pull-left"></span>
+            <span class="header-text pull-left">Upload File</span>
+            <div class="toolbar-icon close-dialog-icon" (click)="close()"></div>
+        </div>
+    </p-header>
+    <div class="col-xs-12 no-padding height-pc-100">
+        <file-upload
+            #fileUpload
+            [inputFilesData]="dropFiles"
+            [uploadFileMode]="uploadFileMode"
+            [idFolder]="parkedItemId"
+            [checkFileCorrect]="checkFileCorrect"
+            [allowSelectDuplicateFile]="false"
+            [acceptExtensionFiles]="allowUploadeExtension"
+            (onCompleteItem)="onCompleteUploadItem($event)"
+        ></file-upload>
+    </div>
+    <p-footer>
+        <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+            <button type="button" mat-raised-button class="pull-right new-size" title="Close" (click)="close()">
+                Close
+            </button>
+        </div>
+    </p-footer>
+</p-dialog>

@@ -1,0 +1,28 @@
+.row-drag-item-wrapper {
+    border-radius: 4px;
+    border-width: 1px;
+    border-color:black;
+    border-style: solid
+}
+
+.row-content {
+    --column-space-between: 2px;
+
+    flex-grow: 1;
+    justify-content: flex-start;
+    min-height: 60px;
+    padding: 10px;;
+
+    > column-drag-item:not(:first-child):not(:last-child) {
+        padding-right: var(--column-space-between);
+        padding-left: var(--column-space-between);
+    }
+
+    > column-drag-item:first-child {
+        padding-right: var(--column-space-between);
+    }
+
+    > column-drag-item:last-child {
+        padding-left: var(--column-space-between);
+    }
+}

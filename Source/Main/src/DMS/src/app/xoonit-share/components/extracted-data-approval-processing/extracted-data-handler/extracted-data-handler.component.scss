@@ -1,0 +1,47 @@
+@import 'src/sass_files/color.scss';
+
+:host {
+    display: block;
+    height: 100%;
+}
+
+.extracted-handler {
+    height: 100%;
+    .header {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-bottom: 3px solid $blue-link-water;
+        padding: 12px 0;
+        &.blue {
+            border-bottom-color: $blue-16;
+        }
+        &.orange {
+            border-bottom-color: $orange7;
+        }
+        .txt-header {
+            text-align: center;
+            font-family: 'rbt_Bold';
+            font-size: 18px;
+            margin: 0;
+            flex: 1;
+            color: $black-pearl1;
+        }
+        .fa-trash {
+            font-size: 20px;
+            &:hover {
+                color: #a40000;
+            }
+        }
+    }
+    .main {
+        margin-top: 13px;
+    }
+
+    .data-table {
+        // 26px of header
+        // 15px of padding bottom
+        height: calc(100% - 26px - 15px);
+    }
+}

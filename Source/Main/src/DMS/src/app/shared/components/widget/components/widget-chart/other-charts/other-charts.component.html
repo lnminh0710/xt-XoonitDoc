@@ -1,0 +1,21 @@
+<xena-combo-chart
+    *ngIf="_chartType === proChartType.ComboChart"
+    class="chart-container"
+    [view]="_view"
+    [scheme]="_colorType"
+    [colorSchemeLine]="lineChartScheme"
+    [results]="barChartData"
+    [animations]="animations"
+    [lineChart]="lineChartData"
+    [tooltipDisabled]="_disableTooltip"
+    [gradient]="_gradient"
+    [xAxis]="showXAxis"
+    [yAxis]="showYAxis"
+    [legend]="_showLegend"
+    [legendTitle]="_legendTitle"
+    [showGridLines]="_showGirdLines"
+    [showXAxisLabel]="_showXAxisLabel"
+    [showYAxisLabel]="_showYAxisLabel"
+    [xAxisLabel]="_xAxisLabel"
+    [yAxisLabel]="_yAxisLabel">
+</xena-combo-chart>

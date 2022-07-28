@@ -1,0 +1,56 @@
+<div class="order-detail-container">
+    <ng-container *ngIf="showCustomerInfo">       
+        <div class="col-xs-12 order-info" style="padding: 10px">
+            <div class="date-info">
+                <ng-container *ngFor="let documentDetailGroup of documentDetailListGroup">
+                    <span class="date-info-detail {{DocType[documentDetailGroup.docType]}}" [ngClass]="{'in-active' : !documentDetailGroup.visible}" *ngIf="(!documentDetailGroup.visible) || (documentDetailGroup.toggle)"
+                          (click)="activeDoc(documentDetailGroup)">
+                        <ng-container *ngIf="documentDetailGroup.documentDetailList && documentDetailGroup.documentDetailList.length">
+                            <i class="fa {{documentDetailGroup.docIcon}} doc-icon" container="body" tooltip="{{documentDetailGroup.documentDetailList[0].docNr}}"></i> Create Date: {{ documentDetailGroup.documentDetailList[0].createDate }}
+                        </ng-container>
+                    </span>
+                </ng-container>
+            </div>
+
+            <div class="doc-group col-xs-12" style="padding:0"  *ngFor="let documentDetailGroup of documentDetailListGroup">
+                <ng-container *ngIf="documentDetailGroup.visible">
+                    <div class="{{DocType[documentDetailGroup.docType]}} header">
+                        <span class="header-title">
+                            <label class="doc-type__title">{{documentDetailGroup.docName}}</label>
+                            <i class="fa {{documentDetailGroup.docIcon}} doc-icon"></i>
+                        </span>
+                    </div>
+                    <div class="col-xs-12 order-item" [ngClass]="{'selected': item.selected}" *ngFor="let item of documentDetailGroup.documentDetailList" (click.out-zone)="selectDocument(item)">
+                        <order-info *ngIf="item.visible"
+                                    [showDownloadFile]="true"
+                                    [disabled]="true"
+                                    [fieldFilters]="item.fieldFilters"
+                                    [filterMode]="item.filterMode"
+                                    [documentDetail]="item"
+                                    [currentModule]="currentModule"
+                                    (onReloadWidget)="reloadWidget()">
+                        </order-info>
+                    </div>
+                </ng-container>
+            </div>
+
+        </div>
+    </ng-container>
+    <ng-container *ngIf="!showCustomerInfo">
+        <div class="order-info">
+            <div class="col-xs-12 order-item" *ngFor="let item of documentDetails">
+                <order-info [hidden]="!item.visible"
+                            [fieldFilters]="item.fieldFilters"
+                            [filterMode]="item.filterMode"
+                            [documentDetail]="item"
+                            [currentModule]="currentModule"
+                            (onEditField)="editField($event)"
+                            (onRenderCompleted)="renderCompleted($event)">
+                </order-info>
+            </div>
+        </div>
+    </ng-container>
+    <div class="loading" *ngIf="isLoading">
+        <i class="fa fa-spinner fa-spin"></i>
+    </div>
+</div>

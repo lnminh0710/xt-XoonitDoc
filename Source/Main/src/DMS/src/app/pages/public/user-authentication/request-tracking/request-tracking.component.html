@@ -1,0 +1,37 @@
+<div class="col-xs-12  margin-top--sd">
+    <textarea id="requestItems" rows="20" style="width: 100%;"
+    [(ngModel)]="requestItems"
+    (change)="onRequestItemChanged()">
+    </textarea>
+    <button type="button"
+        class="mat-btn-blue  margin-top--sd"
+        mat-raised-button
+        (click)="go()">GO</button>
+    <mat-radio-group
+        [(ngModel)]="loadFunction">
+        <mat-radio-button
+            color="primary"
+            value="0"
+            [checked]="true"
+            (change)="onLoadFunctionChanged(0)">
+            None
+        </mat-radio-button>
+        <mat-radio-button
+            color="primary"
+            value="1"
+            (change)="onLoadFunctionChanged(1)">
+            First Load
+        </mat-radio-button>
+        <mat-radio-button
+            color="primary"
+            value="2"
+            (change)="onLoadFunctionChanged(2)">
+            Click Parked Item
+        </mat-radio-button>
+    </mat-radio-group>
+    <div class="col-xs-12  margin-top--sd">
+        <div class="col-xs-12" *ngFor="let item of successItems;" [ngStyle]="{'background': item.success ? 'green' : ''}">
+            {{item.url}}
+        </div>
+    </div>
+</div>

@@ -1,0 +1,11 @@
+<div class="form-layout-container display-flex flex-row justify-content-between">
+    <div class="left-sidebar w-100 h-100">
+        <ng-content select="[leftSidebar]"></ng-content>
+    </div>
+    <div class="main-container w-100 h-100">
+        <ng-content select="[mainContainer]"></ng-content>
+    </div>
+    <div class="right-sidebar w-100 h-100">
+        <ng-content select="[rightSidebar]"></ng-content>
+    </div>
+</div>

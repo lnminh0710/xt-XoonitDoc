@@ -1,0 +1,139 @@
+<p-dialog header="" [(visible)]="isShowDialog" [styleClass]="dialogClass" appendTo="body" modal="true"
+    [draggable]="true" [resizable]="true" responsive="true" [width]="580">
+    <p-header>
+        <div class="ui-dialog-flat__header cloud-share-folder__header">
+            <div class="image-icon warning-icon"></div>
+            <span class="cloud-share-folder__title">
+                <label-translation [keyword]="'CLOUD_SHARE_FOLDER__LoginMyCloud'"></label-translation>
+            </span>
+            <div class="toolbar-icon icon-transform close-dialog-icon" #popHand="bs-tooltip" container="body"
+                data-placement="bottom" [tooltip]="tooltipCloseButton" aria-label="Close" (click)="close()"></div>
+        </div>
+    </p-header>
+    <div class="cloud-share-folder__body">
+        <div class="cloud-share-folder__text">
+            <label-translation [keyword]="'CLOUD_SHARE_FOLDER__Description'"></label-translation>
+        </div>
+        <div class="cloud-share-folder__text">
+            <label-translation [keyword]="'CLOUD_SHARE_FOLDER__Description1'"></label-translation> <a href="https://www.mycloud.swisscom.ch/" target="_blank"><label-translation [keyword]="'CLOUD_SHARE_FOLDER__MyCloud'"></label-translation></a> <label-translation [keyword]="'CLOUD_SHARE_FOLDER__Description2'"></label-translation>
+        </div>
+
+        <div class="cloud-share-folder__outline-input">
+            <input [value]="SharedLink" (change)="SharedLink = $event.target.value" />
+        </div>
+        <div class="cloud-share-folder__action">
+            <div class="cloud-share-folder__help">
+                <div class="image-icon arrow-to-right-blue-icon"></div>
+                <a class="cloud-share-folder__help-link" href="https://www.mycloud.swisscom.ch/" target="_blank">
+                    <label-translation [keyword]="'CLOUD_SHARE_FOLDER__GoToMyCloud'"></label-translation>
+                </a>
+            </div>
+            <div class="cloud-share-folder__button-test" (click)="close()"><label-translation [keyword]="'CLOUD_SHARE_FOLDER__Cancel'"></label-translation></div>
+            <div *ngIf="!isLoading" class="cloud-share-folder__button-done" (click)="submitCloudConnection()">
+                <span *ngIf="testResponse !== 'success'"><label-translation [keyword]="'CLOUD_SHARE_FOLDER__TestConnection'"></label-translation></span>
+                <div class="cloud-share-folder__connection-success" *ngIf="testResponse === 'success'">
+                    <i class="fa fa-check-circle"></i>
+                    <label-translation [keyword]="'CLOUD_SHARE_FOLDER__Success'"></label-translation>
+                </div>
+            </div>
+            <div class="cloud-share-folder__connection" *ngIf="isLoading">
+                <div class="cloud-share-folder__connection-progress" *ngIf="testProgress"
+                    [style.width.%]="testProgress"></div>
+            </div>
+            <div [class.disabled]="!canSave" class="cloud-share-folder__button-done" (click)="saveCloudConnection()">
+                <span *ngIf="!isSaveSuccess"><label-translation [keyword]="'CLOUD_SHARE_FOLDER__Save'"></label-translation></span>
+                <div class="cloud-share-folder__connection-success" *ngIf="isSaveSuccess && canSave">
+                    <i class="fa fa-check-circle"></i>
+                    <label-translation [keyword]="'CLOUD_SHARE_FOLDER__Success'"></label-translation>
+                </div>
+            </div>
+        </div>
+        <div class="cloud-share-folder__connection-error" *ngIf="testResponse === 'error'">
+            <i class="fa fa-exclamation-triangle"></i>
+            <label-translation [keyword]="testError"></label-translation>
+        </div>
+        <!-- <div class="cloud-share-folder__connection" *ngIf="testProgress || testResponse">
+            <div class="cloud-share-folder__connection-progress" *ngIf="testProgress" [style.width.%]="testProgress">
+                {{ testProgress }} %
+            </div>
+            <div class="cloud-share-folder__connection-success" *ngIf="testResponse === 'success'">
+                <i class="fa fa-check-circle"></i>
+                Success
+            </div>
+            <div class="cloud-share-folder__connection-error" *ngIf="testResponse === 'error'">
+                <i class="fa fa-exclamation-triangle"></i>
+                {{ testError }}
+            </div>
+        </div> -->
+    </div>
+</p-dialog>
+
+<!-- <div class="cloud-share-folder__body">
+        <div class="cloud-share-folder__email">
+            <div class="cloud-share-folder__email-title">Email of myDM:</div>
+            <div class="cloud-share-folder__email-value">{{ MyDmEmail }}</div>
+        </div>
+        <div class="cloud-share-folder__row">
+            <div class="cloud-share-folder__input">
+              
+                <mat-form-field class="dms-custom-control">
+                    <input
+                        matInput
+                        [value]="UserEmail"
+                        (change)="UserEmail = $event.target.value"
+                        (focusout)="EmailError = checkValidateEmail($event.target.value)"
+                        placeholder="Your email on {{ titleCloud }}:"
+                    />
+                    <mat-error *ngIf="EmailError">Email invalid</mat-error>
+                </mat-form-field>
+            </div>
+            <div class="cloud-share-folder__button-open-drive" (click)="openNewTab()">Open your {{ titleCloud }}</div>
+        </div>
+        <div class="cloud-share-folder__row last">
+            <div class="cloud-share-folder__input">
+                <mat-form-field class="dms-custom-control">
+                    <input
+                        matInput
+                        [value]="SharedFolder"
+                        (change)="SharedFolder = $event.target.value"
+                        placeholder="Folder shared with myDM:"
+                    />
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="cloud-share-folder__outline-input" *ngIf="titleCloud == 'MyCloud'">
+            <input [value]="SharedLink" (change)="SharedLink = $event.target.value" />
+        </div>
+        <div class="cloud-share-folder__action">
+            <div class="cloud-share-folder__help">
+            </div>
+            <div class="cloud-share-folder__button-test" (click)="testConnection()">
+                Test connection
+            </div>
+            <div
+                class="cloud-share-folder__button-done"
+                (click)="!EmailError && submitCloudConnection()"
+                [ngClass]="{ disabled: EmailError }"
+            >
+                Done
+                <div *ngIf="isLoading" class="cloud-share-folder__progress"></div>
+            </div>
+        </div>
+        <div class="cloud-share-folder__connection">
+            <div class="cloud-share-folder__connection-progress" *ngIf="testProgress" [style.width.%]="testProgress">
+                {{ testProgress }} %
+            </div>
+            <div class="cloud-share-folder__connection-success" *ngIf="testResponse === 'success'">
+                <i class="fa fa-check-circle"></i>
+                Success
+            </div>
+            <div class="cloud-share-folder__connection-error" *ngIf="testResponse === 'error'">
+                <i class="fa fa-exclamation-triangle"></i>
+                {{ testError }}
+            </div>
+        </div>
+    </div> -->
+
+<ng-template #tooltipCloseButton>
+    <label-translation [keyword]="'CLOUD_SHARE_FOLDER__Close'"></label-translation>
+</ng-template>

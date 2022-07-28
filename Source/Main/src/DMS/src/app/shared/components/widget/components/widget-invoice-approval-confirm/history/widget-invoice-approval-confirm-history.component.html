@@ -1,0 +1,159 @@
+<div class="confirm-history" [ngClass]="{ 'highlight-error': showErrorHighlight }">
+    <div class="widget-header approval d-flex align-items-center justify-content-betwwen" *ngIf="invoiceApprovalModule">
+        <label-translation keyword="WIDGET_Confirm_Approval__Confirm"></label-translation>
+    </div>
+    <div
+        class="confirm-history__content"
+        [ngClass]="{ 'hide-header': !invoiceApprovalModule, 'mini-scrollbar': !invoiceApprovalModule }"
+    >
+        <div class="confirm-history__control">
+            <div class="confirm-history__control-person">
+                <div class="title">
+                    <label-translation keyword="WIDGET_Confirm_Approval__Controlled_By"></label-translation> :
+                </div>
+                <div class="confirm-history__control-person-name">
+                    {{ currentUser?.firstname + ' ' + currentUser?.lastname + ' - ' + currentUser?.roleName }}
+                </div>
+                <span
+                    *ngIf="(currentUrgentState && !invoiceApprovalModule) || urgentStateApproval === '1'"
+                    class="urgent-state"
+                >
+                    <label-translation keyword="WIDGET_Confirm_Approval__Urgent"></label-translation>
+                </span>
+            </div>
+            <div class="confirm-history__action">
+                <mat-radio-group name="ApprovalStatus" class="confirm-history__radio">
+                    <div class="d-inline">
+                        <mat-radio-button
+                            control-key="Approved"
+                            disableRipple
+                            class="confirm-history__radio-item"
+                            color="accent"
+                            [value]="StatusApprovalEnum.Approved"
+                            [disabled]="isDisabled"
+                            [checked]="statusApproval == StatusApprovalEnum.Approved"
+                            (change)="openConfirmDialog(StatusApprovalEnum.Approved)"
+                        >
+                            <div
+                                class="confirm-history__radio-title approve"
+                                [ngClass]="{ selected: statusApproval === StatusApprovalEnum.Approved }"
+                            >
+                                <label-translation keyword="WIDGET_Confirm_Approval__Approved"></label-translation>
+                            </div>
+                        </mat-radio-button>
+                    </div>
+                    <div class="d-inline">
+                        <mat-radio-button
+                            disableRipple
+                            control-key="Rejected"
+                            class="confirm-history__radio-item"
+                            color="warn"
+                            [value]="StatusApprovalEnum.Rejected"
+                            [disabled]="isDisabled"
+                            [checked]="statusApproval == StatusApprovalEnum.Rejected"
+                            (change)="openConfirmDialog(StatusApprovalEnum.Rejected)"
+                        >
+                            <div
+                                class="confirm-history__radio-title reject"
+                                [ngClass]="{ selected: statusApproval === StatusApprovalEnum.Rejected }"
+                            >
+                                <label-translation keyword="WIDGET_Confirm_Approval__Reject"></label-translation>
+                            </div>
+                        </mat-radio-button>
+                    </div>
+                </mat-radio-group>
+                <div
+                    class="confirm-history__control-note"
+                    [class.hidden]="statusApproval != StatusApprovalEnum.Rejected || invoiceApprovalModule"
+                >
+                    <mat-form-field class="w-100">
+                        <mat-label>
+                            <label-translation keyword="WIDGET_Confirm_Approval__Note"></label-translation>
+                        </mat-label>
+                        <input
+                            matInput
+                            [(ngModel)]="Note"
+                            #focusNote
+                            [required]="statusApproval === StatusApprovalEnum.Rejected"
+                        />
+                        <mat-error
+                            ><label-translation keyword="WIDGET_Confirm_Approval__NoteIsRequired"></label-translation>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+        <div class="confirm-history__history mini-scrollbar" *ngIf="invoiceApprovalModule">
+            <div class="confirm-history__item" *ngFor="let item of history">
+                <div class="confirm-history__item-status-icon">
+                    <div
+                        class="image-icon"
+                        [ngClass]="{
+                            'check-circle-icon': item[HistoryEnum.StatusApproval] === StatusApprovalEnum.Approved,
+                            'fail-circle-icon': item[HistoryEnum.StatusApproval] === StatusApprovalEnum.Rejected,
+                            'pending-icon': item[HistoryEnum.StatusApproval] === StatusApprovalEnum.Pending
+                        }"
+                    ></div>
+                </div>
+                <div class="confirm-history__item-status-title">
+                    {{ item[HistoryEnum.StatusLabel] }}
+                </div>
+                <div class="confirm-history__item-controller">{{ item[HistoryEnum.Person] }}</div>
+                <div class="confirm-history__item-date">{{ item[HistoryEnum.DateTime] }}</div>
+                <div
+                    class="confirm-history__item-reason toolbar-icon info-blue-icon"
+                    *ngIf="item[HistoryEnum.StatusApproval] === StatusApprovalEnum.Rejected"
+                    #popUpload="bs-tooltip"
+                    container="body"
+                    data-placement="bottom"
+                    [tooltip]="item[HistoryEnum.ReasonReject]"
+                ></div>
+                <div class="confirm-history__item-line"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #confirmSaveHistory let-close="close">
+    <div class="popup-content">
+        <div class="popup-content__title">
+            <label-translation keyword="WIDGET_Confirm_Approval__Are_You_Sure"></label-translation>&nbsp;
+            <b>
+                <label-translation
+                    keyword="WIDGET_Confirm_Approval__Approved"
+                    *ngIf="statusApproval === StatusApprovalEnum.Approved"
+                ></label-translation>
+                <label-translation
+                    keyword="WIDGET_Confirm_Approval__Reject"
+                    *ngIf="statusApproval !== StatusApprovalEnum.Approved"
+                ></label-translation> </b
+            >&nbsp;?
+        </div>
+        <div class="popup-content__title-secondary" *ngIf="statusApproval == StatusApprovalEnum.Rejected">
+            <label-translation keyword="WIDGET_Confirm_Approval__Please_Take_Note"></label-translation>
+        </div>
+        <mat-form-field class="w-100" *ngIf="statusApproval == StatusApprovalEnum.Rejected">
+            <mat-label><label-translation keyword="WIDGET_Confirm_Approval__Note"></label-translation></mat-label>
+            <input #focusNote matInput [(ngModel)]="Note" (ngModelChange)="changeNoteAction($event)" autofocus />
+        </mat-form-field>
+    </div>
+    <div class="popup-action">
+        <div class="popup-action__button ml-4" (click)="cancel(close)">
+            <label-translation keyword="POPUP_action__Cancel"></label-translation>
+        </div>
+        <div
+            class="popup-action__button primary"
+            [class.disabled]="isDisableButton"
+            (click)="updateConfirmHistory(close)"
+        >
+            <label-translation keyword="POPUP_action__Yes"></label-translation>
+        </div>
+        <div
+            class="popup-action__button primary"
+            [class.disabled]="isDisableButton"
+            (click)="updateConfirmHistory(close, true)"
+        >
+            <label-translation keyword="POPUP_action__Yes_And_Next"></label-translation>
+        </div>
+    </div>
+</ng-template>

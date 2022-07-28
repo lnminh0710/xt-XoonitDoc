@@ -1,0 +1,23 @@
+<div class="full-width-height">
+    <div class="flex-container flex-row compressed-file-breadcrumb">
+        <div class="compressed-file-breadcrumb-button" (click)="goBack($event)">
+            <i class="fa fa-arrow-left"></i>
+        </div>
+        <span class="compressed-file-breadcrumb-path">{{ fileName }}{{ breadcrumb }}</span>
+    </div>
+    <div [perfectScrollbar]="perfectScrollbarConfig" style="max-height: 100%; height: calc(100% - 50px);">
+        <div class="flex-container flex-row compressed-container">
+            <ng-container *ngIf="!showMessageEmptyFolder">
+                <div *ngFor="let file of currentRootFiles" class="compressed-file">
+                    <file-item [item]="file" (openItem)="openItem($event)">
+                    </file-item>
+                </div>
+            </ng-container>
+            <ng-container *ngIf="showMessageEmptyFolder">
+                <div class="empty-folder-message">
+                    <span>{{THIS_FOLDER_IS_EMPTY}}</span>
+                </div>
+            </ng-container>
+        </div>
+    </div>
+</div>

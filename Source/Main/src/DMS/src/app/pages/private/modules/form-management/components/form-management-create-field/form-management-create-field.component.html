@@ -1,0 +1,69 @@
+<p-dialog
+    header=""
+    [(visible)]="showDialog"
+    [styleClass]="'prime-dialog'"
+    appendTo="body"
+    modal="true"
+    [draggable]="true"
+    [resizable]="false"
+    responsive="true"
+    [width]="400"
+    [height]="210"
+    (onHide)="cancel()"
+>
+    <p-header>
+        <div class="modal-header--confirm">
+            <span class="fa fa-question-circle header-icon pull-left"></span>
+            <span class="header-text pull-left"> Create field </span>
+            <!-- <button type="button" mat-raised-button class="mat-btn-close-popup" aria-label="Close" (click)="cancel()">
+        <span class="fa fa-fw fa-close"></span>
+      </button> -->
+            <div class="toolbar-icon close-dialog-icon" (click)="cancel()"></div>
+        </div>
+    </p-header>
+    <div class="form-management-dialog">
+        <div class="form-management-dialog__line">
+            <span class="form-management-dialog__title">Field name : </span>
+            <input
+                class="form-control textarea form-management-dialog__field-name"
+                [value]="fieldName"
+                (change)="onChangeFieldName($event)"
+            />
+        </div>
+        <div class="form-management-dialog__line">
+            <span class="form-management-dialog__title">Module name : </span>
+            <wj-combo-box
+                #combo
+                [itemsSource]="modules"
+                [isEditable]="true"
+                [displayMemberPath]="'name'"
+                [selectedValuePath]="'IdRepTableModuleTemplateName'"
+                [(selectedItem)]="selectedModule"
+                [isRequired]="true"
+            ></wj-combo-box>
+        </div>
+    </div>
+    <p-footer>
+        <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+            <button
+                label="Cancel"
+                type="button"
+                mat-raised-button
+                class="ui-widget ui-state-default ui-corner-all ui-button-text-only new-size"
+                (click)="cancel()"
+            >
+                <span class="ui-button-text ui-c">Cancel</span>
+            </button>
+            <button
+                label="OK"
+                type="button"
+                mat-raised-button
+                class="mat-btn-blue ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only new-size"
+                [disabled]="isDisabled"
+                (click)="createField()"
+            >
+                <span class="ui-button-text ui-c">OK</span>
+            </button>
+        </div>
+    </p-footer>
+</p-dialog>

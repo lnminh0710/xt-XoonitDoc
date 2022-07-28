@@ -1,0 +1,47 @@
+<div class="tool__tab-container">
+    <tabset #scanAssignmentTab>
+        <tab heading="Assign User"
+             (select)="selectTab(1, $event)">
+            <div class="height-pc-100"
+                [perfectScrollbar]="{suppressScrollX: true, suppressScrollY: false}">
+              <div class="col-xs-12  xn-padding-10  no-padding-bottom  scan-assignment-winzard">
+                  <smart-wizzard #wizzard
+                                 [data]="wizzardData"
+                                 (wizzardClick)="wizzardClick($event)"></smart-wizzard>
+              </div>
+              <div class="col-xs-12  xn-padding-10  scan-assignment-step">
+                  <app-scan-assignment-step1 #compStep1
+                                             [wjgridAssigmentTableId]="'2f63346a-e783-4031-a4bb-6f30e806cbe3'"
+                                             [globalProperties]="globalProperties"
+                                             (outputData)="getOutputDataStep1($event)"
+                                             (callToOpenStep2)="callToOpenStep2()">
+                  </app-scan-assignment-step1>
+                  <app-scan-assignment-step2 #compStep2
+                                             [globalProperties]="globalProperties"
+                                             [wjgridPoolsDetailTableId]="'3b7c0c96-7862-4e05-b28e-329571213356'"
+                                             [wjgridUsersTableId]="'2081364d-4c9e-49b0-98f7-1f24f2f85cc0'"
+                                             [dataStep1]="dataStep1"
+                                             (saved)="savedStep2($event)"
+                                             (moveToNextStep)="moveToStepNextTo2($event)"
+                                             (outputData)="getOutputDataStep2($event)"
+                                             (selectStep1AfterSave)="selectStep1AfterSaveHandler()">
+                  </app-scan-assignment-step2>
+              </div>
+            </div>
+        </tab>
+        <tab heading="Assigned"
+             (select)="selectTab(2, $event)">
+            <div class="height-pc-100"
+                [perfectScrollbar]="{suppressScrollX: true, suppressScrollY: false}">
+              <app-scan-assignment-step3 #compStep3
+                                         [globalProperties]="globalProperties"
+                                         [wjgridPoolsDetailTableId]="'71748696-1975-48ce-a6ca-83c4b9fb369d'"
+                                         [dataStep1]="dataStep1"
+                                         (saved)="savedStep3($event)"
+                                         (moveToNextStep)="backToStep2($event)"
+                                         (outputData)="getOutputDataStep3($event)">
+              </app-scan-assignment-step3>
+            </div>
+        </tab>
+    </tabset>
+</div>

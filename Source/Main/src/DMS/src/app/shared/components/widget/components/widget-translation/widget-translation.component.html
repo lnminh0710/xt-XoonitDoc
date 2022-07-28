@@ -1,0 +1,46 @@
+<div class="col-xs-12 widget-translate">
+    <div class="wt-rs-header">
+        <span class="wt-rs-header__label">Selected field: </span> 
+        <span class="wt-rs-header__text-value" *ngIf="translateCommunicationData">
+            {{translateCommunicationData.fieldText}} :  {{originalValue}}
+        </span>
+    </div>
+    <div class="col-xs-12 no-padding  wt-rs__apply-for  margin-bottom--sd" *ngIf="enableLanguageSelectionMode">
+        <span class="wt-rs__apply-for__text">Apply for: </span>
+        <mat-radio-group>
+            <mat-radio-button
+                color="primary"
+                class="wt-rs__apply-for__radio"
+                [(ngModel)]="applyFor"
+                (change)="changeTranslateMode()"
+                value="1">
+                All
+            </mat-radio-button>
+            <mat-radio-button
+                color="primary"
+                class="wt-rs__apply-for__radio"
+                [(ngModel)]="applyFor"
+                (change)="changeTranslateMode()"
+                value="2">
+                Only this widget
+            </mat-radio-button>
+        </mat-radio-group>
+    </div>
+    <div class="wt-rs-grid">
+        <xn-ag-grid *ngIf="gridData && gridData.columns && gridData.columns.length"
+                    [id]="translateTextGridId"
+                    #translateTextGrid
+                    [dataSource]="gridData"
+                    [readOnly]="false"
+                    [allowAddNew]="false"
+                    [allowDelete]="false"
+                    [isShowedEditButtons]="false"
+                    [gridStyle]="gridStyle"
+                    [globalProperties]="globalProperties"
+                    [fitWidthColumn]="true"
+                    (cellEditingStarted)="onTableEditStart($event)"
+                    (cellEditingStopped)="onTableEditEnd($event)"
+                    (cellValueChanged)="onTableEditSuccess($event)">
+        </xn-ag-grid>
+    </div>
+</div>

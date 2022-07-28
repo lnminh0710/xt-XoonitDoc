@@ -1,0 +1,33 @@
+<div class="document-tree-node-container h-100 w-100">
+    <div mat-dialog-title class="d-flex flex-row my-auto">
+        <div mat-button mat-icon-button tabIndex="-1" style="height: 30px;">
+            <mat-icon [svgIcon]="iconFolder" aria-hidden="false" inline="true" style="width: 30px;"></mat-icon>
+        </div>
+        <h5 class="w-100 text-center m-auto">
+            <div [ngSwitch]="matDialogData.mode">
+                <label-translation *ngSwitchCase="DocumentTreeModeEnum.RENAME" [keyword]="'XN_DOCUMENT_TREE_NODE_DIALOG__Rename_Folder'"></label-translation>
+                <label-translation *ngSwitchDefault [keyword]="'XN_DOCUMENT_TREE_NODE_DIALOG__Create_Folder'"></label-translation>
+            </div>
+        </h5>
+        <button mat-button mat-icon-button aria-label="Close" tabIndex="-1" (click)="cancelClicked($event)" style="width: 20px; line-height: 30px; height: 30px">
+            <mat-icon style="font-size: 20px; width: 20px; line-height: 20px; height: 20px;">close</mat-icon>
+        </button>
+    </div>
+    <div mat-dialog-content class="w-100 m-auto p-0" [formGroup]="formGroup">
+        <ng-container *ngFor="let controlConfig of controlConfigs">
+            <xn-dynamic-material-control [config]="controlConfig" formControlName="{{controlConfig.formControlName}}" (onKeydown)="onCtrlKeyDown($event)"
+                [formGroup]="formGroup">
+            </xn-dynamic-material-control>
+        </ng-container>
+    </div>
+    
+    <div mat-dialog-actions class="d-flex flex-row justify-content-center mb-0">
+        <button mat-flat-button style="background-color: rgba(9,30,66,0.08); color: black;"
+            (click)="cancelClicked($event)">
+            <label-translation [keyword]="'COMMON_LABEL__Cancel'"></label-translation>
+        </button>
+        <button mat-flat-button color="primary" class="text-uppercase" (click)="okClicked($event)">
+            <label-translation [keyword]="'COMMON_LABEL__Ok'"></label-translation>
+        </button>
+    </div>
+</div>

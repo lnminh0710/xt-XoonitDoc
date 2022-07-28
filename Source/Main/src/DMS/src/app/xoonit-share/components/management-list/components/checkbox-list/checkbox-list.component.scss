@@ -1,0 +1,16 @@
+:host {
+    display: block;
+    height: 100%;
+    .checkbox-list-container {
+        height: 100%;
+        .item-row {
+            display: flex;
+            align-items: center;
+            height: 35px;
+            padding: 0 10px;
+            max-width: calc(100% - 30px);
+            text-overflow: ellipsis;
+            overflow: hidden;
+        }
+    }
+}

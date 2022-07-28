@@ -1,0 +1,70 @@
+<div id="feedback-canvas" class="feedback" *ngIf="isShowFeedBack">
+    <!-- <img src="{{dataUrl}}"/> -->
+    <xn-capture-item-list
+        [captureItems]="captureItems"
+        [isShowCapture]="isShowCapture"
+        (actionRemove)="actionRemoveHandler($event)"
+        (actionUpdateComment)="actionUpdateCommentHandler($event)"
+    >
+    </xn-capture-item-list>
+    <feedback-popup
+        #feedbackPopup
+        [imageTemps]="imageTemps"
+        [dataUrl]="dataUrl"
+        [feedbackStoreData]="feedbackStoreData"
+        [browserInfo]="browserInfo"
+        (makeCaptureArea)="showCapture($event)"
+        (closePopup)="resetData()"
+        (outputData)="outputFeedbackData($event)"
+        (sendMail)="sendMailHandler()"
+        (showImageReview)="showImageReviewHandle($event)"
+        (removeItem)="removeItemHandle($event)"
+    >
+    </feedback-popup>
+    <xn-capture-line
+        #captureLine
+        [isShowCapture]="isShowCapture"
+        (hideCapture)="hideCapture($event)"
+        (addImage)="addImageHandler($event)"
+    >
+    </xn-capture-line>
+
+    <p-dialog
+        *ngIf="showImageReview"
+        [styleClass]="'prime-dialog  prime-dialog-no-footer  prime-dialog-image-review'"
+        [(visible)]="showImageReview"
+        modal="true"
+        width="{{ imageViewerConfig.panelWidth + 200 }}"
+        height="{{ imageViewerConfig.panelHeight + 250 }}"
+        positionTop="20"
+        responsive="true"
+        appendTo="body"
+        [resizable]="false"
+        [draggable]="true"
+    >
+        <p-header>
+            <div class="modal-header--information">
+                <span class="header-text"
+                    ><label-translation [keyword]="'Feedback_Combine__Image_Review'"></label-translation
+                ></span>
+                <!-- <button type="button"
+	                    mat-raised-button
+	                    class="mat-btn-close-popup"
+	                    aria-label="Close"
+	                    (click)="closeImageReviewHandle()">
+	                <span class="fa fa-fw fa-close"></span>
+	            </button> -->
+                <div class="toolbar-icon close-dialog-icon" (click)="closeImageReviewHandle()"></div>
+            </div>
+        </p-header>
+        <div class="row content-detail">
+            <feedback-image-review
+                [images]="imageTemps"
+                [imageTemps]="imageTemps"
+                [config]="imageViewerConfig"
+            ></feedback-image-review>
+        </div>
+    </p-dialog>
+</div>
+<i *ngIf="isSending" class="feedback-spinner fa fa-spinner fa-spin fa-fw"></i>
+<div *ngIf="isSending" class="feedback-overlay"></div>

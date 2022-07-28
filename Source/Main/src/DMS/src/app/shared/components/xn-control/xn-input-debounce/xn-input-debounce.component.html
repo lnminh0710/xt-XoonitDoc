@@ -1,0 +1,45 @@
+<div class="search-box" (mouseleave)="isHoverBox = false" (mouseover)="isHoverBox = true">
+  <img
+    *ngIf="isSearchBoxControl"
+    src="public/imgs/search.png"
+    alt="search-icon"
+    class="icon-search"
+    (click)="!hasSearchButton && searchClicked()"
+  />
+  <input
+    #inputControl
+    id="{{ id }}"
+    type="text"
+    class="form-control search-input {{ cssClass }}"
+    [ngClass]="{ 'has-button': hasSearchButton, 'not-search-buton': isSearchBoxControl }"
+    placeholder="{{ placeholder }}"
+    autocomplete="off"
+    [disabled]="isDisabled"
+    [(value)]="value"
+    (keyup)="onKeyup($event)"
+    (focus)="isFocusBox = true"
+    (blur)="isFocusBox = false"
+  />
+
+  <button type="button" mat-button class="mat-btn-blue search-button" *ngIf="hasSearchButton" (click)="searchClicked()">
+    <i class="fa  fa-search"></i>
+  </button>
+  <button *ngIf="hasClearText && value && (isFocusBox || isHoverBox)"
+    class="toolbar-icon icon-delete" 
+    mat-button 
+    matSuffix 
+    mat-icon-button 
+    aria-label="Clear" 
+    tabIndex="-1" 
+    (mousedown)="clearText($event)">
+    <mat-icon aria-hidden="false" color="red">cancel</mat-icon>
+  </button>
+
+  <div
+    class="search-indicator-icon"
+    [ngClass]="{ 'has-search-button': hasSearchButton, 'is-inside-form': isInsideForm }"
+    *ngIf="isLoading"
+  >
+    <i class="fa fa-spinner fa-spin"></i>
+  </div>
+</div>

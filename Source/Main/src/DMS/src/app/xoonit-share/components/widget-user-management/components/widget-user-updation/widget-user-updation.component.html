@@ -1,0 +1,174 @@
+<form *ngIf="formGroup" [formGroup]="formGroup" autocomplete="off">
+    <div class="row">
+        <div class="form-group custom-height col-xs-12 col-md-6">
+            <mat-form-field class="dms-custom-control skin-light clear-wrapper"
+                (mouseenter)="changeValueHover(dataFields.COMPANY_NAME.controlName, true)"
+                (mouseleave)="changeValueHover(dataFields.COMPANY_NAME.controlName, false)">
+                <input type="text" id="{{dataFields.COMPANY_NAME.controlName}}" class="input-have-clear"
+                    [attr.name]="dataFields.COMPANY_NAME.controlName"
+                    [attr.aria-label]="dataFields.COMPANY_NAME.controlName" matInput
+                    [formControlName]="dataFields.COMPANY_NAME.controlName" [matAutocomplete]="auto_compnay_submit"
+                    (ngModelChange)="filterStates(null, FilterOptionsUserEnumData.CompanySubmitForm)"
+                    #textAutoCompleteControl (focus)="changeValueFocus(dataFields.COMPANY_NAME.controlName, true)"
+                    (blur)="changeValueFocus(dataFields.COMPANY_NAME.displayName, false)" required>
+                    <mat-label><label-translation [keyword]="dataFields.COMPANY_NAME.displayName"></label-translation></mat-label>
+                <img *ngIf="userLogin.encrypted === USER_ROLES_ENUM.MasterAdministration  && formGroup.controls[dataFields.COMPANY_NAME.controlName].value 
+                && (isFocus[dataFields.COMPANY_NAME.controlName] || isHover[dataFields.COMPANY_NAME.controlName])"
+                    class="clear-text-icon" src="public/imgs/standard_action_cross-circle.svg" alt="clear text"
+                    (click)="clearText(dataFields.COMPANY_NAME.controlName)">
+                <mat-autocomplete #auto_compnay_submit="matAutocomplete" [displayWith]="displayFn"
+                    (optionSelected)="listenOnSelectedCompanyOption($event)">
+                    <mat-option *ngFor="let item of filterOptionsParam.company.acOpionsForSubmit" [value]="item">
+                        {{ item.TextValue }}
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+            <xn-error-message
+                [condition]="xnErrorMessageHelper.isRequired(formGroup, dataFields.COMPANY_NAME.controlName)"
+                [fieldName]="dataFields.COMPANY_NAME.displayName" [typeErr]="errorMessageTypeEnum.REQUIRED">
+            </xn-error-message>
+        </div>
+        <div class="form-group custom-height col-xs-12 col-md-6">
+            <mat-form-field class="dms-custom-control skin-light clear-wrapper"
+                (mouseenter)="changeValueHover(dataFields.EMAIL.controlName, true)"
+                (mouseleave)="changeValueHover(dataFields.EMAIL.controlName, false)">
+                <input matInput xnEnteBreakDown [xnControlsData]="controlDataList" type="text" class="input-have-clear"
+                    [attr.name]="dataFields.EMAIL.controlName"
+                    id="{{dataFields.EMAIL.controlName}}" [formControlName]="dataFields.EMAIL.controlName"
+                    (keydown.enter)="submit()" required autocomplete="off"
+                    (ngModelChange)="filterStates(null, FilterOptionsUserEnumData.EmailSubmitForm)"
+                    (focus)="changeValueFocus(dataFields.EMAIL.controlName, true)"
+                    (blur)="changeValueFocus(dataFields.EMAIL.controlName, false)">
+                <mat-label><label-translation [keyword]="dataFields.EMAIL.displayName"></label-translation></mat-label>
+                <img *ngIf="formGroup.controls[dataFields.EMAIL.controlName].value 
+                && (isFocus[dataFields.EMAIL.controlName] || isHover[dataFields.EMAIL.controlName])"
+                    class="clear-text-icon" src="public/imgs/standard_action_cross-circle.svg" alt="clear text"
+                    (click)="clearText(dataFields.EMAIL.controlName)">
+            </mat-form-field>
+            <xn-error-message [condition]="xnErrorMessageHelper.isRequired(formGroup, dataFields.EMAIL.controlName)"
+                [fieldName]="dataFields.EMAIL.displayName" [typeErr]="errorMessageTypeEnum.REQUIRED">
+            </xn-error-message>
+            <xn-error-message
+                [condition]="xnErrorMessageHelper.isInvalidPattern(formGroup, dataFields.EMAIL.controlName)"
+                [typeErr]="errorMessageTypeEnum.PATTERN_EMAIL"></xn-error-message>
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group custom-height col-xs-12 col-md-6">
+            <mat-form-field class="dms-custom-control skin-light clear-wrapper"
+                (mouseenter)="changeValueHover(dataFields.FIRSTNAME.controlName, true)"
+                (mouseleave)="changeValueHover(dataFields.FIRSTNAME.controlName, false)">
+                <input matInput xnEnteBreakDown [xnControlsData]="controlDataList" type="text" class="input-have-clear"
+                    [attr.name]="dataFields.FIRSTNAME.controlName"
+                    id="{{dataFields.FIRSTNAME.controlName}}" [formControlName]="dataFields.FIRSTNAME.controlName"
+                    (keydown.enter)="submit()" required autocomplete="off"
+                    (focus)="changeValueFocus(dataFields.FIRSTNAME.controlName, true)"
+                    (blur)="changeValueFocus(dataFields.FIRSTNAME.controlName, false)">
+                <mat-label><label-translation [keyword]="dataFields.FIRSTNAME.displayName"></label-translation></mat-label>
+                <img *ngIf="formGroup.controls[dataFields.FIRSTNAME.controlName].value 
+                && (isFocus[dataFields.FIRSTNAME.controlName] || isHover[dataFields.FIRSTNAME.controlName])"
+                    class="clear-text-icon" src="public/imgs/standard_action_cross-circle.svg" alt="clear text"
+                    (click)="clearText(dataFields.FIRSTNAME.controlName)">
+            </mat-form-field>
+            <xn-error-message [condition]="xnErrorMessageHelper.isRequired(formGroup, dataFields.FIRSTNAME.controlName)"
+                [fieldName]="dataFields.FIRSTNAME.displayName" [typeErr]="errorMessageTypeEnum.REQUIRED">
+            </xn-error-message>
+        </div>
+        <div class="form-group custom-height col-xs-12 col-md-6">
+            <mat-form-field class="dms-custom-control skin-light clear-wrapper"
+                (mouseenter)="changeValueHover(dataFields.LASTNAME.controlName, true)"
+                (mouseleave)="changeValueHover(dataFields.LASTNAME.controlName, false)">
+                <input matInput xnEnteBreakDown [xnControlsData]="controlDataList" type="text" class="input-have-clear"
+                    [attr.name]="dataFields.LASTNAME.controlName"
+                    id="{{dataFields.LASTNAME.controlName}}" [formControlName]="dataFields.LASTNAME.controlName"
+                    (keydown.enter)="submit()" required autocomplete="off"
+                    (focus)="changeValueFocus(dataFields.LASTNAME.controlName, true)"
+                    (blur)="changeValueFocus(dataFields.LASTNAME.controlName, false)">
+                <mat-label><label-translation [keyword]="dataFields.LASTNAME.displayName"></label-translation></mat-label>
+                <img *ngIf="formGroup.controls[dataFields.LASTNAME.controlName].value 
+                && (isFocus[dataFields.LASTNAME.controlName] || isHover[dataFields.LASTNAME.controlName])"
+                    class="clear-text-icon" src="public/imgs/standard_action_cross-circle.svg" alt="clear text"
+                    (click)="clearText(dataFields.LASTNAME.controlName)">
+            </mat-form-field>
+            <xn-error-message [condition]="xnErrorMessageHelper.isRequired(formGroup, dataFields.LASTNAME.controlName)"
+                [fieldName]="dataFields.LASTNAME.displayName" [typeErr]="errorMessageTypeEnum.REQUIRED">
+            </xn-error-message>
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group custom-height col-xs-12 col-md-6 mb-0">
+            <mat-form-field class="dms-custom-control skin-light clear-wrapper"
+                (mouseenter)="changeValueHover(dataFields.INITIALS.controlName, true)"
+                (mouseleave)="changeValueHover(dataFields.INITIALS.controlName, false)">
+                <input matInput xnEnteBreakDown [xnControlsData]="controlDataList" type="text" class="input-have-clear"
+                    [attr.name]="dataFields.INITIALS.controlName"
+                    id="{{dataFields.INITIALS.controlName}}" [formControlName]="dataFields.INITIALS.controlName"
+                    (keydown.enter)="submit()" required autocomplete="off"
+                    (focus)="changeValueFocus(dataFields.INITIALS.controlName, true)"
+                    (blur)="changeValueFocus(dataFields.INITIALS.controlName, false)">
+                <mat-label><label-translation [keyword]="dataFields.INITIALS.displayName"></label-translation></mat-label>
+                <img *ngIf="formGroup.controls[dataFields.INITIALS.controlName].value 
+                && (isFocus[dataFields.INITIALS.controlName] || isHover[dataFields.INITIALS.controlName])"
+                    class="clear-text-icon" src="public/imgs/standard_action_cross-circle.svg" alt="clear text"
+                    (click)="clearText(dataFields.INITIALS.controlName)">
+            </mat-form-field>
+            <xn-error-message [condition]="xnErrorMessageHelper.isRequired(formGroup, dataFields.INITIALS.controlName)"
+                [fieldName]="dataFields.INITIALS.displayName" [typeErr]="errorMessageTypeEnum.REQUIRED">
+            </xn-error-message>
+        </div>
+        <div class="form-group custom-height col-xs-12 col-md-6 mb-0">
+            <div class="row">
+                <div class="form-group custom-height  col-xs-12 col-md-6">
+                    <mat-form-field class="dms-custom-control">
+                        <mat-select
+                            id="{{dataFields.USER_ROLE.controlName}}"
+                            [formControlName]="dataFields.USER_ROLE.controlName"
+                            [attr.name]="dataFields.USER_ROLE.controlName" #selectControl required [disabled]="">
+                            <mat-option *ngFor="let item of userRoleList" [value]="item.key">
+                                {{ item.value }}
+                            </mat-option>
+                        </mat-select>
+                        <mat-label><label-translation [keyword]="dataFields.USER_ROLE.displayName"></label-translation></mat-label>
+                    </mat-form-field>
+                    <xn-error-message
+                        [condition]="xnErrorMessageHelper.isRequired(formGroup, dataFields.USER_ROLE.controlName)"
+                        [fieldName]="dataFields.USER_ROLE.displayName" [typeErr]="errorMessageTypeEnum.REQUIRED">
+                    </xn-error-message>
+                </div>
+                <div class=" col-xs-12 col-md-6 active-control ">
+                    <div class="row">
+                        <div class="col-xs-7 text-name">
+                            <label-translation [keyword]="dataFields.IS_ACTIVE.displayName"></label-translation>
+                        </div>
+                        <div class="col-xs-5">
+                            <mat-slide-toggle color="primary" id="{{dataFields.IS_ACTIVE.controlName}}"
+                                (keydown.enter)="submit()" [formControlName]="dataFields.IS_ACTIVE.controlName"
+                                #radioButtonControl>
+                            </mat-slide-toggle>
+                        </div>
+                        <xn-error-message
+                            [condition]="xnErrorMessageHelper.isRequired(formGroup, dataFields.IS_ACTIVE.controlName)"
+                            [fieldName]="dataFields.IS_ACTIVE.displayName" [typeErr]="errorMessageTypeEnum.REQUIRED">
+                        </xn-error-message>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row err-mesage">
+        <div class="col-xs-12">
+            <xn-error-message [condition]="isError" [errMes]="errMes" [typeErr]="errorMessageTypeEnum.CUSTOM_MESSAGE">
+            </xn-error-message>
+        </div>
+    </div>
+    <div class="row form-group wrapper-button text-right">
+        <button type="button" class="btn-cmd btn-cmd-default" (click)="closeDialog()"><label-translation [keyword]="'Cancel'"></label-translation></button>
+        <button type="button" class="btn-cmd btn-cmd-primary" (click)="submit()" [disabled]="!formGroup.valid">
+            <label-translation [keyword]="'Save'"></label-translation>
+        </button>
+    </div>
+</form>
+
+<div *ngIf="isLoading" class="xn-loading">
+    <i class="fa fa-spinner fa-spin fa-2x"></i>
+</div>

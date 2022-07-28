@@ -1,0 +1,53 @@
+body#print { 
+   overflow:auto !important;
+   height: auto !important;
+   min-height:initial !important;
+}
+
+widget-form .container-inline-content inline-edit .control-label .fa {
+    padding-top: 5px;
+}
+
+table {
+    font-size: 12px;
+}
+
+table td.creditcard-icon {
+    white-space: normal;
+}
+
+table .wj-cell {
+    position: relative;
+}
+
+table .wj-alt:not(.wj-header):not(.wj-group) {
+    background: #f2f2f2 !important;
+}
+
+table .wj-cell {
+    border: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.fa-circle.active {
+    color: #53b33a !important;
+}
+
+.fa-circle.active:before {
+    content: "\f046" !important;
+}
+
+.fa-circle.in-active:before {
+    content: "\f096" !important;
+}
+
+app-xn-tree-view .tree-view__node-select {
+    margin-top: 0.02px;
+}
+.xn-tree-node {
+  max-height: 24px;
+}
+
+
+.ag-theme-balham .ag-layout-print .ag-cell {
+    border-right: solid 1px #d9dcde;
+}

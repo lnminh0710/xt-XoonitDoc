@@ -1,0 +1,76 @@
+<ng-container [ngSwitch]="isLoading">
+    <ng-container *ngSwitchCase="true" [ngTemplateOutlet]="loadingSpinnerTemplate"></ng-container>
+
+    <ng-container *ngSwitchCase="false" [ngTemplateOutlet]="filesTemplate"></ng-container>
+</ng-container>
+<ng-template #filesTemplate>
+    <div class="export-configuration">
+        <div class="export-configuration__filter">
+            <div class="export-configuration__search-box">
+                <div class="export-configuration__search-box-icon"></div>
+                <input
+                    class="export-configuration__search-box-input"
+                    type="text"
+                    (change)="onQuickFilterChanged($event)"
+                />
+            </div>
+        </div>
+        <div class="export-configuration__option">
+            <mat-radio-group name="ExportType" class="export-configuration__export-type">
+                <mat-radio-button
+                    color="primary"
+                    [value]="'EXCEL'"
+                    [checked]="exportType === 'EXCEL'"
+                    (change)="exportType = 'EXCEL'"
+                >
+                    Excel
+                </mat-radio-button>
+                <mat-radio-button
+                    color="primary"
+                    [value]="'PDF'"
+                    [checked]="exportType === 'PDF'"
+                    (change)="exportType = 'PDF'"
+                >
+                    PDF
+                </mat-radio-button>
+                <mat-radio-button
+                    color="primary"
+                    [value]="'WALLET'"
+                    [checked]="exportType === 'WALLET'"
+                    (change)="exportType = 'WALLET'"
+                >
+                    Wallet
+                </mat-radio-button>
+            </mat-radio-group>
+            <div class="export-configuration__space"></div>
+            <div
+                class="export-configuration__export-button"
+                [ngClass]="{ disabled: disabledButton }"
+                (click)="!disabledButton && export()"
+            >
+                Export
+            </div>
+        </div>
+        <div class="export-configuration__table">
+            <ag-grid-angular
+                #fileHistoryGrid
+                style="width: 100%; height: 100%; background-color: transparent"
+                class="ag-theme-balham"
+                [columnDefs]="columnDefs"
+                [defaultColDef]="defaultColDef"
+                [gridOptions]="gridOptions"
+                [rowData]="files"
+                [rowMultiSelectWithClick]="true"
+                rowSelection="multiple"
+                (gridReady)="onGridReady($event)"
+                (selectionChanged)="onSelectionChanged()"
+            >
+            </ag-grid-angular>
+        </div>
+    </div>
+</ng-template>
+<ng-template #loadingSpinnerTemplate>
+    <div class="center-wrapper">
+        <i class="fa fa-spinner fa-spin" style="font-size: 24px"></i>
+    </div>
+</ng-template>

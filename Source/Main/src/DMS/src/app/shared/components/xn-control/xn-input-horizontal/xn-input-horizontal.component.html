@@ -1,0 +1,87 @@
+<ng-container [ngSwitch]="controlType">
+    <ng-container *ngSwitchCase="'textarea'">
+        <div class="d-flex flex-column {{ customClass }}">
+            <div class="textarea-item">
+                <div class="icon"><i class="{{ icon }}"></i></div>
+                <div class="label">{{ title }}</div>
+            </div>
+            <mat-form-field appearance="outline">
+                <mat-label>{{ placeholder }}</mat-label>
+                <textarea matInput [formControl]="formControl" [readonly]="readonly"></textarea>
+            </mat-form-field>
+        </div>
+    </ng-container>
+    <ng-container *ngSwitchCase="'label'">
+        <mat-form-field class="w-100 {{ customClass }}">
+            <span matPrefix><i class="{{ icon }}"></i></span>
+            <input type="text" matInput placeholder="{{ title }}" name="{{ name }}" readonly />
+        </mat-form-field>
+    </ng-container>
+    <ng-container *ngSwitchCase="'button'">
+        <mat-form-field class="w-100 {{ customClass }} cursor-pointer">
+            <span matPrefix><i class="{{ icon }}"></i></span>
+            <input type="text" matInput placeholder="{{ title }}" name="{{ name }}" readonly (click)="click()" />
+        </mat-form-field>
+    </ng-container>
+    <ng-container *ngSwitchCase="'date'">
+        <mat-form-field class="w-100 {{ customClass }} cursor-pointer">
+            <span matPrefix><i class="{{ icon }}"></i></span>
+            <input
+                placeholder="{{ title }}"
+                matInput
+                [matDatepicker]="picker"
+                name="{{ name }}"
+                [readonly]="readonly"
+                [formControl]="formControl"
+            />
+            <mat-datepicker-toggle
+                [hidden]="readonly"
+                class="invisible"
+                matSuffix
+                [for]="picker"
+                #datepicker
+            ></mat-datepicker-toggle>
+            <i [class.d-none]="readonly" class="fas fa-calendar-alt icon-picker" (click)="datepicker._open($event)"></i>
+            <mat-datepicker #picker></mat-datepicker>
+            <mat-error *ngIf="formControl && formControl.hasError('matDatepickerParse')">
+                {{ title }} {{ 'IsInvalid' | translate }}
+            </mat-error>
+        </mat-form-field>
+    </ng-container>
+    <ng-container *ngSwitchCase="'combobox'">
+        <mat-form-field class="w-100 {{ customClass }} combobox">
+            <span matPrefix><i class="{{ icon }}"></i></span>
+            <span class="title" [class.readonly-mode]="readonly">{{ title }}</span>
+            <ng-container *ngIf="readonly; else select">
+                <input class="d-none" matInput />
+                <span class="value">{{ alterValue }}</span>
+            </ng-container>
+            <ng-template #select>
+                <mat-select [formControl]="formControl" [value]="formControl.value" disableRipple>
+                    <ng-container *ngFor="let item of combobox">
+                        <mat-option [value]="item.id">{{ item.value }}</mat-option>
+                    </ng-container>
+                </mat-select>
+            </ng-template>
+        </mat-form-field>
+    </ng-container>
+    <ng-container *ngSwitchDefault>
+        <mat-form-field class="w-100 {{ customClass }}">
+            <input
+                type="text"
+                matInput
+                placeholder="{{ title }}"
+                [formControl]="formControl"
+                name="{{ name }}"
+                [readonly]="readonly"
+                (focusout)="focusout()"
+            />
+            <mat-error *ngIf="formControl && formControl.hasError('email') && !formControl.hasError('required')">
+                {{ title }} {{ 'IsInvalid' | translate }}
+            </mat-error>
+            <mat-error *ngIf="formControl && formControl.hasError('required')">
+                {{ title }} {{ 'IsRequired' | translate }}
+            </mat-error>
+        </mat-form-field>
+    </ng-container>
+</ng-container>

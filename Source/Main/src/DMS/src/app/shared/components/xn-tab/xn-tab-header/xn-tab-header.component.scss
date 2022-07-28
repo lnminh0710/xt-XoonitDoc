@@ -1,0 +1,333 @@
+@import "src/sass_files/size.scss";
+
+.tab-summary-wrapper {
+  position: relative;
+  height: 125px;
+  margin: 0 auto;
+  overflow: visible;
+
+  &.big-size {
+    height: 160px;
+  }
+
+  &.min-height {
+    height: 30px;
+  }
+}
+
+.tab-summary-list {
+  position: absolute;
+  min-width: 3000px;
+}
+
+.tab-summary-list li {
+  display: table-cell;
+  position: relative;
+  vertical-align: middle;
+
+  .logo {
+    margin: -22px 0 5px 0;
+
+    img {
+      width: auto;
+      height: 70px;
+    }
+  }
+}
+
+.last-update {
+  float: right;
+  margin: 2px 5px 0 0;
+  font-size: 11px;
+  font-style: italic;
+}
+
+.scroller {
+  text-align: center;
+  cursor: pointer;
+  display: none;
+  padding: 7px;
+  white-space: no-wrap;
+  vertical-align: middle;
+  background-color: #0f5e8c;
+  opacity: 1;
+  position: absolute;
+  z-index: 848;
+  padding-top: 40px;
+  height: 130px;
+  color: #fff;
+  margin-top: -5px;
+
+  &.min-height {
+    height: 35px;
+    padding-top: 0;
+    z-index: 999;
+
+    h4 {
+      margin-top: 6px;
+    }
+  }
+
+  &.scroller-disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+}
+
+.scroller-right {
+  right: 0;
+}
+
+.scroller-left {
+  /*left: 0;*/
+}
+
+.tab-header-container {
+  overflow: visible;
+}
+
+@media (max-width: $max-sm-size) {
+  .tab-header-container {
+    overflow: hidden;
+  }
+}
+
+:host ::ng-deep ul {
+  li.tab-summary {
+    min-width: 180px;
+    max-width: 180px;
+    min-height: 125px;
+    max-height: 125px;
+
+    &.big-size {
+      min-width: 320px;
+      max-width: 320px;
+      min-height: 160px;
+      max-height: 160px;
+
+      > a {
+        min-height: 160px;
+        max-height: 160px;
+
+        > .panel {
+          > .panel-body {
+            min-height: 130px;
+            max-height: 130px;
+          }
+
+          &.main-tab {
+            > .panel-body {
+              min-height: 150px;
+              max-height: 150px;
+            }
+          }
+        }
+      }
+    }
+
+    &.min-height {
+      min-height: 30px;
+      max-height: 30px;
+    }
+
+    > a {
+      padding: 0 !important;
+      margin-right: 2px;
+      min-height: 125px;
+      max-height: 125px;
+      border-radius: 10px 10px 0 0;
+
+      &.min-height {
+        min-height: 30px;
+        max-height: 30px;
+      }
+
+      > .panel {
+        margin-bottom: 0;
+        border: none;
+        -webkit-box-shadow: none;
+        -moz-box-shadow: none;
+        box-shadow: none;
+        border-radius: 10px;
+
+        .panel-heading,
+        .panel-body,
+        .panel-footer {
+          padding: 5px;
+        }
+
+        > .panel-heading {
+          border-radius: 10px 10px 0 0;
+          padding-top: 4px;
+          padding-bottom: 2px;
+          background-color: #f9f9f9;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+
+          &.heading-sm {
+            padding: 0;
+          }
+        }
+
+        > .panel-body {
+          border-radius: 0 0 10px 10px;
+          min-height: 93px;
+          max-height: 93px;
+          padding-top: 1px;
+
+          .header-icon-container {
+            padding-left: 1px;
+            padding-right: 1px;
+          }
+
+          h3 {
+            margin-top: 5px;
+          }
+
+          .square-box {
+            width: 100%;
+            height: 100%;
+            line-height: 100%;
+            border-radius: 4px;
+            margin-bottom: 5px;
+          }
+
+          .square-box span {
+            vertical-align: middle;
+          }
+        }
+
+        &.main-tab {
+          border-radius: 10px;
+
+          &.min-height {
+            border: 1px solid #ddd;
+            border-bottom: none;
+            height: 28px;
+            border-bottom-left-radius: 0 !important;
+            border-bottom-right-radius: 0 !important;
+            background-color: #f9f9f9;
+            padding-top: 4px;
+          }
+
+          > .panel-body {
+            min-height: 120px;
+            max-height: 120px;
+            padding-top: 25px;
+            border-radius: 10px;
+
+            &.min-height {
+              min-height: 30px;
+              max-height: 30px;
+            }
+
+            &.small-padding-top {
+              padding-top: 14px;
+            }
+          }
+        }
+      }
+    }
+
+    &.active {
+      > a {
+        &.active {
+          .panel {
+            > .panel-heading {
+              padding-top: 0;
+              background-color: #fff;
+            }
+
+            > .panel-body {
+              padding-top: 0;
+
+              h3 {
+                cursor: pointer;
+              }
+            }
+
+            &.main-tab {
+              border-radius: 10px;
+
+              &.min-height {
+                height: 28px;
+                border-radius: 4px !important;
+                border-bottom-left-radius: 0 !important;
+                border-bottom-right-radius: 0 !important;
+                background-color: #fff;
+                padding-top: 0;
+              }
+
+              > .panel-body {
+                min-height: 115px;
+                max-height: 115px;
+                padding-top: 0;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.link-widget-container {
+  position: absolute;
+  width: 99%;
+  height: 99%;
+  background-color: #bcf1f9;
+  opacity: 0.75;
+  border-radius: 10px;
+  top: 0;
+
+  &.connected {
+    background-color: #c8ffc8;
+  }
+}
+
+.link-widget-container,
+.link-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .fa {
+    font-size: x-large;
+  }
+
+  .link-icon__radius {
+    border-radius: 35px;
+    background-color: #fff;
+    padding: 10px;
+  }
+
+  .link-text {
+    padding-top: 5px;
+    font-size: small;
+    font-weight: bold;
+  }
+
+  .tab-collapsed {
+    .link-text {
+      font-size: small;
+    }
+  }
+}
+// .xn-edit-form__tab-progress {
+//     margin-top: 85px;
+//     float: left;
+//     .xn-ef__tp--child {
+//         float: left;
+//         width: 110px;
+//         height: 40px;
+//         text-align: center;
+//         border: 1px solid #fba026;
+//         border-radius: 4px 4px 0px 0px;
+//         cursor: default;
+//         font-weight: 600;
+//     }
+//     .xn-ef__tp-text {
+//         line-height: 35px;
+//     }
+// }

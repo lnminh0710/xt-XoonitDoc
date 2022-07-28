@@ -1,0 +1,13 @@
+<tabset #groupTab>
+    <tab heading="Main"
+         (select)="selectTab(1, $event)">
+        <doublet-check-main [countryGridId]="countryGridId"
+                            [columnsGridId]="columnsGridId"
+                            [autoMatchingGridId]="autoMatchingGridId"
+                            [manualMatchingGridId]="manualMatchingGridId"></doublet-check-main>
+    </tab>
+    <tab heading="Archive"
+         (select)="selectTab(2, $event)">
+        <doublet-check-archive></doublet-check-archive>
+    </tab>
+</tabset>

@@ -1,0 +1,102 @@
+<div
+    class="form-control-wrapper"
+    [ngStyle]="config?.style"
+    [ngClass]="config?.class"
+    [formGroup]="formGroup"
+    enterNextFocus
+>
+    <ng-container *ngIf="!!isFocus || !formGroup.controls[config.formControlName].value">
+        <mat-form-field
+            [ngClass]="{ 'mat-field-invalid-disabled': !!formGroup.controls[config.formControlName].errors }"
+            class="w-100 html-input-control"
+                        (mouseenter)="onMouseEnter(formGroup.controls[config.formControlName])"
+                        (mouseleave)="onMouseLeave(formGroup.controls[config.formControlName])"
+                        (mouseover)="onMouseOver(formGroup.controls[config.formControlName])"
+                        (dblclick)="onDblClick(formGroup.controls[config.formControlName])">
+            <mat-label><label-translation [keyword]="config.label"></label-translation></mat-label>
+            <textarea [rows]="!formGroup.controls[config.formControlName].value ? '1' : '2'"
+                      #matInputElement
+                      matInput
+                      attr.control-key="{{config.formControlName}}"
+                      [formControlName]="config.formControlName"
+                      [attr.pattern]="config.setting?.Validators?.Pattern?.Regex"
+                      (keypress)="keyPress($event)"
+                      (focus)="onFocusField(formGroup.controls[config.formControlName])"
+                      (blur)="onBlurField(formGroup.controls[config.formControlName])"
+                      (keydown)="onKeydown.emit($event)"
+                      (keyup)="onKeyup.emit($event)">
+            {{ value }}
+        </textarea>
+            <span matSuffix>
+                <ng-content select="[additionalMatIcon]"></ng-content>
+            </span>
+            <!--<mat-error>
+                <ng-template [ngTemplateOutlet]="matErrMsg"
+                             [ngTemplateOutletContext]="{
+                        control: formGroup.controls[config.formControlName],
+                        controlConfig: config
+                    }">
+                </ng-template>
+            </mat-error>-->
+        </mat-form-field>
+        <mat-error class='translateY'>
+            <ng-template [ngTemplateOutlet]="matErrMsg"
+                         [ngTemplateOutletContext]="{
+                        control: formGroup.controls[config.formControlName],
+                        controlConfig: config
+                    }">
+            </ng-template>
+        </mat-error>
+    </ng-container>
+    <ng-container *ngIf="!isFocus && !!formGroup.controls[config.formControlName].value">
+        <mat-form-field class="w-100 html-input-control"
+                        [ngClass]="{ activated: !disabled }"
+                        (mouseenter)="onMouseEnter(formGroup.controls[config.formControlName])"
+                        (mouseleave)="onMouseLeave(formGroup.controls[config.formControlName])"
+                        (mouseover)="onMouseOver(formGroup.controls[config.formControlName])"
+                        (dblclick)="
+                onDblClick(formGroup.controls[config.formControlName]);
+                onFocusField(formGroup.controls[config.formControlName])
+            ">
+            <mat-label><label-translation [keyword]="config.label"></label-translation></mat-label>
+            <textarea style="display: none"
+                      rows="1"
+                      #matInputElement
+                      matInput
+                      [formControlName]="config.formControlName">
+            </textarea>
+            <div class="html-input-control__container"
+                 [innerHTML]="formGroup.controls[config.formControlName].value | sanitizeHtml">
+                {{ innerHTML }}
+            </div>
+            <!--<mat-error>
+                <ng-template [ngTemplateOutlet]="matErrMsg"
+                             [ngTemplateOutletContext]="{
+                        control: formGroup.controls[config.formControlName],
+                        controlConfig: config
+                    }">
+                </ng-template>
+            </mat-error>-->
+        </mat-form-field>
+        <mat-error class='translateY'>
+            <ng-template [ngTemplateOutlet]="matErrMsg"
+                         [ngTemplateOutletContext]="{
+                        control: formGroup.controls[config.formControlName],
+                        controlConfig: config
+                    }">
+            </ng-template>
+        </mat-error>
+    </ng-container>
+</div>
+
+<ng-template #matErrMsg let-control="control" let-controlConfig="controlConfig">
+    <ng-container *ngIf="control.errors?.required">
+        {{ controlConfig.label }} <label-translation [keyword]="'COMMON_LABEL__is_required'"></label-translation>
+    </ng-container>
+    <ng-container *ngIf="control.errors?.maxlength">
+        This field is required max length as {{ control.errors?.maxlength.requiredLength }}
+    </ng-container>
+    <ng-container *ngIf="control.errors?.pattern">
+        {{ config.setting?.Validators?.Pattern.Message }}
+    </ng-container>
+</ng-template>

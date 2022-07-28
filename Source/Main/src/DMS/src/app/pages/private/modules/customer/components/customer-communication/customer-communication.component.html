@@ -1,0 +1,47 @@
+<div class="xn-form-container height-pc-100 customer-communication">
+    <div #parent *ngFor="let contact of contactList; let i = index;"
+         class="contact"
+         [ngClass]="{'main': contact.isMain,'other': !contact.isMain}">
+        <div>
+            <div class="col-xs-12 col-sm-6 no-padding box-info-l">
+                <div class="icon">
+                    <i class="fa fa-phone-square"></i>
+                </div>
+                <div class="info">
+                    <div class="title">{{contact.businessTitle}}</div>
+                    <div class="contact-type">{{contact.mailValue.value1}}</div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-6 no-padding box-info-r">
+                <div class="name">{{contact.name}}</div>
+                <div class="phone">
+                    {{contact.mailValue.value2}}
+                    <i *ngIf="contact.values.length"
+                       class="fa fa-arrow-down"
+                       [attr.data-target]="'#btnShowMoreContact' + contact.id"
+                       (click)="showMore(popup, contact.id)"></i>
+                </div>
+            </div>
+        </div>
+
+        <wj-popup #popup [owner]="parent" [showTrigger]="'None'" [hideTrigger]="'Blur'" class="popover communication">
+            <div class="popover-container">
+                <div *ngIf="contact.values.length" class="contact-pop" id="btnShowMoreContact{{contact.id}}">
+                    <div class="list-group">
+                        <div style="display:flex"
+                             class="list-group-item"
+                             *ngFor="let contactValue of contact.values"
+                             [ngClass]="{'main': contactValue.isMain}">
+                            <div class="col-xs-12 col-sm-6 left">
+                                {{contactValue.value1}}
+                            </div>
+                            <div class="col-xs-12 col-sm-6 right">
+                                {{contactValue.value2}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </wj-popup>
+    </div>
+</div>

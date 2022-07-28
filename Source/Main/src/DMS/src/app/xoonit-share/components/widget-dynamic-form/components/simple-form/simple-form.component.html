@@ -1,0 +1,23 @@
+<div class="simple-octopus-form-container" *ngIf="formGroupConfigDef">
+    <div class="form-container d-flex flex-column px-1 pt-1">
+        <ng-container *ngFor="let formConfig of formGroupConfigDef.formConfigDefs">
+            <div class="form-wrapper" [id]="formConfig.title" [ngStyle]="formConfig.customStyle">
+                <!--<h4 class="form-group-title" *ngIf="showTitle">
+                    {{ formConfig.title }}
+                </h4>-->
+                <ng-container *ngFor="let ctrlConfig of formConfig.controlConfigs" [formGroup]="formConfig.formGroup">
+                    <!--*ngIf="!(ctrlConfig.setting?.DisplayField?.Hidden === '1')"-->
+                    <xn-dynamic-material-control *ngIf="!ctrlConfig.hidden"
+                                                 [style.visibility]="ctrlConfig.invisible ?  'hidden' : 'visible'"
+                                                 [config]="ctrlConfig"
+                                                 formControlName="{{ ctrlConfig.formControlName }}"
+                                                 [formGroup]="formConfig.formGroup"
+                                                 (onControlFocus)="onFocusChanged($event)"
+                                                 (onControlClick)="onClickChanged($event)"
+                                                 (onControlIconClick)="onIconClickChanged($event)">
+                    </xn-dynamic-material-control>
+                </ng-container>
+            </div>
+        </ng-container>
+    </div>
+</div>

@@ -1,0 +1,258 @@
+################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/Source/Main/.vs
+/Source/Main/packages
+/Source/Main/src/DMS/obj
+/Source/Main/src/DMS/wwwroot
+/Source/Main/src/MonitorFolderWindowService/obj
+/Source/Main/src/MonitorFolderWindowService/bin
+/Source/Main/src/DMS/bin
+/Source/Main/src/DMS/Logs
+*.user
+Source/Main/src/DMS/package-lock.json
+Source/Main/src/DMS/src/public/assets/lib/@types/ez-plus/index.d.ts
+Source/Main/src/DMS/src/public/assets/lib/@types/ez-plus/LICENSE
+Source/Main/src/DMS/src/public/assets/lib/@types/ez-plus/package.json
+Source/Main/src/DMS/src/public/assets/lib/@types/ez-plus/README.md
+Source/Main/src/DMS/src/public/assets/lib/ez-plus/index.d.ts
+Source/Main/src/DMS/src/public/assets/lib/ez-plus/LICENSE
+Source/Main/src/DMS/src/public/assets/lib/ez-plus/README.md
+Source/Main/src/MonitorFolderWindowService/bin/
+Source/Main/src/DMS/Logs/
+Source/Main/src/DMS/.vscode
+PythonService/*.pyc
+PythonService/.history/*
+
+# IntelliJ project files
+.idea
+*.iml
+out
+gen
+
+### VisualStudioCode template
+.vscode/*
+.vscode/settings.json
+!.vscode/tasks.json
+.vscode/launch.json
+!.vscode/extensions.json
+*.code-workspace
+
+### Python template
+# Byte-compiled / optimized / DLL files
+PythonService/__pycache__/
+PythonService/*.py[cod]
+PythonService/*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+PythonService/.Python
+PythonService/build/
+PythonService/develop-eggs/
+PythonService/dist/
+PythonService/downloads/
+PythonService/eggs/
+PythonService/.eggs/
+PythonService/lib/
+PythonService/lib64/
+PythonService/parts/
+PythonService/sdist/
+PythonService/var/
+PythonService/wheels/
+PythonService/pip-wheel-metadata/
+PythonService/share/python-wheels/
+PythonService/.egg-info/
+PythonService/.installed.cfg
+PythonService/*.egg
+PythonService/MANIFEST
+
+# PyInstaller
+#  Usually these files are written by a python script from a template
+#  before PyInstaller builds the exe, so as to inject date/other infos into it.
+*.manifest
+*.spec
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+PythonService/.tox/
+PythonService/.nox/
+PythonService/.coverage
+PythonService/.coverage.*
+PythonService/.cache
+PythonService/nosetests.xml
+PythonService/coverage.xml
+PythonService/*.cover
+PythonService/*.py,cover
+PythonService/.hypothesis/
+PythonService/.pytest_cache/
+
+# Translations
+*.mo
+*.pot
+
+# Django stuff:
+*.log
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+
+# Flask stuff:
+instance/
+.webassets-cache
+
+# Scrapy stuff:
+.scrapy
+
+# Sphinx documentation
+docs/_build/
+
+# PyBuilder
+target/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+*/.ipynb_checkpoints/*
+
+# IPython
+profile_default/
+ipython_config.py
+
+# pyenv
+.python-version
+
+# pipenv
+#   According to pypa/pipenv#598, it is recommended to include Pipfile.lock in version control.
+#   However, in case of collaboration, if having platform-specific dependencies or dependencies
+#   having no cross-platform support, pipenv may install dependencies that don't work, or not
+#   install all needed dependencies.
+#Pipfile.lock
+
+# PEP 582; used by e.g. github.com/David-OConnor/pyflow
+__pypackages__/
+
+# Celery stuff
+celerybeat-schedule
+celerybeat.pid
+
+# SageMath parsed files
+*.sage.py
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+
+# Rope project settings
+.ropeproject
+ git pull origin master
+# mkdocs documentation
+/site
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Pyre type checker
+.pyre/
+
+### macOS template
+# General
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Icon must end with two \r
+Icon
+
+# Thumbnails
+._*
+
+# Files that might appear in the root of a volume
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+
+# Directories potentially created on remote AFP share
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+
+
+# Git ignore folder in TrainingOCRTesseract
+/TrainingOCRTesseract/tesseract/traineddata/
+/TrainingOCRTesseract/tesseract/data/
+/TrainingOCRTesseract/static/uploads/
+/TrainingOCRTesseract/static/ocr/
+/TrainingOCRTesseract/config.ini
+PythonService_new.zip
+*.ini
+
+# Git ignore folder in SignalRServer
+/SignalRServer/.vs
+/SignalRServer/obj
+/SignalRServer/bin
+/SignalRServer/*.bat
+
+CommonServices/.vs/
+CommonServices/XenaSignalR/bin/
+CommonServices/XenaSignalR/obj/
+CommonServices/XenaSchedulerCore/obj/
+CommonServices/XenaSchedulerCore/bin/
+CommonServices/XenaReport/obj/
+CommonServices/XenaReport/bin/
+CommonServices/XenaNPOIExcelCore/obj/
+CommonServices/XenaNPOIExcelCore/bin/
+CommonServices/XenaMatchingData/obj/
+CommonServices/XenaMatchingData/bin/
+CommonServices/XenaExcelCore/obj/
+CommonServices/XenaExcelCore/bin/
+CommonServices/XenaEmail/obj/
+CommonServices/XenaEmail/bin/
+CommonServices/XenaElasticSearchv7/obj/
+CommonServices/XenaElasticSearchv7/bin/
+CommonServices/XenaDeployScheduleNetCore/obj/
+CommonServices/XenaDeployScheduleNetCore/bin/
+CommonServices/packages/
+CommonServices/ReplaceAndConvertWord2Pdf/bin/
+CommonServices/ReplaceAndConvertWord2Pdf/obj/
+CommonServices/Test.Console/bin/
+CommonServices/Test.Console/obj/
+CommonServices/XenaBgService/bin/
+CommonServices/XenaBgService/obj/
+CommonServices/XenaCommon/bin/
+CommonServices/XenaCommon/obj/
+CommonServices/XenaDeployCore/bin/
+CommonServices/XenaDeployCore/obj/
+CommonServices/XenaDeploySchedule/bin/
+CommonServices/XenaDeploySchedule/obj/
+CommonServices/ImageProcess/bin/
+CommonServices/ImageProcess/obj/
+
+LoginCloud/.vs/
+LoginCloud/ExternalLoginWeb/bin/
+LoginCloud/ExternalLoginWeb/obj/
+LoginCloud/ExternalLoginWeb/wwwroot/
+CommonServices/DocProcessing/obj/
+CommonServices/DocProcessing/bin/
+*.bak
+*.rar
+*.sqlite

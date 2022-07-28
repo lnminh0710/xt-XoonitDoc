@@ -1,0 +1,14 @@
+<ng-container [ngSwitch]="cellStartedEdit">
+    <ng-container *ngSwitchCase="true">
+        <mat-form-field class="background-color booking-num table-dd-cell">
+            <input matInput #searchText class="font-color" autocomplete="off" [TableDropdown]="table"
+                [ngModel]="displayValue" (ngModelChange)="onSearch($event)">
+            <table-dropdown cssClass="dropdown-in-payment-overview" [guid]="'4182b473-efbe-439e-a308-731ca6abbcd9'"
+                [dataSource]="dataSource" [hightlightKeywords]="displayValue" [maxHeight]="300" [width]="350" [top]="15"
+                [x]="-10" (closeDropdown)="choose($event)" #table></table-dropdown>
+        </mat-form-field>
+    </ng-container>
+    <ng-container *ngSwitchDefault>
+        <span class="cell-ellipsis">{{displayValue}}</span>
+    </ng-container>
+</ng-container>

@@ -1,0 +1,10 @@
+<div class="widget-view-container full-width-height">
+    <div class="widget-viewer-content full-width-height drop-viewer-zone"
+        dnd-droppable 
+        [dropZones]="['widget-viewer']"
+        (onDropSuccess)="onDropFileViewer($event)">
+        <div class="full-width-height drop-viewer-content">
+            <ng-container #containerViewer></ng-container>
+        </div>
+    </div>
+</div>

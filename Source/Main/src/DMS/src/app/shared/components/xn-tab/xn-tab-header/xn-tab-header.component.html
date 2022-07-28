@@ -1,0 +1,245 @@
+<div class="tab-header-container">
+    <div class="scroller scroller-left"
+         [ngClass]="{'min-height': isTabCollapsed}"
+         (click)="scrollerLeftClick($event)">
+        <h4><i class="fa fa-chevron-left" aria-hidden="true"></i></h4>
+    </div>
+    <div class="scroller scroller-right"
+         [ngClass]="{'min-height': isTabCollapsed}"
+         (click)="scrollerRightClick($event)">
+        <h4 [ngClass]="{'min-height': isTabCollapsed}"><i class="fa fa-chevron-right" aria-hidden="true"></i></h4>
+    </div>
+    <div class="tab-summary-wrapper"
+         [ngClass]="{'min-height': isTabCollapsed, 'big-size': ofModuleLocal.idSettingsGUI == 43}">
+        <ul class="nav nav-tabs tab-summary-list">
+            <!--Main tab heading-->
+            <li *ngIf="mainTabHeader && mainTabHeader.visible && mainTabHeader.accessRight && mainTabHeader.accessRight.read"
+                id="{{mainTabHeader.tabSummaryInfor.tabID}}"
+                class="nav-item tab-summary cursor-pointer"
+                [ngClass]="{'active': mainTabHeader.active, 'disabled': mainTabHeader.disabled, 'min-height': isTabCollapsed, 'big-size': ofModuleLocal.idSettingsGUI == 43}"
+                [xnDropTarget]="{zone: 'widget'}"
+                (xnDrop)="onConnectWidget($event)">
+                <ng-template [ngIf]="!mainTabHeader.showAsOtherTab">
+                    <a data-target="#{{mainTabHeader.tabSummaryInfor.tabID}}"
+                       id="{{mainTabHeader.tabSummaryInfor.tabID}}-container"
+                       class="nav-link"
+                       [ngClass]="{'active': mainTabHeader.active,
+                               'disabled': mainTabHeader.disabled,
+                               'linkable-widget' : linkableWidget,
+                               'min-height': isTabCollapsed }"
+                       (click)="clickMainTabHeader(mainTabHeader, $event)"
+                       (dblclick)="clickMainTabHeader(mainTabHeader, $event)">
+                        <div class="panel main-tab"
+                             [ngClass]="{'min-height': isTabCollapsed}">
+                            <span *ngIf="isTabCollapsed"
+                                  class="margin-top--sd margin-left--sm font-size-14px">{{mainTabHeader.tabSummaryInfor.tabName}}</span>
+                            <div class="panel-heading"
+                                 *ngIf="mainTabHeader.active && ofModuleLocal.idSettingsGUI != 6 && !isTabCollapsed">
+                                <span class="margin-top--sm xn-icon__dot_list-horizontal icon-black pull-right"></span>
+                            </div>
+                            <div *ngIf="!isTabCollapsed"
+                                 class="panel-body"
+                                 [ngClass]="{'small-padding-top': !mainTabHeader.active && ofModuleLocal.idSettingsGUI == 6}">
+                                <div class="row"
+                                     *ngIf="mainTabHeader.tabSummaryData && mainTabHeader.tabSummaryData.length">
+                                    <div class="col-xs-12 logo"
+                                         *ngIf="ofModuleLocal.idSettingsGUI == 43">
+                                        <img src="{{mainTabHeader.tabSummaryData[0].logoUrl}}" />
+                                    </div>
+                                    <div class="col-xs-12"
+                                         *ngIf="ofModuleLocal.idSettingsGUI != 6"
+                                         [style.color]="mainTabHeader.tabSummaryData[0].textColor"
+                                         [innerHTML]="mainTabHeader.tabSummaryData[0].data"
+                                         dnd-draggable
+                                         [dropZones]="['parked-item']"
+                                         [dragEnabled]="mainTabHeader.active"
+                                         [dragData]="selectedEntity"></div>
+
+                                    <div class="col-xs-12"
+                                         *ngIf="ofModuleLocal.idSettingsGUI == 6">
+                                        <!--<app-business-cost-status-tab [status]="'good'"
+                                        [mainTabActive]="mainTabHeader.active"></app-business-cost-status-tab>-->
+                                    </div>
+                                </div>
+
+                                <div class="row"
+                                     *ngIf="(!mainTabHeader.tabSummaryData || !mainTabHeader.tabSummaryData.length) && (editingData || ofModuleLocal.idSettingsGUI == 6)">
+                                    <div class="col-xs-12"
+                                         *ngIf="editingData && ofModuleLocal.idSettingsGUI != 6">
+                                        {{editingData}}
+                                    </div>
+                                    <div class="col-xs-12"
+                                         *ngIf="ofModuleLocal.idSettingsGUI == 6">
+                                        <!--<app-business-cost-status-tab [status]="'good'"
+                                                                      [mainTabActive]="mainTabHeader.active"></app-business-cost-status-tab>-->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </ng-template>
+
+                <ng-template [ngIf]="mainTabHeader.showAsOtherTab">
+                    <a data-target="#{{mainTabHeader.tabSummaryInfor.tabID}}"
+                       id="{{mainTabHeader.tabSummaryInfor.tabID}}-container"
+                       class="nav-link"
+                       [ngClass]="{'active': mainTabHeader.active, 'disabled': mainTabHeader.disabled, 'linkable-widget' : linkableWidget, 'min-height': isTabCollapsed}"
+                       (click)="clickOtherTabsHeader(mainTabHeader, $event)"
+                       (dblclick)="clickOtherTabsHeader(mainTabHeader, $event)">
+                        <div class="panel other-tab-summary">
+                            <div class="panel-heading">
+                                <span class="margin-top--sm font-size-14px">{{mainTabHeader.tabSummaryInfor.tabName}}</span>
+
+                                <span class="pull-right tab-header-menu"
+                                      *ngIf="mainTabHeader.tabSummaryMenu && mainTabHeader.tabSummaryMenu.length">
+                                    <xn-tab-header-menu *ngIf="mainTabHeader.active"
+                                                        [tabID]="mainTabHeader.tabSummaryInfor.tabID"
+                                                        [data]="mainTabHeader.tabSummaryMenu"
+                                                        (onApply)="onTabHeaderMenuApply($event)"></xn-tab-header-menu>
+                                </span>
+                            </div>
+                            <div *ngIf="!isTabCollapsed"
+                                 class="panel-body">
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <em class="font-size-12px">Last Update: {{formatDate(mainTabHeader.tabSummaryInfor.lastUpdate, globalDateFormat)}}</em>
+                                    </div>
+                                </div>
+                                <div *ngIf="mainTabHeader.tabSummaryInfor.tabType == 2">
+                                    <ng-template ngFor let-sumData [ngForOf]="mainTabHeader.tabSummaryData">
+                                        <div #headerIconContainer
+                                             *ngIf="sumData.data"
+                                             [attr.data-is-parent-active]="mainTabHeader.active"
+                                             [attr.data-text-color]="sumData.textColor"
+                                             [attr.data-http-link]="sumData.httpLink"
+                                             (click)="onTabIconClick(mainTabHeader, sumData)"
+                                             class="col-xs-3 text-center header-icon-container"
+                                             [ngClass]="[(mainTabHeader.active && sumData.active) ? 'border-bottom' : '']">
+                                            <button mat-icon-button>
+                                                <h3 [style.color]="(mainTabHeader.active && sumData.active ) ? sumData.textColor : ''"
+                                                    tooltip="{{mainTabHeader.active ? sumData.toolTip : ''}}"
+                                                    placement="top"
+                                                    container="body">
+                                                    <i class="fa {{sumData.iconName}}" aria-hidden="true"></i>
+                                                </h3>
+                                            </button>
+                                            <div class="square-box text-center font-size-11px">
+                                                <span *ngIf="globalNumberFormat == 'N'" [style.color]="mainTabHeader.active ? sumData.textColor : ''">{{sumData.data | number:0}}</span>
+                                                <span *ngIf="globalNumberFormat != 'N'" [style.color]="mainTabHeader.active ? sumData.textColor : ''">{{sumData.data}}</span>
+                                            </div>
+                                        </div>
+                                    </ng-template>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </ng-template>
+                <ng-container *ngTemplateOutlet="linkWidgetContainer"></ng-container>
+
+            </li>
+
+            <!--Other tabs heading-->
+            <ng-template ngFor let-otherTabHeader [ngForOf]="otherTabsHeader" let-i="index">
+                <li *ngIf="otherTabHeader.visible && otherTabHeader.accessRight && otherTabHeader.accessRight.read"
+                    id="{{otherTabHeader.tabSummaryInfor.tabID}}"
+                    class="nav-item tab-summary cursor-pointer"
+                    [ngClass]="{'active': otherTabHeader.active, 'disabled': otherTabHeader.disabled, 'min-height': isTabCollapsed, 'big-size': ofModuleLocal.idSettingsGUI == 43}"
+                    [xnDropTarget]="{zone: 'widget'}"
+                    (xnDrop)="onConnectWidget($event)">
+                    <a data-target="#{{otherTabHeader.tabSummaryInfor.tabID}}"
+                       id="{{otherTabHeader.tabSummaryInfor.tabID}}-container"
+                       class="nav-link"
+                       [ngClass]="{'active': otherTabHeader.active, 'disabled': otherTabHeader.disabled, 'linkable-widget' : linkableWidget, 'min-height': isTabCollapsed}"
+                       (click)="clickOtherTabsHeader(otherTabHeader, $event)"
+                       (dblclick)="clickOtherTabsHeader(otherTabHeader, $event)">
+                        <div class="panel other-tab-summary">
+                            <div class="panel-heading">
+                                <span class="margin-top--sm font-size-14px">{{otherTabHeader.tabSummaryInfor.tabName}}</span>
+                                <span class="last-update" *ngIf="otherTabHeader.tabSummaryInfor.tabID == 'OrderProcessing'">
+                                    Last Update: {{formatDate(otherTabHeader.tabSummaryInfor.lastUpdate, globalDateFormat)}}
+                                </span>
+                                <span class="pull-right tab-header-menu"
+                                      *ngIf="otherTabHeader.tabSummaryMenu && otherTabHeader.tabSummaryMenu.length">
+                                    <xn-tab-header-menu *ngIf="otherTabHeader.active"
+                                                        [tabID]="otherTabHeader.tabSummaryInfor.tabID"
+                                                        [data]="otherTabHeader.tabSummaryMenu"
+                                                        (onApply)="onTabHeaderMenuApply($event)"></xn-tab-header-menu>
+                                </span>
+                            </div>
+                            <div *ngIf="!isTabCollapsed"
+                                 class="panel-body">
+                                <!--<div class="row" *ngIf="otherTabHeader.tabSummaryInfor.tabType == 1">
+                                    <div class="col-xs-12">
+                                        <em class="font-size-12px">Last Update: {{formatDate(otherTabHeader.tabSummaryInfor.lastUpdate, globalDateFormat)}}</em>
+                                    </div>
+                                </div>-->
+                                <div *ngIf="otherTabHeader.tabSummaryInfor.tabType == 2">
+                                    <ng-template ngFor let-sumData [ngForOf]="otherTabHeader.tabSummaryData">
+                                        <div #headerIconContainer
+                                             *ngIf="sumData.data"
+                                             [attr.data-is-parent-active]="otherTabHeader.active"
+                                             [attr.data-text-color]="sumData.textColor"
+                                             [attr.data-http-link]="sumData.httpLink"
+                                             (click)="onTabIconClick(otherTabHeader, sumData)"
+                                             class="col-xs-3 text-center header-icon-container"
+                                             [ngClass]="[(otherTabHeader.active && sumData.active) ? 'border-bottom' : '']">
+                                            <button mat-icon-button>
+                                                <h3 [style.color]="(otherTabHeader.active && sumData.active ) ? sumData.textColor : ''"
+                                                    tooltip="{{otherTabHeader.active ? sumData.toolTip : ''}}"
+                                                    placement="top"
+                                                    container="body">
+                                                    <i class="fa {{sumData.iconName}}" aria-hidden="true"></i>
+                                                </h3>
+                                            </button>
+                                            <div class="square-box text-center font-size-11px">
+                                                <span *ngIf="globalNumberFormat == 'N'" [style.color]="otherTabHeader.active ? sumData.textColor : ''">{{sumData.data | number:0}}</span>
+                                                <span *ngIf="globalNumberFormat != 'N'" [style.color]="otherTabHeader.active ? sumData.textColor : ''">{{sumData.data}}</span>
+                                            </div>
+                                        </div>
+                                    </ng-template>
+                                </div>
+                                <div *ngIf="otherTabHeader.tabSummaryInfor.tabID == 'OrderProcessing'">
+                                    <order-processing [data]="otherTabHeader"></order-processing>
+                                </div>
+                                <div *ngIf="otherTabHeader.tabSummaryInfor.tabID == 'Document'">
+                                    <document-processing [data]="otherTabHeader"></document-processing>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+
+                    <ng-container *ngIf="otherTabHeader.active == true && (!mainTabHeader || !mainTabHeader.visible)">
+                        <ng-container *ngTemplateOutlet="linkWidgetContainer"></ng-container>
+                    </ng-container>
+
+                </li>
+            </ng-template>
+            <xn-tab-header-sub-form *ngIf="ofModuleLocal
+                                            && ((ofModuleLocal.idSettingsGUI == 4 && isMainTabSelected) || ofModuleLocal.idSettingsGUI == 6 || ofModuleLocal.idSettingsGUI == 30)
+                                            && !isViewMode"
+                                    [isTabCollapsed]="isTabCollapsed"
+                                    [setting]="subTabSetting"></xn-tab-header-sub-form>
+        </ul>
+    </div>
+</div>
+
+<ng-template #linkWidgetContainer>
+    <div class="link-widget-container" *ngIf="linkableWidget"
+         [ngClass]="{'connected': isConnectedToMain}"
+         [xnDropTarget]="{zone: 'widget'}"
+         (xnDrop)="onConnectWidget($event)">
+        <div [ngClass]="{'tab-collapsed': isTabCollapsed}">
+            <div class="link-icon" *ngIf="!isTabCollapsed">
+                <div class="link-icon__radius">
+                    <i class="fa fa-link"></i>
+                </div>
+            </div>
+            <div class="link-text" *ngIf="!isConnectedToMain">
+                Drag here to connect
+            </div>
+            <div class="link-text" *ngIf="isConnectedToMain">
+                Connected
+            </div>
+        </div>
+    </div>
+</ng-template>

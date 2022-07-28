@@ -1,0 +1,30 @@
+@import '../user.authentication.scss';
+
+.authenticate {
+    padding: 2% 4%;
+
+    .error-body {
+        padding: 0 440px;
+        text-align: center;
+        .message {
+            background-color: $pink3;
+            padding: 18px 25px;
+            color: $red11;
+            margin-bottom: 65px;
+            font-size: 16px;
+            margin-left: 12%;
+            margin-right: 12%;
+            .subject {
+                font-family: 'rbt_Medium';
+            }
+        }
+
+        .title {
+            color: $blue-4;
+            font-size: 32px;
+            &.content {
+                margin-bottom: 134px;
+            }
+        }
+    }
+}

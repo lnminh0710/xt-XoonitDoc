@@ -1,0 +1,7 @@
+<div class="form-control-wrapper"
+        [ngStyle]="config?.style"
+         [formGroup]="formGroup" enterNextFocus>
+    <mat-slide-toggle attr.control-key="{{config.formControlName}}" color="primary" [formControlName]="config.formControlName">
+        <label-translation [keyword]="config.label"></label-translation>
+    </mat-slide-toggle>
+</div>

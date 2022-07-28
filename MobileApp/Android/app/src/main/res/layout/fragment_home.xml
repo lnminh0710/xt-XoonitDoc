@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/black_1">
+
+    <RelativeLayout
+        android:id="@+id/switch_view"
+        android:layout_width="match_parent"
+        android:layout_height="34dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        android:background="@color/black_1">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/document"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="4dp"
+                android:paddingBottom="4dp"
+                android:text="@string/document"
+                android:textColor="@color/text_grey_2"
+                android:textSize="14dp" />
+
+            <TextView
+                android:id="@+id/tvDocumentCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
+                android:layout_toEndOf="@id/document"
+                android:background="@drawable/edittext_border"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                tools:text="10"
+                android:paddingBottom="4dp"
+                android:paddingTop="4dp"
+                android:textColor="@color/white"
+                android:textSize="14dp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true">
+
+            <ImageButton
+                android:id="@+id/imgBtnViewByList"
+                android:layout_width="34dp"
+                android:layout_height="34dp"
+                android:background="@android:color/transparent"
+                android:src="@drawable/ic_list" />
+
+            <ImageButton
+                android:id="@+id/imgBtnViewByGrid"
+                android:layout_width="34dp"
+                android:layout_height="34dp"
+                android:layout_marginEnd="15dp"
+                android:layout_toEndOf="@id/imgBtnViewByList"
+                android:background="@android:color/transparent"
+                android:src="@drawable/ic_iconspace_grid" />
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvDocumentList"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_above="@id/page_number"
+        android:layout_below="@id/switch_view"
+        android:layout_marginTop="8dp"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp"
+        android:scrollbars="none" />
+
+    <GridView
+        android:id="@+id/gridDocumentHome"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_above="@id/page_number"
+        android:layout_below="@id/switch_view"
+        android:layout_marginTop="4dp"
+        android:gravity="center"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp"
+        android:numColumns="3"
+        android:scrollbars="none"
+        android:stretchMode="columnWidth"
+        android:visibility="gone" />
+
+    <RelativeLayout
+        android:id="@+id/page_number"
+        android:layout_width="wrap_content"
+        android:layout_height="56dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="20sp">
+
+        <TextView
+            android:id="@+id/page"
+            android:layout_width="wrap_content"
+            android:layout_height="34dp"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="120dp"
+            android:gravity="center"
+            android:text="Page"
+            android:textColor="@color/text_grey_2"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/pager_number"
+            android:layout_width="56dp"
+            android:layout_height="34dp"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="10dp"
+            android:layout_toEndOf="@id/page"
+            android:background="@drawable/edittext_border"
+            android:gravity="center"
+            android:text="1"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="14dp" />
+
+        <TextView
+            android:id="@+id/page_of"
+            android:layout_width="wrap_content"
+            android:layout_height="34dp"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="10dp"
+            android:layout_toEndOf="@id/pager_number"
+            android:gravity="center"
+            android:text="@string/of_number"
+            android:textColor="@color/text_grey_2"
+            android:textSize="14dp" />
+
+        <ImageButton
+            android:id="@+id/previous"
+            android:layout_width="34dp"
+            android:layout_height="34dp"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="10dp"
+            android:layout_toEndOf="@id/page_of"
+            android:background="@drawable/edittext_border"
+            android:clickable="true"
+            android:focusable="true"
+            android:src="@drawable/icon_back" />
+
+        <ImageButton
+            android:id="@+id/next"
+            android:layout_width="34dp"
+            android:layout_height="34dp"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="10dp"
+            android:layout_toEndOf="@id/previous"
+            android:background="@drawable/edittext_border"
+            android:clickable="true"
+            android:focusable="true"
+            android:src="@drawable/icon_next" />
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

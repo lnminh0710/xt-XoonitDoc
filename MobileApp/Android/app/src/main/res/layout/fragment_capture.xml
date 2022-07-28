@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#001420"
+    android:clickable="true"
+    android:focusable="true"
+    android:focusableInTouchMode="true">
+
+    <TextView
+        android:id="@+id/textview_address_document_capture"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="8dp"
+        android:background="@color/blue_dark_1"
+        android:gravity="center"
+        android:text="Invoice / Building / Diverses"
+        android:textColor="@color/white"
+        android:textSize="14dp" />
+
+    <GridView
+        android:id="@+id/gridview_fragment_capture"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/textview_address_document_capture"
+        android:background="#001420"
+        android:clipToPadding="false"
+        android:gravity="center"
+        android:horizontalSpacing="16dp"
+        android:numColumns="2"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        android:scrollbars="none"
+        android:verticalSpacing="16dp"
+        tools:targetApi="m" />
+
+    <ImageButton
+        android:id="@+id/fab_fragment_capture"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:background="@color/transparent"
+        android:src="@drawable/ic_fab_fragment_capture" />
+
+</RelativeLayout>

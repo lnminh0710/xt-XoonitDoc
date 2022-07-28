@@ -1,0 +1,28 @@
+@import 'src/sass_files/size.scss';
+
+.contact-detail {
+    .widget-header {
+        margin: 0;
+        width: 100%;
+
+        .button-box {
+            &.disabled-div {
+                pointer-events: none;
+                filter: brightness(0.3) !important;
+            }
+
+            img {
+                cursor: pointer;
+            }
+        }
+    }
+    .widget-content {
+        padding: 15px;
+    }
+
+    ::ng-deep .mat-form-field {
+        input {
+            font-size: 16px;
+        }
+    }
+}

@@ -1,0 +1,71 @@
+<p-dialog
+    *ngIf="widgetData"
+    #pEditDialog
+    [styleClass]="dialogStyleClass"
+    header=""
+    [(visible)]="showDialog"
+    [resizable]="isResizable"
+    [draggable]="isDraggable"
+    modal="modal"
+    [width]="dialogW"
+    [height]="dialogH"
+    responsive="true"
+    appendTo="body"
+    (onShow)="onShow()"
+>
+    <p-header>
+        <div class="modal-header--information">
+            <span class="fa fa-pencil-square-o header-icon pull-left"></span>
+            <span class="header-text pull-left">Widget Edit</span>
+            <div class="toolbar-icon close-dialog-icon" (click)="close()"></div>
+            <button
+                type="button"
+                mat-raised-button
+                class="mat-btn-expand-popup"
+                *ngIf="!isMaximized"
+                (click)="maximize()"
+            >
+                <span class="fa fa-window-maximize"></span>
+            </button>
+            <button
+                type="button"
+                mat-raised-button
+                class="mat-btn-collapse-popup"
+                *ngIf="isMaximized"
+                (click)="restore()"
+            >
+                <span class="fa fa-window-restore"></span>
+            </button>
+        </div>
+    </p-header>
+    <div [ngStyle]="contentStyle">
+        <widget-module-info
+            [showInDialog]="true"
+            [widgetStates]="widgetStates"
+            [currentModule]="currentModule"
+            [activeSubModule]="activeSubModule"
+            [widgetProperties]="_widgetData.properties"
+            (onEditingWidget)="onEditingWidget($event)"
+            (onSaveSuccessWidget)="saveSuccessWidget($event)"
+            (onOpenTranslateWidget)="onOpenTranslateWidget($event)"
+            (onChangeFieldFilter)="changeFieldFilter($event)"
+            (onResetWidget)="onResetWidget($event)"
+        >
+        </widget-module-info>
+    </div>
+    <p-footer>
+        <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix no-border no-padding">
+            <button
+                label="Cancel"
+                pbutton=""
+                type="button"
+                mat-raised-button
+                class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"
+                (click)="close()"
+            >
+                <span class="ui-button-text ui-c">Cancel</span>
+            </button>
+        </div>
+        <div class="widget-info__resize_bottom xn-icon__resize icon-black"></div>
+    </p-footer>
+</p-dialog>

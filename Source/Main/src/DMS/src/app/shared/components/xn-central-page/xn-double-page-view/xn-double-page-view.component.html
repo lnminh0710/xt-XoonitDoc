@@ -1,0 +1,15 @@
+<app-xn-double-page-view-horizontal *ngIf="isHorizontal"
+                                    [data]="split"                                    
+                                    [isOrderDataEntry]="isOrderDataEntry"
+                                    [isActivated]="isActivated"
+                                    [tabID]="tabID"
+                                    [isSplitterDragging]="isSplitterDragging">
+</app-xn-double-page-view-horizontal>
+
+<app-xn-double-page-view-vertical *ngIf="isVertical"
+                                  [data]="split"                                  
+                                  [isOrderDataEntry]="isOrderDataEntry"
+                                  [isActivated]="isActivated"
+                                  [tabID]="tabID"
+                                  [isSplitterDragging]="isSplitterDragging">
+</app-xn-double-page-view-vertical>

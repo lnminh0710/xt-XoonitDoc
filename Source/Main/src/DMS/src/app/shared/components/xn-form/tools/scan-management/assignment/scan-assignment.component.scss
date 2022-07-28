@@ -1,0 +1,65 @@
+$spacing: 5px;
+$command-height: 30px;
+
+.scan-assignment-winzard {
+    height: ($spacing*13);
+}
+
+.scan-assignment-step {
+    height: calc(100% - #{($spacing*13)});
+}
+.scan-assignment-step-1-grid {
+    height: calc(100% - #{($spacing*8)});
+}
+
+.scan-assignment-step-1-grid,
+.scan-assignment-step-2-grid,
+.scan-assignment-step-3-grid {
+    min-height: ($spacing*40);
+}
+
+.xn-width-100 {
+    min-width: ($spacing*20);
+    width: auto;
+}
+
+.table-title {
+    z-index: 2;
+    height: ($spacing*4);
+    width: auto;
+    padding: $spacing ($spacing*2);
+    font-weight: bold;
+}
+
+.margin-top-10 {
+    margin-top: ($spacing*4);
+}
+
+.xn-label-01 {
+    padding-top: ($spacing*2);
+}
+
+.xn-padding-10 {
+    padding: ($spacing*2);
+}
+
+.xn-magintop-minus-01 {
+    margin-top: -($spacing*12);
+}
+
+.xn-padding-50 {
+    padding-right: ($spacing*10);
+}
+
+.table-title--spacing {
+    margin-top: ($spacing*9);
+}
+.scan-assignment-step-2-grid {
+    height: calc(100% - #{$command-height});
+}
+.scan-assignment-step-3-grid {
+    padding-left: ($spacing*2);
+    padding-right: ($spacing*2);
+    height: calc(100% - #{($spacing*10)});
+    float: left;
+}

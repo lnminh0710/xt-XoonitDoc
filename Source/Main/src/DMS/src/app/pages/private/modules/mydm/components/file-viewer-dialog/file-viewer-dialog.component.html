@@ -1,0 +1,141 @@
+<p-dialog
+    header=""
+    [(visible)]="isShowDialog"
+    [styleClass]="dialogClass"
+    appendTo="body"
+    modal="true"
+    [draggable]="true"
+    [resizable]="true"
+    responsive="true"
+    (onHide)="close()"
+>
+    <div class="file-viewer-dialog">
+        <div
+            class="file-viewer-dialog__close-button toolbar-icon icon-transform close-circle-icon"
+            (click)="close()"
+        ></div>
+        <div class="file-viewer-dialog__content">
+            <div class="file-viewer-dialog__content-loading" *ngIf="isLoading">
+                <img src="public/assets/img/loading-spinner.gif" />
+            </div>
+
+            <!-- pdf -->
+            <div class="file-viewer-dialog__pdf scrollbar" mouseWheel *ngIf="fileType === FileGroupType.PDF">
+                <pdf-viewer
+                    [src]="imageSrc"
+                    [fit-to-page]="true"
+                    [original-size]="false"
+                    [render-text]="true"
+                    [show-all]="false"
+                    [page]="pageVariable"
+                    [zoom]="zoomVariable"
+                    [rotation]="rotateVariable"
+                    (after-load-complete)="loadPdfComplete($event)"
+                    style="display: block"
+                ></pdf-viewer>
+            </div>
+            <!-- text -->
+            <div class="file-viewer-dialog__text" *ngIf="fileType === FileGroupType.TEXT">
+                {{ this.imageSrc }}
+            </div>
+            <!-- image -->
+            <!-- <canvas id="image-file-viewer-dialog__canvas"></canvas> -->
+            <image-viewer-canvas
+                #imageViewer
+                [imageSrc]="imageSrc"
+                [isBase64]="true"
+                [hideToolbar]="true"
+                *ngIf="fileType === FileGroupType.IMAGE"
+            ></image-viewer-canvas>
+        </div>
+        <div class="file-viewer-dialog__toolbar" *ngIf="fileType !== FileGroupType.TEXT && !isLoading">
+            <div class="file-viewer-dialog__toolbar-container">
+                <div class="file-viewer-dialog__toolbar-paging" *ngIf="totalPage > 1">
+                    <div
+                        class="file-viewer-dialog__toolbar-paging-icon"
+                        [ngClass]="{
+                            'prev-icon-disabled': pageVariable === 1,
+                            'prev-icon': pageVariable > 1
+                        }"
+                        (click)="pageVariable > 1 && (pageVariable = pageVariable - 1)"
+                    ></div>
+                    {{ pageVariable }} / {{ totalPage }}
+                    <div
+                        class="file-viewer-dialog__toolbar-paging-icon"
+                        [ngClass]="{
+                            'next-icon': pageVariable < totalPage,
+                            'next-icon-disabled': pageVariable >= totalPage
+                        }"
+                        (click)="pageVariable < totalPage && (pageVariable = pageVariable + 1)"
+                    ></div>
+                </div>
+                <div class="file-viewer-dialog__toolbar-line" *ngIf="totalPage > 1"></div>
+                <div
+                    class="file-viewer-dialog __toolbar-icon-button"
+                    #popRotateL="bs-tooltip"
+                    container="body"
+                    data-placement="bottom"
+                    [tooltip]="rotateLeftTmp"
+                >
+                    <div class="toolbar-icon icon-transform rotate-left-icon" (click)="onRotateImage(-90)"></div>
+                </div>
+                <div class="file-viewer-dialog__toolbar-line"></div>
+                <div
+                    class="file-viewer-dialog __toolbar-icon-button"
+                    #popRotateR="bs-tooltip"
+                    container="body"
+                    data-placement="bottom"
+                    [tooltip]="rotateRightTmp"
+                >
+                    <div class="toolbar-icon icon-transform rotate-right-icon" (click)="onRotateImage(90)"></div>
+                </div>
+                <div class="file-viewer-dialog__toolbar-line"></div>
+                <div
+                    class="file-viewer-dialog __toolbar-icon-button"
+                    #popZoomI="bs-tooltip"
+                    container="body"
+                    data-placement="bottom"
+                    [tooltip]="zoomInTmp"
+                >
+                    <div class="toolbar-icon icon-transform zoom-in-icon" (click)="onZoomImage(1.2)"></div>
+                </div>
+                <div class="file-viewer-dialog__toolbar-line"></div>
+                <div
+                    class="file-viewer-dialog __toolbar-icon-button"
+                    #popZoomO="bs-tooltip"
+                    container="body"
+                    data-placement="bottom"
+                    [tooltip]="zoomOutTmp"
+                >
+                    <div class="toolbar-icon icon-transform zoom-out-icon" (click)="onZoomImage(0.8)"></div>
+                </div>
+                <div class="file-viewer-dialog__toolbar-line"></div>
+                <div
+                    class="file-viewer-dialog __toolbar-icon-button"
+                    #popViewAS="bs-tooltip"
+                    container="body"
+                    data-placement="bottom"
+                    [tooltip]="viewActualTmp"
+                >
+                    <div class="toolbar-icon icon-transform view-actual-size-icon" (click)="viewActualSize()"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</p-dialog>
+
+<ng-template #viewActualTmp>
+    <label-translation [keyword]="'IMAGE_TOOLBAR__ViewActualSize'"></label-translation>
+</ng-template>
+<ng-template #zoomOutTmp>
+    <label-translation [keyword]="'IMAGE_TOOLBAR__ZoomOut'"></label-translation>
+</ng-template>
+<ng-template #zoomInTmp>
+    <label-translation [keyword]="'IMAGE_TOOLBAR__ZoomIn'"></label-translation>
+</ng-template>
+<ng-template #rotateRightTmp>
+    <label-translation [keyword]="'IMAGE_TOOLBAR__RotateRight'"></label-translation>
+</ng-template>
+<ng-template #rotateLeftTmp>
+    <label-translation [keyword]="'IMAGE_TOOLBAR__RotateLeft'"></label-translation>
+</ng-template>

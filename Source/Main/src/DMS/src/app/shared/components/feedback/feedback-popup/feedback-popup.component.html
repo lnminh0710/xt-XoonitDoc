@@ -1,0 +1,77 @@
+<p-dialog
+    header=""
+    [styleClass]="'prime-dialog prime-dialog-feedback'"
+    [(visible)]="isShowDialog"
+    modal="true"
+    width="{{ popupWidth }}"
+    height="{{ popupHeight }}"
+    positionTop="150"
+    responsive="true"
+    appendTo="body"
+    [resizable]="false"
+    [draggable]="true"
+    [contentStyle]="{ 'padding-bottom': 0, 'padding-top': 0 }"
+>
+    <p-header>
+        <div class="modal-header--information">
+            <span class="header-text">
+                <label-translation
+                    *ngIf="feedbackStoreData && feedbackStoreData.isSendToAdmin"
+                    [keyword]="'Feedback_popup__Send_To_Admin'"
+                ></label-translation>
+                <label-translation
+                    *ngIf="!(feedbackStoreData && feedbackStoreData.isSendToAdmin)"
+                    [keyword]="'Feedback_popup__Feedback'"
+                ></label-translation>
+            </span>
+            <!-- <button type="button"
+                    mat-raised-button
+                    class="mat-btn-close-popup"
+                    aria-label="Close"
+                    (click)="closeDialogInside()">
+                <span class="fa fa-fw fa-close"></span>
+            </button> -->
+            <div class="toolbar-icon close-dialog-icon" (click)="closeDialogInside()"></div>
+        </div>
+    </p-header>
+    <div class="row content-detail">
+        <feedback-form
+            #feedbackForm
+            [imageTemps]="imageTemps"
+            [dataUrl]="dataUrl"
+            [feedbackStoreData]="feedbackStoreData"
+            [browserInfo]="browserInfo"
+            (removeItem)="removeItemHandle($event)"
+            (outputData)="feedbackFormOutputData($event)"
+            (callResizePopup)="callResizePopup()"
+            (showImageReview)="showImageReviewHandle($event)"
+        >
+        </feedback-form>
+    </div>
+    <p-footer>
+        <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix no-border no-padding">
+            <button class="pull-left new-size m-w--lg" mat-button (click)="makeCaptureWholeClicked()">
+                <span class="fa fa-desktop"></span>
+                <span class="bt-t"
+                    ><label-translation [keyword]="'Feedback_popup__Make_whole_capture'"></label-translation
+                ></span>
+            </button>
+            <button class="pull-left new-size m-w--lg" mat-button (click)="makeCaptureAreaClicked()">
+                <span class="fa fa-camera"></span>
+                <span class="bt-t"
+                    ><label-translation [keyword]="'Feedback_popup__Select_area_capture'"></label-translation
+                ></span>
+            </button>
+            <button
+                type="button"
+                class="mat-btn-blue pull-right new-size m-w--sm"
+                mat-raised-button
+                title="Save"
+                (click)="sendToAdmin()"
+            >
+                <span class="bt-t"><label-translation [keyword]="'Feedback_popup__Send'"></label-translation></span>
+            </button>
+        </div>
+        <div class="widget-info__resize_bottom xn-icon__resize icon-black"></div>
+    </p-footer>
+</p-dialog>

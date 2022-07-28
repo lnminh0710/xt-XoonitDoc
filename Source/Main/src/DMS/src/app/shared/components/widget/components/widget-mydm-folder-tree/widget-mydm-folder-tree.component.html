@@ -1,0 +1,56 @@
+<!-- <div class="widget-header struct-tree d-flex flex-row justify-content-between">
+    <label-translation [keyword]="'COMMON_LABEL__Structure_Tree'"></label-translation>
+    <span class="ml-auto" style="margin-right: 6px">
+        <button
+            mat-icon-button
+            class="btn-action icon-transform"
+            style="top: -10px"
+            (click)="reload()"
+            #popRefresh="bs-tooltip"
+            container="body"
+            data-placement="bottom"
+            [tooltip]="'Refresh'"
+            [attr.control-key]="'document-viewer__refresh'"
+        >
+            <mat-icon [svgIcon]="IconNamesEnum.WIDGET_MYDM_FORM_Reset"></mat-icon>
+        </button>
+    </span>
+    <span>
+        <button
+            mat-icon-button
+            disableRipple
+            [style.width.px]="20"
+            [style.height.px]="20"
+            [style.line-height.px]="0"
+            (click)="toggleFolderTree($event)"
+        >
+            <mat-icon
+                [svgIcon]="iconChevronDownCicle"
+                aria-hidden="false"
+                inline="true"
+                [style.transition]="'all .1s'"
+                [ngStyle]="!isCollapsed && { transform: 'rotate(180deg) translate(0px, 5px)' }"
+            ></mat-icon>
+        </button>
+    </span>
+</div> -->
+<xn-document-tree-header
+    [hasCollaspeExpand]="false"
+    [hasBtnShowActive]="false"
+    (reloadTree)="reload()"
+></xn-document-tree-header>
+<div class="classified-folder-tree-wrapper">
+    <div class="tree-folder" *ngIf="docTreeList.length > 0">
+        <xn-document-tree
+            [dataTree]="docTreeList"
+            #xnDocumentTree
+            [shouldGetDocumentQuantity]="true"
+            [modeTree]="modeTree"
+            (onClickOnNode)="onClickOnNode($event)"
+            (onDblClickOnNode)="onDblClickOnNode($event)"
+            [config]="structureTreeConfig"
+            [hidden]="hiddenTree"
+        >
+        </xn-document-tree>
+    </div>
+</div>

@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:local="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:background="@color/black_1"
+    android:orientation="vertical">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/top"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/blue_2"
+        android:fitsSystemWindows="true">
+
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar_Home"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:background="@color/blue_2"
+            android:contentInsetStart="0dp"
+            android:contentInsetLeft="0dp"
+            local:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            local:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            app:contentInsetLeft="0dp"
+            app:contentInsetStart="0dp"
+            app:layout_collapseMode="pin">
+            <GridLayout
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:columnCount="3"
+                android:rowCount="1">
+
+                <ImageButton
+                    android:id="@+id/btnBack"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_row="0"
+                    android:layout_column="0"
+                    android:layout_columnWeight="0"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="20dp"
+                    android:background="@android:color/transparent"
+                    android:src="@drawable/icon_back_photo"
+                    android:visibility="visible"/>
+                <TextView
+                    android:id="@+id/btnCancel"
+                    android:layout_width="38dp"
+                    android:layout_height="24dp"
+                    android:layout_row="0"
+                    android:layout_column="0"
+                    android:layout_columnWeight="0"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="center"
+                    android:layout_marginStart="20dp"
+                    android:text="@string/cancel"
+                    android:textColor="@color/text_color_blue"
+                    android:textSize="12sp"
+                    android:visibility="invisible"
+                    android:background="@android:color/transparent" />
+
+                <TextView
+                    android:id="@+id/TextHome"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_row="0"
+                    android:layout_column="1"
+                    android:layout_columnWeight="2"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="18dp"
+                    android:gravity="center"
+                    android:text="Photos"
+                    android:textColor="#FFFFFF"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_row="0"
+                    android:layout_column="2"
+                    android:layout_columnWeight="0"
+                    android:layout_marginEnd="@dimen/margin_20">
+
+                    <ImageButton
+                        android:id="@+id/btnSHowTree"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_centerVertical="true"
+                        android:background="@android:color/transparent"
+                        android:src="@drawable/ic_icons___menussub" />
+
+                    <ImageButton
+                        android:id="@+id/btnShowMenu"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_centerVertical="true"
+                        android:layout_toEndOf="@id/btnSHowTree"
+                        android:background="@android:color/transparent"
+                        android:src="@drawable/ic_grid" />
+                </RelativeLayout>
+            </GridLayout>
+        </androidx.appcompat.widget.Toolbar>
+
+
+        <androidx.appcompat.widget.SearchView
+            android:id="@+id/Search_item_Home"
+            android:layout_width="match_parent"
+            android:layout_height="34dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/border_search"
+            android:clickable="true"
+            android:focusable="true"
+            app:queryHint="Search"
+            app:searchIcon="@drawable/ic_search" />
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <LinearLayout
+        android:id="@+id/tab_menu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/top"
+        android:background="@color/color_toolbar_photo"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/btnGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:paddingStart="94dp"
+            android:paddingTop="6dp"
+            android:paddingBottom="6dp"
+            android:src="@drawable/ic_iconspace_folders" />
+
+        <ImageButton
+            android:id="@+id/btnUpload"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:paddingStart="46dp"
+            android:paddingTop="6dp"
+            android:paddingEnd="46dp"
+            android:paddingBottom="6dp"
+            android:src="@drawable/ic_iconspace_upload" />
+
+        <ImageButton
+            android:id="@+id/btnDeleteAll"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:paddingTop="6dp"
+            android:paddingEnd="94dp"
+            android:paddingBottom="6dp"
+            android:src="@drawable/ic_iconspace_delete_image" />
+    </LinearLayout>
+    <ProgressBar
+        android:id="@+id/progress_upload"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tab_menu"
+        android:background="#001420"
+        android:layout_marginTop="@dimen/margin_10"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:progressBackgroundTint="#697788"
+        android:progressTint="#FFC200"
+        android:visibility="gone" />
+
+    <GridView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/progress_upload"
+        android:background="@color/black_1"
+        android:choiceMode="multipleChoice"
+        android:layout_margin="17dp"
+        android:gravity="center"
+        android:longClickable="true"
+        android:numColumns="2"
+        android:scrollbars="none"
+        android:stretchMode="columnWidth"
+        android:id="@+id/grid_photos"
+        android:horizontalSpacing="16dp"
+        android:verticalSpacing="16dp"/>
+    <Button
+        android:id="@+id/upload_image"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="4dp"
+        android:paddingBottom="4dp"
+        android:layout_alignParentBottom="true"
+        android:backgroundTint="@color/orange"
+        android:text="@string/upload"
+        android:textColor="@color/white"
+        android:textSize="17sp"/>
+
+</RelativeLayout>

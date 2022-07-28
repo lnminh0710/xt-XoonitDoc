@@ -1,0 +1,207 @@
+<div class="cloud-remote-connection">
+    <div class="cloud-remote-connection__header">
+        <span class="cloud-remote-connection__title"> Remote Connection </span>
+        <div class="toolbar-icon close-dialog-icon" aria-label="Close" (click)="close()"></div>
+    </div>
+    <div class="border"></div>
+    <div class="display-flex right-side h-100 cloud-remote-connection-remote-form">
+        <div class="flex-middle w-100">
+            <form *ngIf="remoteConnectionForm" [formGroup]="remoteConnectionForm" autocomplete="off">
+                <div class="row display-flex">
+                    <div class="col-xs-2 flex-middle">
+                        <mat-label>{{ dataFields.TYPE.displayName }}</mat-label>
+                    </div>
+                    <div class="form-group col-xs-10">
+                        <mat-form-field appearance="outline" class="xoonit-control cloud-remote-connection-type">
+                            <mat-select xnEnteBreakDown [formControlName]="dataFields.TYPE.controlName"
+                             (selectionChange)="onSelectRemoteTypeChange($event)">
+                                <mat-option *ngFor="let type of remoteType" [value]="type.idType">
+                                    {{ type.valueType }}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <xn-error-message [condition]="xnErrorMessageHelper.isRequired(remoteConnectionForm, dataFields.TYPE.controlName)"
+                                          [fieldName]="dataFields.TYPE.displayName"
+                                          [typeErr]="ERR_MES_TYPE_ENUM.REQUIRED">
+                        </xn-error-message>
+                    </div>
+                </div>
+                <div class="row display-flex">
+                    <div class="col-xs-2 flex-middle">
+                        <mat-label>{{ dataFields.HOST.displayName }}</mat-label>
+                    </div>
+                    <div class="form-group col-xs-10">
+                        <mat-form-field appearance="outline" class="xoonit-control">
+                            <input matInput
+                                   xnEnteBreakDown
+                                   [xnControlsData]="controlDataList"
+                                   type="text"
+                                   [placeholder]="dataFields.HOST.displayName"
+                                   [attr.name]="dataFields.HOST.controlName"
+                                   id="{{ dataFields.HOST.controlName }}"
+                                   [formControlName]="dataFields.HOST.controlName"
+                                   autocomplete="off"
+                                   required />
+                        </mat-form-field>
+                        <xn-error-message [condition]="xnErrorMessageHelper.isRequired(remoteConnectionForm, dataFields.HOST.controlName)"
+                                          [fieldName]="dataFields.HOST.displayName"
+                                          [typeErr]="ERR_MES_TYPE_ENUM.REQUIRED">
+                        </xn-error-message>
+                    </div>
+                </div>
+                <div class="row display-flex">
+                    <div class="col-xs-2 flex-middle">
+                        <mat-label>{{ dataFields.PORT.displayName }}</mat-label>
+                    </div>
+                    <div class="form-group col-xs-10">
+                        <mat-form-field appearance="outline"
+                                        class="xoonit-control"
+                                        [ngClass]="{ 'has-prefix': hasPrefixPhoneNumber }">
+                            <input matInput
+                                   xnEnteBreakDown
+                                   [xnControlsData]="controlDataList"
+                                   type="number"
+                                   [placeholder]="dataFields.PORT.displayName"
+                                   [attr.name]="dataFields.PORT.controlName"
+                                   id="{{ dataFields.PORT.controlName }}"
+                                   [formControlName]="dataFields.PORT.controlName"
+                                   autocomplete="off"
+                                   (keypress)="numberOnly($event)" />
+                        </mat-form-field>
+                        <xn-error-message [condition]="xnErrorMessageHelper.isRequired(remoteConnectionForm, dataFields.TYPE.controlName)"
+                                          [fieldName]="dataFields.TYPE.displayName"
+                                          [typeErr]="ERR_MES_TYPE_ENUM.REQUIRED">
+                        </xn-error-message>
+                    </div>
+                </div>
+                <div class="row display-flex">
+                    <div class="col-xs-2 flex-middle">
+                        <mat-label>{{ dataFields.USER_NAME.displayName }}</mat-label>
+                    </div>
+                    <div class="form-group col-xs-10">
+                        <mat-form-field appearance="outline" class="xoonit-control">
+                            <input matInput
+                                   xnEnteBreakDown
+                                   [xnControlsData]="controlDataList"
+                                   type="text"
+                                   [placeholder]="dataFields.USER_NAME.displayName"
+                                   [attr.name]="dataFields.USER_NAME.controlName"
+                                   id="{{ dataFields.USER_NAME.controlName }}"
+                                   [formControlName]="dataFields.USER_NAME.controlName"
+                                   autocomplete="off"
+                                   required />
+                        </mat-form-field>
+                        <xn-error-message [condition]="xnErrorMessageHelper.isRequired(remoteConnectionForm, dataFields.USER_NAME.controlName)"
+                                          [fieldName]="dataFields.USER_NAME.displayName"
+                                          [typeErr]="ERR_MES_TYPE_ENUM.REQUIRED">
+                        </xn-error-message>
+                    </div>
+                </div>
+                <div class="row display-flex">
+                    <div class="col-xs-2 flex-middle">
+                        <mat-label>{{ dataFields.PASS.displayName }}</mat-label>
+                    </div>
+                    <div class="form-group col-xs-10">
+                        <mat-form-field appearance="outline" class="xoonit-control">
+                          
+                            <input matInput xnEnteBreakDown [xnControlsData]="controlDataList" [type]="passType"
+                            [placeholder]="dataFields.PASS.displayName"
+                            [attr.name]="dataFields.PASS.controlName"
+                            id="{{ dataFields.PASS.controlName }}"
+                            [formControlName]="dataFields.PASS.controlName"
+                            autocomplete="off"
+                            required />
+                            <mat-icon matSuffix>
+                                <img *ngIf="passType === PASSWORD_DISPLAY_CONSTANT.PASSWORD"
+                                     src="public/imgs/authenticate/invisible.svg" alt="hide pass"
+                                     (click)="showHidePassword()">
+                                <img *ngIf="passType === PASSWORD_DISPLAY_CONSTANT.TEXT"
+                                     src="public/imgs/authenticate/visible.svg" alt="show pass" (click)="showHidePassword()">
+                            </mat-icon>
+                        </mat-form-field>
+                       
+                        <xn-error-message [condition]="xnErrorMessageHelper.isRequired(remoteConnectionForm, dataFields.PASS.controlName)"
+                                          [fieldName]="dataFields.PASS.displayName"
+                                          [typeErr]="ERR_MES_TYPE_ENUM.REQUIRED">
+                        </xn-error-message>
+                    </div>
+                </div>
+                <div class="row display-flex">
+                    <div class="col-xs-2 flex-middle">
+                        <mat-label>{{ dataFields.FOLDER.displayName }}</mat-label>
+                    </div>
+                    <div class="form-group col-xs-10">
+                        <mat-form-field appearance="outline" class="xoonit-control">
+                            <input matInput
+                                   xnEnteBreakDown
+                                   [xnControlsData]="controlDataList"
+                                   type="text"
+                                   [placeholder]="dataFields.FOLDER.displayName"
+                                   [attr.name]="dataFields.FOLDER.controlName"
+                                   id="{{ dataFields.FOLDER.controlName }}"
+                                   [formControlName]="dataFields.FOLDER.controlName"
+                                   autocomplete="off" />
+                        </mat-form-field>
+                        <!-- <xn-error-message
+                            [condition]="
+                                xnErrorMessageHelper.isRequired(remoteConnectionForm, dataFields.FOLDER.controlName)
+                            "
+                            [fieldName]="dataFields.FOLDER.displayName"
+                            [typeErr]="ERR_MES_TYPE_ENUM.REQUIRED"
+                        >
+                        </xn-error-message> -->
+                    </div>
+                </div>
+
+                <div class="row display-flex w-100">
+                    <div class="cloud-remote-connection__action cloud-remote-connection__button_action">
+                        <div class="cloud-remote-connection__button-cancel" (click)="close()">Cancel</div>
+                        <div class="cloud-remote-connection__buttons-right">
+                            <div [class.isDisabled]="!isCanSave"
+                                 class="cloud-remote-connection__button-test"
+                                 *ngIf="!isSaving"
+                                 (click)="submitCloudConnection()">
+                                <span *ngIf="saveResponse !== 'success' || isCanSave">Save </span>
+                                <div class="cloud-remote-connection__connection-success"
+                                     *ngIf="saveResponse === 'success' && !isCanSave">
+                                    <i class="fa fa-check-circle"></i>
+                                    Success
+                                </div>
+                            </div>
+                            <div class="cloud-remote-connection__button-done"
+                                 (click)="testConnection()"
+                                 [class.isDisabled]="!remoteConnectionForm.valid"
+                                 *ngIf="!isLoading">
+                                <span *ngIf="testResponse !== 'success' || isCanTestConnection"> Test Connection </span>
+                                <div class="cloud-remote-connection__connection-success"
+                                     *ngIf="testResponse === 'success' && !isCanTestConnection">
+                                    <i class="fa fa-check-circle"></i>
+                                    Success
+                                </div>
+                            </div>
+                           
+                            <div class="cloud-remote-connection__save-connection" *ngIf="isSaving">
+                                <div class="cloud-remote-connection__connection-progress"
+                                     *ngIf="saveProgress"
+                                     [style.width.%]="saveProgress"></div>
+                            </div>
+                            <div class="cloud-remote-connection__connection" *ngIf="isLoading">
+                                <div class="cloud-remote-connection__connection-progress"
+                                     *ngIf="testProgress"
+                                     [style.width.%]="testProgress"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row cloud-remote-connection__connection-error" *ngIf="testResponse === 'error'">
+                    <i class="fa fa-exclamation-triangle"></i>
+                    {{ testError }}
+                </div>
+                <div class="row cloud-remote-connection__connection-error" *ngIf="saveResponse === 'error'">
+                    <i class="fa fa-exclamation-triangle"></i>
+                    {{ saveError }}
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

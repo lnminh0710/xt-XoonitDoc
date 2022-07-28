@@ -1,0 +1,34 @@
+<div class="widget-header"></div>
+<div *ngIf="form" class="dms-list-widget scroll-bar-custom">
+    <div class="dms-widget">
+        <form [formGroup]="form">
+            <div class="row dms-flex dms-header">
+                <div class="col-sm-8 col-md-7">
+                    <div>{{data.nameForm}}</div>
+                </div>
+            </div>
+            <div *ngFor="let item of getListControlWithoutHiddenAndReadOnly(data.listControl)">
+                <div *ngIf="item.originalColumnName === 'garantie' || item.originalColumnName === 'bisDatum'; else otherForm"
+                    class="row dms-flex">
+                    <div *ngIf="item.originalColumnName === 'garantie'" class="form-group col-md-6 vertical-middle">
+                        <control-dynamic [controlData]="item" [form]="form"
+                            [listControlData]="getListControlWithoutHiddenAndReadOnly(data.listControl)">
+                        </control-dynamic>
+                    </div>
+                    <div *ngIf="item.originalColumnName === 'garantie'" class="form-group col-md-6">
+                        <control-dynamic [controlData]="bisDatumData" [form]="form"
+                            [listControlData]="getListControlWithoutHiddenAndReadOnly(data.listControl)">
+                        </control-dynamic>
+                    </div>
+                </div>
+                <ng-template #otherForm>
+                    <div class="form-group">
+                        <control-dynamic [controlData]="item" [form]="form"
+                            [listControlData]="getListControlWithoutHiddenAndReadOnly(data.listControl)">
+                        </control-dynamic>
+                    </div>
+                </ng-template>
+            </div>
+        </form>
+    </div>
+</div>

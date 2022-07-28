@@ -1,0 +1,70 @@
+<div class="widget-template-tab">
+    <div class="small-line"></div>
+    <div class="btn-group  width-pc-100 margin-top-4px">
+        <a mat-button
+           class="mat-btn-blue"
+           (click)="!disableSaveWidget && saveWidget($event)">
+            <i class="fa fa-floppy-o" aria-hidden="true"></i>
+        </a>
+        <a mat-button
+           class="mat-btn-red"
+           (click)="collapsed($event)">
+            <i class="fa fa-times fa-lg"></i>
+        </a>
+    </div>
+
+    <div class="widget-categories">
+        <ul *ngIf="widgetToolbar && widgetToolbar.length">
+            <ng-template ngFor let-item [ngForOf]="widgetToolbar" [ngForTrackBy]="widgetToolbarTrackBy">
+                <ng-template [ngIf]="!item.hidden">
+                    <li *ngIf="item.Widgets && item.Widgets.length"
+                        dropdown
+                        placement="top left"
+                        container="body"
+                        [isOpen]="item.isopen">
+                        <button class="widget-cat-item"
+                                mat-button
+                                dropdownToggle
+                                [ngClass]="{'has-widget': item.Widgets && item.Widgets.length,
+                                    'cat-selected': item.selected}"
+                                (click)="clickWidgetItem(item)">
+                            <span>
+                                <i class="fa {{item.Icon}}" aria-hidden="true"
+                                   tooltip="{{item.Tooltip}}"
+                                   placement="left"
+                                   container="body"></i>
+                            </span>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-right widget-dropdown-menu"
+                             *dropdownMenu
+                             aria-labelledby="widget-toolbar-menu">
+                            <div style="overflow: hidden;" perfectScrollbar>
+                                <ng-template ngFor let-item [ngForOf]="item.Widgets">
+                                    <div *ngIf="item.accessRight && item.accessRight.read"
+                                         class="widget-item font-size-15px">
+                                        <a dnd-draggable
+                                           class="draggable-item"
+                                           tooltip="{{item.WidgetName.length > 20 ? item.WidgetName : ''}}"
+                                           placement="top"
+                                           container="body"
+                                           [dropZones]="['widget-container']"
+                                           [dragEnabled]="true"
+                                           [dragData]="item">
+                                            <i class="fa {{item.Icon}} font-size-20px"
+                                               aria-hidden="true"></i>
+                                            {{item.WidgetName}}
+                                        </a>
+                                    </div>
+                                </ng-template>
+                            </div>
+                        </div>
+                    </li>
+                </ng-template>
+            </ng-template>
+        </ul>
+    </div>
+</div>
+
+<div *ngIf="enableIndicator && isLoading" class="widget-loading">
+    <i class="fa fa-spinner fa-pulse fa-3x"></i>
+</div>

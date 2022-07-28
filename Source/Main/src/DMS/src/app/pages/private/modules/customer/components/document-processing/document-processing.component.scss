@@ -1,0 +1,80 @@
+.header-icon-container {
+    padding-left: 1px;
+    padding-right: 1px;
+}
+
+.order-processing-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.square-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2px 15px;
+
+    span {
+        min-height: 11px;
+        max-height: 11px;
+    }
+
+    &.overdue {
+        background-color: #e9342b;
+        color: #fff;
+        opacity: 0.7;
+    }
+
+    &.shipped {
+        border: 1px solid #0bbc0b !important;
+        color: #0e940e;
+    }
+
+    &.in-progress {
+        border: 1px solid #ee9c19 !important;
+        color: #e8940e;
+    }
+
+    &.total {
+        border: 1px solid #2e2d2d !important;
+        color: #3a3737;
+    }
+}
+
+.header-icon {
+    min-height: 30px;
+    max-height: 30px;
+    font-size: 15pt;
+
+    .debts {
+        font-size: 12pt;
+    }
+
+    .fa {
+        &.offers {
+            color: #8c20e5;
+        }
+
+        &.orders {
+            color: #2081ed;
+        }
+
+        &.delivery {
+            color: #3a3737;
+        }
+
+        &.invoices {
+            color: #0bbc0b;
+        }
+
+        &.depts {
+            color: #f13507;
+        }
+    }
+}
+
+.doc-title {
+    height: 20px;
+    padding: 2px 0px 2px;
+}

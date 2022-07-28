@@ -1,0 +1,54 @@
+<xn-tab-button></xn-tab-button>
+<toaster-container [toasterconfig]="toastrConfig"></toaster-container>
+
+<div class="content-wrapper module-container"
+     hotKeyProcessing
+     [ofModule]="ofModule"
+     processingDocument
+     #xnFocus="xnFocusError"
+     [xnFocusError]="xnFocus">
+    <section class="content">
+        <div *ngIf="isShowSearchPage, else managementTemplate">
+            <widget-search-page [searchPageType]="searchPageContactParam"></widget-search-page>
+        </div>
+        <ng-template #managementTemplate>
+            <div class="module-management w-100">
+                <xn-tab class="xn-tab--general"
+                        [headerData]="headerData"
+                        [tabSetting]="tabSetting"></xn-tab>
+            </div>
+        </ng-template>
+    </section>
+</div>
+<xn-message-modal></xn-message-modal>
+
+<app-aside (onToggleWidgetTemplate)="handleToggleWidgetTemplate($event)">Loading control sidebar...</app-aside>
+<property-panel [isExpand]="isExpand"
+                [isGlobal]="isGlobal"
+                [properties]="properties"
+                [parentData]="propertiesParentData"
+                (onClose)="onPropertyPanelClose($event)"
+                (onSave)="onPropertyPanelSave($event)"
+                (onChange)="onPropertyPanelChange($event)"
+                (onApply)="onPropertyPanelApply($event)"></property-panel>
+
+<div *ngIf="xnLoading.loading"
+     class="xn-loading">
+    <i class="fa fa-spinner fa-spin fa-2x"></i>
+</div>
+
+<ng-template #confirmDeleteDocument let-close="close">
+    <div class="document-delete">
+        <div class="text-header">
+            <span class="delete-title">Delete</span> document ?
+        </div>
+        <div class="button-wrapper">
+            <button class="btn-cmd btn-cmd-default" (click)="close()">
+                Cancel
+            </button>
+            <button class="btn-cmd btn-cmd-danger" (click)="deleteDocument(close)"><span class="text-button">
+                    Delete
+                </span></button>
+        </div>
+    </div>
+</ng-template>

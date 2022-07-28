@@ -1,0 +1,58 @@
+<ng-template #popupUserSelection let-close="close">
+    <div class="popup-content popup-selection">
+        <div class="popup-selection__title">Who do you want to add?</div>
+        <mat-chip-list #chipList class="popup-user-chip-list">
+            <mat-chip
+                *ngFor="let user of userSelected"
+                class="popup-user-chip"
+                [selectable]="true"
+                [removable]="true"
+                (removed)="removeUser(user)"
+            >
+                <div class="toolbar-icon with-fa">
+                    <i
+                        class="fal"
+                        [ngClass]="{
+                            'fa-user': user.MemberType === 'user',
+                            'fa-group': user.MemberType === 'group'
+                        }"
+                    ></i>
+                </div>
+                <div
+                    class="popup-user-chip__title"
+                    container="body"
+                    data-placement="bottom"
+                    [tooltip]="user[textValue]"
+                >
+                    {{ user[textValue] }}
+                </div>
+                <div matChipRemove class="toolbar-icon with-fa">
+                    <i class="fal fa-times-circle"></i>
+                </div>
+            </mat-chip>
+        </mat-chip-list>
+        <mat-form-field class="w-100">
+            <input matInput #userFilterInput [formControl]="userInput" [matAutocomplete]="auto" />
+            <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+                <mat-option *ngFor="let user of filteredUsers" [value]="user">
+                    <div class="d-flex align-items-center">
+                        <div class="toolbar-icon with-fa">
+                            <i
+                                class="fal"
+                                [ngClass]="{
+                                    'fa-user': user.MemberType === 'user',
+                                    'fa-group': user.MemberType === 'group'
+                                }"
+                            ></i>
+                        </div>
+                        {{ user[textValue] }}
+                    </div>
+                </mat-option>
+            </mat-autocomplete>
+        </mat-form-field>
+    </div>
+    <div class="popup-action">
+        <div class="popup-action__button" (click)="close()">Cancel</div>
+        <div class="popup-action__button primary" (click)="addSelectionUser(close)">Add</div>
+    </div>
+</ng-template>

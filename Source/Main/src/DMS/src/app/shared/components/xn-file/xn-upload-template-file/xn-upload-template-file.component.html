@@ -1,0 +1,230 @@
+<div class="upload-template-file form-group no-margin">
+    <as-split direction="horizontal" [gutterSize]="5" (dragEnd)="dragSplitterEnd($event)">
+        <as-split-area
+            [size]="35"
+            [minSize]="3"
+            [perfectScrollbar]="{ suppressScrollX: false, suppressScrollY: false }"
+        >
+            <div class="xn-uft-left-side border-gray--right">
+                <div class="col-xs-12 no-padding height-pc-100">
+                    <div class="xn__form-header">
+                        <span class="no-margin">Document template</span>
+                    </div>
+                    <div class="col-xs-12 no-padding">
+                        <div class="col-xs-1 no-padding list-template-of-file-cbo">
+                            <wj-combo-box
+                                #templateCtr
+                                class="custom-wj-input-control xn-select"
+                                placeholder="Please select"
+                                [itemsSource]="templates"
+                                [displayMemberPath]="'textValue'"
+                                [selectedValuePath]="'idValue'"
+                                [isEditable]="true"
+                                [isRequired]="false"
+                                (selectedIndexChanged)="changeTemplate()"
+                            >
+                            </wj-combo-box>
+                            <control-messages [xn-trigger-click-inside-cbo]="templateCtr" icon="object-group">
+                            </control-messages>
+                        </div>
+                        <div class="col-xs-1 no-padding file-template-menu">
+                            <app-xn-ai-tab-plus
+                                [tabs]="templateFileMenus"
+                                [buttonIcon]="'ellipsis-v'"
+                                [toolTip]="'File Template Menu'"
+                                [customCss]="'file-template-menu-icon'"
+                                (dropdownItemClicked)="dropdownItemClickedHandler($event)"
+                            ></app-xn-ai-tab-plus>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 no-padding xn__form-header" [hidden]="true">
+                        <span class="no-margin">Upload data sample file</span>
+                    </div>
+                    <div class="col-xs-12 no-padding" [hidden]="true">
+                        <div class="file-action-button">
+                            <a
+                                mat-raised-button
+                                [ngClass]="{ 'xn-disabled': isDisableUploadButton }"
+                                class="pull-left"
+                                (click)="uploadFileClick()"
+                            >
+                                <a tooltip="Upload template file" placement="top" container="body" class="green-color">
+                                    <i aria-hidden="true" class="fa fa-cloud-upload"></i>
+                                </a>
+                            </a>
+                        </div>
+                        <label class="template-file-name padding-left--sd">{{ templateFileName }}</label>
+                    </div>
+                    <div class="col-xs-12 no-padding margin-top--sd">
+                        <!-- *ngIf="user.id == '1' || user.id == '2'"> -->
+                        <span class="no-margin pull-left xn__form-header">SQL Template</span>
+                        <a
+                            mat-raised-button
+                            [ngClass]="{ 'xn-disabled': !columnViewMode }"
+                            class="pull-left reload-sql-query-column-name"
+                            (click)="reloadSqlTemplateColumnsNameClick()"
+                        >
+                            <a
+                                tooltip="Reload SQL template columns name"
+                                placement="top"
+                                container="body"
+                                class="blue-color"
+                            >
+                                <i aria-hidden="true" class="fa fa-undo"></i>
+                            </a>
+                        </a>
+                        <mat-slide-toggle
+                            class="mat-primary pull-right xn__form-header"
+                            (change)="columnViewModeChanged()"
+                            [(ngModel)]="columnViewMode"
+                        >
+                            Column view mode
+                        </mat-slide-toggle>
+                    </div>
+                    <div class="col-xs-12 no-padding sql-template">
+                        <!-- *ngIf="user.id == '1' || user.id == '2'"> -->
+                        <textarea
+                            *ngIf="!columnViewMode"
+                            class="form-control xn-input textarea"
+                            (keyup)="sqlTemplateChanged($event)"
+                            [(ngModel)]="sqlTemplate"
+                        >
+                        </textarea>
+                        <div class="col-xs-12 no-padding height-pc-100" *ngIf="columnViewMode">
+                            <xn-ag-grid
+                                [readOnly]="false"
+                                *ngIf="
+                                    sqlColumnsDataSourceTable &&
+                                    sqlColumnsDataSourceTable.columns &&
+                                    sqlColumnsDataSourceTable.columns.length
+                                "
+                                [id]="gridId"
+                                [dataSource]="sqlColumnsDataSourceTable"
+                                [fitWidthColumn]="true"
+                                (cellEditingStarted)="onTableEditStartHandle()"
+                                (cellEditingStopped)="onRowEditEndedHandle()"
+                            >
+                            </xn-ag-grid>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </as-split-area>
+
+        <as-split-area
+            [size]="65"
+            [minSize]="3"
+            [perfectScrollbar]="{ suppressScrollX: false, suppressScrollY: false }"
+        >
+            <div class="xn-uft-right-side">
+                <div class="xn__form-header">
+                    <span class="no-margin">Used countries</span>
+                </div>
+                <xn-country-check-list
+                    *ngIf="countryCheckListData && countryCheckListData.length"
+                    [data]="countryCheckListData"
+                    (outputData)="outputDataCountryHandler($event)"
+                >
+                </xn-country-check-list>
+            </div>
+        </as-split-area>
+    </as-split>
+</div>
+<p-dialog
+    [styleClass]="'upload-file-dialog'"
+    header=""
+    [(visible)]="showDialog"
+    modal="modal"
+    width="900"
+    height="500"
+    responsive="true"
+    appendTo="body"
+    (onAfterHide)="close()"
+>
+    <p-header>
+        <div class="modal-header--information">
+            <span class="fa fa-upload header-icon pull-left"></span>
+            <span class="header-text pull-left">Upload File</span>
+            <div class="toolbar-icon close-dialog-icon" (click)="close()"></div>
+        </div>
+    </p-header>
+    <div class="col-xs-12 no-padding height-pc-100">
+        <file-upload
+            #fileUpload
+            [uploadFileMode]="uploadFileMode"
+            [singleFile]="true"
+            [idFolder]="printingUploadTemplateFolderName"
+            [acceptExtensionFiles]="'.txt, .csv'"
+            (onCompleteItem)="onCompleteUploadItem($event)"
+        ></file-upload>
+    </div>
+    <p-footer>
+        <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+            <button type="button" mat-raised-button class="pull-right new-size" title="Close" (click)="close()">
+                Close
+            </button>
+        </div>
+    </p-footer>
+</p-dialog>
+<p-dialog
+    [styleClass]="'upload-file-dialog'"
+    header=""
+    [(visible)]="showDialogTemplateName"
+    modal="modal"
+    width="300"
+    height="180"
+    responsive="true"
+    appendTo="body"
+    (onAfterHide)="closeDialogTemplateName()"
+>
+    <p-header>
+        <div class="modal-header--information">
+            <span class="fa fa-upload header-icon pull-left"></span>
+            <span class="header-text pull-left">{{ templateTile }}</span>
+            <div
+                class="toolbar-icon icon-transform close-dialog-icon"
+                #popHand="bs-tooltip"
+                container="body"
+                data-placement="bottom"
+                [tooltip]="'Close'"
+                aria-label="Close"
+                (click)="closeDialogTemplateName()"
+            ></div>
+        </div>
+    </p-header>
+    <div class="col-xs-12 no-padding height-pc-100">
+        <input
+            class="form-control xn-input"
+            [ngClass]="{ 'input-error': !templateName && submitTemplateName }"
+            id="txt-template-name-for-upload-file"
+            (change)="templateNameChanged()"
+            [(ngModel)]="templateName"
+        />
+        <div [hidden]="templateName || !submitTemplateName" class="alert alert-danger">
+            Please input the template name
+        </div>
+    </div>
+    <p-footer>
+        <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+            <button
+                type="button"
+                mat-raised-button
+                class="pull-right new-size"
+                title="Close"
+                (click)="closeDialogTemplateName()"
+            >
+                Cancel
+            </button>
+            <button
+                label="Save"
+                pbutton=""
+                mat-raised-button
+                type="button"
+                class="mat-btn-blue"
+                (click)="saveTemplateName(templateNameSavingMode)"
+            >
+                <span class="ui-button-text ui-c">Save</span>
+            </button>
+        </div>
+    </p-footer>
+</p-dialog>

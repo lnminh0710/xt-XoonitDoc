@@ -1,0 +1,140 @@
+<div *ngIf="controlData && form; else otherTemplate" [formGroup]="form">
+    <div [ngSwitch]="controlData.controlType">
+        <!-- TYPE: TEXT: number, text -->
+        <mat-form-field *ngSwitchCase="'textbox'" class="dms-custom-control"
+            (mouseenter)="onMouseEnter(note)" (mouseleave)="onMouseLeave(note)">
+            <input matInput [attr.type]="controlData.type" placeholder="{{controlData.columnName}}"
+                id="{{controlData.originalColumnName}}" [formControlName]="controlData.originalColumnName"
+                [ngClass]="controlData.className"
+                [attr.maxlength]="controlData.validators ? controlData.validators.MaxLength : null"
+                [attr.pattern]="controlData.validators && controlData.validators.Pattern ? controlData.validators.Pattern.Regex : null"
+                (focus)="onControlFocus()" (blur)="onControlLostFocus()" (keypress)="keyPress($event)"
+                (keyup.enter)="onEnter()" #textControl>
+            <img *ngIf="form.controls[controlData.originalColumnName] && form.controls[controlData.originalColumnName].value && controlData.isShowClearField"
+                src="public/imgs/standard_action_cross-circle.svg" alt="clear text" class="btn-clear-field"
+                (mousedown)="clearTextField(controlData.originalColumnName)">
+            <ng-template [ngTemplateOutlet]="RequiredErrMsg"
+                [ngTemplateOutletContext]="{ control: form.controls[controlData.originalColumnName], controlData: controlData }">
+            </ng-template>
+        </mat-form-field>
+        <!-- TYPE: Textarea -->
+        <mat-form-field *ngSwitchCase="'textArea'" class="dms-custom-control">
+            <textarea matInput placeholder="{{controlData.columnName}}" id="{{controlData.originalColumnName}}"
+                [formControlName]="controlData.originalColumnName" [attr.rows]="controlData.rows"
+                (focus)="onControlFocus()" (blur)="onControlLostFocus()" (keyup.enter)="onEnter()"
+                #textAreaControl></textarea>
+            <ng-template [ngTemplateOutlet]="RequiredErrMsg"
+                [ngTemplateOutletContext]="{ control: form.controls[controlData.originalColumnName], controlData: controlData }">
+            </ng-template>
+        </mat-form-field>
+        <!-- TYPE: Dropdownlist -->
+        <mat-form-field *ngSwitchCase="'dropdown'" class="dms-custom-control {{controlData.originalColumnName}}"
+           >
+            <mat-select placeholder="{{controlData.columnName}}" id="{{controlData.originalColumnName}}"
+                [formControlName]="controlData.originalColumnName" [attr.name]="controlData.originalColumnName"
+                (focus)="onControlFocus()" (blur)="onControlLostFocus()" (keyup.enter)="onEnter($event)"
+                (keyup.arrowdown)="onArrowDown()" (keyup.arrowup)="onArrowUp()" (keyup.Space)="onSpace()"
+                #selectControl>
+                <mat-option *ngIf="controlData.defaultOption">{{controlData.defaultOption}}</mat-option>
+                <mat-option *ngFor="let item of controlData.options" [value]="item.key">
+                    {{ item.value }}
+                </mat-option>
+            </mat-select>
+            <ng-template [ngTemplateOutlet]="RequiredErrMsg"
+                [ngTemplateOutletContext]="{ control: form.controls[controlData.originalColumnName], controlData: controlData }">
+            </ng-template>
+        </mat-form-field>
+        <!-- TYPE: AutoComplete -->
+        <div *ngSwitchCase="'autocomplete'" class="dms-custom-control">
+            <input type="text" id="{{controlData.originalColumnName}}" placeholder="{{controlData.columnName}}"
+                [attr.aria-label]="controlData.columnName" matInput [formControlName]="controlData.originalColumnName"
+                [matAutocomplete]="auto" [ngClass]="controlData.className" (keyup.enter)="onEnter()"
+                #textAutoCompleteControl>
+            <mat-autocomplete *ngSwitchCase="'autocomplete'" #auto="matAutocomplete" [displayWith]="displayFn">
+                <mat-option *ngFor="let item of acReactiveOptions | async" [value]="item">
+                    {{ item.value }}
+                </mat-option>
+            </mat-autocomplete>
+            <ng-template [ngTemplateOutlet]="RequiredErrMsg"
+                [ngTemplateOutletContext]="{ control: form.controls[controlData.originalColumnName], controlData: controlData }">
+            </ng-template>
+        </div>
+        <!-- TODO -->
+        <!-- TYPE: TEXT: datepicker -->
+        <div *ngSwitchCase="'datetime'" class="dms-custom-control">
+            <input matInput [matDatepicker]="picker" placeholder="{{controlData.columnName}}"
+                id="{{controlData.originalColumnName}}" (keyup.enter)="onEnter()"
+                [formControlName]="controlData.originalColumnName" readonly #textDateTimeControl>
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+
+            <!-- <input *ngSwitchCase="'datetime'" matInput [matDatepicker]="myDatepicker" disabled>
+            <mat-datepicker-toggle *ngSwitchCase="'datetime'" matSuffix [for]="myDatepicker"></mat-datepicker-toggle>
+            <mat-datepicker *ngSwitchCase="'datetime'" #myDatepicker disabled="false"></mat-datepicker> -->
+
+            <!-- <input *ngSwitchCase="'datetime'" matInput [matDatepicker]="picker" placeholder="{{controlData.columnName}}"
+                [formControlName]="controlData.originalColumnName">
+            <mat-datepicker-toggle *ngSwitchCase="'datetime'" matSuffix [for]="picker">
+            </mat-datepicker-toggle>
+            <mat-datepicker *ngSwitchCase="'datetime'" #picker></mat-datepicker> -->
+            <ng-template [ngTemplateOutlet]="RequiredErrMsg"
+                [ngTemplateOutletContext]="{ control: form.controls[controlData.originalColumnName], controlData: controlData }">
+            </ng-template>
+        </div>
+        <!-- TYPE: RADIO Button -->
+        <ng-container *ngSwitchCase="'radioToggle'">
+            <mat-slide-toggle class="dms-custom-control" id="{{controlData.originalColumnName}}"
+                (keyup.enter)="onEnter()" [formControlName]="controlData.originalColumnName"
+                (focusin)="onControlFocus($event)" (focusout)="onControlLostFocus($event)" #radioButtonControl>
+                <span *ngIf="controlData.columnName; else radioTextOther">
+                    {{controlData.columnName}}
+                </span>
+                <ng-template #radioTextOther>
+                    <span
+                        [ngClass]="{'md-success': form.controls[controlData.originalColumnName].value}">{{controlData.textValueTrue}}</span>
+                    / <span
+                        [ngClass]="{'md-danger': !form.controls[controlData.originalColumnName].value}">{{controlData.textValueFalse}}</span>
+                </ng-template>
+            </mat-slide-toggle>
+            <ng-template [ngTemplateOutlet]="RequiredErrMsg"
+                [ngTemplateOutletContext]="{ control: form.controls[controlData.originalColumnName], controlData: controlData }">
+            </ng-template>
+        </ng-container>
+    </div>
+</div>
+<ng-template #otherTemplate>
+    <div [ngSwitch]="controlData.controlType">
+        <mat-form-field *ngIf="controlData.controlType !== 'radioToggle'" class="dms-custom-control"
+           >
+            <mat-select *ngSwitchCase="'dropdown'" placeholder="{{controlData.columnName}}"
+                [(ngModel)]="controlData.originalColumnName" [attr.name]="controlData.originalColumnName"
+                (focus)="onControlFocus($event)" (blur)="onControlLostFocus($event)" #selectControl>
+                <mat-option *ngIf="controlData.defaultOption">{{controlData.defaultOption}}</mat-option>
+                <mat-option *ngFor="let item of controlData.options" [value]="item.originalColumnName">
+                    {{ item.value }}
+                </mat-option>
+            </mat-select>
+            <input *ngSwitchCase="'autocomplete'" type="text" placeholder="{{controlData.columnName}}"
+                [attr.aria-label]="controlData.columnName" matInput [(ngModel)]="controlData.value"
+                [matAutocomplete]="auto" (ngModelChange)="filterStates(controlData.value)"
+                [ngClass]="controlData.className" (keydown.enter)="enterFunctionAutoComplete(controlData.value)"
+                (focus)="onControlFocus($event)" (blur)="onControlLostFocus($event)" #textAutoCompleteControl>
+            <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+                <mat-option *ngFor="let item of acOptions" [value]="item">
+                    {{ item.value }}
+                </mat-option>
+            </mat-autocomplete>
+        </mat-form-field>
+    </div>
+</ng-template>
+<ng-template #RequiredErrMsg let-control="control" let-controlData="controlData">
+    <mat-error *ngIf="isRequired">
+        {{controlData.columnName}} is <strong>required</strong>
+    </mat-error>
+    <mat-error *ngIf="control.errors?.maxLength">
+        This field is required max length as {{control.errors?.maxLength.requiredLength}}
+    </mat-error>
+    <mat-error *ngIf="control.errors?.pattern">
+        {{controlData.validators.Pattern.Message}}
+    </mat-error>
+</ng-template>

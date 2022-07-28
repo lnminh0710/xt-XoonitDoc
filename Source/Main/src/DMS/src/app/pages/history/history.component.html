@@ -1,0 +1,19 @@
+<toaster-container [toasterconfig]="toastrConfig"></toaster-container>
+<div class="content-wrapper  module-container">
+    <section class="content">
+        <!-- <div class="module-management w-100">
+            <xn-tab class="xn-tab--general"
+                    [headerData]="headerData"
+                    [tabSetting]="tabSetting"></xn-tab>
+        </div> -->
+        <widget-scanning-history [globalProperties]="globalProperties"></widget-scanning-history>
+    </section>
+</div>
+<xn-message-modal></xn-message-modal>
+<app-aside (onToggleWidgetTemplate)="handleToggleWidgetTemplate($event)">Loading control sidebar...</app-aside>
+<property-panel [isExpand]="isExpand" [isGlobal]="isGlobal" [properties]="properties"
+                (onClose)="onPropertyPanelClose($event)" (onSave)="onPropertyPanelSave($event)"
+                (onChange)="onPropertyPanelChange($event)" (onApply)="onPropertyPanelApply($event)"></property-panel>
+<div *ngIf="xnLoading.loading" class="xn-loading">
+    <i class="fa fa-spinner fa-spin fa-2x"></i>
+</div>

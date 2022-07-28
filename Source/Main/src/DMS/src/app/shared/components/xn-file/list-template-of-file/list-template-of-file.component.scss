@@ -1,0 +1,46 @@
+$spacing: 5px;
+$command-height: 35px;
+$group-button-height: 35px;
+$file-action-buttom-width: 32px;
+.list-template-of-file {
+	height: 100%;
+	margin-top: $spacing*2;
+	padding: 10px 0 0 0 !important;
+	min-width: 150px;
+	min-height: 150px;
+    margin: 0 !important;
+}
+.list-template-of-file-cbo {
+	height: $command-height;
+}
+.ltof-group-button {
+	height: $command-height;
+    padding: $spacing;
+}
+.template-file-name {
+	float: left;
+	width: calc(100% - #{$file-action-buttom-width} - #{$spacing});
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    line-height: $file-action-buttom-width;
+}
+.file-action-button {
+	float: left;
+	.mat-raised-button {
+		max-width: $file-action-buttom-width;
+		min-width: $file-action-buttom-width;
+		padding: 1px (#{$spacing*2}) 0 (#{$spacing*2});
+	}
+}
+.list-template-of-file-label {
+	height: calc(100% - #{$command-height * 4} - (#{$spacing} * 2));
+	padding-top: $spacing*2;
+}
+.list-template-of-file-label--non-hd {
+	height: calc(100% - #{$command-height * 4} - #{$spacing});
+	padding-top: $spacing*2;
+}
+.xn__form-header {
+    padding-left: $spacing;
+}

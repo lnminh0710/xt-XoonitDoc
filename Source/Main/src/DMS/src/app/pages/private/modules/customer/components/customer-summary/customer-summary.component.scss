@@ -1,0 +1,93 @@
+.customer-summary {
+    color: #A7A7A7;
+    padding: 0 10px;
+
+    .box-logo {
+        padding: 0 10px 0 0;
+        margin-top: 25px;
+
+        img.logo {
+            width: 100%;
+            max-width: 100px;
+        }
+    }
+
+    .box-name {
+        .name {
+            color: #000000;
+            font-weight: bold;
+            font-size: 15px;
+        }
+    }
+
+    .box-hour {
+        .opening {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+
+        .day {
+            color: #000000;
+        }
+    }
+
+    .box-date {
+        padding: 0 0 0 10px;
+        color: #040404;
+
+        .item {
+            float: left;
+            width: 100%;
+
+            &.mb {
+                margin-bottom: 20px;
+            }
+
+            .date {
+                color: #A7A7A7;
+            }
+
+
+            .left {
+                float: left;
+                padding-right: 10px;
+                width: 60px;
+            }
+
+            .right {
+                float: left;
+                padding-left: 3px;
+                width: calc(100% - 60px);
+            }
+
+            .create {
+                border-left: 3px solid #000000;
+
+                .name {
+                    font-weight: bold;
+                }
+            }
+
+            .update {
+                border-left: 3px solid #00AAEA;
+
+                .name {
+                    color: #00AAEA;
+                    font-weight: bold;
+                }
+            }
+        }
+    }
+
+    .box-note {
+        color: #000000;
+
+        .title {
+            font-weight: bold;
+        }
+    }
+
+    .border-r {
+        border-right: 1px solid #C8C8C8;
+    }
+}

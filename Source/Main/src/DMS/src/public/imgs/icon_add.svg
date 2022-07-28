@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="12px" height="12px" viewBox="0 0 12 12" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>C080D078-1586-49E1-B11F-B7D7B0696048</title>
+    <defs>
+        <path d="M6,0 C6.36818983,0 6.66666667,0.296630859 6.66666667,0.662265122 L6.666,5.333 L11.338,5.33333333 C11.6701212,5.33333333 11.9454931,5.57796143 11.9928159,5.90092662 L12,6 C12,6.368 11.7033333,6.66666667 11.338,6.66666667 L11.338,6.66666667 L6.666,6.666 L6.66666667,11.3377349 C6.66666667,11.670243 6.42211305,11.9455174 6.09909369,11.9928193 L6,12 C5.63181017,12 5.33333333,11.7033691 5.33333333,11.3377349 L5.333,6.666 L0.662,6.66666667 C0.329878788,6.66666667 0.0545068871,6.42258953 0.00718407213,6.09922364 L0,6 C0,5.632 0.296666667,5.33333333 0.662,5.33333333 L0.662,5.33333333 L5.333,5.333 L5.33333333,0.662265122 C5.33333333,0.329757006 5.57788695,0.0544825539 5.90090631,0.00718065437 L6,0 Z" id="path-1"></path>
+    </defs>
+    <g id="Page-2" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="L34.-Add-user--Xoonit-Copy" transform="translate(-1296.000000, -158.000000)">
+            <g id="Group" transform="translate(1275.000000, 144.000000)">
+                <g id="editor/add" transform="translate(21.000000, 14.000000)">
+                    <mask id="mask-2" fill="white">
+                        <use xlink:href="#path-1"></use>
+                    </mask>
+                    <use id="Combined-Shape" fill="#42526E" xlink:href="#path-1"></use>
+                    <g id="↳-🎨Color" mask="url(#mask-2)" fill="#FFFFFF">
+                        <g transform="translate(-2.000000, -2.000000)" id="N0">
+                            <polygon points="0 16 16 16 16 0 0 0"></polygon>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

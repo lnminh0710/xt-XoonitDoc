@@ -1,0 +1,31 @@
+::ng-deep {
+    .cdk-overlay-pane {
+        width: 20vw;
+    }
+}
+.user-management-popup {
+    padding: 10px;
+    .popup-input {
+        .popup-input__form {
+            width: 100%;
+            font-size: 16px;
+            .error {
+                white-space: nowrap;
+                color: red;
+            }
+        }
+    }
+    .popup-action {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        gap: 20px;
+        .disable {
+            pointer-events: none;
+            opacity: 0.7;
+        }
+        .popup-action__button:last-child{
+            margin-right: 0;
+        }
+    }
+}

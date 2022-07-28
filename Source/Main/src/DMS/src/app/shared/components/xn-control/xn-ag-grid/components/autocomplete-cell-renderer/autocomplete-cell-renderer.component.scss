@@ -1,0 +1,17 @@
+::ng-deep {
+    mat-form-field.ag-grid-cell-autocomplete {
+        .mat-form-field-infix {
+            border-top: 0;
+        }
+        .mat-form-field-wrapper {
+            padding: 0;
+        }
+        .mat-form-field-underline {
+            height: 0;
+
+            .mat-form-field-ripple {
+                height: 0;
+            }
+        }
+    }
+}

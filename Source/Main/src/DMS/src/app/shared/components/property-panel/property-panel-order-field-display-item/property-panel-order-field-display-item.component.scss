@@ -1,0 +1,93 @@
+.pl__of__display-item {
+    /*height: calc(100% - 80px);*/
+    height: 100%;
+}
+
+.drag-and-drop-panel {
+    clear: both;
+    cursor: pointer;
+    line-height: 22px;
+    height: 31px;
+    display: flex;
+    align-items: center;
+}
+
+.drag-and-drop-panel:hover {
+    font-weight: 900;
+    cursor: move;
+}
+
+.drag-and-drop__icon {
+    float: left;
+    width: 15%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.drag-and-drop__text {
+    float: left;
+    width: 60%;
+}
+
+.drag-and-drop__number {
+    float: left;
+    width: 25%;
+}
+
+.drag-and-drop__number-header,
+.drag-and-drop__icon,
+.drag-and-drop__number {
+    text-align: center;
+}
+
+.arrow-icon {
+    position: absolute;
+    z-index: 100;
+    left: 50%;
+    font-size: xx-large;
+
+    a:hover {
+        opacity: 0.6;
+    }
+
+    &.arrow-up {
+        top: -12px;
+    }
+
+    &.arrow-down {
+        bottom: 0;
+    }
+}
+
+
+.display-fields {
+    position: relative;
+    width: 100%;
+    height: calc(100% - 60px);
+    display: block;
+}
+
+
+.drad-and-drop-body > div.selected-item {
+    background-color: #bcdaee;
+}
+
+
+.drag-and-drop-panel.gu-mirror {
+    display: block;
+    background-color: #6aa9ff;
+
+    mat-checkbox {
+        display: none;
+    }
+
+    .drag-and-drop-panel {
+        background-color: #6aa9ff;
+    }
+}
+
+.no-drag {
+    cursor: default;
+}

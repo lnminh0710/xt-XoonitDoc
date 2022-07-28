@@ -1,0 +1,206 @@
+<div class="scanning-configuration">
+    <div class="scanning-configuration__action">
+        <div
+            class="toolbar-icon icon-transform preview-page-icon"
+            [ngClass]="{ disabled: previewButtonDisabled }"
+            #popUpload="bs-tooltip"
+            container="body"
+            data-placement="bottom"
+            [tooltip]="tooltipShowViewer"
+            (click)="!previewButtonDisabled && previewScanImageMode()"
+        ></div>
+        <mat-slide-toggle
+            class="mat-slide-toggle-customize size--medium color--green"
+            [checked]="switchToAnotherLib"
+            (change)="changeLib()"
+        >
+            <span class="scanning-configuration__action-lib">
+                <label-translation keyword="SCAN__Scan_With_Dynamsoft"></label-translation
+            ></span>
+        </mat-slide-toggle>
+        <div class="space"></div>
+        <div class="scanning-configuration__action-doctype" *ngIf="doctypeSelected?.name">
+            {{ doctypeSelected?.name }}
+        </div>
+        <div class="space"></div>
+        <div class="scanning-configuration__action-advance" (click)="openScanSettings()">
+            <label-translation keyword="POPUP_title__Scan_Setting"></label-translation>
+        </div>
+        <div class="scanning-configuration__scan-button" (click)="scan(false)">
+            <div class="scanning-configuration__scan-button-title">
+                <label-translation
+                    keyword="SCAN__Reconnect_Button"
+                    *ngIf="!isReadyScan && !switchToAnotherLib"
+                ></label-translation>
+                <label-translation
+                    keyword="SCAN__Scan_Button"
+                    *ngIf="isReadyScan || switchToAnotherLib"
+                ></label-translation>
+            </div>
+
+            <div *ngIf="isLoadingScan" class="scanning-configuration__scan-button-progress"></div>
+        </div>
+    </div>
+    <div id="dwtcontrolContainer"></div>
+    <div class="scanning-configuration__setting" [perfectScrollbar]="{}">
+        <div class="scanning-configuration__setting-title">
+            <label-translation keyword="SCAN__Scanning_Status"></label-translation>
+        </div>
+        <div class="scanning-configuration__setting-auto-feeder">
+            <mat-slide-toggle
+                class="mat-slide-toggle-customize size--medium color--green"
+                [checked]="configAutoFeeder"
+                (change)="configAutoFeeder = !configAutoFeeder"
+            >
+                <span class="scanning-configuration__setting-auto-feeder-title">
+                    <label-translation keyword="SCAN__Auto_Feeder"></label-translation>
+                </span>
+            </mat-slide-toggle>
+        </div>
+    </div>
+    <div class="scanning-configuration__printer" [perfectScrollbar]="{}">
+        <ng-container *ngIf="isLoadingPrinterList">
+            <div class="scanning-configuration__printer-progress"></div>
+            <div class="scanning-configuration__printer-progress"></div>
+            <div class="scanning-configuration__printer-progress"></div>
+        </ng-container>
+        <div
+            *ngFor="let item of printerList; let i = index"
+            class="scanning-configuration__printer-item"
+            (click)="selectedScanner(i)"
+            [ngClass]="{ selected: printerIndex === i }"
+        >
+            {{ item }}
+        </div>
+    </div>
+
+    <div class="scanning-configuration__footer">
+        <div class="scanning-configuration__scan-button" (click)="scanBase64()">
+            <div class="scanning-configuration__scan-button-title">Scan base64</div>
+        </div>
+    </div>
+</div>
+
+<p-dialog
+    header=""
+    [(visible)]="isLoadingScan && !switchToAnotherLib"
+    [styleClass]="'loading-dialog'"
+    modal="true"
+    appendTo="body"
+    [draggable]="false"
+    [resizable]="false"
+    responsive="false"
+    [closeOnEscape]="false"
+    [width]="350"
+    [height]="250"
+>
+    <div>
+        <div class="image-icon scan-progress-icon"></div>
+        <div class="cancel-scanning" (click)="stopScan()">
+            <label-translation keyword="SCAN__Stop"></label-translation>
+        </div>
+    </div>
+</p-dialog>
+
+<ng-template #scanConfigurationScanSetting let-close="close">
+    <div class="scan-dialog__content">
+        <mat-radio-group name="Resolution" class="scanning-configuration__radio-group">
+            <span class="scanning-configuration__radio-group-title">
+                <label-translation keyword="SCAN__Resolution_title"></label-translation>
+            </span>
+            <mat-radio-button
+                class="scanning-configuration__radio-group-item"
+                color="warn"
+                value="200"
+                [checked]="configResolution == 200"
+                (change)="configResolution = 200"
+            >
+                <label-translation keyword="SCAN__Resolution_200"></label-translation>
+            </mat-radio-button>
+            <mat-radio-button
+                class="scanning-configuration__radio-group-item"
+                color="primary"
+                value="300"
+                [checked]="configResolution == 300"
+                (change)="configResolution = 300"
+            >
+                <label-translation keyword="SCAN__Resolution_300"></label-translation>
+            </mat-radio-button>
+            <mat-radio-button
+                class="scanning-configuration__radio-group-item"
+                color="primary"
+                value="600"
+                [checked]="configResolution == 600"
+                (change)="configResolution = 600"
+            >
+                <label-translation keyword="SCAN__Resolution_600"></label-translation>
+            </mat-radio-button>
+        </mat-radio-group>
+        <mat-radio-group name="ColorMode" class="scanning-configuration__radio-group">
+            <span class="scanning-configuration__radio-group-title"
+                ><label-translation keyword="SCAN__Color_title"></label-translation
+            ></span>
+            <mat-radio-button
+                class="scanning-configuration__radio-group-item"
+                color="primary"
+                [value]="EnumPixelType.TWPT_RGB"
+                [checked]="configColorMode == EnumPixelType.TWPT_RGB"
+                (change)="configColorMode = EnumPixelType.TWPT_RGB"
+            >
+                <label-translation keyword="SCAN__Color_RGB"></label-translation>
+            </mat-radio-button>
+            <mat-radio-button
+                class="scanning-configuration__radio-group-item"
+                color="primary"
+                [value]="EnumPixelType.TWPT_GRAY"
+                [checked]="configColorMode == EnumPixelType.TWPT_GRAY"
+                (change)="configColorMode = EnumPixelType.TWPT_GRAY"
+            >
+                <label-translation keyword="SCAN__Color_Gray"></label-translation>
+            </mat-radio-button>
+            <mat-radio-button
+                class="scanning-configuration__radio-group-item"
+                color="primary"
+                [value]="EnumPixelType.TWPT_BW"
+                [checked]="configColorMode == EnumPixelType.TWPT_BW"
+                (change)="configColorMode = EnumPixelType.TWPT_BW"
+            >
+                <label-translation keyword="SCAN__Color_BW"></label-translation>
+            </mat-radio-button>
+        </mat-radio-group>
+    </div>
+    <div class="scan-dialog__action">
+        <div class="scan-dialog__action-cancel" (click)="close(); getScanSetting()">
+            <label-translation keyword="POPUP_action__Cancel"></label-translation>
+        </div>
+        <div class="space"></div>
+        <div class="scan-dialog__action-advance-settings" (click)="close(); scan(true)">
+            <label-translation keyword="POPUP_action__Advance_Settings"></label-translation>
+        </div>
+        <div class="scan-dialog__action-save" (click)="close(); saveScanSetting()">
+            <label-translation keyword="POPUP_action__Save"></label-translation>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #scanConfigurationAppRequired>
+    <div class="scan-dialog__content no-flex">
+        <div class="scan-dialog__content-primary">
+            <label-translation keyword="SCAN__App_Require"></label-translation>
+        </div>
+        <div class="scan-dialog__content-primary">
+            <label-translation keyword="SCAN__App_Need_Install"></label-translation>
+        </div>
+    </div>
+    <div class="scan-dialog__action">
+        <div class="space"></div>
+        <div class="scan-dialog__action-cancel" (click)="initXoonitScan()">
+            <label-translation keyword="SCAN__Reconnect_Button"></label-translation>
+        </div>
+        <div class="scan-dialog__action-save" (click)="downloadScanFile()">
+            <label-translation keyword="POPUP_action__Download"></label-translation>
+        </div>
+        <div class="space"></div>
+    </div>
+</ng-template>
+<ng-template #tooltipShowViewer> <label-translation keyword="TOOLTIP_SCAN__Preview"></label-translation></ng-template>

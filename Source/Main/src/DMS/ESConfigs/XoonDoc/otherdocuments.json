@@ -1,0 +1,34 @@
+{
+    "properties": {
+        "createDate": {
+            "type": "keyword"
+        },
+        "updateDate": {
+            "type": "keyword"
+        },
+        "clientId": {
+            "type": "keyword"
+        },
+        "rootName": {
+            "type": "keyword"
+        },
+        "searchKeyWords": {
+            "type": "keyword"
+        },
+        "scannedFilename": {
+            "type": "keyword"
+        },
+        "groupName": {
+            "type": "keyword"
+        },
+        "mediaName": {
+            "type": "keyword"
+        },
+        "notes": {
+            "type": "keyword"
+        },
+        "fullText_RemovedHtml": {
+            "type": "keyword"
+        }
+    }
+}

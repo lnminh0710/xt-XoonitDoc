@@ -1,0 +1,133 @@
+@import '../../styles/common.scss';
+
+.form-management-card {
+  height: 100%;
+  width: 100%;
+  background-color: #fff;
+
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+  // &.show-field {
+  //   border-top-right-radius: 0;
+  //   border-bottom-right-radius: 0;
+  // }
+  &__action {
+    height: $header-height;
+    display: flex;
+    align-items: center;
+    padding: $padding-ratio;
+    input {
+      height: $action-height;
+      border-radius: unset;
+      :focus {
+        outline: unset;
+      }
+    }
+    border-bottom: $border-1px;
+  }
+  &__input {
+    border-radius: 4px;
+    background-color: #f6f6f6;
+    height: $action-height !important;
+    padding: 7px !important;
+    box-shadow: unset;
+    border: unset;
+    border-radius: unset;
+  }
+  &__button-create {
+    background-color: #fff;
+    float: right;
+    height: 24px;
+    width: 48px;
+    cursor: pointer;
+    border-radius: 4px;
+    margin-left: -52px;
+    border: 1px solid #eeeeee;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    &:hover {
+      box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
+    }
+  }
+  .create-icon {
+    height: 16px;
+    width: 16px;
+  }
+  &__list {
+    height: calc(100% - #{$header-height});
+    width: 100%;
+    position: relative;
+  }
+
+  &__item {
+    height: $action-height;
+    background-color: #fff;
+    cursor: pointer;
+    user-select: none;
+    display: flex;
+    align-items: center;
+    // flat
+    border-bottom: $border-1px;
+    color: #424242;
+    position: relative;
+    &:hover {
+      background-color: #f6f6f6;
+      .form-management-card__item-drag {
+        height: 8px;
+        // transition: append($list1: , $val: , $separator: );
+        &-line {
+          border-top-width: 1px;
+        }
+      }
+    }
+    &.card {
+      // card
+      border-bottom: unset;
+      box-shadow: 0 1px $padding-ratio rgba(0, 0, 0, 0.15);
+      margin: $padding-ratio;
+      border-radius: $padding-ratio;
+    }
+    &.selected {
+      background-color: #85cffb69;
+      // border-bottom: $border-1px;
+    }
+    .form-switch {
+      margin-left: 0;
+      margin-right: 10px;
+    }
+    &-container {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      &.assign-mode {
+        width: calc(100% - 40px);
+      }
+    }
+    &-drag {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 0px;
+      position: absolute;
+      top: 0;
+      width: 100%;
+      transition: height 0.35s;
+      transition-timing-function: ease-in-out;
+      &-line {
+        border-top-color: #cccccc;
+        height: 2px;
+        border-top-width: 0;
+        border-top-style: solid;
+        width: 12px;
+      }
+    }
+
+    &__title {
+      margin-left: 10px;
+      font-size: 12px;
+      width: calc(100%);
+    }
+  }
+}

@@ -1,0 +1,40 @@
+<div class="xn__double-page-view__horizontal">
+    <as-split direction="horizontal"
+              (dragStart)="dragStart()"
+              (dragEnd)="dragEnd($event,pageItems)" [gutterSize]="5">
+        <as-split-area [size]="item.ContentSize"
+                       [minSize]="3"
+                       class="split-area-content"
+                       *ngFor="let item of pageItems"
+                       [perfectScrollbar]="item.perfectScrollbarConfig"
+                       [attr.data-splitareaid]="item.TabID">
+            <div class="horizontal-page_content"                 
+                 *ngIf="item.Page"
+                 id="{{item.Page.PageId}}"
+                 style="height:100%">
+                <widget-container *ngIf="contentHeight"
+                                  [isActivated]="isActivated"
+                                  [pageId]="item.Page.PageId"
+                                  [tabID]="item.TabID"
+                                  [isSplitterDragging]="isDragging"
+                                  (onWidgetDeleted)="refreshPerfectScrollbar($event)"></widget-container>
+            </div>
+
+            <div class="horizontal-page_content"
+                 *ngIf="!item.Page && (item.Split || item.SimpleTabs)"
+                 style="height:100%">
+                <app-xn-tab-page-view [data]="item"
+                                      [isActivated]="isActivated"
+                                      [tabID]="item.TabID"
+                                      [isSplitterDragging]="isSplitterDragging"
+                                      *ngIf="item.Split"></app-xn-tab-page-view>
+
+                <xn-tab-content-simple-tabs [data]="item"
+                                            [isActivated]="isActivated"
+                                            [tabID]="item.TabID"
+                                            [isSplitterDragging]="isDragging"
+                                            *ngIf="item.SimpleTabs"></xn-tab-content-simple-tabs>
+            </div>
+        </as-split-area>
+    </as-split>
+</div>

@@ -1,0 +1,125 @@
+<div class="padding-top--md  form-container"
+     [ngClass]="{'submitted': formGroup['submitted']}">
+    <form [formGroup]="formGroup"
+          class="form-horizontal"
+          id="feedbackFormGroup">
+        <control-focus #focusControl
+                       formName="feedbackFormGroup"
+                       focusControl="idRepContactAddressType">
+        </control-focus>
+        <div class="height-pc-100  col-xs-12  no-padding">
+            <div class="form-group  col-xs-12">
+                <div class="col-xs-2">
+                    <label class="text-bold"><label-translation [keyword]="'Feedback_Form__Priority'"></label-translation></label>
+                </div>
+                <div class="col-xs-10">
+                    <mat-radio-group formControlName="priority">
+                        <mat-radio-button color="primary"
+                                          value="Low">
+                            <label-translation [keyword]="'Feedback_Form__Low'"></label-translation>
+                        </mat-radio-button>
+                        <mat-radio-button value="Normal">
+                            <label-translation [keyword]="'Feedback_Form__Normal'"></label-translation>
+                        </mat-radio-button>
+                        <mat-radio-button color="warn"
+                                          value="High">
+                            <label-translation [keyword]="'Feedback_Form__High'"></label-translation>
+                        </mat-radio-button>
+                    </mat-radio-group>
+                </div>
+            </div>
+            <div class="form-group  col-xs-12">
+                <label for="subject"
+                       class="control-label  col-sm-12  text-bold">
+                    <label-translation *ngIf="feedbackData.isSendToAdmin" [keyword]="'Feedback_Form__Reason'"></label-translation>
+                    <label-translation *ngIf="!feedbackData.isSendToAdmin" [keyword]="'Feedback_Form__Type'"></label-translation>
+                </label>
+                <div class="col-xs-12">
+                    <xn-combo-box #typeCtrl
+                                  wjDropdownHelper
+                                  [formGroup]="formGroup"
+                                  formControlName="type"
+                                  class="custom-wj-input-control xn-select"
+                                  [itemsSource]="types"
+                                  [displayMemberPath]="'textValue'"
+                                  [selectedValuePath]="'idValue'"
+                                  [isEditable]="true"
+                                  [isRequired]="false"
+                                  placeholder="Please select"
+                                  (selectedIndexChanged)="onChangeType($event)">
+                    </xn-combo-box>
+                    <control-messages [control]="formGroup.controls.type"
+                                      [icon]="'align-justify'">
+                    </control-messages>
+                </div>
+            </div>
+            <div class="form-group  col-xs-12">
+                <label for="subject"
+                       class="control-label  col-sm-12  text-bold">
+                    <label-translation [keyword]="'Feedback_Form__Subject'"></label-translation>
+                </label>
+                <div class="col-xs-12">
+                    <input type="text"
+                           class="form-control  xn-input"
+                           formControlName="subject"
+                           autocomplete="off" />
+                    <control-messages [control]="formGroup.controls.subject"
+                                      [icon]="'align-justify'">
+                    </control-messages>
+                </div>
+            </div>
+            <div class="form-group  col-xs-12  padding-top--sd">
+                <label for="content"
+                       class="control-label  col-sm-12  text-bold">
+                    <label-translation [keyword]="'Feedback_Form__Comment'"></label-translation>
+                </label>
+                <div class="col-xs-12">
+                    <textarea #notes
+                              class="form-control  xn-input"
+                              id="content"
+                              name="content"
+                              formControlName="content"></textarea>
+                    <control-messages icon="comment  fa-2"
+                                      styleClass="for-notes-sm">
+                    </control-messages>
+                </div>
+            </div>
+        </div>
+    </form>
+    <div *ngIf="(imageTemps && imageTemps.length)"
+         class="form-group  col-xs-12  images-capture">
+        <label class="control-label  col-sm-12  margin-bottom--sd  text-bold">
+            <label-translation [keyword]="'Feedback_Form__Images_captured'"></label-translation>
+        </label>
+        <div class="col-xs-12  image-captured  no-padding  padding-top--sd"
+             id="feed-back-image-capture-wrapper"
+             [perfectScrollbar]="perfectScrollbarConfig">
+            <div *ngFor="let item of imageTemps.slice().reverse()"
+                 class="col-xs-12">
+                <div class="image-captured--wrap">
+                    <div class="image-captured--child"
+                         id="{{'capture-image-' + item.id}}">
+                        <a class="mat-btn-red--icon"
+                          *ngIf="item.canRemove"
+                          (click)="removeCapture(item)">
+                            <i class="fa fa-times-circle"></i>
+                        </a>
+                        <img class="image-captured--item  cursor-pointer"
+                             src="{{item.image}}"
+                             (click)="showImageReviewClicked(item)" />
+                    </div>
+                </div>
+                <div class="image-captured--comment">
+                    <textarea #notes
+                              class="form-control  xn-input"
+                              id="{{'capture-notes-' + item.id}}"
+                              name="notes"
+                              [(ngModel)]="item.text"></textarea>
+                    <control-messages icon="comment  fa-2"
+                                      styleClass="for-notes-sm">
+                    </control-messages>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

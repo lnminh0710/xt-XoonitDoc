@@ -1,0 +1,40 @@
+@import "src/sass_files/variables.scss";
+
+.property-panel {
+    border-left: 2px solid #d9d9d9;
+    height: 100%;
+    position: absolute;
+    z-index: 900;
+
+    .property-panel-header {
+        line-height: 30px;
+
+        span {
+            height: 30px;
+            margin: 0 !important;
+            padding: 5px 3px;
+        }
+    }
+
+    .property-panel-collapse {
+        cursor: pointer;
+        height: 100% !important;
+
+        .property-panel-content {
+            display: none !important;
+        }
+    }
+
+    .property-panel-expand {
+        .property-panel-content {
+            display: block !important;
+
+            .property-panel-toggle {
+                margin-right: $spacing-size-sd;
+                -webkit-transform: rotate(-90deg);
+                -moz-transform: rotate(-90deg);
+                -ms-transform: rotate(-90deg);
+            }
+        }
+    }
+}

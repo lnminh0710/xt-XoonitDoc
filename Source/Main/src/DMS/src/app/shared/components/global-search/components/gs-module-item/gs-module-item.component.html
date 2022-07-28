@@ -1,0 +1,70 @@
+<div
+    *ngIf="moduleItem.accessRight && moduleItem.accessRight.read"
+    class="gs-dms-item {{ moduleItem.mainClassName }}  col-xs-12  col-sm-4  col-md-2  col-lg-1"
+    (click)="globalItemClicked()"
+    (dblclick)="globalItemDoubleClicked()"
+    [ngClass]="{
+        'gs_module-item__clicked': moduleItem.isClicked,
+        'gs__all-icon--blur': moduleItem.isSearchEmpty,
+        'icon-transform': !moduleItem.isSearchEmpty,
+        'folder-open': !!moduleItem.children?.length
+    }"
+>
+    <div class="gs-dms-item__content">
+        <div class="gs-dms-item__result" *ngIf="!moduleItem.children?.length">
+            <div *ngIf="!moduleItem.isLoading" class="gs-dms-item__result-number">
+                {{ moduleItem.searchResult || '0' }}
+            </div>
+            <div
+                *ngIf="moduleItem.isLoading"
+                class="gs__all-icon--loading__sub  {{
+                    moduleItem.controlClassName
+                }}  fa fa-circle-o-notch fa-spin fa-3x fa-fw"
+            ></div>
+        </div>
+        <div *ngIf="!!moduleItem.children?.length && !moduleItem.isLoading" class="gs-dms-item__children">
+            <ng-container *ngFor="let item of moduleItem.searchResultChildren">
+                <div
+                    *ngIf="item.count > 0"
+                    class="cursor-pointer gs-dms-item__children-number {{ item.key }}"
+                    #popCount="bs-tooltip"
+                    container="body"
+                    data-placement="bottom"
+                    [tooltip]="item.moduleName"
+                    (click)="goToGlobalChildren(item.key)"
+                >
+                    {{ item.count }}
+                </div>
+            </ng-container>
+        </div>
+        <div class="gs-dms-item__result" *ngIf="!!moduleItem.children?.length && moduleItem.isLoading">
+            <div
+                class="gs__all-icon--loading__sub  {{
+                    moduleItem.controlClassName
+                }}  fa fa-circle-o-notch fa-spin fa-3x fa-fw"
+            ></div>
+        </div>
+        <div class="gs-dms-item__folder">
+            <div class="gs-dms-item__folder-icon">
+                <span class="gs-dms-item__folder-icon-detail">
+                    <mat-icon [svgIcon]="moduleItem?.iconNameOver" inline="true"></mat-icon>
+                </span>
+            </div>
+        </div>
+        <div class="gs-dms-item__info">
+            <div
+                class="gs-dms-item__info-module-name"
+                [class.w-50]="(moduleItem.searchResultChildren | itemHasCount) > 4"
+            >
+                {{ moduleItem.moduleName }}
+            </div>
+        </div>
+    </div>
+    <!-- <div class="gs-dms-item__header">
+        
+        <div class="gs-dms-item__header-module-name">
+            {{ moduleItem.moduleName }}
+        </div>
+    </div>
+    <div class="gs-dms-item__body"></div> -->
+</div>

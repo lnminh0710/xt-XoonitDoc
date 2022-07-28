@@ -1,0 +1,340 @@
+@import '../../../../sass_files/color.scss';
+
+.user-management {
+    height: 100%;
+    .header-wrapper {
+        .header-content-wrapper {
+            padding: 6px 12px 0px 12px;
+            margin-left: 0;
+            .filter-block {
+                background-color: $silver-solitude3;
+                border-radius: 9px;
+                margin: 0px 15px 0px 0px;
+                display: inline-block;
+
+                &:last-child {
+                    margin-right: 0;
+                }
+
+                &.block-total {
+                    padding: 26.5px 25px;
+                    width: 160px;
+                    .total-text,
+                    .total-number {
+                        font-family: 'rbt_Medium';
+                        font-size: 16px;
+                        color: $black11;
+                    }
+                }
+
+                &.block-filter {
+                    padding: 8px 15px;
+                    position: relative;
+                    // 16px: total, 205: pagnation, 125: button, 45: marginright: 3 block
+                    width: calc(100% - 160px - 205px - 125px - 45px);
+
+                    .btn-clear-filter {
+                        position: absolute;
+                        top: 3px;
+                        right: 3px;
+                        cursor: pointer;
+                    }
+                    .filter-box {
+                        .title {
+                            font-size: 12px;
+                            color: $gray-slate;
+                            margin-bottom: 8px;
+                        }
+
+                        .filter-control {
+                            .form-control {
+                                border: 0;
+                                font-size: 14px;
+                            }
+                        }
+                    }
+                }
+
+                &.block-panation {
+                    width: 215px;
+                    ::ng-deep .pagination-group-container {
+                        margin-top: 7px;
+
+                        label-translation,
+                        .total-pages {
+                            font-size: 14px;
+                            color: $gray-slate;
+                        }
+                    }
+                }
+            }
+
+            .btn-wrapper {
+                width: 125px;
+                margin-top: 6px;
+                button {
+                    font-family: 'rbt_Medium';
+                    min-width: 100px;
+                    width: 100%;
+                    font-size: 16px;
+                    padding: 0px;
+                    border-radius: 9px;
+                    box-shadow: 0px 9px 5px $black10;
+                    background-color: $grey-5;
+                    color: $white;
+                    border: 0;
+                    line-height: 30px;
+                    margin-bottom: 5px;
+
+                    img {
+                        margin-right: 10px;
+                        margin-bottom: 3px;
+                    }
+                }
+            }
+
+            &.mobile-wrapper {
+                .dropdown {
+                    #user-filter {
+                        width: 100%;
+                        position: relative;
+                        .total-text,
+                        .total-number {
+                            font-family: 'rbt_Medium';
+                            font-size: 16px;
+                            color: $blue19;
+                            float: left;
+                        }
+                        .caret {
+                            position: absolute;
+                            right: 3%;
+                            top: 40%;
+                        }
+                    }
+                    .dropdown-menu {
+                        width: 100%;
+
+                        .filter-block {
+                            margin: 0;
+                            width: 100%;
+                        }
+                    }
+                }
+                .pagnation-button-group {
+                    margin-top: 5px;
+                    .filter-block {
+                        display: inline-block;
+
+                        &.block-panation {
+                            width: 215px;
+                            padding: 3px 7px;
+                        }
+                        &.btn-wrapper {
+                            background-color: transparent;
+                            margin: 0;
+                            width: 100px;
+
+                            button {
+                                width: 100%;
+
+                                img {
+                                    margin-right: 5px;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .user-management-grid {
+        padding: 6px 12px 6px 12px;
+        height: calc(100vh - 143px);
+        &.user-grid {
+            height: calc(100vh - 113px);
+        }
+
+        ::ng-deep ag-grid-angular {
+            &.ag-theme-balham {
+                .ag-side-bar {
+                    border-right: 0;
+                    border-top: 0;
+                }
+            }
+            .ag-row {
+                .ag-cell {
+                    line-height: 40px;
+                    div {
+                        text-align: left;
+                    }
+                }
+            }
+
+            .ag-header-cell-text {
+                font-size: 16px;
+                font-family: 'rbt_Medium';
+            }
+
+            .btn-cmd {
+                max-height: 38px;
+                font-size: 14px;
+                padding: 5px;
+                font-weight: 500;
+                position: relative;
+                top: 0.5px;
+
+                span {
+                    position: relative;
+                    bottom: 5px;
+                }
+            }
+        }
+    }
+}
+
+::ng-deep .amd-dialog-confirm {
+    .ui-widget-header {
+        display: none;
+    }
+    .amd-header {
+        text-align: center;
+        position: relative;
+        padding: 13px 30px;
+        border-bottom: 1px solid $form-color-darker-1;
+        color: $black11;
+        font-family: 'rbt_Bold';
+        font-size: 18px;
+        margin-bottom: 15px;
+
+        .img-close,
+        .img-warning {
+            position: absolute;
+            top: 13px;
+            right: 25px;
+            cursor: pointer;
+        }
+    }
+
+    .amd-body {
+        padding: 1em 2em;
+    }
+
+    .active-control {
+        margin-top: 19px;
+        margin-bottom: 0 !important;
+        .text-name {
+            font-size: large;
+            margin-top: 5px;
+        }
+    }
+
+    .custom-height {
+        min-height: 80px;
+        &.mb-0 {
+            margin-bottom: 0 !important;
+        }
+    }
+
+    &.ui-dialog div.ui-dialog-content {
+        height: calc(100%) !important;
+        padding: 0;
+    }
+
+    .wrapper-button {
+        margin-top: 15px;
+        button {
+            margin-right: 0;
+            margin-left: 15px;
+            font-size: 14px;
+        }
+    }
+}
+
+::ng-deep .amd-dialog-confirm {
+    &.ui-dialog div.ui-dialog-content {
+        padding: 1em;
+    }
+    .amd-header {
+        padding: 0em 1.5em 0.5em 1.5em;
+        color: $black11;
+        border-bottom: 1px solid $form-color-darker-1;
+        font-size: 16px;
+
+        .text-content {
+            font-family: 'rbt_Bold';
+        }
+
+        .img-close,
+        .img-warning {
+            top: 3px;
+            right: 0;
+        }
+        .img-warning {
+            left: 0;
+        }
+    }
+    .amd-body {
+        text-align: center;
+        margin-top: 15px;
+        p {
+            color: $black11;
+            font-size: 16px;
+
+            &.user-info {
+                span {
+                    font-family: 'rbt_Bold';
+                    color: $black11;
+                }
+            }
+        }
+
+        .button-wrapper {
+            margin-top: 35px;
+            button {
+                font-weight: lighter;
+                font-size: 14px;
+
+                .text-button {
+                    text-transform: capitalize;
+                }
+
+                &.btn-cmd-success {
+                    background-color: $red16;
+                }
+            }
+        }
+    }
+}
+
+::ng-deep .cdk-overlay-container {
+    z-index: 1039;
+}
+
+::ng-deep .dms-custom-control {
+    &.mat-form-field-type-mat-select {
+        &.mat-form-field-can-float {
+            margin-top: 5px;
+        }
+        &.mat-form-field-should-float {
+            margin-top: 0px;
+        }
+    }
+    .mat-select-value {
+        color: $blue19 !important;
+    }
+}
+
+::ng-deep .confirm-dialog__content {
+    p {
+        color: $black11;
+        font-size: 16px;
+
+        &.user-info {
+            span {
+                font-family: 'rbt_Bold';
+                color: $black11;
+            }
+        }
+    }
+}

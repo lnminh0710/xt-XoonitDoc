@@ -1,0 +1,30 @@
+<div class="card text-left"
+     (click)="selectParkedItem(parkedItem)"
+     [perfectScrollbar]="{suppressScrollX: true}">
+    <table *ngIf="parkedItemFields.length">
+        <tbody>
+            <tr *ngFor="let field of parkedItemFields; let i = index">
+                <td class="text-center col-xs-1"
+                    [ngClass]="{'header-row': i == 0 }">
+                    <i class="fa {{field.icon}}"
+                       aria-hidden="true"
+                       tooltip="{{field.fieldName}}"
+                       placement="{{field.tooltipPlacement}}"
+                       container="body"></i>
+                </td>
+                <td *ngIf="field.fieldName.toLowerCase().indexOf('date') > -1 && field.fieldValue"
+                    [ngClass]="{'header-row': i == 0 }"
+                    class="field-value-cell">
+                    {{formatDate(field.fieldValue)}}
+                </td>
+                <td *ngIf="field.fieldName.toLowerCase().indexOf('date') == -1"
+                    [ngClass]="{'header-row': i == 0 }"
+                    class="field-value-cell"
+                    tooltip="{{(field.fieldValue && field.fieldValue.length > 20) ? field.fieldValue : ''}}"
+                    container="body">
+                    {{field.fieldValue}}
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

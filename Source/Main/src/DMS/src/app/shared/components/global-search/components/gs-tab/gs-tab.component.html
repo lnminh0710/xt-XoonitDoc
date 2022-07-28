@@ -1,0 +1,94 @@
+<div
+    class="gs__tab-content col-xs-12 no-padding"
+    id="gs-tab-content"
+    [perfectScrollbar]="perfectScrollbarConfig"
+    *ngIf="tabType == globalSearchConsts.searchAll || tabType == globalSearchConsts.invoiceApproval"
+>
+    <gs-module-item-list
+        *ngIf="tabType == globalSearchConsts.searchAll || tabType == globalSearchConsts.invoiceApproval"
+        [ngClass]="{ 'module-children': tabType == globalSearchConsts.invoiceApproval }"
+        [isSearchAllTab]="tabType == globalSearchConsts.searchAll"
+        [tabs]="tabList"
+        [isWithStar]="isWithStar"
+        [searchWithStarPattern]="searchWithStarPattern"
+        [globalItems]="globalSearchModuleModels"
+        [towWayConfig]="globalSearchConfig"
+        [mainModules]="mainModules"
+        [subModules]="subModules"
+        [activeModule]="activeModule"
+        [activeSubModule]="activeSubModule"
+        (onGlobalSearchItemClicked)="globalSearchItemClicked($event)"
+        (onGlobalSearchItemDoubleClicked)="globalSearchItemDoubleClicked($event)"
+    >
+    </gs-module-item-list>
+    <div class="col-xs-12 no-padding">
+        <gs-module-item-list
+            [ngClass]="{
+                hide: tabType !== globalSearchConsts.searchAll || !globalSearchConfig.isAdministrationClicked
+            }"
+            [tabs]="tabList"
+            [isWithStar]="isWithStar"
+            [searchWithStarPattern]="searchWithStarPattern"
+            [globalItems]="globalSearchModuleModelsAdminChildren"
+            [mainModules]="mainModules"
+            [subModules]="subModules"
+            [activeModule]="activeModule"
+            [activeSubModule]="activeSubModule"
+        >
+        </gs-module-item-list>
+    </div>
+    <div class="col-xs-12 no-padding">
+        <gs-module-item-list
+            [ngClass]="{
+                hide: tabType !== globalSearchConsts.searchAll || !globalSearchConfig.isAllDocumentModuleClicked
+            }"
+            [tabs]="tabList"
+            [isWithStar]="isWithStar"
+            [searchWithStarPattern]="searchWithStarPattern"
+            [globalItems]="globalSearchModuleModelsAllDocumentChildren"
+            [mainModules]="mainModules"
+            [subModules]="subModules"
+            [activeModule]="activeModule"
+            [activeSubModule]="activeSubModule"
+            (onGlobalSearchItemDoubleClicked)="globalSearchItemDoubleClicked($event)"
+        >
+        </gs-module-item-list>
+    </div>
+</div>
+<div
+    class="gs__tab-content col-xs-12 no-padding"
+    id="gs-tab-content"
+    *ngIf="tabType != globalSearchConsts.searchAll && tabType != globalSearchConsts.invoiceApproval"
+    style="height: 100%"
+>
+    <div class="gs__grid col-xs-12 no-padding" style="height: calc(100% - 37px)">
+        <gs-result
+            [keyword]="currentTab.textSearch"
+            [filter]="currentTab.filter"
+            [gridId]="currentTab.id || currentTab.module?.idSettingsGUI"
+            [searchIndex]="currentTab.searchIndex"
+            [module]="currentTab.module"
+            [allowDrag]="allowDrag"
+            [isGlobalSearch]="true"
+            [isWithStar]="currentTab.isWithStar"
+            [searchWithStarPattern]="currentTab.searchWithStarPattern"
+            [parentInstance]="that"
+            [activeModule]="activeModule"
+            [tab]="currentTab"
+            [tabs]="tabList"
+            (onRowClicked)="onTableRowClicked($event)"
+            (onRowDoubleClicked)="onTableRowDoubleClicked($event)"
+            (onSearchCompleted)="onSearchCompleted($event)"
+            (addToHistoryAction)="addToHistoryHandler($event)"
+        ></gs-result>
+    </div>
+    <div class="gs__tab-footer" *ngIf="currentTab && currentTab.histories && currentTab.histories.length > 0">
+        <gs-history
+            [currentTab]="currentTab"
+            (texClickedAction)="texClickedHandler($event)"
+            (deleteItemAction)="deleteItemHandler($event)"
+            (deleteAllAction)="deleteAllHandler()"
+        >
+        </gs-history>
+    </div>
+</div>

@@ -1,0 +1,44 @@
+<div *ngIf="authenType" class="authenticate page-info row">
+
+  <!-- website -->
+  <div class="col-md-6 hidden-xs hidden-sm left-side no-background">
+    <div class="mydm-logo cusor-pointer" (click)="redirectToRootPage()">
+    </div>
+    <div class="display-flex h-100">
+      <div class="flex-middle w-100">
+        <h1 class="header">Success!</h1>
+
+        <div class="body-message">
+          <h4>{{message1}}</h4>
+          <h4>{{message2}}</h4>
+        </div>
+
+        <button *ngIf="authenType === ACTION_AUTHEN_TYPE.NEW_PASSWORD" class="btn-cmd btn-cmd-primary"
+          (click)="redirectToLogin()">COUNTINUE TO LOGIN</button>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6 hidden-xs hidden-sm right-side display-flex h-100">
+    <img src="public/imgs/authenticate/authen_success.svg" alt="image right side" class="flex-middle img-right-side">
+  </div>
+
+  <!-- mobile -->
+  <div class="col-xs-12 hidden-md hidden-lg logo mobile-screen">
+    <div class="mydm-logo cusor-pointer" (click)="redirectToRootPage()">
+    </div>
+  </div>
+  <div class="col-xs-12 hidden-md hidden-lg right-side mobile-screen">
+    <img src="public/imgs/authenticate/authen_success.svg" alt="image right side" class="flex-middle img-right-side">
+  </div>
+  <div class="col-xs-12 hidden-md hidden-lg left-side no-background mobile-screen">
+    <h1 class="header">Success!</h1>
+
+    <div class="body-message">
+      <h4>{{message1}}</h4>
+      <h4>{{message2}}</h4>
+    </div>
+
+    <button *ngIf="authenType === ACTION_AUTHEN_TYPE.NEW_PASSWORD" class="btn-cmd btn-cmd-primary"
+      (click)="redirectToLogin()">COUNTINUE TO LOGIN</button>
+  </div>
+</div>

@@ -1,0 +1,20 @@
+.custom-box-header + ::ng-deep .box-detail-container {
+    height: 100%;
+}
+
+.toggle-captured-form {
+    display: flex;
+    position: relative;
+    height: 100%;
+
+    & button.btn-captured-form {
+        background: transparent;
+        margin: auto;
+        padding: 0;
+
+        & img.img-toggle {
+            height: 48px;
+            width: 48px;
+        }
+    }
+}

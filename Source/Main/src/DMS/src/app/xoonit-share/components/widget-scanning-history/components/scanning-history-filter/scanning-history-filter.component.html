@@ -1,0 +1,52 @@
+<div class="eraser" [class.show]="hasFiltered" (click)="clearFilter($event)">
+</div>
+<div class="controls-filter-container">
+    <ng-container *ngFor="let ctrl of controlsFilter">
+        <ng-container [ngSwitch]="ctrl.setting.controlType.type">
+            <ng-container *ngSwitchCase="'datepicker'">
+                <ng-container *ngTemplateOutlet="datepickerTemplate; context: { control: ctrl }"></ng-container>
+            </ng-container>
+
+            <ng-container *ngSwitchCase="'autocomplete'">
+                <ng-container *ngTemplateOutlet="typeaheadTemplate; context: { control: ctrl }"></ng-container>
+            </ng-container>
+
+            <ng-container *ngSwitchCase="'dropdown'">
+                <ng-container *ngTemplateOutlet="dropdownTemplate; context: { control: ctrl }"></ng-container>
+            </ng-container>
+        </ng-container>
+    </ng-container>
+</div>
+
+<ng-template #datepickerTemplate let-control="control">
+    <div class="control-filter {{control.columnName}}-datepicker">
+        <div class="label-control"><label-translation [allowUpdateLanguage]="false"
+            [keyword]="control.columnHeader"></label-translation></div>
+        <xn-bs-datepicker [bsConfig]="bsConfig"
+                        [disabled]="(control.setting.displayField?.readOnly === '1') || false"
+                        (onDatepickerChanged)="selectDatepicker($event, control)" #dpTo></xn-bs-datepicker>
+    </div>
+</ng-template>
+
+<ng-template #dropdownTemplate let-control="control">
+    <div class="control-filter categories-dropdown">
+        <div class="label-control"><label-translation [allowUpdateLanguage]="false"
+            [keyword]="control.columnHeader"></label-translation></div>
+        <xn-ngx-dropdown [dataSource]="control.value"
+            [displayFieldMember]="control.displayMember"
+            (onSelectedDataChanged)="selectItemDropdown($event, control)"></xn-ngx-dropdown>
+    </div>
+</ng-template>
+
+<ng-template #typeaheadTemplate let-control="control">
+    <div class="control-filter {{control.columnName}}-typeahead">
+        <div class="label-control"><label-translation [allowUpdateLanguage]="false"
+            [keyword]="control.columnHeader"></label-translation></div>
+        <xn-input-typeahead [(typeaheadValue)]="control.typeaheadValue" 
+            [typeaheadOptionField]="control.typeaheadOptionField"
+            [typeaheadWaitMs]="control.typeaheadWaitMs"
+            [dataSource]="control.dataSource$"
+            (onSelectedItemChanged)="selectDataAutocomplete($event)"
+            (onEmptyTypeahead)="onEmptyTypeaheadValue($event)"></xn-input-typeahead>
+    </div>
+</ng-template>

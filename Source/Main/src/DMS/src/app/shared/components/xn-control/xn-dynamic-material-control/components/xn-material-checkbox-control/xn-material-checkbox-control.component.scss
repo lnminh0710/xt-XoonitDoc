@@ -1,0 +1,10 @@
+.form-control-wrapper {
+    ::ng-deep {
+        .icon {
+            font-size: 15px;
+            /*color: #0378d1;*/
+            margin: 0px 5px 0;
+            cursor: pointer;
+        }
+    }
+}

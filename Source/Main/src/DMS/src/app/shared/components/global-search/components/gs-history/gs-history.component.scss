@@ -1,0 +1,116 @@
+$p-h: 24px;
+$b-sp: 2px;
+
+.gs-history {
+    display: flex;
+    position: absolute;
+    bottom: 0px;
+    width: calc(100% - 650px);
+
+    &__action {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 30px;
+        height: 37px;
+
+        &-delete {
+            background: url('src/public/imgs/light-icons/delete-red.svg') center no-repeat;
+            height: 28px;
+            width: 28px;
+            cursor: pointer;
+        }
+    }
+
+    &__breadcrumb {
+        flex: 1;
+        height: 37px;
+        &-tooltip {
+            position: absolute;
+
+            &-title {
+                text-align: center;
+                position: absolute;
+                bottom: $b-sp;
+                line-height: $p-h;
+                height: $p-h;
+                padding: 0 2px;
+                z-index: 10;
+                white-space: nowrap;
+                font-family: 'rbt_Regular';
+                font-size: 12px;
+            }
+        }
+
+        &-delete {
+            position: absolute;
+            top: 0px;
+            right: 10px;
+            background: url('src/public/imgs/light-icons/delete-mini.svg') center no-repeat;
+            height: 12px;
+            width: 12px;
+            background-color: #fff;
+            border-radius: 50%;
+            z-index: 10;
+        }
+
+        &-item {
+            display: inline-block;
+            margin-left: -18.5px;
+            position: relative;
+            cursor: pointer;
+
+            &:first-of-type {
+                margin-left: 0;
+            }
+
+            .active {
+            }
+
+            &-head {
+                display: inline-block;
+                border: 18.5px solid transparent;
+                border-left-width: 18.5px;
+                border-right-width: 0px;
+                z-index: 10;
+                padding: 0 1px;
+                position: relative;
+                vertical-align: top;
+            }
+
+            &-body {
+                padding: 0 4px;
+                position: relative;
+                float: left;
+                overflow: hidden;
+                font-family: 'rbt_Regular';
+                font-size: 12px;
+                letter-spacing: 0;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                height: 37px;
+
+                &-two-row {
+                    font-size: 10px;
+
+                    &-sc {
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        white-space: nowrap;
+                        width: 60px;
+                    }
+                }
+            }
+
+            &-tail {
+                display: inline-block;
+                border: 18.5px solid transparent;
+                border-left-width: 18.5px;
+                border-right-width: 0px;
+                vertical-align: top;
+                float: left;
+            }
+        }
+    }
+}

@@ -1,0 +1,28 @@
+<div class="scanning-action">
+    <div
+        class="scanning-action__button save-scanning"
+        [ngClass]="{ 'lds-dual-ring': isLoading }"
+        (click)="saveImage()"
+        #popRotateL="bs-tooltip"
+        container="body"
+        data-placement="bottom"
+        [tooltip]="'Save all'"
+    ></div>
+
+    <div
+        class="scanning-action__button group-image"
+        (click)="groupImage()"
+        #popRotateL="bs-tooltip"
+        container="body"
+        data-placement="bottom"
+        [tooltip]="'Group image'"
+    ></div>
+    <div
+        class="scanning-action__button delete"
+        (click)="deleteImage()"
+        #popRotateL="bs-tooltip"
+        container="body"
+        data-placement="bottom"
+        [tooltip]="'Delete all'"
+    ></div>
+</div>

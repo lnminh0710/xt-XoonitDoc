@@ -1,0 +1,1 @@
+export { WidgetFormComponent } from './widget-form.component';

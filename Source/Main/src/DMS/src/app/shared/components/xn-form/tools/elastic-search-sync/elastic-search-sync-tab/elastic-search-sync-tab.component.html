@@ -1,0 +1,13 @@
+<div class="col-xs-12  no-padding  height-pc-100">
+    <tabset>
+        <tab *ngFor="let tabz of data;let i=index"
+             (select)="selectTab($event, tabz)"
+             [heading]="tabz.title">
+            <elastic-search-sync-tree #elasticSearchSyncTree
+                [data]="tabz.data"
+                (outputData)="onTreeOutputData($event, tabz)">
+            </elastic-search-sync-tree>
+        </tab>
+    </tabset>
+</div>
+<div class="m  bg-disabled" *ngIf="!isIdle"></div>

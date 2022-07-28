@@ -1,0 +1,12 @@
+@import '../user.authentication.scss';
+
+.authenticate { 
+    .right-side {
+        &.mobile-screen {
+            margin-top: 50px;
+            .img-right-side {
+                height: 200px;
+            }
+        }
+    }
+}

@@ -1,0 +1,1 @@
+export * from './widget-elastic-search.component';

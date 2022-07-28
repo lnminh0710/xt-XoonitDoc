@@ -1,0 +1,107 @@
+@import 'src/sass_files/color.scss';
+
+%displayCenter {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+%text {
+    font-family: 'rbt_Regular';
+    color: #030d3c;
+    font-size: 14px;
+    letter-spacing: 0;
+    line-height: 16px;
+}
+
+.widget-header {
+    .actions-list {
+        margin-top: -8px;
+
+        &.left {
+            justify-content: flex-start;
+
+            .upload-icon {
+                position: relative;
+                top: -3px;
+            }
+        }
+
+        &.right {
+            justify-content: flex-end;
+        }
+    }
+}
+.widget-email-list {
+    height: calc(100% - 45px);
+
+    .xoonit-grid {
+        height: 100%;
+    }
+}
+
+.popup-content {
+    // width: 300px;
+    max-height: 400px;
+    padding: 10px;
+    &__title {
+        @extend %displayCenter;
+        @extend %text;
+        margin-bottom: 10px;
+        font-size: 16px;
+        margin-top: 6px;
+        b {
+            margin: 0 5px;
+        }
+    }
+    &__title-secondary {
+        @extend %text;
+        @extend %displayCenter;
+        font-size: 15px;
+    }
+}
+
+@keyframes MoveUpDown {
+    0%,
+    100% {
+        bottom: 20px;
+    }
+    50% {
+        bottom: 40px;
+    }
+}
+.drop-files {
+    height: 100%;
+    form {
+        height: 100%;
+        .upload-animation {
+            display: flex;
+            position: absolute;
+            bottom: -100vh;
+            right: calc(50% - 75px);
+            flex-direction: column;
+            align-items: center;
+            transition: bottom 0.5s ease-in-out;
+            &__image {
+                animation: MoveUpDown 1s linear infinite;
+                width: 64px;
+                height: 64px;
+                background: url('src/public/imgs/icons/uploading.png') center no-repeat;
+                background-size: 64px;
+                position: absolute;
+            }
+            &__title {
+                text-align: center;
+                font-weight: 700;
+                font-size: 18px;
+                width: 150px;
+            }
+        }
+
+        &.is-dragging-over {
+            background-color: #cbe6ff83;
+            .upload-animation {
+                bottom: 40px;
+            }
+        }
+    }
+}

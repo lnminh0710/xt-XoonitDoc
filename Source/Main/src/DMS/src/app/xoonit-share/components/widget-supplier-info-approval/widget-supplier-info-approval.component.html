@@ -1,0 +1,56 @@
+<div class="invoice-supplier">
+    <div
+        class="widget-header approval d-flex align-items-center justify-content-betwwen">
+        <div class="title">
+            <label-translation [keyword]="'WIDGET_SUPPLIER_INFO__Title'"></label-translation>
+        </div>
+        <xn-search-table
+            [dataSource]="dataSource"
+            [id]="'b8bf135e-377e-4bd2-ba21-a8f1fc8724df'"
+            [title]="title"
+            [globalProperties]="globalProperties"
+            [isShowAddNew]="isShowAddNew"
+            [isHiddenSearchBox]="isApprovalModule"
+            (onSearchChange)="search($event)"
+            (onClearSearch)="hideSearchBox($event)"
+            (onSelect)="select($event)"
+            (onAddNew)="addNew()"
+            (onKeydown)="onKeydown($event)"
+            [placeholder]="title"
+            [tooltipSearch]="title"
+            #searchTemp
+        >
+        </xn-search-table>
+        <div
+            class="toolbar-icon draw-icon transform-icon"
+            *ngIf="!!IdPerson && !isApprovalModule"
+            (click)="updateSupplier()"
+            [ngClass]="{ disabled: !!IdPersonUpdate }"
+            container="body"
+            data-placement="bottom"
+            tooltip="Edit"
+        ></div>
+    </div>
+    <div class="invoice-supplier__content mini-scrollbar">
+        <widget-dynamic-form
+            #supplierForm
+            [idMainDocument]="idMainDocument"
+            [object]="formObjectName"
+            [methodName]="formMethodName"
+            (dataChanged)="dataChanged($event)"
+            (formInitialized)="dynamicFormInitialized($event)"
+            (onControlClick)="onControlClick($event)"
+        >
+        </widget-dynamic-form>
+    </div>
+</div>
+
+<ng-template #addNewPopup let-close="close">
+    <div class="popup-content">
+        <widget-dynamic-form #addUpdateSupplierForm [dynamicFormGroupDef]="dynamicFormGroupDef"> </widget-dynamic-form>
+    </div>
+    <div class="popup-action">
+        <div class="popup-action__button" (click)="close()">Cancel</div>
+        <div class="popup-action__button primary" (click)="createUpdateSupplier(close)">Save</div>
+    </div>
+</ng-template>

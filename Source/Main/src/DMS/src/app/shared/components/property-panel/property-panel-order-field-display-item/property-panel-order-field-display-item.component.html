@@ -1,0 +1,34 @@
+<div class="display-fields">
+    <div #fieldBody class="col-xs-12 no-padding  pl__of__display-item"
+         (mousedown)="containerMousedown()"
+         [perfectScrollbar]="perfectScrollbarConfig">
+        <div class="pl__of-top-element  height-0"></div>
+        <div class="drad-and-drop-body" *ngIf="fields"
+             dragula="order-fields-display-item-bag"
+             [dragulaModel]='fields'>
+            <div class="drag-and-drop-panel"
+                 #fieldItem
+                 *ngFor="let item of fields; let i=index"
+                 [ngClass]="{'div-row-odd': ((i%2) == 0),
+                 'div-dragging': item.isDragging,
+                 'div-dragged': item.isDragged,
+                 'selected-item': item.isSelected }" id="{{item.IdSysWidgetFieldsOrderBy}}">
+                <div class="drag-and-drop__icon no-drag">
+                    <mat-checkbox color="primary"
+                                  class="checkbox-item"
+                                  [(ngModel)]="item.isSelected">
+                    </mat-checkbox>
+                    <!--<span class="fa  fa-ellipsis-h"></span>-->
+                </div>
+                <div class="drag-and-drop__text"
+                     (click)="itemClicked(item)">
+                    {{item.FieldName}}
+                </div>
+                <div class="drag-and-drop__number">
+                    {{i + 1}}
+                </div>
+            </div>
+            <div class="pl__of-bottom-element  height-0"></div>
+        </div>
+    </div>
+</div>

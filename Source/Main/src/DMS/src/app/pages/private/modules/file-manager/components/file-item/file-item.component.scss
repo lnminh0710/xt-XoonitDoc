@@ -1,0 +1,50 @@
+.file-manager {
+  &__item {
+    &-container {
+      flex-direction: column;
+      display: flex;
+      height: 100%;
+      width: 100%;
+      align-items: center;
+      cursor: pointer;
+      &.selected {
+        background-color: #0178b81f;
+      }
+    }
+    &-icon {
+      width: 100%;
+      height: 75px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      &-image {
+        width: 64px;
+        height: 64px;
+      }
+    }
+    &-title {
+      font-size: 14px;
+      width: 100px;
+      text-align: center;
+      display: block;
+      display: -webkit-box;
+      max-height: 80px;
+      margin: 0 auto;
+      line-height: 1.4;
+      -webkit-line-clamp: 4;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      word-wrap: break-word;
+    }
+    &-title-editing {
+      width: 100px;
+      max-height: 80px;
+      resize: none;
+      overflow: hidden;
+    }
+  }
+}
+
+.tooltip-error {
+  color: red;
+}

@@ -1,0 +1,32 @@
+<ng-container [ngSwitch]="cellStartedEdit">
+    <ng-container *ngSwitchCase="true">
+        <div class="full-width no-border wj-control wj-dropdown wj-content wj-combobox"
+             tabindex="-1">
+            <div style="position:relative" class="wj-template">
+                <div class="wj-input">
+                    <div class="wj-input-group wj-input-btn-visible">
+                        <input type="text"
+                               class="wj-form-control"
+                               autocomplete="off"
+                               autocorrect="off"
+                               autocapitalize="off"
+                               spellcheck="false"
+                               [(ngModel)]="displayValue">
+                        <span class="wj-input-group-btn"
+                              tabindex="-1">
+                            <button class="wj-btn wj-btn-default"
+                                    type="button"
+                                    tabindex="-1"
+                                    (click)="toggleDropdown()">
+                                <span class="wj-glyph-down"></span>
+                            </button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+    <ng-container *ngSwitchDefault>
+        <span class="cell-ellipsis">{{displayValue}}</span>
+    </ng-container>
+</ng-container>

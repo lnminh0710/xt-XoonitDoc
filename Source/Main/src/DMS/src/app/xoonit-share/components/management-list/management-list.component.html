@@ -1,0 +1,25 @@
+<div class="management-list-container">
+    <ng-container [ngSwitch]="type">
+        <ng-container *ngSwitchCase="TypeOfList.ICON">
+            <icon-list
+                [widgetId]="widgetId"
+                [headerTitle]="headerTitle"
+                [list]="list"
+                [selectedItem]="selectedItem"
+                [hideAllDeleteButton]="hideAllDeleteButton"
+                [hideAllEditButton]="hideAllEditButton"
+                [iconTemplateForAll]="iconTemplateForAll"
+                (onAdd)="addItem()"
+                (onEdit)="editItem($event)"
+                (onDelete)="deleteItem($event)"
+                (onRowClick)="rowClickItem($event)"
+            ></icon-list>
+        </ng-container>
+        <ng-container *ngSwitchCase="TypeOfList.CHECKBOX">
+            <checkbox-list
+                [list]="list"
+                (onChange)="changeStatus($event)"
+            ></checkbox-list>
+        </ng-container>
+    </ng-container>
+</div>

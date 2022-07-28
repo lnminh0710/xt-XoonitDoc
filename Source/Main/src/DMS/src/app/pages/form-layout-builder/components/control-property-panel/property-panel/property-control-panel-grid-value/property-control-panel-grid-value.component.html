@@ -1,0 +1,97 @@
+<div [ngSwitch]="item.controlType">
+    <ng-template [ngSwitchCase]="'textbox'">
+        <input type="text"
+               class="no-boder"
+               [ngClass]="{'prop-dirty': item.dirty}"
+               [disabled]="item.disabled"
+               [ngModel]="item.value"
+               (ngModelChange)="onInputChanged($event)"
+               autocomplete="off" />
+    </ng-template>
+    <ng-template [ngSwitchCase]="'numeric'">
+        <wj-input-number [isRequired]="false"
+                         [(value)]="item.value"
+                         [min]="0"
+                         [format]="'D'"
+                         class="no-border full-width no-margin-left"
+                         [ngClass]="{'prop-dirty': item.dirty}"
+                         (valueChanged)="onInputChanged(item.value)">
+        </wj-input-number>
+    </ng-template>
+    <ng-template [ngSwitchCase]="'checkbox'">
+        <mat-checkbox color="primary"
+                      class="checkbox-item"
+                      [(ngModel)]="item.value"
+                      [disabled]="item.disabled"
+                      (change)="onCheckboxChanged(item)">
+            {{item.valueDescription}}
+        </mat-checkbox>
+    </ng-template>
+    <ng-template [ngSwitchCase]="'dropdown'">
+        <dropdown-template [item]="item"
+                           (onSelectedIndexChanged)="onComboBoxChanged($event)">
+        </dropdown-template>
+    </ng-template>
+    <ng-template [ngSwitchCase]="'multiSelect'">
+        <div class="input-group full-width">
+            <input type="text"
+                   class="no-boder cursor-pointer"
+                   [readonly]="true"
+                   [disabled]="item.disabled"
+                   [ngModel]="multiSelectInputValue"
+                   (click)="showMultiSelectDialog(item)"
+                   autocomplete="off">
+            <span class="input-group-btn">
+                <button type="button"
+                        class="no-border  mat-btn-non-fix"
+                        mat-raised-button
+                        [disabled]="item.disabled"
+                        (click)="showMultiSelectDialog(item)">
+                    &hellip;
+                </button>
+            </span>
+        </div>
+    </ng-template>    
+    <ng-template [ngSwitchCase]="'color'">
+        <wj-input-color #propColor
+                        class="full-width no-border"
+                        [ngClass]="{'prop-dirty': item.dirty}"
+                        [isDisabled]="item.disabled"
+                        [isRequired]="false"
+                        [(value)]="item.value"
+                        (gotFocus)="propColor.isDroppedDown = true">
+        </wj-input-color>
+    </ng-template>
+    <ng-template [ngSwitchCase]="'dateformat'">
+        <div class="input-group full-width">
+            <input type="text"
+                   class="no-boder cursor-pointer"
+                   [readonly]="true"
+                   [disabled]="item.disabled"
+                   [ngModel]="item.value"
+                   (click)="showDateFormatDialog(item)"
+                   autocomplete="off" />
+            <span class="input-group-btn">
+                <button type="button"
+                        mat-raised-button
+                        class="no-border  mat-btn-non-fix"
+                        [disabled]="item.disabled"
+                        (click)="showDateFormatDialog(item)">
+                    &hellip;
+                </button>
+            </span>
+        </div>
+    </ng-template>
+    <ng-template [ngSwitchCase]="'multiselectcombobox'">
+        <wj-multi-select #propMultiSelectCombobox
+                         wjDropdownHelper
+                         class="full-width no-border property-combobox"
+                         [itemsSource]="item.options"
+                         [displayMemberPath]="'value'"
+                         [selectedValuePath]="'key'"
+                         [isDisabled]="item.disabled"
+                         [isRequired]="false"
+                         (checkedItemsChanged)="onPropMultiSelectComboboxChanged(propMultiSelectCombobox)">
+        </wj-multi-select>
+    </ng-template>
+</div>

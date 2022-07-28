@@ -1,0 +1,35 @@
+<!--<wijmo-grid #widgetWijmoGridComponent
+            [readOnly]="false"
+            [dataSource]="dataSource"
+            [isSupportHierarchicalView]="true"
+            [isEditting]="isEditting"
+            [gridStyle]="gridStyle"
+            [widgetStyle]="widgetStyle"
+            [globalProperties]="globalProperties"
+            (onTableEditStart)="tableEditStart($event)"
+            (onScrollPositionChanged)="scrollPositionChanged($event)">
+    <ng-container *booleanCellTemplate="let item=item; let col=col; let notEditing=notEditing">
+        <ng-container *ngIf="notEditing;else edit_content">
+            <i class="fa fa-check" [ngClass]="{'active' : item[col.data], 'in-active' :  !item[col.data] }">
+            </i>
+        </ng-container>
+        <ng-template #edit_content>
+            <mat-checkbox color="primary"
+                          [(ngModel)]="item[col.data]"
+                          (change)="onCheckboxChanged(item, col.data)">
+            </mat-checkbox>
+        </ng-template>
+    </ng-container>
+    <ng-container *booleanColHeaderTemplate="let col=col; let notEditing=notEditing">
+        <span>{{col.title}}</span>
+        <span *ngIf="col.sort"
+              [ngClass]="col.sort"></span>
+        <span *ngIf="!notEditing"
+              class="display-inline-block text-center">
+            <mat-checkbox color="primary"
+                          class="mat-checkbox--check-all"
+                          (change)="checkAllItems(col.data, $event)">
+            </mat-checkbox>
+        </span>
+    </ng-container>
+</wijmo-grid>-->

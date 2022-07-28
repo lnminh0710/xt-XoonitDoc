@@ -1,0 +1,99 @@
+<div class="xn-form-container height-pc-100 customer-summary">
+    <div class="col-xs-12 col-sm-6 no-padding border-r">
+        <div class="col-xs-3 box-logo">
+            <img class="logo"
+                 [imageLoader]="imageUrl"
+                 [imageNameDefault]="'avata-default.png'"
+                 alt="Avatar" />
+        </div>
+        <div class="col-xs-9 no-padding">
+            <div class="box-name">
+                <div class="name">
+                    <span [ngStyle]="data.Address.Company.Style">{{data.Address.Company.Value}}</span>
+                    <span [ngStyle]="data.Address.PersonNr.Style">#{{data.Address.PersonNr.Value}}</span>
+                </div>
+                <div [ngStyle]="data.Address.Department.Style">
+                    {{data.Address.Department.Value}}
+                </div>
+                <div>
+                    <span [ngStyle]="data.Address.Street.Style">{{data.Address.Street.Value}}</span>
+                    <span [ngStyle]="data.Address.Zip.Style">{{data.Address.Zip.Value}}</span>
+                    <span [ngStyle]="data.Address.Place.Style">{{data.Address.Place.Value}}</span>
+                </div>
+            </div>
+            <div class="box-hour">
+                <div class="opening"
+                     [ngStyle]="data.CompanyOpening.OpeningHours.Style">
+                    {{data.CompanyOpening.OpeningHours.Value}}
+                </div>
+                <div>
+                    <div class="col-xs-6 no-padding">
+                        <div class="day"
+                             [ngStyle]="data.CompanyOpening.OpenDays.Style">
+                            {{data.CompanyOpening.OpenDays.Value}}
+                        </div>
+                        <div [ngStyle]="data.CompanyOpening.OpenDaysTime.Style">
+                            {{data.CompanyOpening.OpenDaysTime.Value}}
+                        </div>
+                    </div>
+                    <div class="col-xs-6 no-padding">
+                        <div class="day"
+                             [ngStyle]="data.CompanyOpening.OpenDay.Style">
+                            {{data.CompanyOpening.OpenDay.Value}}
+                        </div>
+                        <div [ngStyle]="data.CompanyOpening.OpenDayTime.Style">
+                            {{data.CompanyOpening.OpenDayTime.Value}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-12 col-sm-6 no-padding">
+        <div class="col-xs-7 box-date">
+            <div class="item mb">
+                <div class="left"
+                     [ngStyle]="data.Created.Created.Style">
+                    {{data.Created.Created.Value}}
+                </div>
+                <div class="right create"
+                     [ngStyle]="data.Created.BorderLeft">
+                    <div class="name"
+                         [ngStyle]="data.Created.LoginName.Style">
+                        {{data.Created.LoginName.Value}}
+                    </div>
+                    <div class="date"
+                         [ngStyle]="data.Created.CreateDate.Style">
+                        {{data.Created.CreateDate.Value}}
+                    </div>
+                </div>
+            </div>
+            <div class="item">
+                <div class="left"
+                     [ngStyle]="data.Updated.Updated.Style">
+                    {{data.Updated.Updated.Value}}
+                </div>
+                <div class="right update"
+                     [ngStyle]="data.Updated.BorderLeft">
+                    <div class="name"
+                         [ngStyle]="data.Updated.LoginName.Style">
+                        {{data.Updated.LoginName.Value}}
+                    </div>
+                    <div class="date"
+                         [ngStyle]="data.Updated.UpdateDate.Style">
+                        {{data.Updated.UpdateDate.Value}}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-5 no-padding box-note">
+            <div class="title"
+                 [ngStyle]="data.Notes.Label.Style">
+                {{data.Notes.Label.Value}}:
+            </div>
+            <div [ngStyle]="data.Notes.Notes.Style">
+                {{data.Notes.Notes.Value}}
+            </div>
+        </div>
+    </div>
+</div>

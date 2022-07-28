@@ -1,0 +1,62 @@
+﻿<p-dialog
+    header=""
+    [(visible)]="showDialog"
+    modal="true"
+    width="300"
+    positionTop="150"
+    responsive="true"
+    appendTo="body"
+    [resizable]="false"
+    [draggable]="false"
+    [contentStyle]="{ 'padding-bottom': 0, 'padding-top': 0 }"
+>
+    <p-header>
+        <div class="modal-header--information">
+            <span class="header-text">Select Display Fields</span>
+            <div class="toolbar-icon close-dialog-icon" (click)="close()"></div>
+        </div>
+    </p-header>
+    <div class="row">
+        <perfect-scrollbar class="col-xs-12 no-padding grid-content">
+            <table class="table table-striped no-margin-bottom full-width">
+                <thead>
+                    <tr>
+                        <th class="col-xs-3 text-center bg-gray xn-padding--sm">
+                            <mat-checkbox color="primary" [(ngModel)]="checkAll" (change)="selectAll()"> </mat-checkbox>
+                        </th>
+                        <th class="col-xs-9 text-left bg-gray xn-padding--sm">Field Name</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <ng-template let-item ngFor [ngForOf]="displayFields" let-idx="index" [ngForTrackBy]="itemsTrackBy">
+                        <tr *ngIf="!item.isHidden">
+                            <td class="text-center xn-padding--sm">
+                                <mat-checkbox
+                                    color="primary"
+                                    [disabled]="item.isEditable == false"
+                                    [(ngModel)]="item.selected"
+                                    (change)="onCheckboxChanged()"
+                                >
+                                </mat-checkbox>
+                            </td>
+                            <td class="text-left xn-padding--sm">
+                                {{ item.value }}
+                            </td>
+                        </tr>
+                    </ng-template>
+                </tbody>
+            </table>
+        </perfect-scrollbar>
+    </div>
+
+    <p-footer>
+        <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+            <button label="Cancel" pbutton="" type="button" mat-raised-button (click)="close()">
+                <span class="ui-button-text ui-c">Cancel</span>
+            </button>
+            <button label="Save" pbutton="" type="button" mat-raised-button class="mat-btn-blue" (click)="apply()">
+                <span class="ui-button-text ui-c">Apply</span>
+            </button>
+        </div>
+    </p-footer>
+</p-dialog>

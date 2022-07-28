@@ -1,0 +1,197 @@
+<ng-container *ngIf="xnDocumentTreeService.structureSettingsChanged$ | async as treeSettings">
+    <div class="document-tree-container" [class.collapsed-tree]="treeSettings.isCollapsedTree">
+        <div class="tree-container">
+            <tree-root
+                [nodes]="nodes"
+                [options]="options"
+                (contextmenu)="rightClickOnTree($event)"
+                (initialized)="initialized($event)"
+                #treeComponent
+            >
+                <ng-template #treeNodeFullTemplate let-node="node" let-index="index" let-templates="templates">
+                    <ng-template
+                        [ngTemplateOutlet]="xnTreeNodeContent"
+                        [ngTemplateOutletContext]="{
+                            node: node,
+                            templates: templates,
+                            treeSettings: treeSettings,
+                            index: index
+                        }"
+                    >
+                    </ng-template>
+                </ng-template>
+            </tree-root>
+        </div>
+        <ng-container *ngTemplateOutlet="notification"></ng-container>
+    </div>
+</ng-container>
+
+<ng-template #nodeMenu let-implicit>
+    <section class="context-menu-folder">
+        <ng-template
+            [ngTemplateOutlet]="templateRefContextMenuOnNode"
+            [ngTemplateOutletContext]="{ node: implicit.treeNode, treeComponent: implicit.treeComponent }"
+        >
+        </ng-template>
+    </section>
+</ng-template>
+
+<ng-template #treeMenu let-implicit>
+    <section class="context-menu-folder">
+        <ng-template
+            [ngTemplateOutlet]="templateRefContextMenuOnTree"
+            [ngTemplateOutletContext]="{
+                treeComponent: implicit.treeComponent
+            }"
+        >
+        </ng-template>
+    </section>
+</ng-template>
+
+<ng-template #notification>
+    <div id="notification-popup-anchor"></div>
+</ng-template>
+
+<ng-template
+    let-node="node"
+    let-templates="templates"
+    let-treeSettings="treeSettings"
+    let-index="index"
+    #xnTreeNodeContent
+>
+    <div
+        class="xn-tree-node"
+        [class.leaf-node]="node.isLeaf"
+        [class.has-children]="node.hasChildren"
+        [class.parent-has-more-child]="node.parent?.data?.children?.length > 1"
+        [class.last-child]="node.parent?.data?.children?.length - 1 === index"
+        [class.expandable]="node.parent?.hasChildren && node.isCollapsed"
+        [class.collapsable]="node.hasChildren && node.isExpanded"
+        [class.after-adjacent-root]="node.data.isAfterAdjacentRoot"
+        [class.highlight-path]="node.data.highlightPathName"
+        [class.root-node]="node.parent?.data?.virtual"
+        [class.highlight-path-line]="node.data.highlightNodeBefore"
+        [class.select-this-folder-on-collapsing]="
+            treeSettings.isCollapsedTree &&
+            this.rootSelectedNode &&
+            node.data.idDocument === this.rootSelectedNode.data.idDocument
+        "
+    >
+        <!-- <div *ngIf="node.parent?.data?.virtual" class="node-expander" [class.root]="node.parent?.data?.virtual && hasNodeChildren(node)"
+            (click)="toggleNodeExpanded(node, $event)">
+            <span *ngIf="hasNodeChildren(node) && node.isCollapsed" class="node-toggle"><i
+                    class="fa fa-caret-up"></i></span>
+            <span *ngIf="hasNodeChildren(node) && node.isExpanded" class="node-toggle"><i
+                    class="fa fa-caret-down"></i></span>
+        </div> -->
+
+        <div
+            class="node-content-wrapper root-node-content-wrapper"
+            [class.root-node-content-wrapper]="node.parent?.data?.virtual"
+            [class.node-content-wrapper-active]="node.isActive"
+            [class.node-content-wrapper-focused]="node.isFocused"
+            [class.selectable]="modeTree === ModeTreeEnumeration.SELECTABLE_FOLDER"
+            [class.select-temporary-folder]="temporarySelectingNode && temporarySelectingNode === node"
+            [class.select-this-folder]="this.selectedNode && node.data.idDocument === this.selectedNode.data.idDocument"
+            [class.highlight-path-line]="node.data.highlightPathLine"
+            [class.wallet]="node.data.name && node.data.name.toLowerCase() === 'wallet'"
+            [attr.dataRef-key]="!node.data.isCompany ? node.data.idDocument : null"
+            [attr.dataRef-user]="!node.data.isCompany ? node.data.idLogin : null"
+            [attr.is-user]="node.data.isUser"
+            (click)="clickOnNode($event, node, templates)"
+            (dblclick)="dbClickOnNode($event, node)"
+            (dragover)="onDragOver($event)"
+            (drop)="onDrop($event, node)"
+            (contextmenu)="rightClickOnNode($event, node)"
+        >
+            <!-- <ng-container *ngIf="node.data.idDocument && (node.data.mode === DocumentTreeModeEnumeration.VIEW || node.data.mode === DocumentTreeModeEnumeration.DELETE)"> -->
+            <span
+                class="icon icon-transform"
+                *ngIf="node.parent?.data?.virtual"
+                [class.w28px-h28px]="!treeSettings.isCollapsedTree"
+                [class.w40px-h40px]="treeSettings.isCollapsedTree"
+                #popIcon="bs-tooltip"
+                container="body"
+                data-placement="bottom"
+                [tooltip]="treeSettings.isCollapsedTree ? node.data.name : ''"
+            >
+                <mat-icon [svgIcon]="node?.data?.icon" inline="true"></mat-icon>
+            </span>
+            <span class="icon" *ngIf="!node.parent?.data?.virtual">
+                <span class="dot"></span>
+            </span>
+            <span class="description">
+                {{ node.data.name }}
+            </span>
+
+            <div class="right-content">
+                <div class="quantity-folder">
+                    <span *ngIf="this.shouldGetDocumentQuantity && node.hasChildren" class="quantity-parent">
+                        {{ node.data.quantityParent }}
+                    </span>
+                    <span
+                        *ngIf="this.shouldGetDocumentQuantity"
+                        class="quantity"
+                        [class.left-border]="node.hasChildren"
+                        [textContent]="node.data.quantity"
+                    >
+                    </span>
+                </div>
+
+                <div
+                    *ngIf="node.hasChildren && !(treeSettings.activeFoldersOnly && node.data.isHiddenAllChildren)"
+                    class="node-expander"
+                    (click)="clickOnExpander(node, $event)"
+                >
+                    <span *ngIf="node.isCollapsed" class="node-toggle"><i class="fa fa-chevron-down"></i></span>
+                    <span *ngIf="node.isExpanded" class="node-toggle"><i class="fa fa-chevron-up"></i></span>
+                </div>
+            </div>
+            <!-- </ng-container> -->
+
+            <!-- <div class="node-creation-wrapper" *ngIf="isShowInputFolderName(node)">
+                <mat-form-field class="mat-form-field-group dms-custom-control default-color">
+                    <input matInput class="input-folder-name" placeholder="Folder name"
+                        [value]="node.data.name || ''" (keydown.enter)="okActionFolderName($event, node)"
+                        (keydown.esc)="cancelActionFolderName($event, node)">
+                </mat-form-field>
+                <div class="text-right">
+                    <span class="btn-myDm myDm-cancel"
+                        (click)="cancelActionFolderName($event, node)">Cancel</span>
+                    <span class="btn-myDm myDm-success" (click)="okActionFolderName($event, node)">OK</span>
+                </div>
+            </div> -->
+        </div>
+
+        <tree-node-children
+            [class.root-node-has-tree-children]="node.parent?.data?.virtual && node.hasChildren"
+            [node]="node"
+            [templates]="templates"
+        ></tree-node-children>
+    </div>
+</ng-template>
+
+<ng-template #overlayNodeChildren let-implicit>
+    <div
+        class="overlay-root-tree {{ overlayChildrenNodePanelClass }}"
+        *ngIf="changeSizeOverlayRefFitAngularTree.asObservable() | async as angularTreeSize"
+    >
+        <tree-root
+            [nodes]="implicit.nodes"
+            (initialized)="initializedTreeRootOverlay($event)"
+            [class.invisible]="!angularTreeSize.height"
+        >
+            <ng-template #treeNodeFullTemplate let-node="node" let-index="index" let-templates="templates">
+                <ng-template
+                    [ngTemplateOutlet]="xnTreeNodeContent"
+                    [ngTemplateOutletContext]="{
+                        node: node,
+                        templates: templates,
+                        treeSettings: implicit.treeSettings
+                    }"
+                >
+                </ng-template>
+            </ng-template>
+        </tree-root>
+    </div>
+</ng-template>

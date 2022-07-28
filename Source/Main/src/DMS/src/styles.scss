@@ -1,0 +1,332 @@
+/* You can add global styles to this file, and also import other style files */
+@import '~bootstrap/dist/css/bootstrap.css';
+@import '~perfect-scrollbar/css/perfect-scrollbar.css';
+@import '~font-awesome/css/font-awesome.css';
+@import '~angular2-toaster/toaster.css';
+@import '~dragula/dist/dragula.css';
+@import '~primeng/resources/primeng.min.css';
+@import '~primeng/resources/themes/omega/theme.css';
+@import '~ng2-slim-loading-bar/style.css';
+
+@import 'src/sass_files/adminlte.scss';
+@import 'src/public/assets/lib/adminlte/all-skins.min';
+@import 'src/sass_files/3rd-library-override.scss';
+@import 'src/sass_files/all-skins-override.scss';
+@import 'src/sass_files/perfect-scrollbar.min';
+@import 'src/sass_files/wijmo.min';
+@import 'src/sass_files/wijmo-theme-override.scss';
+@import 'src/sass_files/jquery-ui-override.scss';
+@import 'src/sass_files/quill-override.scss';
+@import 'src/sass_files/override/button-override.scss';
+@import 'src/sass_files/override/mat-input-override.scss';
+@import 'src/sass_files/override/material-input.scss';
+@import 'src/sass_files/bootstrap4.scss';
+@import 'src/sass_files/angular-tree.scss';
+// @import '~video.js/src/css/video-js.scss';
+
+@font-face {
+    font-family: 'rbt_Regular';
+    src: url('public/fonts/SFProTTF/SFProDisplay-Regular.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'rbt_Medium';
+    src: url('public/fonts/SFProTTF/SFProDisplay-Medium.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'rbt_Bold';
+    src: url('public/fonts/SFProTTF/SFProDisplay-Bold.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'ocr-b-std';
+    src: url('public/fonts/OCRBStd.otf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Font Awesome 5 Pro';
+    font-style: normal !important;
+    font-weight: 300;
+    font-display: auto;
+    src: url('public/fonts/fa-light-300.eot');
+    src: url('public/fonts/fa-light-300.eot?#iefix') format('embedded-opentype'),
+        url('public/fonts/fa-light-300.woff2') format('woff2'), url('public/fonts/fa-light-300.woff') format('woff'),
+        url('public/fonts/fa-light-300.ttf') format('truetype'),
+        url('public/fonts/fa-light-300.svg#fontawesome') format('svg');
+}
+
+.fal {
+    font-family: 'Font Awesome 5 Pro';
+    font-weight: 300;
+    font-style: normal;
+}
+
+html,
+body,
+div.page-wrapper {
+    min-height: 100vh !important;
+    max-height: 100vh !important;
+    font-size: 12px;
+    font-family: 'rbt_Regular';
+}
+
+body#main,
+div.page-wrapper {
+    overflow: hidden;
+}
+
+input,
+select,
+button,
+.form-control {
+    font-size: 12px;
+}
+
+*:focus {
+    outline: none !important;
+}
+
+a:link,
+a:visited,
+a:hover,
+a:active {
+    text-decoration: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: 'rbt_Medium';
+}
+
+.credit {
+    display: inline-block;
+    width: 39px;
+    height: 27px;
+    background: url('~/public/assets/lib/credit/all_39x27.png') no-repeat !important;
+    margin-right: 5px;
+
+    &.credit-jp {
+        background-position: -52px -399px !important;
+    }
+
+    &.credit-mc {
+        background-position: -101px -449px !important;
+    }
+
+    &.credit-crs {
+        background-position: -101px -739px !important;
+    }
+
+    &.credit-mst {
+        background-position: -150px -400px !important;
+    }
+
+    &.credit-ae {
+        background-position: -101px -59px !important;
+    }
+
+    &.credit-dc {
+        background-position: -52px -254px !important;
+    }
+
+    &.credit-cb {
+        background-position: -52px -739px !important;
+    }
+
+    &.credit-vs {
+        background-position: -150px -643px !important;
+    }
+
+    &.credit-ma {
+        background-position: -150px -400px !important;
+    }
+
+    &.credit-vi {
+        background-position: -150px -643px !important;
+    }
+}
+
+.credit-sm {
+    display: inline-block;
+    width: 29px;
+    height: 20px;
+    background: url('~/public/assets/lib/credit/all_cc_small_28x19.png') no-repeat !important;
+    margin-right: 5px;
+
+    &.credit-jp {
+        background-position: -38px -294px !important;
+    }
+
+    &.credit-mc {
+        background-position: -74px -330px !important;
+    }
+
+    &.credit-crs {
+        background-position: -74px -545px !important;
+    }
+
+    &.credit-mst {
+        background-position: -150px -400px !important;
+    }
+
+    &.credit-ae {
+        background-position: -74px -43px !important;
+    }
+
+    &.credit-dc {
+        background-position: -38px -187px !important;
+    }
+
+    &.credit-cb {
+        background-position: -38px -545px !important;
+    }
+
+    &.credit-vs {
+        background-position: -110px -473px !important;
+    }
+
+    &.credit-ma {
+        background-position: -110px -294px !important;
+    }
+}
+
+.min-height-unset {
+    min-height: unset !important;
+}
+
+.no-border {
+    border: none !important;
+    border-radius: 0;
+}
+
+.doublet-check-wj-row-cell {
+    display: flex;
+    align-items: center;
+}
+
+.display-block {
+    display: block;
+}
+
+.display-inline-block {
+    display: inline-block;
+}
+
+#page-loading {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    z-index: 9997;
+
+    img#background-img {
+        width: 100%;
+        height: auto;
+        z-index: 9998;
+        -webkit-filter: grayscale(0);
+        -moz-filter: grayscale(0);
+        -ms-filter: grayscale(0);
+        filter: grayscale(1);
+        -webkit-animation-name: loadingGrayscale; /* Safari 4.0 - 8.0 */
+        -webkit-animation-duration: 5s; /* Safari 4.0 - 8.0 */
+        -webkit-animation-iteration-count: infinite; /* Safari 4.0 - 8.0 */
+        animation-name: loadingGrayscale;
+        animation-duration: 5s;
+        animation-iteration-count: infinite;
+    }
+
+    img#loading-img {
+        position: absolute;
+        left: calc(100vw / 2 - 50px);
+        z-index: 9999;
+        width: 100px;
+    }
+}
+
+// keyframes mixin
+@mixin keyframes($name) {
+    @-webkit-keyframes #{$name} {
+        @content;
+    }
+
+    @-moz-keyframes #{$name} {
+        @content;
+    }
+
+    @-ms-keyframes #{$name} {
+        @content;
+    }
+
+    @keyframes #{$name} {
+        @content;
+    }
+}
+
+// use of keyframes mixin
+@include keyframes(loadingGrayscale) {
+    0% {
+        -webkit-filter: grayscale(0);
+        -moz-filter: grayscale(0);
+        -ms-filter: grayscale(0);
+        filter: grayscale(0);
+    }
+
+    50% {
+        -webkit-filter: grayscale(1);
+        -moz-filter: grayscale(1);
+        -ms-filter: grayscale(1);
+        filter: grayscale(1);
+    }
+
+    100% {
+        -webkit-filter: grayscale(0);
+        -moz-filter: grayscale(0);
+        -ms-filter: grayscale(0);
+        filter: grayscale(0);
+    }
+}
+
+.overflow-auto {
+    overflow: auto;
+}
+
+.cusor-pointer {
+    cursor: pointer;
+}
+
+/*.disable-text-selection, a, span, p, h1, h2, h3, h4, h5, h6, td, label {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.enable-text-selection,
+.enable-text-selection * {
+    -webkit-touch-callout: default;
+    -webkit-user-select: text;
+    -moz-user-select: text;
+    -ms-user-select: text;
+    user-select: text;
+}*/
+.flex-1 {
+    flex: 1;
+}
+
+.modal-header--information {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.ag-watermark {
+    display: none !important;
+    visibility: hidden !important;
+}

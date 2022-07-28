@@ -1,0 +1,15 @@
+wj-flex-grid {
+	height: 100%;
+}
+
+:host ::ng-deep {
+    .fa-trash-o {
+        font-size: 17px;
+	    line-height: 22px;
+	    cursor: pointer;
+    }
+}
+.ag-theme-balham {
+	width: 100%;
+	height: 100%;
+}

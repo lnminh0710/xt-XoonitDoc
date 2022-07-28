@@ -1,0 +1,12 @@
+<div class="control form-group">
+    <div class="input-group date" data-provide="datepicker">
+        <input type="text" class="form-control{{formControlClassStyle}}" [placeholder]="bsConfig.dateInputFormat" bsDatepicker #datepickerCtrl="bsDatepicker"
+            [isDisabled]="disabled"
+            [disabled]="disabled"
+            (bsValueChange)="onChangedDatepicker($event)" [bsConfig]="bsConfig"
+            (input)="onDatepickerEmpty($event)">
+        <div class="input-group-icon icon-calendar">
+            <span (click)="datepickerCtrl.show()"><i class="fa fa-calendar"></i></span>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,8 @@
+<xn-capture-item
+	*ngFor="let item of captureItems; let i=index"
+    [indexItem]="i"
+    [captureItem]="item"
+    [isShowCapture]="isShowCapture"
+    (actionRemove)="actionRemoveHandler($event)"
+    (actionUpdateComment)="actionUpdateCommentHandler($event)">
+</xn-capture-item>

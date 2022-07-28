@@ -1,0 +1,71 @@
+.pagination {
+    border: none !important;
+    margin-bottom: 0;
+    margin-top: 0;
+}
+
+.pagination > li > a, .pagination > li > span {
+    padding: 2px 9px;
+}
+
+.page-number-input {
+    float: left;
+    margin: 0 5px 0 5px;
+}
+
+.page-number-input input {
+    width: 60px;
+    text-align: center;
+    border-radius: 3px;
+}
+
+li {
+    float: left;
+}
+
+.mat-raised-button {
+    margin-left: 1px;
+    min-width: 0;
+    width: 30px;
+    border-radius: 0;
+    padding: 0 11px;
+
+    &.delete {
+        color: #C62828 !important;
+        background: none !important;
+        padding: 0 !important;
+        box-shadow: none !important;
+        margin-left: 0px;
+
+        &[disabled] {
+            color: rgba(0, 0, 0, 0.38) !important;
+        }
+
+        &:not([disabled]) {
+            color: #C62828 !important;
+        }
+    }
+}
+
+.mat-raised-button--first {
+    border-radius: 4px 0 0 4px;
+}
+
+.mat-raised-button--last {
+    border-radius: 0 4px 4px 0;
+}
+
+.height-px-30 {
+    height: 30px;
+}
+
+.page-size {
+    float: left;
+    padding: 0 8px;
+}
+
+.custom-wj-input-control {
+    padding-left: 0px;
+    width: 95px;
+    height: 25px;
+}

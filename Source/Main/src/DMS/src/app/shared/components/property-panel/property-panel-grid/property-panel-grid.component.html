@@ -1,0 +1,55 @@
+<table class="table no-margin-bottom full-width padding-left--sm"
+       [ngClass]="[isRootLocal ? 'table-root' : '']">
+    <tbody>
+        <ng-template let-item ngFor [ngForOf]="datasourceLocal" let-idx="index" [ngForTrackBy]="itemsTrackBy">
+            <tr *ngIf="(item.visible == undefined || item.visible == null || item.visible != false)">
+                <td class="col-xs-6 no-padding padding-left--sm"
+                    [ngClass]="{'no-border-right' : isRootLocal,
+                                'white-border-left' : (levelLocal>1),
+                                'bg-root-gray' : isRootLocal}">
+
+                    <span class="empty-space width-level-{{levelLocal}}"></span>                    
+                    <a class="collapse-button cursor-pointer"
+                       *ngIf="item.children && item.children.length"
+                       (click)="item.collapsed = !item.collapsed">
+                        <i *ngIf="item.collapsed"
+                           class="fa fa-plus-square-o"
+                           aria-hidden="true"></i>
+                        <i *ngIf="!item.collapsed"
+                           class="fa fa-minus-square-o" aria-hidden="true"></i>
+                    </a>
+
+                    <a class="collapse-button cursor-pointer"
+                       *ngIf="item.children && item.children.length"
+                       (click)="item.collapsed = !item.collapsed"
+                       [tooltip]="item.tooltip"
+                       container="body"><strong>{{item.name}}</strong></a>
+                    <span *ngIf="!item.children || !item.children.length"
+                          [tooltip]="item.tooltip"
+                          container="body">{{item.name}}</span>
+                </td>
+                <td class="no-padding"
+                    [ngClass]="{'no-border-left' : isRootLocal,
+                                'white-border-right' : (levelLocal>1),
+                                'bg-root-gray' : isRootLocal}">
+                    <property-panel-grid-value (onPropertiesChange)="propertiesChange($event)"
+                                               (onPropertiesApply)="propertiesApply($event)"
+                                               [item]="item"
+                                               [usingModule]="usingModule"></property-panel-grid-value>
+                </td>
+            </tr>
+            <tr *ngIf="(item.visible == undefined || item.visible == null || item.visible != false) && item.children && item.children.length">
+                <td [collapse]="item.collapsed"
+                    colspan="2"
+                    class="no-padding">
+                    <app-property-panel-grid [datasource]="item.children"
+                                         [isRoot]="false"
+                                         [level]="levelLocal"
+                                         [usingModule]="usingModule"
+                                         (onPropertiesChange)="propertiesChange($event)"
+                                         (onPropertiesApply)="propertiesApply($event)"></app-property-panel-grid>
+                </td>
+            </tr>
+        </ng-template>
+    </tbody>
+</table>

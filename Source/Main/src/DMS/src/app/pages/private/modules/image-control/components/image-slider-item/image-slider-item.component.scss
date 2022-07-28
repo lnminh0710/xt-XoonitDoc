@@ -1,0 +1,206 @@
+@keyframes bar-animation {
+    0% {
+        background-position: 0 0;
+    }
+    100% {
+        background-position: 50px 50px;
+    }
+}
+
+.item--display-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.error {
+    color: #dd2727 !important;
+}
+.warning {
+    color: #f07300 !important;
+}
+$borderRadius: 10px;
+$typeHeight: 70px;
+.image-slider__item {
+    // border: 1px solid #616161;
+    cursor: pointer;
+    width: 100%;
+    transition: all ease-in-out 0.3s;
+    margin: auto;
+    border-radius: $borderRadius;
+    position: relative;
+
+    &.selected {
+        box-shadow: 0px 0px 10px 5px rgba(1, 122, 255, 0.9);
+    }
+
+    &-type {
+        // background-color: #333358;
+        background-color: #f1f6ff;
+        border-bottom-right-radius: $borderRadius;
+        border-bottom-left-radius: $borderRadius;
+        height: $typeHeight;
+        justify-content: flex-start;
+        width: 100%;
+        font-size: 14px;
+        position: relative;
+    }
+    &-doctype {
+        justify-content: flex-start;
+        height: 32px;
+        padding: 0 10px;
+    }
+
+    &-checkbox {
+        height: 16px;
+        width: 16px;
+        margin-right: 10px;
+        cursor: pointer;
+        &.checked {
+            background: url('src/public/imgs/dark-icons/check.png') center no-repeat;
+        }
+        &.unchecked {
+            box-sizing: border-box;
+            border: 2px solid #dfe1e5;
+            border-radius: 2px;
+            background-color: #fafbfc;
+        }
+    }
+
+    &-info {
+        padding: 0 10px;
+        height: 38px;
+        &-total-page {
+            flex: 1;
+            justify-content: flex-start;
+            .toolbar-icon {
+                margin-right: 5px;
+            }
+        }
+    }
+
+    &-image-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-sizing: border-box;
+        border: 1px solid #31314d;
+        border-bottom: unset;
+        border-radius: $borderRadius $borderRadius 0 0;
+        &.done {
+            border: unset;
+        }
+    }
+    &-image {
+    }
+    &-action {
+        width: 28px;
+        display: flex;
+        justify-content: flex-end;
+        height: 28px;
+        &-icon {
+            margin-right: 4px;
+            width: 28px;
+            height: 28px;
+            &.eye-icon {
+                background: url('src/public/imgs/icons/eye.svg') center no-repeat;
+            }
+            &.trash-icon {
+                background: url('src/public/imgs/icons/trash.svg') center no-repeat;
+            }
+        }
+    }
+
+    &-progress {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 10px;
+        width: 100%;
+
+        position: absolute;
+        top: 0;
+        left: 0;
+
+        background: -webkit-linear-gradient(
+            135deg,
+            #009999 25%,
+            #008283 25%,
+            #008283 50%,
+            #009999 50%,
+            #009999 75%,
+            #008283 75%
+        );
+        background-size: 30px 30px;
+        animation: bar-animation 3s linear infinite;
+    }
+
+    &-title {
+        padding: 0 10px;
+        flex: 1;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+    }
+
+    &-total-page {
+        font-size: 10px;
+    }
+
+    &-confirmation {
+        height: 0;
+        width: 0;
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        border-top-left-radius: 50%;
+        background-color: rgba(0, 0, 0, 0.7);
+        transition: all ease-in-out 0.35s;
+        border-radius: $borderRadius;
+        color: #ffffff;
+        &.show-confirm {
+            height: 100%;
+            width: 100%;
+            border-top-left-radius: 0;
+        }
+        &-container {
+            height: auto;
+            width: 100%;
+        }
+        &-title {
+            height: 40px;
+            text-align: center;
+        }
+        &-action {
+            &-cancel,
+            &-delete {
+                height: 32px;
+                width: 40%;
+                border-radius: 5px;
+                background-color: #deebff;
+                color: #101b4f;
+            }
+            &-delete {
+                margin-left: 10px;
+                background-color: #a40000;
+                color: #fff;
+            }
+        }
+
+        //
+        .upload-animate-icon {
+            margin: auto;
+            margin-bottom: 5px;
+        }
+
+        .title {
+            text-align: center;
+            font-size: 16px;
+        }
+    }
+
+    &.small {
+        .image-slider__item-type {
+            height: 34px;
+        }
+    }
+}

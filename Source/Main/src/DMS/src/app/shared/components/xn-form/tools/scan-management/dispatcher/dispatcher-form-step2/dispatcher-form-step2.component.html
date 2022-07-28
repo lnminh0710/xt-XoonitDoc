@@ -1,0 +1,41 @@
+<div class="xn-padding--sd  dispatcher-step2"
+    [perfectScrollbar]="{suppressScrollX: true, suppressScrollY: false}">
+    <div class="margin-bottom--sd  col-xs-12  no-padding">
+        <button type="button"
+                mat-raised-button
+                class="mat-btn-blue  pull-right  margin-left--sd xn-margin"
+                (click)="unDispatch()">
+            UnDispatch
+        </button>
+    </div>
+    <div class="col-xs-12  no-padding  dispatcher-form__step2__left">
+        <div class="xn__form-header  col-xs-12  table-border  table-border-bg">
+            <p class="pull-left xn__form-header-title">Pools</p>
+            <p class="pull-right xn__form-header-title">
+                N. of entries: {{poolRightData.data.length}}
+            </p>
+        </div>
+        <div class="col-xs-6  no-padding  pool-grid--left  padding-right--sm">
+            <xn-ag-grid #poolLeftGrid
+                        *ngIf="poolLeftData && poolLeftData.columns && poolLeftData.columns.length"
+                        [id]="poolLeftGridId"
+                        [dataSource]="poolLeftData"
+                        [globalProperties]="globalProperties"
+                        [fitWidthColumn]="true"
+                        [autoSelectFirstRow]="true"
+                        (rowClick)="poolLeftGridItemClick($event)">
+            </xn-ag-grid>
+        </div>
+        <div class="col-xs-6  no-padding  pool-grid">
+            <xn-ag-grid #poolRightGrid
+                        *ngIf="poolRightData && poolRightData.columns && poolRightData.columns.length"
+                        [id]="poolRightGridId"
+                        [dataSource]="poolRightData"
+                        [readOnly]="false"
+                        [globalProperties]="globalProperties"
+                        [isEditting]="true"
+                        [fitWidthColumn]="true">
+            </xn-ag-grid>
+        </div>
+    </div>
+</div>

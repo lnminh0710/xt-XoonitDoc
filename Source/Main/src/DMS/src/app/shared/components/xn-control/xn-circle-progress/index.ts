@@ -1,0 +1,1 @@
+export * from './xn-circle-progress.component';

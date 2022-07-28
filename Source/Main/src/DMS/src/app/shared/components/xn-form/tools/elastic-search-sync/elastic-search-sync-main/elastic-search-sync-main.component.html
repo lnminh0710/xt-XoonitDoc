@@ -1,0 +1,33 @@
+<div class="col-xs-12  m">
+    <div class="t">
+        <div class="col-xs-4  no-padding-left  height-pc-100">
+            <div class="xn__form-header">Module</div>
+            <div class="e-s-t">
+                <elastic-search-sync-tab [data]="tabs"
+                                         [isIdle]="isIdle"
+                                         (outputData)="onTabOutputData($event)">
+                </elastic-search-sync-tab>
+            </div>
+        </div>
+        <div class="col-xs-8  no-padding-right  height-pc-100">
+            <div class="xn__form-header">Result</div>
+            <div class="e-s-g">
+                <elastic-search-sync-grid #searchSyncGrid
+                                          [gridId]="searchSyncGridId"
+                                          [isGettingData]="isGettingData"
+                                          [gettingDataMessage]="gettingDataMessage"
+                                          [data]="dataSource">
+                </elastic-search-sync-grid>
+            </div>
+        </div>
+    </div>
+    <div class="b">
+        <elastic-search-sync-command #searchSyncCommand
+                                     [percentValue]="percentValue"
+                                     [isIdle]="isIdle"
+                                     (output)="onCommandOutput($event)"
+                                     (callStart)="onCallStart()"
+                                     (callStop)="onCallStop()"></elastic-search-sync-command>
+    </div>
+
+</div>

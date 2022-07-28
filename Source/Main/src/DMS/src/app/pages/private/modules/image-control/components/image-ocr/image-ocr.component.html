@@ -1,0 +1,44 @@
+<!-- [isMove]="isMoveImage"
+(toggleMove)="onToggleMove($event)" -->
+<app-image-toolbar
+    *ngIf="!hiddenToolbar"
+    [viewAllPage]="viewAllPage"
+    [IdDocumentContainerScans]="IdDocumentContainerScans"
+    [IdDocument]="IdDocument"
+    [isShowRotateMode]="true"
+    [toolbarConfig]="toolbarConfig"
+    [isShowTodo]="isShowTodo"
+    [isSelectDocType]="isSelectDocType && !isEmpty && !isLoading && !!imageSrc"
+    [JsonQRCode]="JsonQRCode"
+    (viewActualSize)="viewActualSize()"
+    (rotateImage)="rotateImage($event)"
+    (zoomImage)="zoomImage($event)"
+    (toggleViewImageInfo)="onToggleViewImageInfo($event)"
+    (toggleKeyword)="onToggleKeyword()"
+    (toggleTodo)="onToggleTodo()"
+    (openSharing)="openSharing()"
+    (runOCRManually)="runOCRManually()"
+    (clean)="removeAllObject()"
+    (fullscreen)="fullscreenAction($event)"
+></app-image-toolbar>
+<div class="widget-image__container-loading" *ngIf="isLoading">
+    <img src="public/assets/img/loading-spinner.gif" />
+</div>
+<image-empty-state *ngIf="isEmpty" title="No image available"></image-empty-state>
+<div
+    id="{{ widgetId }}_image-ocr__wrapper"
+    style="position: relative; height: 100%"
+    [ngStyle]="{ 'padding-top': hiddenToolbar ? '0' : '90px' }"
+>
+    <div
+        (mousedown)="mousedown($event)"
+        (mousemove)="mousemove($event)"
+        (mouseup)="mouseup($event)"
+        (mouseleave)="mouseleave($event)"
+        [id]="widgetId"
+        style="height: 100%"
+        class="widget-image__container"
+    >
+        <canvas id="{{ widgetId + idData }}__canvas"></canvas>
+    </div>
+</div>

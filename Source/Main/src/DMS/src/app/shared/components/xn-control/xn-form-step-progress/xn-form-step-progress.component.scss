@@ -1,0 +1,122 @@
+.progress-main {
+    width: 100%;
+    float: left;
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
+
+.progress-sub {
+    float: left;
+    width: 50%;
+}
+
+.progress-sub__child {
+    float: left;
+    width: calc(50% - 9px);
+    height: 6px;
+}
+
+.progress-sub__center {
+    cursor: pointer;
+    background-color: transparent;
+    float: left;
+    width: 15px;
+    line-height: 10px;
+    margin-left: -1px;
+    border-radius: 4px;
+    height: 6px;
+
+    span {
+        font-size: 18px;
+        margin-top: -6px;
+    }
+}
+
+.left-progress__last {
+    width: calc(50% - 13px);
+}
+
+.progress-bow {
+    width: 0;
+    border-top: 3px solid transparent;
+    border-bottom: 3px solid transparent;
+    background: transparent;
+}
+
+.progress-bow--first {
+    position: absolute;
+    border-left: 4px solid #fff;
+}
+
+/******/
+
+.progress-text-main {
+    float: left;
+    width: 100%;
+}
+
+.progress-text-sub {
+    float: left;
+    width: 50%;
+    text-align: center;
+    font-weight: 700;
+}
+
+@-webkit-keyframes example {
+    0% {
+        background-color: green;
+        width: 0%;
+        height: 100px;
+    }
+
+    25% {
+        background-color: green;
+        width: 25%;
+        height: 100px;
+    }
+
+    50% {
+        background-color: green;
+        width: 50%;
+        height: 100px;
+    }
+
+    75% {
+        background-color: green;
+        width: 75%;
+        height: 100px;
+    }
+
+    100% {
+        background-color: green;
+        width: 100%;
+        height: 100px;
+    }
+}
+
+/* Standard syntax */
+@keyframes example {
+    0% {
+        background-color: green;
+        width: 0%;
+        height: 100px;
+    }
+
+    25% {
+        background-color: green;
+        width: 50%;
+        height: 100px;
+    }
+
+    75% {
+        background-color: green;
+        width: 75%;
+        height: 100px;
+    }
+
+    100% {
+        background-color: green;
+        width: 100%;
+        height: 100px;
+    }
+}

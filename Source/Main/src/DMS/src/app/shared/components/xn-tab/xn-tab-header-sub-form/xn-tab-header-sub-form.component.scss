@@ -1,0 +1,35 @@
+﻿.xn-edit-form__tab-progress {
+  float: left;
+
+  &.need-margin-top {
+    margin-top: 84px;
+  }
+
+  .xn-ef__tp--child {
+    float: left;
+    min-width: 110px;
+    height: 40px;
+    text-align: center;
+    border-bottom: none;
+    border-radius: 4px 4px 0px 0px;
+    cursor: default;
+    font-weight: 600;
+
+    &.margin-right-2px {
+      margin-right: 2px;
+    }
+
+    &.disabled-tab {
+      background-color: #eee !important;
+      border: 1px solid #cecece;
+      color: #cecece;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+  }
+
+  .xn-ef__tp-text {
+    line-height: 35px;
+    padding: 0 10px 0 10px;
+  }
+}

@@ -1,0 +1,28 @@
+@import 'src/sass_files/color.scss';
+
+.member-permission-wrapper {
+    height: 100%;
+    padding: 12px 15px;
+    .group-btn-wrapper {
+        .title-name {
+            font-size: 14px;
+            font-family: 'rbt_Medium';
+        }
+        .add-new-icon {
+            z-index: 1;
+            & > i {
+                cursor: pointer;
+                font-size: 28px;
+                color: $blue-azure-radiance;
+            }
+        }
+    }
+    .data-wrapper {
+        margin-top: 5px;
+        height: calc(100% - 5px - 45px);
+    }
+    .bottom-wrapper {
+        margin-top: 10px;
+        text-align: right;
+    }
+}

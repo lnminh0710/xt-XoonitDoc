@@ -1,0 +1,31 @@
+.header-text {
+    font-size: 18px;
+}
+
+.grid-content {
+    height: 500px;
+}
+
+.reference-table {
+    height: 390px;
+}
+
+.padding-left-30px {
+    padding-left: 30px;
+}
+
+tbody {
+    display: block;
+    height: 360px;
+    overflow: auto;
+}
+
+thead, tbody tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+}
+
+thead {
+    width: calc( 100% - 18px );
+}

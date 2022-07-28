@@ -1,0 +1,649 @@
+<div class="container">
+    <ng-container *ngTemplateOutlet="action"></ng-container>
+    <div class="drop-files" [ngClass]="{ 'd-none': !!data }" dnd-droppable (onDropSuccess)="dropFiles($event)">
+        <form
+            [formGroup]="formGroup"
+            class="box"
+            enctype="multipart/form-data"
+            novalidate
+            id="xml-upload-zone"
+            #formUploadPriceTag
+        >
+            <div class="box__input">
+                <input
+                    class="box__file"
+                    type="file"
+                    name="files"
+                    [attr.accept]="acceptFileTypes"
+                    id="xml-files"
+                    formControlName="files"
+                    [multiple]="false"
+                    (change)="onFileChange($event)"
+                />
+                <label for="file" (click)="openFilesDialog($event)">
+                    <div class="box__image"></div>
+                    <div class="box__title">
+                        <div class="box__title--primary">
+                            <label-translation [keyword]="'WIDGET_IMPORT_UPLOAD_FILE__Choose_File'"></label-translation>
+                        </div>
+                        <label-translation [keyword]="'WIDGET_IMPORT_UPLOAD_FILE__Drag_Here'"></label-translation>
+                    </div>
+                </label>
+            </div>
+        </form>
+    </div>
+    <ng-container *ngTemplateOutlet="content"></ng-container>
+</div>
+
+<ng-template #content>
+    <div id="preview-section" #previewContent>
+        <ng-container *ngTemplateOutlet="dataInfoNew; context: { previewMode: false }"></ng-container>
+    </div>
+    <div id="print-section" class="d-none">
+        <ng-container *ngTemplateOutlet="dataInfoNew; context: { previewMode: true }"></ng-container>
+    </div>
+</ng-template>
+
+<ng-template #dataInfo let-previewMode="previewMode">
+    <div
+        class="price-tag"
+        [ngClass]="{ 'd-none': !data, 'transform--center': zoom < 1, 'transform--top': zoom > 1 }"
+        style.transform="scale({{ previewMode ? 1 : zoom }})"
+    >
+        <div class="price-tag__row">
+            <div class="price-tag__title" style="font-size: 40px; font-weight: 500">Occasion</div>
+            <div class="price-tag__value" style="font-size: 50px" [ngClass]="{ bold: true }">
+                {{ getUIValue('car.name') }}
+            </div>
+        </div>
+        <div class="price-tag__line"></div>
+        <div class="price-tag__row">
+            <div class="price-tag__title">
+                <span style="font-size: 24px"> Zulassung:</span>
+                <span style="font-size: 20px">
+                    {{ getUIDate('InitialRegistration') }}
+                </span>
+            </div>
+            <div class="d-flex">
+                <div class="price-tag__value">
+                    <span style="font-size: 24px"> Motor:</span>
+                    {{ getUINumber('EnginePowerHP') }} PS / {{ getUINumber('EnginePowerKW') }} kW
+                </div>
+                <div class="mx-5"></div>
+                <div class="mx-4"></div>
+                <div class="price-tag__value">
+                    <span style="font-size: 24px"> {{ getUINumber('EngineCylinder') }} Zylinder / Hubraum: </span>
+                    {{ getUINumber('EngineCapacity') }} ccm
+                </div>
+            </div>
+        </div>
+        <div class="price-tag__row">
+            <div class="price-tag__title">
+                <span style="font-size: 24px">km:</span>
+                <span style="font-size: 20px">
+                    {{ getUINumber('Milage') }}
+                </span>
+            </div>
+            <div class="price-tag__value">
+                <div>
+                    <div class="price-tag__value">
+                        <span style="font-size: 24px">Getriebe:</span>
+                        {{ getUIValue('GearType') }}
+                    </div>
+                    <div class="d-flex align-items-baseline" style="font-size: 24px">
+                        Farbe:
+                        <span style="font-size: 20px; margin-left: 10px; margin-right: 8px; text-transform: capitalize">
+                            {{ getUIValue('BodyColor') }}
+                        </span>
+                        Polster:
+                        <span style="font-size: 20px; margin-left: 10px; text-transform: capitalize">
+                            {{ getUIValue('Covering') }}
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="price-tag__row">
+            <div class="price-tag__title"></div>
+            <div class="price-tag__value">
+                <div>
+                    <div class="price-tag__value">
+                        <span style="font-size: 24px"> Verbrauch,CO2-Emissionen: </span>
+                        {{ getUIValue('ConsumptionLiquidExtraCombined', 0) }}
+                        l
+                    </div>
+                    <div class="value mx-1">
+                        {{ getUIValue('EmissionCo2Liquid') }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="price-tag__row">
+            <div class="price-tag__title"></div>
+            <div class="price-tag__value">
+                <div>
+                    <div class="price-tag__value">
+                        <div>
+                            <div>
+                                {{ getUIValue('PrimaryFuelType') }}
+                            </div>
+                            <div style="text-align: center">Gesamt</div>
+                        </div>
+                    </div>
+                    <div class="value mx-2">
+                        {{ getUIValue('EmissionClass') }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="price-tag__line"></div>
+        <div class="price-tag__row">
+            <div class="price-tag__title">Ausstattung</div>
+        </div>
+        <div class="price-tag__row" mt="0px">
+            <div class="price-tag__title"></div>
+            <div class="price-tag__value">
+                {{ getValuePropertyField('StandardEquipment') }},
+                {{ getValuePropertyField('SpecialEquipment') }}
+            </div>
+        </div>
+        <div class="price-tag__action-row" *ngIf="!previewMode">
+            <div class="price-tag__icon-button" (click)="openEditPropertyDialog()">
+                <i class="fa fa-pencil"></i>
+            </div>
+        </div>
+        <div class="price-tag__line"></div>
+        <div class="price-tag__row" mt="4px">
+            <div class="price-tag__title" [ngClass]="{ bold: true }">Leasing ab:</div>
+            <div class="price-tag__value" [ngClass]="{ bold: true }" style="font-size: 40px">
+                <div>
+                    <div class="price-tag__value" [ngClass]="{ bold: true }" style="font-size: 52px">
+                        Fr. {{ getUIPrice('LeasingRate') }}
+                        <span>/Monat</span>
+                    </div>
+                    <div class="price-tag__value" [ngClass]="{ bold: true }" style="font-size: 52px">
+                        <span>Preis: </span>
+                        Fr. {{ getUIPrice('PublicPriceValue') }}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="price-tag__row" mt="0">
+            <div class="price-tag__title" [ngClass]="{ bold: true }"></div>
+            <div class="price-tag__value" [ngClass]="{ bold: true }" style="font-size: 50px">
+                <div>
+                    <div class="price-tag__value"></div>
+                    <div class="value d-flex" [ngClass]="{ bold: true }" style="font-size: 24px">
+                        <span style="visibility: hidden"> Preis: </span>
+                        (Neupreis Fr.
+                        <span class="me-1"></span>
+                        {{ getUIPrice('ListPriceValue') }})
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="price-tag__action-row" *ngIf="!previewMode">
+            <div class="price-tag__icon-button" (click)="openEditPriceDialog()">
+                <i class="fa fa-pencil"></i>
+            </div>
+        </div>
+        <div class="price-tag__line"></div>
+        <div class="price-tag__row">
+            <div class="price-tag__title">Garantie</div>
+            <div class="price-tag__value">
+                <div>
+                    <div class="price-tag__value" style="font-size: 24px">
+                        {{ getUIValue('WarrantyText', '     a         ') }}
+                    </div>
+                    <div class="price-tag__value" style="font-size: 24px">
+                        {{ getUINumber('WarrantyDuration') }}
+                        Monate oder
+                        {{ getUINumber('WarrantyMilage') }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="price-tag__row" mt="6px">
+            <div class="price-tag__title">Leasingkonditionen</div>
+            <div class="price-tag__value" style="font-size: 18px; font-weight: 300">
+                Anzahlung: {{ getUIPrice('LeasingInitialPayment') }}
+                - CHF Laufrzeit:
+                {{ getUINumber('LeasingDuration', 0) }} Monate
+                <span class="mx-4"></span>
+                km-Leistung:
+                {{ getUINumber('LeasingExcessMileageCosts') }} km/Jahr Nur in Verbindung mit Allianz!
+            </div>
+        </div>
+        <div class="price-tag__line"></div>
+    </div>
+</ng-template>
+
+<ng-template #dataInfoNew let-previewMode="previewMode">
+    <div
+        class="price-tag"
+        [ngClass]="{ 'd-none': !data, 'transform--center': zoom < 1, 'transform--top': zoom > 1 }"
+        style.transform="scale({{ previewMode ? 1 : zoom }})"
+    >
+        <div class="price-tag__row">
+            <div class="price-tag__title" style="font-size: 40px; font-weight: 500">Occasion</div>
+            <div class="price-tag__value" style="font-size: 50px" [ngClass]="{ bold: true }">
+                {{ getUIValue('car.name') }}
+            </div>
+        </div>
+        <div class="price-tag__row" *ngFor="let item of fields; let index = i">
+            <div class="price-tag__title">{{ item.label }}</div>
+            <div class="price-tag__value">
+                {{ item.value() }}
+            </div>
+        </div>
+        <div class="price-tag__row">
+            <div class="price-tag__title">Ausstattung</div>
+            <div class="price-tag__action-row" *ngIf="!previewMode">
+                <div class="price-tag__icon-button" (click)="openEditPropertyDialog()">
+                    <i class="fa fa-pencil"></i>
+                </div>
+            </div>
+        </div>
+        <div class="price-tag__row" mt="0px">
+            <div class="price-tag__title"></div>
+            <div class="price-tag__value">
+                {{ getValuePropertyField('StandardEquipment') }},
+                {{ getValuePropertyField('SpecialEquipment') }}
+            </div>
+        </div>
+        <div class="price-tag__action-row" *ngIf="!previewMode">
+            <div class="price-tag__icon-button" (click)="openEditPriceDialog()">
+                <i class="fa fa-pencil"></i>
+            </div>
+        </div>
+        <div class="price-tag__row" mt="4px">
+            <div class="price-tag__title" [ngClass]="{ bold: true }">Leasing ab:</div>
+            <div class="price-tag__value" [ngClass]="{ bold: true }" style="font-size: 40px">
+                <div>
+                    <div class="price-tag__value" [ngClass]="{ bold: true }" style="font-size: 52px">
+                        Fr. {{ getUIPrice('LeasingRate') }}
+                        <span>/Monat</span>
+                    </div>
+                    <div class="price-tag__value" [ngClass]="{ bold: true }" style="font-size: 52px">
+                        <span>Preis: </span>
+                        Fr. {{ getUIPrice('PublicPriceValue') }}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="price-tag__row" mt="0">
+            <div class="price-tag__title" [ngClass]="{ bold: true }"></div>
+            <div class="price-tag__value" [ngClass]="{ bold: true }" style="font-size: 50px">
+                <div>
+                    <div class="price-tag__value"></div>
+                    <div class="value d-flex" [ngClass]="{ bold: true }" style="font-size: 24px">
+                        <span style="visibility: hidden"> Preis: </span>
+                        (Neupreis Fr.
+                        <span class="me-1"></span>
+                        {{ getUIPrice('ListPriceValue') }})
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="price-tag__row">
+            <div class="price-tag__title">Garantie</div>
+            <div class="price-tag__value">
+                {{ getUIValue('WarrantyText', '     a         ') }}
+            </div>
+        </div>
+        <div class="price-tag__row" mt="6px">
+            <div class="price-tag__title">Leasingkonditionen</div>
+            <div class="price-tag__value" style="font-size: 18px; font-weight: 300">
+                Anzahlung: {{ getUIPrice('LeasingInitialPayment') }}
+                - CHF Laufrzeit: 48 Monate
+                <span class="mx-1"></span>
+                km-Leistung: 10'000 km/Jahr nur mit Vollkasko!
+            </div>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #action>
+    <div class="price-tag-action">
+        <div class="price-tag-action__block">
+            <div
+                [attr.control-key]="'price-tag__fullpage'"
+                class="toolbar-icon icon-transform"
+                [class.full-screen-icon]="!isFullScreen"
+                [class.minimize-icon]="isFullScreen"
+                (click)="fullscreenAction()"
+                #popUpload="bs-tooltip"
+                container="body"
+                data-placement="bottom"
+                [tooltip]="isFullScreen ? 'Minimize' : 'Full screen'"
+            ></div>
+            <div class="price-tag-action__primary-button" (click)="openFilesDialog($event)">
+                <div class="toolbar-icon icon-transform upload-icon"></div>
+                XML
+            </div>
+            <div
+                class="price-tag-action__primary-button"
+                [ngClass]="{ disabled: !dataList.length }"
+                (click)="download()"
+            >
+                <div class="toolbar-icon icon-transform download-icon"></div>
+                CSV
+            </div>
+            <div
+                class="price-tag-action__contained-button"
+                [ngClass]="{ disabled: !dataList.length }"
+                (click)="print()"
+            >
+                <div class="toolbar-icon icon-transform print-icon"></div>
+            </div>
+        </div>
+        <div class="price-tag-action__block">
+            <mat-slider
+                min="0.2"
+                max="1.8"
+                step="0.2"
+                [value]="zoom"
+                color="primary"
+                [disabled]="!data || !dataList.length"
+                (change)="changeZoom($event)"
+            ></mat-slider>
+            <div
+                class="price-tag-action__contained-button"
+                [ngClass]="{ disabled: !dataList.length || currentIndex === 0 }"
+                (click)="currentIndex > 0 && onChangeIndex(currentIndex - 1)"
+            >
+                <i class="fa fa-chevron-left"></i>
+            </div>
+            <div class="price-tag-action__paging" [ngClass]="{ disabled: !dataList.length }">
+                {{ !!dataList.length ? currentIndex + 1 : 0 }} of {{ dataList.length }}
+            </div>
+            <div
+                class="price-tag-action__contained-button"
+                [ngClass]="{ disabled: !dataList.length || currentIndex === dataList.length - 1 }"
+                (click)="currentIndex < dataList.length - 1 && onChangeIndex(currentIndex + 1)"
+            >
+                <i class="fa fa-chevron-right"></i>
+            </div>
+            <div
+                class="price-tag-action__contained-button"
+                [ngClass]="{ disabled: !dataList.length }"
+                (click)="refresh()"
+            >
+                <div class="toolbar-icon icon-transform refresh-icon"></div>
+            </div>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #popupPrice>
+    <form [formGroup]="formData" autocomplete="off" class="form-wrapper" [perfectScrollbar]>
+        <div class="row custom-row px-4 py-2 mb-4">
+            <ng-container *ngTemplateOutlet="inputControl; context: { control: priceFields.FUEL }"> </ng-container>
+            <ng-container *ngTemplateOutlet="checkboxControl; context: { control: priceFields.AB_MFK }"> </ng-container>
+            <ng-container *ngTemplateOutlet="dateControl; context: { control: priceFields.LAST_CHECK }"> </ng-container>
+            <ng-container
+                *ngTemplateOutlet="selectControl; context: { control: priceFields.CURRENCY, dataList: currencyOptions }"
+            >
+            </ng-container>
+            <ng-container *ngTemplateOutlet="inputNumberControl; context: { control: priceFields.LEASING_AB }">
+            </ng-container>
+            <ng-container *ngTemplateOutlet="inputNumberControl; context: { control: priceFields.PRICE }">
+            </ng-container>
+            <ng-container *ngTemplateOutlet="inputNumberControl; context: { control: priceFields.NEU_PRICE }">
+            </ng-container>
+            <ng-container *ngTemplateOutlet="inputControl; context: { control: priceFields.GARANTIE }"> </ng-container>
+            <!-- <ng-container
+                *ngTemplateOutlet="
+                    inputNumberControl;
+                    context: { control: priceFields.LEASING_DURATION, thousandsSeparator: '.' }
+                "
+            >
+            </ng-container>
+            <ng-container
+                *ngTemplateOutlet="
+                    inputNumberControl;
+                    context: { control: priceFields.LEASING_MILEAGE_COSTS, thousandsSeparator: '.' }
+                "
+            >
+            </ng-container> -->
+        </div>
+    </form>
+</ng-template>
+
+<ng-template #popupProperty>
+    <form [formGroup]="formData" autocomplete="off" class="form-wrapper" [perfectScrollbar]>
+        <div class="row custom-row mx-4 my-2" style="max-height: 600px">
+            <div class="form-control-wrapper">
+                <mat-checkbox
+                    color="primary"
+                    [checked]="isCheckAll"
+                    (change)="setAll($event.checked)"
+                    [indeterminate]="indeterminate"
+                >
+                    <label-translation [keyword]="'All'"></label-translation>
+                </mat-checkbox>
+            </div>
+            <div
+                class="form-control-wrapper"
+                *ngFor="let item of controlDataList"
+                [formGroup]="formData"
+                enterNextFocus
+            >
+                <mat-checkbox
+                    attr.control-key="{{ item.controlName }}"
+                    color="primary"
+                    [formControlName]="item.controlName"
+                >
+                    <label-translation [keyword]="item.displayName"></label-translation>
+                </mat-checkbox>
+            </div>
+        </div>
+    </form>
+</ng-template>
+
+<ng-template
+    #inputNumberControl
+    let-control="control"
+    let-customClass="customClass"
+    let-thousandsSeparator="thousandsSeparator"
+>
+    <div class="form-group col-xs-12 {{ customClass }}">
+        <form [formGroup]="formData">
+            <mat-form-field
+                class="dms-custom-control skin-light clear-wrapper"
+                (mouseenter)="changeValueHover(control.controlName, true)"
+                (mouseleave)="changeValueHover(control.controlName, false)"
+            >
+                <input
+                    matInput
+                    xnEnteBreakDown
+                    [xnControlsData]="controlDataList"
+                    currencyMask
+                    [isDecimal]="false"
+                    [thousandsSeparator]="thousandsSeparator"
+                    type="text"
+                    class="input-have-clear"
+                    [attr.name]="control.controlName"
+                    id="{{ control.controlName }}"
+                    [formControlName]="control.controlName"
+                    [required]="control.isRequired"
+                    autocomplete="off"
+                    (focus)="changeValueFocus(control.controlName, true)"
+                    (blur)="changeValueFocus(control.controlName, false)"
+                />
+                <mat-label>
+                    <label-translation [keyword]="control.displayName"></label-translation>
+                </mat-label>
+                <img
+                    *ngIf="
+                        formData.controls[control.controlName].value &&
+                        (isFocus[control.controlName] || isHover[control.controlName])
+                    "
+                    class="clear-text-icon"
+                    src="public/imgs/standard_action_cross-circle.svg"
+                    alt="clear text"
+                    (click)="clearText(control.controlName)"
+                />
+            </mat-form-field>
+            <xn-error-message
+                *ngIf="control.isRequired"
+                [condition]="xnErrorMessageHelper.isRequired(formData, control.controlName)"
+                [fieldName]="control.displayName"
+                [typeErr]="ERR_MES_TYPE_ENUM.REQUIRED"
+            >
+            </xn-error-message>
+            <xn-error-message
+                *ngIf="control.pattern"
+                [condition]="xnErrorMessageHelper.isInvalidPattern(formData, control.controlName)"
+                [typeErr]="ERR_MES_TYPE_ENUM.PATTERN_EMAIL"
+            ></xn-error-message>
+        </form>
+    </div>
+</ng-template>
+
+<ng-template
+    #inputControl
+    let-control="control"
+    let-customClass="customClass"
+    let-thousandsSeparator="thousandsSeparator"
+>
+    <div class="form-group col-xs-12 {{ customClass }}">
+        <form [formGroup]="formData">
+            <mat-form-field
+                class="dms-custom-control skin-light clear-wrapper"
+                (mouseenter)="changeValueHover(control.controlName, true)"
+                (mouseleave)="changeValueHover(control.controlName, false)"
+            >
+                <input
+                    matInput
+                    xnEnteBreakDown
+                    [xnControlsData]="controlDataList"
+                    type="text"
+                    class="input-have-clear"
+                    [attr.name]="control.controlName"
+                    id="{{ control.controlName }}"
+                    [formControlName]="control.controlName"
+                    [required]="control.isRequired"
+                    autocomplete="off"
+                    (focus)="changeValueFocus(control.controlName, true)"
+                    (blur)="changeValueFocus(control.controlName, false)"
+                />
+                <mat-label>
+                    <label-translation [keyword]="control.displayName"></label-translation>
+                </mat-label>
+                <img
+                    *ngIf="
+                        formData.controls[control.controlName].value &&
+                        (isFocus[control.controlName] || isHover[control.controlName])
+                    "
+                    class="clear-text-icon"
+                    src="public/imgs/standard_action_cross-circle.svg"
+                    alt="clear text"
+                    (click)="clearText(control.controlName)"
+                />
+            </mat-form-field>
+            <xn-error-message
+                *ngIf="control.isRequired"
+                [condition]="xnErrorMessageHelper.isRequired(formData, control.controlName)"
+                [fieldName]="control.displayName"
+                [typeErr]="ERR_MES_TYPE_ENUM.REQUIRED"
+            >
+            </xn-error-message>
+            <xn-error-message
+                *ngIf="control.pattern"
+                [condition]="xnErrorMessageHelper.isInvalidPattern(formData, control.controlName)"
+                [typeErr]="ERR_MES_TYPE_ENUM.PATTERN_EMAIL"
+            ></xn-error-message>
+        </form>
+    </div>
+</ng-template>
+
+<ng-template #selectControl let-control="control" let-customClass="customClass" let-dataList="dataList">
+    <div class="form-group col-xs-12 {{ customClass }}">
+        <form [formGroup]="formData">
+            <mat-form-field class="dms-custom-control">
+                <mat-label>
+                    <label-translation [keyword]="control.displayName"></label-translation>
+                </mat-label>
+                <mat-select
+                    id="{{ control.controlName }}"
+                    [formControlName]="control.controlName"
+                    [attr.name]="control.controlName"
+                    #selectControl
+                    [required]="control.isRequired"
+                    [disabled]="true"
+                >
+                    <mat-option *ngFor="let item of dataList" [value]="item.idValue">
+                        {{ item.textValue }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <xn-error-message
+                *ngIf="control.isRequired"
+                [condition]="xnErrorMessageHelper.isRequired(formData, control.controlName)"
+                [fieldName]="control.displayName"
+                [typeErr]="ERR_MES_TYPE_ENUM.REQUIRED"
+            >
+            </xn-error-message>
+        </form>
+    </div>
+</ng-template>
+
+<ng-template #checkboxControl let-control="control" let-customClass="customClass">
+    <div class="form-group col-xs-12 {{ customClass }}">
+        <form [formGroup]="formData">
+            <mat-checkbox
+                [attr.name]="control.controlName"
+                xnEnteBreakDown
+                [xnControlsData]="controlDataList"
+                id="{{ control.controlName }}"
+                color="primary"
+                [formControlName]="control.controlName"
+            >
+                <label-translation [keyword]="control.displayName"></label-translation>
+            </mat-checkbox>
+        </form>
+    </div>
+</ng-template>
+
+<ng-template #dateControl let-control="control" let-customClass="customClass">
+    <div class="form-group col-xs-12 {{ customClass }}">
+        <form [formGroup]="formData">
+            <mat-form-field
+                class="w-100"
+                attr.control-key="{{ control.controlName }}"
+                (mouseenter)="changeValueHover(control.controlName, true)"
+                (mouseleave)="changeValueHover(control.controlName, false)"
+            >
+                <mat-label>
+                    <label-translation [keyword]="control.label"></label-translation>
+                </mat-label>
+                <input
+                    matInput
+                    xnEnteBreakDown
+                    [xnControlsData]="controlDataList"
+                    [matDatepicker]="picker"
+                    [formControlName]="control.controlName"
+                    (focus)="changeValueFocus(control.controlName, true)"
+                    (blur)="changeValueFocus(control.controlName, false)"
+                />
+                <button
+                    mat-button
+                    *ngIf="control.showBtnClearValue"
+                    matSuffix
+                    mat-icon-button
+                    aria-label="Clear"
+                    tabIndex="-1"
+                    (click)="clearText(control.controlName)"
+                >
+                    <mat-icon [ngStyle]="ngStyleMatIcon">close</mat-icon>
+                </button>
+                <mat-datepicker-toggle tabIndex="-1" matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+        </form>
+    </div>
+</ng-template>

@@ -1,0 +1,41 @@
+@import './variables';
+
+.additional-information {
+    .tab-content {
+        border: none !important;
+    }
+}
+
+.xn-ai__tab-list ul li:first-child {
+    margin-left: $spacing-size-sm;
+}
+
+.global-search .tab-content {
+    padding: $spacing-size-sm;
+    height: calc(100% - 40px);
+}
+
+xn-tab-content-simple-tabs {
+    ul {
+        li {
+            padding-top: 5px;
+
+            &:first-child {
+                margin-left: $spacing-size-sm;
+            }
+        }
+    }
+
+    .tab-content {
+        border: none !important;
+        height: calc(100% - 30px);  
+        /*height: 100% !important;*/
+    }
+}
+
+app-xn-ai-tab, xn-tab-content-simple-tabs, order-data-entry-tab, global-search {
+    ul.nav > li > a {
+        padding-top: 5px;
+        padding-bottom: 5px;
+    }
+}

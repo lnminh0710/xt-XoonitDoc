@@ -1,0 +1,13 @@
+@import "../widget-document-form.component.scss";
+
+.dms-list-widget {
+  .dms-widget {
+    padding: 0px 30px;
+  }
+}
+
+::ng-deep .cdk-overlay-pane {
+  .mat-select-panel {
+    margin-top: 31px;
+  }
+}

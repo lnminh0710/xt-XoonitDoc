@@ -1,0 +1,84 @@
+@import 'src/sass_files/variables.scss';
+
+.panel {
+    height: 100%;
+}
+
+.panel-info {
+    padding-top: 10px;
+    border: none;
+}
+
+.panel-body {
+    padding: 0px;
+    height: 100%;
+}
+
+.result-summary {
+    float: right;
+}
+
+.result-heading {
+    position: absolute;
+    right: 10px;
+    bottom: -34px;
+}
+
+:host ::ng-deep .paging-grid {
+    position: absolute;
+    top: -32px;
+    left: 320px;
+}
+
+.mydm-es-search {
+    height: 100%;
+
+    & :host {
+        & .panel {
+            border-radius: 0px !important;
+
+            & .result-heading {
+                position: relative;
+                left: -35px;
+                top: 22px;
+            }
+
+            & ::ng-deep xn-ag-grid {
+                & .no-padding {
+                    height: auto;
+                    position: relative;
+                    top: auto;
+                    left: 12px;
+                }
+
+                & ag-grid-angular.ag-theme-balham {
+                    height: 89%;
+
+                    & .ag-root-wrapper {
+                        width: 100%;
+
+                        & .ag-root {
+                            border: none;
+
+                            & .ag-header {
+                                & .ag-header-cell {
+                                    border-bottom: none;
+                                }
+                            }
+
+                            & .ag-row {
+                                border: none;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+:host ::ng-deep {
+    .ag-theme-balham .ag-row {
+        border-style: inherit !important;
+    }
+}

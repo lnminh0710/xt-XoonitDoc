@@ -1,0 +1,19 @@
+<div class="sharing-contact-container h-100 w-100">
+    <div mat-dialog-title class="d-flex flex-row">
+        <h5 class="w-100 text-center m-auto">Company</h5>
+        <button mat-button mat-icon-button aria-label="Close" tabIndex="-1" (click)="dialogRef.close()">
+            <mat-icon style="font-size: 20px;">close</mat-icon>
+        </button>
+    </div>
+    <div mat-dialog-content class="w-100 m-auto p-0" [formGroup]="formGroup">
+        <ng-container *ngFor="let controlConfig of controlConfigs">
+            <xn-dynamic-material-control [config]="controlConfig" formControlName="{{controlConfig.formControlName}}"
+                [formGroup]="formGroup">
+            </xn-dynamic-material-control>
+        </ng-container>
+    </div>
+    <div mat-dialog-actions class="d-flex flex-row justify-content-center">
+        <button mat-flat-button style="background-color: #DEEBFF; color: black;"
+            (click)="selectAndClose($event)">Select</button>
+    </div>
+</div>

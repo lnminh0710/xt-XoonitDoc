@@ -1,0 +1,435 @@
+<form class="payment-overview mini-scrollbar" *ngIf="!mustHide" [formGroup]="paymentForm" XnEnterForm>
+    <ng-template #Add>
+        <label-translation [keyword]="'Add'"></label-translation>
+    </ng-template>
+    <ng-template #Remove>
+        <label-translation [keyword]="'Remove'"></label-translation>
+    </ng-template>
+    <div class="kosten-row" [class.disabled]="!!idDocument && ofModule.idSettingsGUI === ModuleList.Approval.idSettingsGUI">
+        <div class="item-row"
+            [ngClass]="{'d-none': costCentre.get(PaymentFormProperty.IS_HIDDEN).value}"
+        >
+            <div class="title font-bold">
+                <span><label-translation [keyword]="'WIDGET_PM_OVERVIEW__CostCentre'"></label-translation></span>
+            </div>
+            <mat-form-field formGroupName="costCentre" appearance="outline" class="background-color"
+                [class.error]="(costCentre.get(PaymentFormProperty.ORIGINAL).touched || clickedSave) && costCentre.get(PaymentFormProperty.ID).errors?.required"
+                [attr.control-key]="'group-payment-costCentre'">
+                <input
+                    class="font-color"
+                    matInput
+                    [readonly]="ofModule.idSettingsGUI === ModuleList.Approval.idSettingsGUI"
+                    [attr.enter-break]="true"
+                    [formControlName]="PaymentFormProperty.ORIGINAL"
+                    autocomplete="off"
+                    [TableDropdown]="tableCostCentre"
+                    (focus)="setFocusOCRScan($event, costCentre.get(PaymentFormProperty.ORIGINAL), true)"
+                    (blur)="blurVat(costCentre.get(PaymentFormProperty.ORIGINAL), true)"
+                >
+                <table-dropdown
+                    cssClass="dropdown-in-payment-overview"
+                    [guid]="'b353d2b7-e3f6-4133-b854-4892b711247d'"
+                    [globalProperties]="globalProperties"
+                    [forceHiddenDropdown]="!dataSourceCostCentre?.data?.length"
+                    [dataSource]="dataSourceCostCentre"
+                    [hightlightKeywords]="costCentre.get(PaymentFormProperty.ORIGINAL).value"
+                    [maxHeight]="300"
+                    [width]="350"
+                    [top]="15"
+                    [x]="-10"
+                    (closeDropdown)="choose($event, costCentre, 'dataSourceCostCentre')"
+                    #tableCostCentre
+                ></table-dropdown>
+            </mat-form-field>
+        </div>
+        <div class="item-row second"
+            [ngClass]="{
+                'd-none': costType.get(PaymentFormProperty.IS_HIDDEN).value,
+                'first-item': costCentre.get(PaymentFormProperty.IS_HIDDEN).value
+            }"
+        >
+            <div class="title font-bold">
+                <span><label-translation [keyword]="'WIDGET_PM_OVERVIEW__CostType'"></label-translation></span>
+            </div>
+            <mat-form-field formGroupName="costType" appearance="outline" class="background-color" [class.disabled]="!!idDocument && ofModule.idSettingsGUI === ModuleList.Approval.idSettingsGUI"
+                [class.error]="(costType.get(PaymentFormProperty.ORIGINAL).touched || clickedSave) && costType.get(PaymentFormProperty.ID).errors?.required"
+                [attr.control-key]="'group-payment-overview_costType'">
+                <input
+                    class="font-color"
+                    matInput
+                    [readonly]="ofModule.idSettingsGUI === ModuleList.Approval.idSettingsGUI"
+                    [attr.enter-break]="true"
+                    [formControlName]="PaymentFormProperty.ORIGINAL"
+                    autocomplete="off"
+                    [TableDropdown]="tableCostType"
+                    (focus)="setFocusOCRScan($event, costType.get(PaymentFormProperty.ORIGINAL), true)"
+                    (blur)="blurVat(costType.get(PaymentFormProperty.ORIGINAL), true)"
+                >
+                <table-dropdown
+                    cssClass="dropdown-in-payment-overview"
+                    [guid]="'19890e85-f8ab-4873-a26c-dd7009f18791'"
+                    [globalProperties]="globalProperties"
+                    [forceHiddenDropdown]="!dataSourceCostType?.data?.length"
+                    [dataSource]="dataSourceCostType"
+                    [hightlightKeywords]="costType.get(PaymentFormProperty.ORIGINAL).value"
+                    [maxHeight]="300"
+                    [width]="350"
+                    [top]="15"
+                    [x]="-10"
+                    (closeDropdown)="choose($event, costType, 'dataSourceCostType')"
+                    #tableCostType
+                ></table-dropdown>
+            </mat-form-field>
+        </div>
+    </div>
+
+    <div class="kosten-row" [class.disabled]="!!idDocument && ofModule.idSettingsGUI === ModuleList.Approval.idSettingsGUI">
+        <div class="item-row"
+            [ngClass]="{'d-none': bookingNr.get(PaymentFormProperty.IS_HIDDEN).value}"
+        >
+            <div class="title font-bold">
+                <span><label-translation [keyword]="'WIDGET_PM_OVERVIEW__BookingNr'"></label-translation></span>
+            </div>
+            <mat-form-field formGroupName="bookingNr" appearance="outline" class="background-color booking-num"
+                [class.error]="(bookingNr.get(PaymentFormProperty.ORIGINAL).touched || clickedSave) && bookingNr.get(PaymentFormProperty.ID).errors?.required"
+                [class.readonlyBookingNr]="bookingNrReadonly"
+                [attr.control-key]="'group-payment-overview_bookingNr'">
+                <input
+                    class="font-color"
+                    matInput
+                    [readonly]="ofModule.idSettingsGUI === ModuleList.Approval.idSettingsGUI"
+                    [attr.enter-break]="true"
+                    [formControlName]="PaymentFormProperty.ORIGINAL"
+                    autocomplete="off"
+                    [TableDropdown]="table"
+                    (focus)="setFocusOCRScan($event, bookingNr.get(PaymentFormProperty.ORIGINAL), true)"
+                    (blur)="blurVat(bookingNr.get(PaymentFormProperty.ORIGINAL), true)"
+                >
+                <div class="mt-3 text-danger error" *ngIf="(bookingNr.get(PaymentFormProperty.ORIGINAL).touched || clickedSave) && bookingNr.get(PaymentFormProperty.ID).errors?.required">
+                    <label-translation [keyword]="'WIDGET_PM_OVERVIEW__InvalidBookingNr'"></label-translation>
+                </div>
+                <table-dropdown
+                    cssClass="dropdown-in-payment-overview"
+                    [guid]="'775eb68c-f805-4bb4-bfbb-9b41d7fc5752'"
+                    [globalProperties]="globalProperties"
+                    [forceHiddenDropdown]="!dataSourceBookingNr?.data?.length"
+                    [dataSource]="dataSourceBookingNr"
+                    [hightlightKeywords]="bookingNr.get(PaymentFormProperty.ORIGINAL).value"
+                    [maxHeight]="300"
+                    [width]="350"
+                    [top]="15"
+                    [x]="-10"
+                    (closeDropdown)="choose($event, bookingNr, 'dataSourceBookingNr')"
+                    #table
+                ></table-dropdown>
+            </mat-form-field>
+        </div>
+        <div class="item-row second"
+            [ngClass]="{
+                'd-none': projectNumber.get(PaymentFormProperty.IS_HIDDEN).value,
+                'first-item': bookingNr.get(PaymentFormProperty.IS_HIDDEN).value
+            }"
+        >
+            <div class="title font-bold">
+                <span><label-translation [keyword]="'WIDGET_PM_OVERVIEW__ProjectNumber'"></label-translation></span>
+            </div>
+            <mat-form-field formGroupName="projectNumber" appearance="outline" class="background-color"
+                [class.error]="(projectNumber.get(PaymentFormProperty.ORIGINAL).touched || clickedSave) && projectNumber.get(PaymentFormProperty.ID).errors?.required"
+                [attr.control-key]="'group-payment-overview_projectNumber'">
+                <input
+                    class="font-color"
+                    matInput
+                    [readonly]="ofModule.idSettingsGUI === ModuleList.Approval.idSettingsGUI"
+                    [attr.enter-break]="true"
+                    [formControlName]="PaymentFormProperty.ORIGINAL"
+                    autocomplete="off"
+                    [TableDropdown]="tableProjectNumber"
+                    (focus)="setFocusOCRScan($event, projectNumber.get(PaymentFormProperty.ORIGINAL), true)"
+                    (blur)="blurVat(projectNumber.get(PaymentFormProperty.ORIGINAL), true)"
+                >
+                <table-dropdown
+                    cssClass="dropdown-in-payment-overview"
+                    [guid]="'45ccfda8-8741-44fa-bdca-f30ffaa15231'"
+                    [globalProperties]="globalProperties"
+                    [forceHiddenDropdown]="!dataSourceProjectNumber?.data?.length"
+                    [dataSource]="dataSourceProjectNumber"
+                    [hightlightKeywords]="projectNumber.get(PaymentFormProperty.ORIGINAL).value"
+                    [maxHeight]="300"
+                    [width]="350"
+                    [top]="15"
+                    [x]="-10"
+                    (closeDropdown)="choose($event, projectNumber, 'dataSourceProjectNumber')"
+                    #tableProjectNumber
+                ></table-dropdown>
+            </mat-form-field>
+        </div>
+    </div>
+    <div class="kosten-row" *ngIf="bookingNr?.get(PaymentFormProperty.ORIGINAL)?.value">
+        <div class="item-row">
+            <div class="title font-bold">
+            </div>
+            <label class="title-booking">
+                <i>{{bookingNr.get('dataTitle').value}}</i>
+            </label>
+        </div>
+    </div>
+
+    <ng-container
+        *ngTemplateOutlet="rowTemplate;
+        context: {$implicit: {
+            formGroupName: 'idCurrency',
+            title: 'WIDGET_PM_OVERVIEW__CurrencyCountry',
+            formTemplate: currencyTemplate,
+            titleBold: true,
+            exchangeForm: exchangeTemplate
+        }}"></ng-container>
+
+    <ng-container *ngTemplateOutlet="rowTemplate;
+        context: {$implicit: {
+            formGroupName: 'inclVATInvoice',
+            title: 'WIDGET_PM_OVERVIEW__InvoiceIncludeVAT',
+            formTemplate: inclVATInvoiceTemplate,
+            exchangeValue: ((inclVATInvoice.get(PaymentFormProperty.ORIGINAL).value | tranformDecimal : false) * ratioExchange) | tranformDecimal : true : 2: true
+        }}"></ng-container>
+
+    <ng-container *ngIf="!isNoVAT">
+        <ng-container *ngTemplateOutlet="rowTemplate;
+            context: {$implicit: {
+                formGroupName: 'exclVATInvoice',
+                title: 'WIDGET_PM_OVERVIEW__InvoiceExcludeVAT',
+                formTemplate: exclVATInvoiceTemplate,
+                exchangeValue: ((exclVATInvoice.get(PaymentFormProperty.ORIGINAL)?.value | tranformDecimal : false) * ratioExchange) | tranformDecimal : true : 2: true
+            }}"
+        ></ng-container>
+    </ng-container>
+
+    <div formArrayName="vATs">
+        <ng-container *ngFor="let vAt of vATs.controls; let i = index">
+            <ng-template #vATsInvoiceTemplate>
+                <div [formGroupName]="i"
+                     class="w-100 d-flex flex-column">
+                    <div class="vat-form d-flex">
+                        <div class="icon d-flex align-items-center">
+                            <i *ngIf="i < 1"
+                               class="icon icon-transform fa fa-plus-circle add"
+                               [class.disabled]="isNoVAT || (hasNoVATInDropdown ? vATs.controls.length >= vatsDropdown.length - 1 : vATs.controls.length >= vatsDropdown.length)"
+                               container="body"
+                               [tooltip]="Add"
+                               (click)="(isNoVAT || (hasNoVATInDropdown ? vATs.controls.length < vatsDropdown.length - 1 : vATs.controls.length < vatsDropdown.length)) && addVAT()"
+                               [attr.control-key]="'group-payment-overview_add_btn'"
+                            ></i>
+                            <i *ngIf="i >= 1"
+                               class="icon icon-transform fal fa-trash delete"
+                               container="body"
+                               [tooltip]="Remove"
+                               (click)="removeVAT(i, vAt.get(PaymentFormProperty.ORIGINAL))"
+                               [attr.control-key]="'group-payment-overview_remove_btn' + i"
+                            ></i>
+                        </div>
+                        <div class="value">
+                            <mat-form-field appearance="outline" class="background-color" [attr.control-key]="'group-payment-overview_vAt_select' + i">
+                                <input
+                                    class="font-color"
+                                    [class.input]="!isNoVAT"
+                                    matInput
+                                    [readonly]="ofModule.idSettingsGUI === ModuleList.Approval.idSettingsGUI"
+                                    [attr.enter-break]="true"
+                                    [XnDecimalNumber]="2"
+                                    [limit]="5"
+                                    [formControlName]="PaymentFormProperty.ORIGINAL"
+                                    [matAutocomplete]="vatComplete"
+                                    #vatComplete="matAutocompleteTrigger"
+                                    (focus)="setFocusOCRScan($event, vAt.get(PaymentFormProperty.ORIGINAL))"
+                                    (blur)="blurVat(vAt.get(PaymentFormProperty.ORIGINAL))"
+                                    (keydown)="onKeydownCloseAutoComplete($event)"
+                                >
+                                <span *ngIf="!isNoVAT" class="unit">%</span>
+                                <mat-autocomplete #vatComplete="matAutocomplete" (optionSelected)="selectVAT($event, vAt)">
+                                    <mat-option *ngFor="let option of filteredVats" [value]="option.textValue">
+                                        {{option.textValue}}
+                                    </mat-option>
+                                </mat-autocomplete>
+                            </mat-form-field>
+                        </div>
+                        <div class="input-value" *ngIf="vATs.controls.length > 1">
+                            <mat-form-field appearance="outline" class="background-color" [attr.control-key]="'group-payment-overview_vAt_input' + i">
+                                <input [XnDecimalNumber]="2" [readonly]="ofModule.idSettingsGUI === ModuleList.Approval.idSettingsGUI" [attr.enter-break]="true" autocomplete="off" class="font-color" matInput
+                                    [formControlName]="PaymentFormProperty.INPUT" (focus)="setFocusOCRScan($event, vAt.get(PaymentFormProperty.INPUT))">
+                            </mat-form-field>
+                        </div>
+                        <div class="calculate" [class.has-input-value]="vATs.controls.length > 1">
+                            <mat-form-field appearance="outline" class="background-color pointer-none">
+                                <input
+                                    [XnDecimalNumber]="2"
+                                    class="font-color"
+                                    matInput
+                                    readonly
+                                    tabindex="-1"
+                                    [formControlName]="PaymentFormProperty.CALCULATE"
+                                    [ngModel]="(!!idDocument && ofModule.idSettingsGUI === ModuleList.Approval.idSettingsGUI)
+                                    ? vAt.get(PaymentFormProperty.CALCULATE).value
+                                    : (vATs.controls.length > 1
+                                    ? ((((vAt.get(PaymentFormProperty.ORIGINAL).value | tranformDecimal : false) * (vAt.get(PaymentFormProperty.INPUT).value | tranformDecimal : false)) / 100) | tranformDecimal : true : 2 : true)
+                                    : (((vAt.get(PaymentFormProperty.ORIGINAL).value | tranformDecimal : false) * (exclVATInvoice.get(PaymentFormProperty.ORIGINAL)?.value | tranformDecimal : false)) / 100) | tranformDecimal : true : 2 : true
+                                    )"
+                                >
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <mat-error *ngIf="vAt.get(PaymentFormProperty.ORIGINAL).errors?.isBelong">
+                        <label-translation [keyword]="'WIDGET_PM_OVERVIEW__InvalidVAT'"></label-translation>
+                    </mat-error>
+                </div>
+            </ng-template>
+
+            <div [formGroupName]="i"
+                 class="row-template d-flex"
+                 [class.disabled]="!!idDocument && ofModule.idSettingsGUI === ModuleList.Approval.idSettingsGUI">
+                <div class="title">
+                    <span><label-translation [keyword]="'WIDGET_PM_OVERVIEW__VATAmount'"></label-translation>&nbsp;{{'(' + (i + 1) + ')'}}</span>
+                </div>
+                <div class="value d-flex align-items-center">
+                    <div class="value-form d-flex">
+                        <ng-container *ngTemplateOutlet="vATsInvoiceTemplate"></ng-container>
+                    </div>
+                    <div class="exchange-form d-flex align-items-center justify-content-end default-style" [class.d-none]="displayExchangeCurrency.isHidden">
+                        {{((vAt.get(PaymentFormProperty.CALCULATE).value | tranformDecimal : false) * ratioExchange) |
+                        tranformDecimal : true : 2 : true}}
+                        <input class="d-none"
+                               [formControlName]="PaymentFormProperty.EXCHANGE"
+                               [ngModel]="((vAt.get(PaymentFormProperty.CALCULATE).value | tranformDecimal : false) * ratioExchange) | tranformDecimal : true : 2 : true">
+                    </div>
+                </div>
+            </div>
+        </ng-container>
+    </div>
+
+    <div class="text-danger error-below"
+        *ngIf="vATs.controls.length > 1 && inclVATInvoice.get(PaymentFormProperty.ORIGINAL).errors?.isEqual">
+        <label-translation [keyword]="'WIDGET_PM_OVERVIEW__AddGrossAmount'"></label-translation>:&nbsp;{{inclVATInvoice.get(PaymentFormProperty.CALCULATE).value}})
+    </div>
+
+    <ng-container *ngTemplateOutlet="rowTemplate;
+        context: {$implicit: {
+            formGroupName: 'term',
+            title: 'WIDGET_PM_OVERVIEW__PaymentTerm',
+            formTemplate: termTemplate
+        }}"></ng-container>
+
+    <ng-template #currencyTemplate>
+        <div class="currency">
+            <mat-form-field formGroupName="idCurrency" appearance="outline" class="background-color" [attr.control-key]="'group-payment-overview_currency'">
+                <input
+                    class="font-color"
+                    matInput
+                    [readonly]="ofModule.idSettingsGUI === ModuleList.Approval.idSettingsGUI"
+                    [attr.enter-break]="true"
+                    [formControlName]="PaymentFormProperty.ORIGINAL"
+                    [matAutocomplete]="currencyComplete"
+                    #currencyComplete="matAutocompleteTrigger"
+                    (focus)="setFocusOCRScan($event, idCurrency.get(PaymentFormProperty.ORIGINAL))"
+                    (blur)="blurCountryAndCurrency(idCurrency.get(PaymentFormProperty.ORIGINAL), 'filteredCurrencies', currencies, idCurrency)"
+                    (keydown)="onKeydownCloseAutoComplete($event)"
+                >
+                <mat-autocomplete #currencyComplete="matAutocomplete" (optionSelected)="selectCurrencyAndCountry($event, idCurrency, currencies)">
+                    <mat-option *ngFor="let currency of filteredCurrencies" [value]="currency.textValue">
+                        {{currency.textValue}}
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+        </div>
+
+        <div class="country">
+            <mat-form-field formGroupName="country" appearance="outline" class="background-color" [class.pointer-none]="idCurrency.invalid" [attr.control-key]="'group-payment-overview_country'">
+                <input
+                    class="font-color"
+                    matInput
+                    [readonly]="ofModule.idSettingsGUI === ModuleList.Approval.idSettingsGUI"
+                    [class.not-main]="country.get(PaymentFormProperty.EXCHANGE).value === PaymentFlag.ZEROS"
+                    [attr.enter-break]="true"
+                    [formControlName]="PaymentFormProperty.ORIGINAL"
+                    [matAutocomplete]="countryComplete"
+                    #countryComplete="matAutocompleteTrigger"
+                    (focus)="setFocusOCRScan($event, country.get(PaymentFormProperty.ORIGINAL))"
+                    (blur)="blurCountryAndCurrency(country.get(PaymentFormProperty.ORIGINAL), 'filteredCountries', countries, country)"
+                    (keydown)="onKeydownCloseAutoComplete($event)"
+                >
+                <mat-autocomplete class="payment-country" #countryComplete="matAutocomplete" (optionSelected)="selectCurrencyAndCountry($event, country, countries)">
+                    <mat-option *ngFor="let countr of idCurrency.invalid ? [] : filteredCountries" [value]="countr.textValue" [class.is-main]="countr.isMainCountry === PaymentFlag.ONE">
+                        {{countr.textValue}}
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+        </div>
+    </ng-template>
+
+    <ng-template #exclVATInvoiceTemplate>
+        <mat-form-field formGroupName="exclVATInvoice" appearance="outline" class="background-color" [class.pointer-none]="vATs.controls.length > 1" [attr.control-key]="'group-payment-overview_exclVATInvoice'">
+            <input [XnDecimalNumber]="2" [readonly]="(vATs.controls.length > 1) || ofModule.idSettingsGUI === ModuleList.Approval.idSettingsGUI" [attr.enter-break]="true" autocomplete="off" class="font-color" 
+             matInput [formControlName]="PaymentFormProperty.ORIGINAL" (focus)="setFocusOCRScan($event, exclVATInvoice.get(PaymentFormProperty.ORIGINAL))"
+            >
+        </mat-form-field>
+    </ng-template>
+
+    <ng-template #inclVATInvoiceTemplate>
+        <mat-form-field formGroupName="inclVATInvoice" appearance="outline" class="background-color"
+            [class.error]="vATs.controls.length > 1 && inclVATInvoice.get(PaymentFormProperty.ORIGINAL).errors?.isEqual" [attr.control-key]="'group-payment-overview_inclVATInvoice'"
+        >
+            <input [XnDecimalNumber]="2" [attr.enter-break]="true" class="font-color" [readonly]="ofModule.idSettingsGUI === ModuleList.Approval.idSettingsGUI"
+                matInput [formControlName]="PaymentFormProperty.ORIGINAL" (focus)="setFocusOCRScan($event, inclVATInvoice.get(PaymentFormProperty.ORIGINAL))"
+            >
+        </mat-form-field>
+        <!-- <div class="mt-3 text-danger error" *ngIf="vATs.controls.length > 1 && inclVATInvoice.get(PaymentFormProperty.ORIGINAL).errors?.isEqual">
+            Invalid Invoice total incl. VAT: {{inclVATInvoice.get(PaymentFormProperty.CALCULATE).value}}
+        </div> -->
+    </ng-template>
+
+    <ng-template #termTemplate>
+        <mat-form-field formGroupName="term" appearance="outline" class="background-color term" [attr.control-key]="'group-payment-overview_paymentterm'">
+            <input class="term-input font-color" XnDecimalNumber [attr.enter-break]="true" [isInteger]="true" [limit]="5" matInput [readonly]="ofModule.idSettingsGUI === ModuleList.Approval.idSettingsGUI"
+                [formControlName]="PaymentFormProperty.ORIGINAL" (focus)="setFocusOCRScan($event, term.get(PaymentFormProperty.ORIGINAL))">
+            <span class="term-label"><label-translation [keyword]="'WIDGET_PM_OVERVIEW__Day'"></label-translation></span>
+        </mat-form-field>
+        <i class="fal fa-arrow-right icon-arrow-right"></i>
+        <ng-container *ngTemplateOutlet="dateTemplate"></ng-container>
+    </ng-template>
+
+    <ng-template #dateTemplate>
+        <mat-form-field formGroupName="date" appearance="outline" class="background-color pointer-none date">
+            <input class="font-color" matInput readonly tabindex="-1" [formControlName]="PaymentFormProperty.ORIGINAL">
+        </mat-form-field>
+    </ng-template>
+
+    <ng-template #exchangeTemplate>
+        <div class="w-100 d-flex align-items-center justify-content-between">
+            <span class="currency-exchange font-bold">{{baseCurrency}}</span>
+            <span class="exchange-value font-bold">{{ratioExchange}}</span>
+        </div>
+    </ng-template>
+
+    <ng-template #rowTemplate
+                 let-config>
+        <div [formGroupName]="config.formGroupName"
+             class="row-template d-flex"
+             [class.disabled]="!!idDocument && ofModule.idSettingsGUI === ModuleList.Approval.idSettingsGUI">
+            <div class="title"
+                 [class.font-bold]="config.titleBold">
+                <span><label-translation [keyword]="config.title"></label-translation></span>
+            </div>
+            <div class="value d-flex align-items-center">
+                <div class="value-form d-flex">
+                    <ng-container *ngTemplateOutlet="config.formTemplate"></ng-container>
+                </div>
+                <div class="exchange-form d-flex align-items-center justify-content-end"
+                     [class.d-none]="displayExchangeCurrency.isHidden"
+                     [class.default-style]="config.exchangeValue != undefined && !config.exchangeForm">
+                    <div [class.d-none]="config.exchangeValue == undefined">
+                        {{config.exchangeValue}}
+                        <input class="d-none" readonly [formControlName]="PaymentFormProperty.EXCHANGE" [ngModel]="config.exchangeValue">
+                    </div>
+                    <ng-container *ngTemplateOutlet="config.exchangeForm"></ng-container>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+</form>

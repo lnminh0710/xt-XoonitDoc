@@ -1,0 +1,12 @@
+<div class="confirm-todo">
+    <p class="text">Do you want to submit this Invoice to</p>
+    <ul>
+        <li class="txt-main txt-approval-processing">Approval Processing & ToDoDocuments</li>
+        <li class="txt-main txt-approval">Approval & ToDoDocuments</li>
+    </ul>
+    <div class="button-wrapper">
+        <button class="btn-cmd btn-cmd-default" (click)="closeDialog()">Cancel</button>
+        <button class="btn-cmd btn-cmd-primary" (click)="saveApprovalProcessing()">Approval Processing</button>
+        <button class="btn-cmd btn-cmd-success" (click)="saveApproval()">Approval</button>
+    </div>
+</div>

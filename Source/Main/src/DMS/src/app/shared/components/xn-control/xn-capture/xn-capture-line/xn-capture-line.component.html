@@ -1,0 +1,22 @@
+<div *ngIf="isShowCapture">
+    <div>
+        <div class="fb-tooltip"
+            [style.left.px]="left + 4"
+            [style.top.px]="top - 34"
+        >
+            <label-translation [keyword]="'XnCaptureLine__Press'"></label-translation>
+            <span class="color-blue">
+                             <label-translation [keyword]="'XnCaptureLine__ESC'"></label-translation></span>
+            <label-translation [keyword]="'XnCaptureLine__To_Cancel'"></label-translation>
+        </div>
+        <div class="horizontal" [style.left.px]="left"></div>
+        <div class="vertical" [style.top.px]="top"></div>
+    </div>
+    <div *ngIf="rectangle"
+        class="image-clip temp"
+        [style.left.px]="rectangle.left"
+        [style.top.px]="rectangle.top"
+        [style.width.px]="rectangle.width"
+        [style.height.px]="rectangle.height"
+    ></div>
+</div>

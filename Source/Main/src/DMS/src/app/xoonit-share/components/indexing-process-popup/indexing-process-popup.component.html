@@ -1,0 +1,87 @@
+<div *ngIf="fileProcessList.length > 0" class="file-process-popup-container" [ngClass]="{ expand: !isCollapsed }">
+    <div class="widget-header struct-tree file-process-popup-header d-flex flex-row justify-content-between">
+        <div class="document-item-inline-flex document-item-name">
+            <span> Indexing... </span>
+            <div class="document_processing-icon"></div>
+            <button
+                mat-icon-button
+                class="btn-action icon-transform document_processing-refresh-icon"
+                (click)="getDocumentProcessing()"
+                #popRefresh="bs-tooltip"
+                container="body"
+                data-placement="bottom"
+                tooltip="Refresh"
+            >
+                <mat-icon [svgIcon]="svgIconClear"></mat-icon>
+            </button>
+            <!-- <img width="30px" src="public/assets/img/loading-spinner.gif" /> -->
+        </div>
+        <span>
+            <button
+                mat-icon-button
+                disableRipple
+                [style.width.px]="20"
+                [style.height.px]="20"
+                [style.line-height.px]="0"
+                (click)="toggle($event)"
+            >
+                <mat-icon
+                    [svgIcon]="iconChevronDownCicle"
+                    aria-hidden="false"
+                    inline="true"
+                    [style.transition]="'all .1s'"
+                    [ngStyle]="isCollapsed && { transform: 'rotate(180deg) translate(0px, 5px)' }"
+                ></mat-icon>
+            </button>
+        </span>
+    </div>
+    <div class="classified-folder-tree-document-wrapper file-process-popup-wrapper" *ngIf="!isCollapsed">
+        <div class="file-process-popup-list">
+            <div
+                class="document-files-list-container"
+                [perfectScrollbar]="{ suppressScrollX: true, suppressScrollY: false }"
+            >
+                <div
+                    *ngFor="let documentUploadProgress of fileProcessList; let i = index"
+                    class="document-item"
+                    [ngClass]="{ even: i % 2 }"
+                >
+                    <div
+                        class="document-item-inline-flex document-item-name"
+                        title="{{ documentUploadProgress.documentName }}"
+                    >
+                        {{ documentUploadProgress.documentName }}
+                    </div>
+
+                    <div class="document-item-inline-flex document-item-progress">
+                        <ng-container
+                            *ngTemplateOutlet="
+                                documentUploadStatusTemplate;
+                                context: { documentUploadProgress: documentUploadProgress }
+                            "
+                        ></ng-container>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<ng-template #documentUploadStatusTemplate let-documentUploadProgress="documentUploadProgress">
+    <ng-container [ngSwitch]="documentUploadProgress.status">
+        <div *ngSwitchCase="DOCUMENT_PROCESS_STATUS_ENUM.SUCCESSED" class="">
+            <div class="icon d-inline-block" style="vertical-align: sub; margin-right: 7px">
+                <mat-icon [svgIcon]="svgDocumentChecked" aria-hidden="false" inline="true"></mat-icon>
+            </div>
+        </div>
+        <div *ngSwitchCase="DOCUMENT_PROCESS_STATUS_ENUM.PROCESSING" class="">
+            <div class="icon d-inline-block" style="vertical-align: sub; margin-right: 7px">
+                <mat-icon [svgIcon]="svgDocumentProcessing" aria-hidden="false" inline="true"></mat-icon>
+            </div>
+        </div>
+        <div *ngSwitchCase="DOCUMENT_PROCESS_STATUS_ENUM.FAILED" class="">
+            <div class="icon d-inline-block" style="vertical-align: sub; margin-right: 7px">
+                <mat-icon [svgIcon]="svgDocumentProcessFail" aria-hidden="false" inline="true"></mat-icon>
+            </div>
+        </div>
+    </ng-container>
+</ng-template>

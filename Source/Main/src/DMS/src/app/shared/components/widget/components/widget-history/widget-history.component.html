@@ -1,0 +1,32 @@
+<div class="widget-history">
+    <div class="search-container">
+        <p class="search-text">Search Condition</p>
+        <div class="search-box">
+            <input class="search-input" type="text" placeholder="Keyword" [(ngModel)]="searchText"
+                (ngModelChange)="onSearch($event)" />
+            <img class="search-icon" src="public/imgs/search.png" alt="search icon">
+        </div>
+    </div>
+    <div class="panel panel-info">
+        <div class="panel-body">
+            <xn-ag-grid [pageIndex]="pageIndex" [pageSize]="pageSize" [id]="gridId" [serverPaging]="true"
+                [hightlightKeywords]="keyword" [suppressContextMenu]="false" [dataSource]="dataResult"
+                [allowDrag]="allowDrag.value" [customDragContent]="customDragContent" [parentInstance]="that"
+                [globalProperties]="globalProperties" [autoSelectCurrentRowAfterChangingData]="false"
+                [sheetName]="'Global Search'" [paginationFromPopup]="paginationFromPopup"
+                (rowClick)="onResultSelect($event)" (rowDoubleClicked)="onRowDoubleClick($event)"
+                (pageChanged)="onPageChanged($event)" (pageNumberChanged)="onPageNumberChanged($event)"
+                (mousedown)="gridMouseDown($event)" (mouseup)="gridMouseUp($event)">
+            </xn-ag-grid>
+            <div class="result-heading">
+                <label class="result-summary" *ngIf="globalNumberFormat == 'N'">
+                    N. of entries: {{numberOfEntries | number:0}} of {{totalResults | number:0}}
+                </label>
+                <label class="result-summary" *ngIf="globalNumberFormat != 'N'">
+                    N. of entries: {{numberOfEntries}} of {{totalResults}}
+                </label>
+            </div>
+        </div>
+    </div>
+
+</div>

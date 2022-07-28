@@ -1,0 +1,145 @@
+<p-dialog
+    header=""
+    [(visible)]="isShowDialog"
+    [styleClass]="dialogClass"
+    appendTo="body"
+    modal="true"
+    [draggable]="true"
+    [resizable]="true"
+    responsive="true"
+    [height]="dialogHeight"
+    [width]="dialogWidth"
+    (onHide)="close()"
+>
+    <p-header>
+        <div class="viewer-dialog__header">
+            <div class="viewer-dialog__header-toolbar" aria-label="Close" (click)="isShowSendMail = true">
+                <div
+                    #popPrint="bs-tooltip"
+                    container="body"
+                    data-placement="bottom"
+                    tooltip="Share"
+                    class="toolbar-icon icon-transform share-icon"
+                ></div>
+            </div>
+            <div class="viewer-dialog__header-toolbar" aria-label="Close" (click)="downloadDocument()">
+                <div
+                    #popPrint="bs-tooltip"
+                    container="body"
+                    data-placement="bottom"
+                    tooltip="Download"
+                    class="toolbar-icon icon-transform download-icon"
+                ></div>
+            </div>
+            <!-- <div class="viewer-dialog__header-toolbar" aria-label="Close" (click)="sendMail()">
+                <div class="envelope-icon"></div>
+            </div> -->
+            <div class="viewer-dialog__header-toolbar" aria-label="Close" (click)="print()">
+                <div
+                    #popPrint="bs-tooltip"
+                    container="body"
+                    data-placement="bottom"
+                    tooltip="Print"
+                    class="toolbar-icon icon-transform print-icon"
+                ></div>
+            </div>
+            <div class="viewer-dialog__header-toolbar" aria-label="Close" (click)="onRotateImage(-90)">
+                <div
+                    #popPrint="bs-tooltip"
+                    container="body"
+                    data-placement="bottom"
+                    tooltip="Rotate left"
+                    class="toolbar-icon icon-transform rotate-left-icon"
+                ></div>
+            </div>
+            <div class="viewer-dialog__header-toolbar" aria-label="Close" (click)="onRotateImage(90)">
+                <div
+                    #popPrint="bs-tooltip"
+                    container="body"
+                    data-placement="bottom"
+                    tooltip="Rotate right"
+                    class="toolbar-icon icon-transform rotate-right-icon"
+                ></div>
+            </div>
+            <div class="viewer-dialog__header-toolbar" aria-label="Close" (click)="viewActualSize()">
+                <div
+                    #popPrint="bs-tooltip"
+                    container="body"
+                    data-placement="bottom"
+                    tooltip="View actual size"
+                    class="toolbar-icon icon-transform view-actual-size-icon"
+                ></div>
+            </div>
+            <div class="viewer-dialog__header-toolbar" aria-label="Close" (click)="onZoomImage(1.2)">
+                <div
+                    #popPrint="bs-tooltip"
+                    container="body"
+                    data-placement="bottom"
+                    tooltip="Zoom in"
+                    class="toolbar-icon icon-transform zoom-in-icon"
+                ></div>
+            </div>
+            <div class="viewer-dialog__header-toolbar" aria-label="Close" (click)="onZoomImage(0.8)">
+                <div
+                    #popPrint="bs-tooltip"
+                    container="body"
+                    data-placement="bottom"
+                    tooltip="Zoom out"
+                    class="toolbar-icon icon-transform zoom-out-icon"
+                ></div>
+            </div>
+            <span class="viewer-dialog__title"> {{ imageSelected?.FileName }} </span>
+            <div class="viewer-dialog__control" (click)="onChangeSize()">
+                <div
+                    [ngClass]="{
+                        'viewer-dialog__control-maximize': !isMaximizable,
+                        'viewer-dialog__control-minimize': isMaximizable
+                    }"
+                    #popPrint="bs-tooltip"
+                    container="body"
+                    data-placement="bottom"
+                    [tooltip]="isMaximizable ? 'Minimize' : 'Maximize'"
+                ></div>
+            </div>
+            <div
+                class="toolbar-icon close-dialog-icon"
+                aria-label="Close"
+                (click)="close()"
+                #popPrint="bs-tooltip"
+                container="body"
+                data-placement="bottom"
+                [tooltip]="'Close'"
+            ></div>
+        </div>
+    </p-header>
+    <div class="viewer-dialog">
+        <div class="viewer-dialog__image">
+            <div class="viewer-dialog__image-loading container--center" *ngIf="isLoading">
+                <img src="public/assets/img/loading-spinner.gif" />
+            </div>
+            <div class="viewer-dialog__image-loading container--center" *ngIf="isEmpty">No image available</div>
+
+            <canvas id="image-viewer-dialog__canvas"></canvas>
+
+            <div class="viewer-dialog__page" *ngIf="pages.length > 1">
+                <i
+                    class="fa fa-chevron-left viewer-dialog__page-icon"
+                    [ngClass]="{ disabled: pageIndex <= 0 }"
+                    (click)="getImageByPage(pageIndex - 1)"
+                ></i>
+                {{ pageIndex + 1 }} / {{ pages.length }}
+                <i
+                    class="fa fa-chevron-right viewer-dialog__page-icon"
+                    [ngClass]="{ disabled: pageIndex >= pages.length - 1 }"
+                    (click)="getImageByPage(pageIndex + 1)"
+                ></i>
+            </div>
+        </div>
+    </div>
+</p-dialog>
+<email-configuration
+    *ngIf="isShowSendMail"
+    (onClose)="isShowSendMail = false"
+    [pages]="pages"
+    [IdDocumentContainerScans]="image.IdDocumentContainerScans"
+></email-configuration>

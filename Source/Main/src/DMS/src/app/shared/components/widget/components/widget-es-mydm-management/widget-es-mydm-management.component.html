@@ -1,0 +1,16 @@
+<div class="es-mydm-management-wrapper">
+    <div class="gs-result-wrapper mydm-es-search"> 
+        <gs-result
+            #gsResult
+            [keyword]="keyword"
+            [searchWithStarPattern]="'Both_*X*'"
+            [gridId]="'04f713be-dc86-4906-91ca-2d855f216c0b'"
+            [searchIndex]="moduleFromRoute.searchIndexKey"
+            [isWithStar] ="true"
+            [module]="moduleFromRoute"
+            [dontAllowSearchWhenInit]="true"
+            (onRowClicked)="rowClicked($event)"
+            (onRowDoubleClicked)="rowDoubleClicked($event)"
+            (onSearchCompleted)="onSearchCompleted($event)"></gs-result>
+    </div>
+</div>

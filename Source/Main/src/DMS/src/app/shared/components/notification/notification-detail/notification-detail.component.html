@@ -1,0 +1,49 @@
+<div class="height-pc-100" [perfectScrollbar]="perfectScrollbarConfig">
+    <div class="col-xs-12 no-padding">
+        <div class="col-xs-12 notification-detail-item margin-top--sd">
+            <div>
+                <strong><label-translation [keyword]="'NotificationDetail__Notification_Type'"></label-translation>:
+                </strong>&nbsp;&nbsp;{{data.NotificationType}}
+            </div>
+        </div>
+        <div class="col-xs-12 notification-detail-item">
+            <div>
+                <strong><label-translation [keyword]="'NotificationDetail__Subject'"></label-translation>:</strong>&nbsp;&nbsp;{{data.Subject}}
+            </div>
+        </div>
+        <div class="col-xs-12 notification-detail-item">
+            <div>
+                <strong><label-translation [keyword]="'NotificationDetail__Comment'"></label-translation>:</strong>&nbsp;&nbsp;{{data.MainComment}}
+            </div>
+        </div>
+        <div class="col-xs-12 notification-detail-item">
+            <div>
+                <strong><label-translation [keyword]="'NotificationDetail__Capture_Time'"></label-translation>:</strong>&nbsp;&nbsp;{{data.CreateDateDisplay}}
+            </div>
+        </div>
+        <div class="col-xs-12 notification-detail-item">
+            <div>
+                <strong><label-translation [keyword]="'NotificationDetail__Report_From'"></label-translation>:</strong>&nbsp;&nbsp;{{data.LoginName}}
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-12  no-padding  notification-detail-children"
+        *ngIf="data.MainNotificationType != 'AutoLetter'">
+        <div class="col-xs-12  notification-detail-child"
+             *ngFor="let item of data.Children">
+            <div class="col-xs-12  no-padding"
+                 *ngIf="item.PicturePath">
+                <img imageLoader="/api/FileManager/GetFile?name={{item.PicturePath}}&mode=3" />
+            </div>
+            <div class="col-xs-12 no-padding  padding-top--sd  padding-bottom--sd">
+                {{item.Comment}}
+            </div>
+        </div>
+    </div>
+    <div class="notification-detail-auto-letter"
+        *ngIf="data.MainNotificationType == 'AutoLetter' && data.PicturePath"
+        (click)="downloadPDFClicked()">
+        <i class="fa  fa-file-pdf-o"></i>
+        <div><label-translation [keyword]="'NotificationDetail__Click_To_Download'"></label-translation></div>
+    </div>
+</div>

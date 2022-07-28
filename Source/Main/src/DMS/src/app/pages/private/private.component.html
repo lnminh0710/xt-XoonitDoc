@@ -1,0 +1,57 @@
+<toaster-container [toasterconfig]="toastrConfig"></toaster-container>
+<notification-popup></notification-popup>
+
+<div class="content-wrapper m-0 d-flex w-100">
+    <section class="content">
+        <router-outlet></router-outlet>
+    </section>
+</div>
+<app-aside (onToggleWidgetTemplate)="handleToggleWidgetTemplate($event)">Loading control sidebar...</app-aside>
+<!--<xn-working-modules></xn-working-modules>
+<feedback-combine #feedbackCombine></feedback-combine>-->
+<!--<div bsModal #modal="bs-modal" class="modal fade count-down-clock" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-sm" [ngStyle]="countDownClockModalStyle">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title pull-left">Session Timeout</h4>
+                <button type="button"
+                        class="close pull-right"
+                        aria-label="Close"
+                        (click)="closeChildModal()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p class="content">
+                    You did not use application more than {{consts.defaultCountDownTime}} minutes. Application will redirect to login
+                    page automatically in {{countDownClock}} seconds.
+                </p>
+                <div class="modal-footer">
+                    <button type="button"
+                            mat-raised-button
+                            (click)="closeChildModal()">
+                        Close
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>-->
+
+<xn-message-modal></xn-message-modal>
+<!--<xn-feedback-icon></xn-feedback-icon>-->
+<property-panel
+    [isExpand]="isExpand"
+    [isGlobal]="isGlobal"
+    [properties]="properties"
+    [parentData]="propertiesParentData"
+    (onClose)="onPropertyPanelClose($event)"
+    (onSave)="onPropertyPanelSave($event)"
+    (onChange)="onPropertyPanelChange($event)"
+    (onApply)="onPropertyPanelApply($event)"
+></property-panel>
+
+<div *ngIf="xnLoading.loading" class="xn-loading">
+    <i class="fa fa-spinner fa-spin fa-2x"></i>
+</div>

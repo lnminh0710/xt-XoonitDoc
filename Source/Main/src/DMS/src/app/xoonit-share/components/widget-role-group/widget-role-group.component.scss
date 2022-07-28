@@ -1,0 +1,37 @@
+@import 'src/sass_files/color.scss';
+
+:host {
+    .widget-role-group-container {
+        display: flex;
+        height: 100%;
+        .group-role {
+            flex: 1;
+        }
+        .tab-wrapper {
+            flex: 1;
+            margin-left: 0;
+            .tab-content {
+                xn-checkbox-tree {
+                    ::ng-deep {
+                        mat-tree-node {
+                            & > button {
+                                width: 12px;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+.tab-content {
+    border: none !important;
+}
+::ng-deep {
+    mat-tree {
+        margin-left: 15px;
+    }
+}
+.icon {
+    font-size: 20px;
+}

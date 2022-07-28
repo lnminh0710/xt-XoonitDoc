@@ -1,0 +1,244 @@
+.skin-dark {
+    $opacity: 1;
+
+    .xoonit-gs {
+        background-color: rgba($blue-deep, $opacity);
+        box-shadow: 0 -3px 20px 0 rgba(16, 27, 79, 0.1);
+        &__header {
+            border-bottom: 2px solid $blue-cobalt1;
+            background-color: rgba($blue-deep, $opacity);
+            &-tab {
+                background-color: $blue-deep;
+                &-title {
+                    color: #5b6a7b;
+                }
+                &-delete {
+                    color: $milano-red;
+                }
+                &.activate {
+                    background: linear-gradient(180deg, $blue-cobalt 0%, $blue-cobalt1 100%);
+                    color: $white;
+
+                    .xoonit-gs__header-tab-title {
+                        color: $white;
+                    }
+                }
+            }
+        }
+        &__content {
+            .panel {
+                background-color: transparent !important ;
+            }
+            .ag-theme-balham {
+                background-color: transparent !important ;
+            }
+            // table zone
+            .ag-root {
+                border-width: 0 !important;
+            }
+            .ag-header {
+                background-color: rgba($view-mode, $opacity) !important;
+                color: $white !important;
+                height: 40px !important;
+                &-cell {
+                    line-height: 40px !important;
+                    height: 40px !important;
+                    background-color: rgba($view-mode, $opacity);
+                    border-width: 0 !important;
+                    cursor: pointer;
+
+                    color: $white;
+                    font-family: 'rbt_Regular';
+                    font-size: 14px;
+                    font-weight: bold;
+                    text-align: center;
+
+                    &::after {
+                        border-right: unset !important;
+                    }
+                }
+            }
+            .ag-row {
+                color: $white !important;
+
+                &.ag-row-odd {
+                    background-color: rgba($black-pearl1, $opacity) !important;
+                }
+                &.ag-row-even {
+                    background-color: rgba($blue18, $opacity) !important;
+                }
+                &.ag-row-selected {
+                    background-color: rgba($blue3, $opacity) !important;
+                    .ag-cell-focus {
+                        background-color: rgba($blue3, $opacity) !important;
+                    }
+                }
+                .ag-cell {
+                    display: flex !important;
+                    align-items: center;
+                    border-right: 1px solid rgba(255, 255, 255, 0.5);
+                }
+            }
+            // .ag-icon-checkbox-checked:empty {
+            //     background-image: url('~public/imgs/dark-icons/check.png');
+            // }
+            .ag-grid-body-viewport {
+                overflow: scroll !important;
+                background-color: $white;
+            }
+            .ag-overlay-no-rows-center {
+                color: $black-pearl1;
+            }
+            // end table zone
+        }
+
+        // search input
+        .xoonit-gs__search-input {
+            background-color: $blue-pattens !important;
+            color: $black8 !important;
+        }
+
+        // item
+        .gs-dms-item {
+            margin-right: $spacing-size-sd;
+            margin-top: $spacing-size-sd;
+            padding-bottom: $spacing-size-sd;
+            padding: 0 !important;
+            background-color: $blue-prussian1;
+
+            height: 109px;
+            width: 160px;
+            background-color: $white;
+            box-shadow: 0 4px 10px 0 rgba(16, 27, 79, 0.1);
+            &.selected {
+                background-color: $regal-blue;
+            }
+
+            &__result {
+                height: 24px;
+                width: 24px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                position: absolute;
+                top: 6px;
+                right: 15px;
+                background-color: $blue-pattens2;
+                border-radius: 50%;
+                &-number {
+                    color: $blue-cobalt;
+                    font-family: 'rbt_Regular';
+                    font-size: 12px;
+                    letter-spacing: 0;
+                    line-height: 16px;
+                    text-align: center;
+                }
+            }
+
+            &__folder {
+                margin: 16px 0 0 16px;
+                display: flex;
+                align-items: flex-end;
+                justify-content: flex-start;
+                &-icon {
+                    background: url('~public/imgs/light-icons/folder-icon.svg') center no-repeat;
+                    height: 42px;
+                    width: 42px;
+                    background-size: 62px;
+                }
+            }
+
+            &__info {
+                height: calc(100% - 16px - 42px);
+                padding: 2px 16px 16px 16px;
+                width: 100%;
+                &-module-name {
+                    height: 19px;
+                    color: $blue-4;
+                    font-size: 14px;
+                    letter-spacing: 0;
+                    line-height: 19px;
+                    font-weight: bold;
+                }
+            }
+        }
+
+        .gs-history {
+            &__breadcrumb {
+                &-tooltip-title {
+                    background-color: $blue-navy;
+                    color: $white;
+                }
+
+                &-item {
+                    &-head {
+                        border-left-color: $black-pearl1;
+
+                        &.active {
+                            border-left-color: $blue-navy;
+                        }
+                    }
+                    &-body {
+                        background-color: $black-pearl1;
+                        color: $white;
+                        &.active {
+                            background-color: $blue-navy;
+                            color: $white;
+                        }
+                    }
+                    &-tail {
+                        background-color: $black-pearl1;
+                        border-left-color: $white;
+                        &.active {
+                            background-color: $blue-navy;
+                        }
+                    }
+                }
+            }
+        }
+
+        xn-pagination {
+            .mat-raised-button[disabled][disabled] {
+                background-color: $gray-santas;
+            }
+            .label-text {
+                color: $white;
+            }
+        }
+        &.gs-transparent {
+            $opacity: 0.5;
+            background-color: rgba(0, 0, 0, $opacity);
+            .xoonit-gs__header {
+                background-color: rgba($blue-deep, $opacity);
+            }
+            .xoonit-gs__content {
+                .ag-header {
+                    background-color: rgba($view-mode, $opacity) !important;
+
+                    &-cell {
+                        font-weight: bolder;
+                        background-color: rgba($view-mode, $opacity);
+                    }
+                }
+                .ag-row {
+                    &.ag-row-odd {
+                        background-color: rgba($black, $opacity) !important;
+                    }
+                    &.ag-row-even {
+                        background-color: rgba($blue18, $opacity) !important;
+                    }
+                    &.ag-row-selected {
+                        background-color: rgba($blue3, $opacity) !important;
+                        .ag-cell-focus {
+                            background-color: rgba($blue3, $opacity) !important;
+                        }
+                    }
+                    .ag-cell {
+                        font-weight: bold;
+                    }
+                }
+                // end table zone
+            }
+        }
+    }
+}

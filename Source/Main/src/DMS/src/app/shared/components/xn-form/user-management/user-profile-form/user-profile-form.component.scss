@@ -1,0 +1,132 @@
+.avata-box {
+    width: 160px;
+    margin-bottom: 10px;
+
+    &.move-avatar-box {
+        position: absolute;
+        height: 160px;
+        top: -222px;
+        left: 149px;
+    }
+}
+
+.avata-wraper {
+    width: 100%;
+    height: 160px;
+    text-align: center; /* align the inline(-block) elements horizontally */
+    font: 0/0 a; /* remove the gap between inline(-block) elements */
+    padding: 0;
+    overflow: hidden;
+    border-radius: 4%;
+
+    &:before { /* create a full-height inline block pseudo-element */
+        content: ' ';
+        display: inline-block;
+        vertical-align: middle; /* vertical alignment of the inline element */
+        height: 100%;
+    }
+
+    .user-profile-plus-icon {
+        position: absolute;
+        font-size: 50px;
+        z-index: 101;
+        pointer-events: none;
+        left: 50%;
+        top: 50%;
+        margin-left: -26px;
+        margin-top: -25px;
+        display: none;
+    }
+
+    &:hover {
+        .user-profile-plus-icon {
+            display: block;
+        }
+    }
+
+    .avata {
+        width: 100%;
+        height: 100%;
+        z-index: 102;
+        border-radius: 4%;
+        position: relative;
+        display: inline-block;
+        vertical-align: middle; /* vertical alignment of the inline element */
+        &:hover {
+            opacity: 0.5;
+            z-index: 100 !important;
+            -webkit-animation: fadeOut 0.7s ease-out;
+            -moz-animation: fadeOut 0.7s ease-out;
+            -o-animation: fadeOut 0.7s ease-out;
+            animation: fadeOut 0.7s ease-out;
+        }
+
+        &.move-avatar {
+            width: 100px;
+            height: 100px;
+            max-width: 100px;
+            max-height: 100px;
+            -webkit-border-radius: 50%;
+            -moz-border-radius: 50%;
+            border-radius: 50%;
+            border: 5px solid rgba(255,255,255,0.5);
+            object-fit: cover;
+            -webkit-transition: all 0.1s;
+            transition: all 0.1s;
+        }
+    }
+}
+
+.no-outline:focus,
+.no-outline:active {
+    outline: none !important;
+    box-shadow: none;
+}
+
+.avata-hint {
+    clear: both;
+    float: left;
+    text-align: center;
+    width: 100%;
+    font-size: 12px;
+}
+
+@-webkit-keyframes fadeOut {
+    0% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0.5;
+    }
+}
+
+@-moz-keyframes fadeOut {
+    0% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0.5;
+    }
+}
+
+@-o-keyframes fadeOut {
+    0% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0.5;
+    }
+}
+
+@keyframes fadeOut {
+    0% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0.5;
+    }
+}

@@ -1,0 +1,26 @@
+<xn-tab-button></xn-tab-button>
+<toaster-container [toasterconfig]="toastrConfig"></toaster-container>
+
+<layout-container>
+    <control-templates leftSidebar [dragControls]="controlTemplates"></control-templates>
+    <form-designer mainContainer></form-designer>
+    <control-property-panel rightSidebar></control-property-panel>
+</layout-container>
+
+<xn-message-modal></xn-message-modal>
+
+<app-aside (onToggleWidgetTemplate)="handleToggleWidgetTemplate($event)">Loading control sidebar...</app-aside>
+<property-panel
+    [isExpand]="isExpand"
+    [isGlobal]="isGlobal"
+    [properties]="properties"
+    [parentData]="propertiesParentData"
+    (onClose)="onPropertyPanelClose($event)"
+    (onSave)="onPropertyPanelSave($event)"
+    (onChange)="onPropertyPanelChange($event)"
+    (onApply)="onPropertyPanelApply($event)"
+></property-panel>
+
+<div *ngIf="xnLoading.loading" class="xn-loading">
+    <i class="fa fa-spinner fa-spin fa-2x"></i>
+</div>

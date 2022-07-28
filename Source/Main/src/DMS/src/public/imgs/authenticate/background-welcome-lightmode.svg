@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="726px" height="1024px" viewBox="0 0 726 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title></title>
+    <defs>
+        <rect id="path-1" x="0" y="0" width="726" height="1024"></rect>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Group-40">
+            <mask id="mask-2" fill="white">
+                <use xlink:href="#path-1"></use>
+            </mask>
+            <use id="Rectangle" fill="#E2F1FF" xlink:href="#path-1"></use>
+            <ellipse id="Oval" fill="#0091FF" opacity="0.033110119" mask="url(#mask-2)" cx="461.5" cy="353" rx="454.5" ry="410"></ellipse>
+            <ellipse id="Oval" fill="#0091FF" opacity="0.022437686" mask="url(#mask-2)" cx="-107.5" cy="80.5" rx="454.5" ry="409.5"></ellipse>
+            <ellipse id="Oval" fill="#0091FF" opacity="0.0388532366" mask="url(#mask-2)" cx="-107.5" cy="647.5" rx="454.5" ry="409.5"></ellipse>
+        </g>
+    </g>
+</svg>

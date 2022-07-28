@@ -1,0 +1,46 @@
+<p-dialog
+    header=""
+    [visible]="isBlockClient && !!blockUIStatus"
+    [styleClass]="'caminada-flat-dialog'"
+    modal="true"
+    [draggable]="false"
+    [resizable]="false"
+    responsive="false"
+    [closeOnEscape]="false"
+    [width]="430"
+>
+    <p-header>
+        <div class="caminada-flat-dialog__header block-u-dialog__header">
+            <div class="image-icon warning-icon"></div>
+            <div class="space"></div>
+            <span class="block-u-dialog__header-title" *ngIf="blockUIStatus !== blockUIState.chromeOnly">
+                Cookie disabled
+            </span>
+            <span class="block-u-dialog__header-title" *ngIf="blockUIStatus === blockUIState.chromeOnly">
+                Browser suggestion
+            </span>
+            <div class="space"></div>
+        </div>
+    </p-header>
+    <div class="block-u-dialog__content" *ngIf="blockUIStatus === blockUIState.blockThirdPartyCookie">
+        <div class="block-u-dialog__content-info">
+            Your browser is disable cookie, please allow all cookie, disable block third party and refresh page to login
+            with Cloud account.
+        </div>
+    </div>
+    <div class="block-u-dialog__content" *ngIf="blockUIStatus === blockUIState.blockAllCookie">
+        <div class="block-u-dialog__content-info">
+            Your browser is disable cookie, please allow all cookie, disable block third party and refresh page to use
+            application.
+        </div>
+    </div>
+    <div class="block-u-dialog__content" *ngIf="blockUIStatus === blockUIState.chromeOnly">
+        <div class="block-u-dialog__content-info">
+            We refer to use Chrome browser or Edge Chromium to have the best experience!
+        </div>
+        <div class="block-u-dialog__content-action">
+            <a class="block-u-dialog__content-chrome" href="https://www.google.com/chrome/" target="_blank"></a>
+            <a class="block-u-dialog__content-edge" href="https://www.microsoft.com/en-us/edge" target="_blank"></a>
+        </div>
+    </div>
+</p-dialog>

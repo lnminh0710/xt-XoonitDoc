@@ -1,0 +1,72 @@
+::ng-deep {
+    .custom-dropdown-table {
+        &.table-container {
+            position: fixed;
+            z-index: 10;
+            &.add-new {
+                cursor: pointer;
+                border-radius: 5px;
+                padding: 5px 20px 5px 10px;
+                background-color: #e7e6ec;
+                .icon {
+                    margin-right: 10px;
+                    color: #0091ff;
+                }
+                span {
+                    font-size: 16px;
+                }
+                &:hover {
+                    transform: scale(1.05);
+                }
+            }
+
+            xn-ag-grid {
+                ::ng-deep {
+                    .ag-theme-balham {
+                        .ag-row-selected {
+                            background-color: #b7e4ff !important;
+                        }
+                    }
+                    .ag-body-container {
+                        &.ag-layout-auto-height {
+                            min-height: 0;
+                        }
+                    }
+                }
+            }
+            &.reverse {
+                xn-ag-grid {
+                    ::ng-deep {
+                        .ag-root {
+                            // flex-direction: column-reverse;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    .dropdown-in-payment-overview {
+        .ag-full-width-viewport-wrapper {
+            border: 1px solid #d9dcde;
+            border-right: 0;
+        }
+        .ag-body-viewport {
+            .ag-body-container {
+                .ag-cell {
+                    &[col-id='AccountMainNumber'],
+                    &[col-id='CostCentre'],
+                    &[col-id='CostType'],
+                    &[col-id='ProjectNumber'] {
+                        width: 60px !important;
+                    }
+
+                    &[col-id='Title'],
+                    &[col-id='Description'] {
+                        left: 60px !important;
+                        width: calc(100% - 60px) !important;
+                    }
+                }
+            }
+        }
+    }
+}

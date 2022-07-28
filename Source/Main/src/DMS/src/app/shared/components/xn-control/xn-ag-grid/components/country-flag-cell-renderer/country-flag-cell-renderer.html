@@ -1,0 +1,14 @@
+<div *ngIf="code != null && country != null">
+    <img src="public/assets/img/blank.gif"
+         class="flag flag-{{ code | lowercase}}" />
+    {{country}}
+</div>
+<div *ngIf="code == null && country == null && countryList.length > 0">
+    <ul>
+        <li *ngFor="let country of countryList">
+            <img src="public/assets/img/blank.gif"
+                 class="flag flag-{{ country.code | lowercase}}" />
+            {{country.country}}-{{country.language | lowercase}}
+        </li>
+    </ul>
+</div>

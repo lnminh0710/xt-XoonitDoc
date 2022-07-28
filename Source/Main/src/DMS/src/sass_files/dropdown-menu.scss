@@ -1,0 +1,123 @@
+@import 'color.scss';
+
+.xn__menu {
+    background-color: transparent;
+    border: none;
+    margin-top: 0;
+    margin-left: -5px;
+}
+
+.xn__dropdown__menu {
+    .menu-hide {
+        display: none;
+    }
+
+    ul li:first-child {
+        margin-left: 0px !important;
+    }
+
+    ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        font-size: 13px;
+        text-align: left;
+        line-height: normal;
+    }
+
+    ul li {
+        position: relative;
+    }
+    /* sub navigation */
+    ul {
+        background-color: white;
+        position: absolute;
+        left: 0;
+        width: 230px;
+        border: 1px solid $gray3;
+        box-shadow: 0 2px 4px -1px rgba(0,0,0,.2), 0 4px 5px 0 rgba(0,0,0,.14), 0 1px 10px 0 rgba(0,0,0,.12);
+        border-radius: 4px;
+    }
+
+    ul.right {
+        right: 0;
+        left: initial;
+    }
+
+    li {
+        position: relative;
+        margin: 0;
+        display: block;
+    }
+
+    li ul {
+        position: absolute;
+        top: 0;
+        left: 230px;
+        margin: 0;
+    }
+    /* style all links */
+    a {
+        line-height: 40px;
+        padding: 0 12px;
+        margin: 0 12px;
+    }
+
+    a {
+        color: $black;
+        text-decoration: none;
+        display: block;
+    }
+    /* icon header */
+    li > a > .header-icon {
+        padding: 5px;
+    }
+
+    li:hover, li:focus, li:active {
+        background-color: $white1;
+    }
+
+    a:hover, a:focus, a:active {
+        text-decoration: none;
+        color: $black;
+    }
+    /* style sub level links */
+    li a {
+        margin: 0 10px;
+        padding: 0;
+    }
+
+    li:last-child a {
+        border-bottom: none;
+    }
+    /* hide sub menu links */
+    // ul.sub-menu {
+    // 	display:none;
+    // }
+    a > .fa-angle-right {
+        position: absolute;
+        top: 50%;
+        right: 10px;
+        margin-top: -8px;
+    }
+}
+
+.widget-dropdown-menu {
+    border: 2px solid $gray23;
+    padding-bottom: 0;
+    padding-top: 0;
+    width: 200px;
+
+    .widget-item {
+        color: $skin-blue-main;
+
+        &:hover,
+        &:active {
+            background-color: $blue10;
+        }
+    }
+}
+
+.dropdown-menu {
+    padding: 1px 0;
+}

@@ -1,0 +1,131 @@
+<div class="image-slider">
+    <div class="image-slider__detail">
+        <!-- <mat-checkbox name="remember" color="primary" [checked]="isSelectAll"></mat-checkbox> -->
+        <div
+            class="image-slider__detail-checkbox"
+            [ngClass]="{
+                checked: totalChecked && totalChecked === originalImageList.length,
+                unchecked: totalChecked !== originalImageList.length,
+                disabled: isSaving
+            }"
+            (click)="onClickSelectAll()"
+        ></div>
+        <div class="image-slider__detail-title"><label-translation keyword="SCAN__Select_All"></label-translation></div>
+
+        <div
+            class="toolbar-icon icon-transform paper-airplanes-icon"
+            [ngClass]="{ disabled: !totalChecked || isSaving }"
+            #popUpload="bs-tooltip"
+            container="body"
+            data-placement="bottom"
+            [tooltip]="tooltipUpload"
+            (click)="saveImages()"
+        ></div>
+        <div
+            class="toolbar-icon icon-transform delete-icon"
+            [ngClass]="{ disabled: !totalChecked || isSaving }"
+            #popUpload="bs-tooltip"
+            container="body"
+            data-placement="bottom"
+            [tooltip]="tooltipDelete"
+            (click)="totalChecked > 0 && (isShowConfirm = true)"
+        ></div>
+    </div>
+
+    <div class="image-slider__secondary-detail">
+        <div class="image-slider__secondary-detail-title">
+            <label-translation keyword="SCAN__Total_Selected"></label-translation> : {{ totalChecked }} /
+            {{ originalImageList.length }}
+        </div>
+    </div>
+
+    <div
+        class="image-slider__content mini-scrollbar"
+        infiniteScroll
+        [infiniteScrollDistance]="2"
+        [infiniteScrollThrottle]="50"
+        [scrollWindow]="false"
+        (scrolled)="onScroll()"
+    >
+        <image-slider-item
+            *ngFor="let image of imageShow; let i = index"
+            dnd-draggable
+            [dropZones]="['document-image-ocr']"
+            [dragEnabled]="imageSelected.IdDocumentContainerScans != image.IdDocumentContainerScans"
+            [dragData]="{ data: image, callback: removeItem.bind(this), getAllPage: getAllPage.bind(this) }"
+            [index]="i"
+            [image]="image"
+            [width]="width"
+            [height]="height"
+            [isConfirmInside]="true"
+            [type]="ImageThumbnailType.scanningList"
+            [isLoading]="listLoading[image.IdDocumentContainerScans]"
+            [isSelected]="imageSelected.IdDocumentContainerScans === image.IdDocumentContainerScans"
+            [isChecked]="listChecked[image.IdDocumentContainerScans]"
+            (viewThumbnailDetail)="viewImageDetail($event)"
+            (deleteThumbnail)="deleteThumbnail($event)"
+            (clickItem)="openDocument($event)"
+            (onCheckedChanged)="onSelectImage($event)"
+        ></image-slider-item>
+    </div>
+</div>
+<image-viewer-dialog
+    *ngIf="image && isShowDialog"
+    [isShowDialog]="isShowDialog"
+    [image]="image"
+    [pages]="imageView"
+    [isScanning]="true"
+    [isBase64]="true"
+    (onClose)="isShowDialog = false; index = -1; image = ''"
+>
+</image-viewer-dialog>
+<p-dialog
+    header=""
+    [(visible)]="isShowConfirm"
+    [styleClass]="'caminada-flat-dialog'"
+    appendTo="body"
+    modal="true"
+    [draggable]="true"
+    [resizable]="true"
+    responsive="true"
+    [width]="330"
+    [height]="160"
+>
+    <p-header>
+        <div class="caminada-flat-dialog__header confirm-dialog__header">
+            <div class="toolbar-icon icon-transform warning-icon"></div>
+            <div class="space"></div>
+            <span class="confirm-dialog__header-title"> Confirm </span>
+            <div class="space"></div>
+            <div
+                class="confirm-dialog__close-button toolbar-icon icon-transform close-dialog-icon"
+                #popHand="bs-tooltip"
+                container="body"
+                data-placement="bottom"
+                tooltip="Close"
+                aria-label="Close"
+                (click)="isShowConfirm = false"
+            ></div>
+        </div>
+    </p-header>
+    <div class="confirm-dialog__content">
+        <label-translation keyword="POPUP_action__Delete"></label-translation>
+        <b>{{ totalChecked === originalImageList.length ? 'all' : totalChecked }}</b>
+        <label-translation keyword="POPUP_action__document"></label-translation>?
+    </div>
+    <div class="confirm-dialog__action">
+        <div class="confirm-dialog__action-cancel" (click)="isShowConfirm = false">
+            <label-translation keyword="POPUP_action__Cancel"></label-translation>
+        </div>
+        <div class="confirm-dialog__action-delete" (click)="deleteAllScanImages()">
+            <label-translation keyword="POPUP_action__Yes_Delete"></label-translation>
+        </div>
+    </div>
+</p-dialog>
+
+<ng-template #tooltipUpload>
+    <label-translation keyword="TOOLTIP_SCAN__Upload"></label-translation>
+</ng-template>
+<ng-template #tooltipDelete>
+    <label-translation keyword="TOOLTIP_SCAN__Delete"></label-translation>
+</ng-template>

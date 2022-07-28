@@ -1,0 +1,111 @@
+@import '../../styles/common.scss';
+
+.form-management-field {
+  position: relative;
+  &.card {
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.15);
+    margin: 5px;
+    border-radius: 5px;
+  }
+  &__action {
+    font-size: 14px;
+    height: 32px;
+    border-bottom: $border-1px;
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
+  }
+  &__title-name {
+    border: hidden;
+    width: 200px;
+    height: 24px;
+    font-size: 12px;
+    &.editing {
+      border-bottom: 1px solid #bdbdbd;
+      font-weight: bold;
+    }
+    &:focus {
+      outline: unset !important;
+    }
+    &:disabled {
+      background-color: #fff !important;
+    }
+  }
+  &__detail {
+    max-width: 70%;
+    .editing {
+      height: 15px;
+    }
+    .text--ellipsis {
+      width: 100%;
+
+      &:first {
+        font-weight: bold;
+        height: 16px;
+        color: #000;
+      }
+    }
+  }
+  &__sub-title {
+    font-size: 10px;
+    color: #616161;
+
+    &-active {
+      color: #64dd17;
+      font-weight: bold;
+    }
+    &-hidden {
+      font-weight: bold;
+    }
+  }
+  &__expand-button {
+    align-items: center;
+    cursor: pointer;
+    display: flex;
+    flex: 1;
+    justify-content: flex-end;
+    margin-right: 10px;
+    width: 30px;
+    i.fa {
+      font-size: 30px;
+    }
+  }
+  &__container {
+    padding-left: 10px;
+    border-bottom: $border-1px;
+  }
+  &__field {
+    width: 100%;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    margin-top: 6px;
+    &:last-of-type {
+      margin-bottom: 6px;
+    }
+
+    &-name {
+      border: hidden;
+      border-bottom: $border-field;
+      width: calc(100% - 10px);
+      height: 24px;
+      &:focus {
+        outline: unset !important;
+      }
+      &:disabled {
+        background-color: #fff !important;
+      }
+      &.editing {
+        width: calc(100% - 10px);
+      }
+      &.new {
+        border-bottom-color: #4bda66;
+      }
+    }
+    .order-icon {
+      cursor: pointer;
+      right: unset;
+      left: 10px;
+    }
+  }
+}

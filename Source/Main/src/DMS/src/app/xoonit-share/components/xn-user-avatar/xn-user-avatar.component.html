@@ -1,0 +1,18 @@
+<div class="large-avatar-default" [style.background-image]="'url(' + profileImageUrl + ')'">
+    <div
+        class="remove-avatar"
+        (click)="removeAvatar($event)"
+        *ngIf="!isDefaultImage"
+        #popRemove="bs-tooltip"
+        container="body"
+        data-placement="bottom"
+        tooltip="Remove avatar"
+    ></div>
+    <input
+        #uploadAvatar
+        class="upload-file"
+        type="file"
+        (change)="onFileChanged($event)"
+        (click)="preventClose($event)"
+    />
+</div>

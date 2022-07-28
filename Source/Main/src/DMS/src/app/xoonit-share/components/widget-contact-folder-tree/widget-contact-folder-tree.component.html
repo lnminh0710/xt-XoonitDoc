@@ -1,0 +1,17 @@
+<div class="folder-tree-wrapper">
+    <xn-document-tree-header
+        [hasCollaspeExpand]="false"
+        [hasBtnShowActive]="false"
+        [hasBtnExpand]="false"
+        (reloadTree)="callActionGetDocTree()"
+    ></xn-document-tree-header>
+    <div class="tree-folder">
+        <xn-document-tree
+            [dataTree]="docTreeList"
+            #xnDocumentTree
+            [shouldGetDocumentQuantity]="true"
+            (onClickOnNode)="onClickOnNode($event)"
+            (onDblClickOnNode)="onDblClickOnNode($event)"
+        ></xn-document-tree>
+    </div>
+</div>

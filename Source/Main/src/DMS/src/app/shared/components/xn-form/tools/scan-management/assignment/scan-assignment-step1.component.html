@@ -1,0 +1,37 @@
+<div class="margin-top--sd  height-pc-100"
+    [ngStyle]="{'display': isShowStep1 ? 'block' : 'none'}">
+    <div class="col-xs-12 no-padding">
+        <div class="col-xs-3  no-padding-left  xn-width-100  xn-label-01">
+            Select data entry center
+        </div>
+        <div class="col-xs-4 no-padding form-group">
+            <wj-combo-box #cboDataEntry
+                          selectFirstIfOnlyOne
+                          class="custom-wj-input-control xn-select"
+                          [itemsSource]="dataEntryCenters"
+                          [displayMemberPath]="'textValue'"
+                          [selectedValuePath]="'idValue'"
+                          [isEditable]="true"
+                          [isRequired]="false"
+                          (selectedIndexChanged)="selectedDataEntryChanged($event)"
+                          placeholder="Please select"
+                          (gotFocus)="cboDataEntry.isDroppedDown = true">
+            </wj-combo-box>
+            <control-messages [xn-trigger-click-inside-cbo]="cboDataEntry" [type]="'textbox'"
+                              [icon]="'list'"></control-messages>
+        </div>
+    </div>
+    <div class="col-xs-12 no-padding  scan-assignment-step-1-grid">
+        <xn-ag-grid #wjgridAssigmentTable
+                     *ngIf="dataSourceTable && dataSourceTable.columns && dataSourceTable.columns.length"
+                    [id]="wjgridAssigmentTableId"
+                    [dataSource]="dataSourceTable"
+                    [globalProperties]="globalProperties"
+                    [isShowedHeader]="true"
+                    [autoSelectFirstRow]="true"
+                    [fitWidthColumn]="true"
+                    (rowClick)="onRowClick($event)"
+                    (rowDoubleClicked)="onRowDoubleClicked($event)">
+        </xn-ag-grid>
+    </div>
+</div>

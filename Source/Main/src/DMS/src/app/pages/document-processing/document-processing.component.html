@@ -1,0 +1,47 @@
+<xn-tab-button></xn-tab-button>
+<toaster-container [toasterconfig]="toastrConfig"></toaster-container>
+<notification-popup></notification-popup>
+
+<div class="content-wrapper module-container"
+     hotKeyProcessing
+     [ofModule]="ofModule"
+     processingDocument
+     #xnFocus="xnFocusError"
+     [xnFocusError]="xnFocus">
+    <section class="content">
+        <div class="module-management w-100">
+            <xn-tab class="xn-tab--general"
+                    [headerData]="headerData"
+                    [tabSetting]="tabSetting"></xn-tab>
+        </div>
+    </section>
+</div>
+
+<ng-template #confirmBeforeChangeNewDocument let-idDocumentContainerScanConfirm="idDocumentContainerScanConfirm" let-close="close">
+    <div class="wrapper-popup">
+        <div class="popup-content text-center">Do you want save current document?</div>
+        <div class="popup-footer d-flex">
+            <button mat-stroked-button class="btn-default" (click)="close(); idDocumentContainerScanConfirm = null">Cancel</button>
+
+            <div class="right-buttons">
+                <button mat-flat-button color="warn" class="btn-gray" (click)="saveDocument(close)">No</button>
+                <button mat-flat-button color="primary" class="btn-primary" (click)="saveDocument(close, true)">Save</button>
+            </div>
+        </div>
+    </div>
+</ng-template>
+
+<xn-message-modal></xn-message-modal>
+<app-aside (onToggleWidgetTemplate)="handleToggleWidgetTemplate($event)">Loading control sidebar...</app-aside>
+<property-panel [isExpand]="isExpand"
+                [isGlobal]="isGlobal"
+                [properties]="properties"
+                [parentData]="propertiesParentData"
+                (onClose)="onPropertyPanelClose($event)"
+                (onSave)="onPropertyPanelSave($event)"
+                (onChange)="onPropertyPanelChange($event)"
+                (onApply)="onPropertyPanelApply($event)"></property-panel>
+<div *ngIf="xnLoading.loading"
+     class="xn-loading">
+    <i class="fa fa-spinner fa-spin fa-2x"></i>
+</div>

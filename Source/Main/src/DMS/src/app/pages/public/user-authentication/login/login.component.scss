@@ -1,0 +1,52 @@
+@import '../user.authentication.scss';
+
+.user-image {
+    display: block;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 20px;
+}
+
+.login {
+    .mydm-header {
+        margin-bottom: 90px;
+    }
+
+    button {
+        width: 100%;
+        margin-top: 40px;
+        background-color: $blue-11 !important;
+        border-color: $blue-11 !important;
+        color: $white !important;
+    }
+
+    .remember-pass {
+        margin-top: 20px;
+    }
+
+    .link-signup {
+        margin-top: 35px;
+    }
+
+    .btn-signIn {
+        font-size: 18px;
+        font-family: 'rbt_Bold';
+        padding: 7px 0;
+        height: auto;
+        border-radius: 0;
+    }
+
+    .lable-signUp {
+        color: $grey-4;
+        font-size: 14px;
+    }
+
+    .btn-signUp {
+        font-size: 18px;
+        font-family: 'rbt_Bold';
+        color: $blue-11;
+    }
+}

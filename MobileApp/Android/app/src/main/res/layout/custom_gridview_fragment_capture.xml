@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:backgroundTint="#082742"
+    android:descendantFocusability="blocksDescendants"
+    app:cardCornerRadius="10dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/img_capture"
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:src="@mipmap/ic_launcher"
+            android:contentDescription="@string/todo" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/img_capture"
+            android:id="@+id/layout_typedoc"
+            android:orientation="vertical"
+            android:paddingLeft="6dp"
+            android:paddingRight="6dp"
+            android:paddingBottom="8dp">
+
+            <TextView
+                android:id="@+id/textview_doctype_capture"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1.Invoice"
+                android:textColor="@color/white"
+                android:textSize="12dp"
+                android:layout_marginTop="@dimen/margin_4"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textview_doctype_capture"
+                android:layout_marginTop="4dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/document_pages"
+                    android:textColor="@color/white"
+                    android:textSize="10dp" />
+                <TextView
+                    android:id="@+id/textview_document_pages"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="10"
+                    android:paddingStart="3dp"
+                    android:textColor="@color/white"
+                    android:textSize="10dp" />
+            </LinearLayout>
+            <ImageButton
+                android:id="@+id/button_delete_capture"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="12dp"
+                android:background="@drawable/ic_iconspace_delete"/>
+        </RelativeLayout>
+
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>

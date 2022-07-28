@@ -1,0 +1,65 @@
+.control-label {
+    text-align: left !important;
+}
+
+textarea {
+    height: 100px !important;
+}
+
+.images-capture {
+    height: 250px;
+    padding-top: 10px;
+}
+
+.image-captured {
+    height: 220px;
+}
+
+.image-captured--wrap {
+    height: 100px;
+    margin-bottom: 10px;
+    float: left;
+    width: 200px;
+}
+
+.image-captured--child {
+    width: 100%;
+    height: 100%;
+    padding: 5px;
+    border-radius: 3px;
+}
+
+.image-captured--item {
+    width: 100%;
+    height: 90px;
+}
+
+.image-captured--comment {
+    float: left;
+    width: calc(100% - 210px);
+    margin-left: 10px;
+}
+
+.mat-btn-red--icon {
+    position: absolute;
+    display: none;
+    top: -8px;
+    left: 206px;
+    font-size: 13px;
+    border: none;
+    width: 15px;
+    height: 15px;
+    cursor: pointer;
+
+    .fa-times-circle {
+        font-size: 17px;
+    }
+}
+
+.image-captured--child:hover .mat-btn-red--icon {
+    display: block !important;
+}
+
+mat-radio-button {
+    margin-right: 30px;
+}

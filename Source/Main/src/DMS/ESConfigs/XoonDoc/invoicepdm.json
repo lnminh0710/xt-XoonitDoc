@@ -1,0 +1,67 @@
+{
+    "properties": {
+        "invoiceAmount": { "type": "float" },
+        "payableWithinDays": { "type": "long" },
+
+        "createDate": {
+            "type": "keyword"
+        },
+        "updateDate": {
+            "type": "keyword"
+        },
+        "invoiceDate": {
+            "type": "keyword"
+        },
+
+        "invoiceNr": {
+            "type": "keyword"
+        },
+        "rootName": {
+            "type": "keyword"
+        },
+        "scannedFilename": {
+            "type": "keyword"
+        },
+        "eSRNr": {
+            "type": "keyword"
+        },
+        "mediaName": {
+            "type": "keyword"
+        },
+        "clientId": {
+            "type": "keyword"
+        },
+        "searchKeyWords": {
+            "type": "keyword"
+        },
+        "groupName": {
+            "type": "keyword"
+        },
+        "contoNr": {
+            "type": "keyword"
+        },
+        "sWIFTBIC": {
+            "type": "keyword"
+        },
+        "iBAN": {
+            "type": "keyword"
+        },
+        "membershipNr": {
+            "type": "keyword"
+        },
+        "purposeOfPayment": {
+            "type": "keyword"
+        },
+        "customerNr": {
+            "type": "keyword"
+        },
+        "notes": {
+            "type": "keyword"
+        },
+
+        "fullText_RemovedHtml": {
+            "type": "keyword"
+        }
+
+    }
+}

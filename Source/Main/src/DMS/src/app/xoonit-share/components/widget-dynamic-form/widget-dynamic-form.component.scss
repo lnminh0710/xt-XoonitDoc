@@ -1,0 +1,43 @@
+.widget-header {
+    &.title {
+        font-size: 14px;
+        font-weight: bold;
+    }
+    .actions-list {
+        margin-top: -8px;
+
+        &.left {
+            justify-content: flex-start;
+        }
+        &.right {
+            justify-content: flex-end;
+        }
+
+        & .btn-action .mat-icon {
+            width: 22px;
+            height: 22px;
+            &.clean {
+                height: 30px;
+                width: 30px;
+            }
+        }
+        .btn-action {
+            i {
+                color: #42526e;
+            }
+        }
+        .fa {
+            font-size: 28px;
+        }
+        .fal {
+            font-size: 22px;
+        }
+        .fa-undo {
+            transform: scaleX(-1) rotateZ(180deg);
+        }
+    }
+}
+
+.widget-octopus-form-container {
+    padding: 10px 10px 0 10px;
+}

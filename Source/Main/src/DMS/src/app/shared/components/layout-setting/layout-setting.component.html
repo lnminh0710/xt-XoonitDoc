@@ -1,0 +1,49 @@
+<div class="layout-setting-aside">
+    <div class="small-line"></div>
+    <div class="btn-group width-pc-100">
+        <a mat-button
+           class="mat-btn-blue"
+           tooltip="Save"
+           placement="left"
+           container="body"
+           (click)="save($event)">
+            <i class="fa fa-floppy-o" aria-hidden="true"></i>
+        </a>
+        <a mat-button
+           class="mat-btn-red"
+           tooltip="Close"
+           placement="left"
+           container="body"
+           (click)="close($event)">
+            <i class="fa fa-times fa-lg"></i>
+        </a>
+    </div>
+    <div class="btn-group group2 width-pc-100">
+        <a mat-button
+           class="mat-btn-blue"
+           tooltip="Undo"
+           placement="left"
+           container="body"
+           (click)="undo($event)">
+            <i class="fa fa-undo" aria-hidden="true"></i>
+        </a>
+        <a mat-button
+           class="mat-btn-red"
+           tooltip="Reset"
+           placement="left"
+           container="body"
+           (click)="restore($event)">
+            <i class="fa fa-refresh"></i>
+        </a>
+    </div>
+    <div class="layout-drag-drop-source-block">
+        <div *ngFor="let item of itemDragSource"
+             class="drag-drop-item"
+             tooltip="{{item.title}}"
+             placement="left"
+             container="body"
+             [attr.data-type]="item.type">
+            <i class="{{item.icon}}" aria-hidden="true"></i>
+        </div>
+    </div>
+</div>

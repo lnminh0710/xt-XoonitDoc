@@ -1,0 +1,568 @@
+<div class="confirm-user" [ngClass]="{'highlight-error': showErrorHighligh}">
+    <div class="confirm-user__toggle-button">
+        <div class="urgent-toggle item-row d-inline-block" (click)="$event.stopPropagation()">
+            <mat-slide-toggle
+                class="mat-slide-toggle-urgent mr-3"
+                [attr.control-key]="'user-approval-confirm_set-urgent'"
+                [checked]="isSwitchUrgent"
+                (change)="onChangeUrgent($event)"
+                data-placement="bottom"
+                [tooltip]="tooltipUrgent"
+                container="body"
+            >
+                <span class="title">
+                    <label-translation keyword="WIDGET_Confirm_Approval__Urgent"></label-translation
+                ></span>
+            </mat-slide-toggle>
+        </div>
+        <div class="item-row d-inline-block" (click)="$event.stopPropagation()">
+            <mat-slide-toggle
+                class="mat-slide-toggle-urgent mr-3"
+                color="primary"
+                [attr.control-key]="'user-approval-confirm_set-priority'"
+                [checked]="isSetPriority"
+                (change)="isSetPriority = !isSetPriority"
+                [disabled]="!totalUserChecked"
+                data-placement="bottom"
+                [tooltip]="tooltipSetPriority"
+                container="body"
+            >
+                <span class="title">
+                    <label-translation keyword="WIDGET_Confirm_Approval__Priority"></label-translation
+                ></span>
+            </mat-slide-toggle>
+        </div>
+        <div class="item-row d-inline-block" (click)="$event.stopPropagation()">
+            <mat-slide-toggle
+                class="mat-slide-toggle-urgent mr-3"
+                color="primary"
+                [attr.control-key]="'user-approval-confirm_set-pass-rule'"
+                [checked]="isPassRule"
+                [disabled]="!hasInvalidUser"
+                (change)="onChangePassRule($event)"
+                data-placement="bottom"
+                [tooltip]="tooltipSkipRule"
+                container="body"
+            >
+                <span class="title">
+                    <label-translation keyword="WIDGET_Confirm_Approval__Pass_Rule"></label-translation
+                ></span>
+            </mat-slide-toggle>
+        </div>
+    </div>
+    <div class="confirm-user__content" [ngClass]="{ 'container--disabled': isEmpty }">
+        <as-split direction="horizontal" [gutterSize]="3">
+            <as-split-area class="confirm-splitter">
+                <div class="confirm-user__group">
+                    <as-split
+                        direction="vertical"
+                        [gutterSize]="3"
+                        style="height: 100%"
+                        (dragEnd)="dragEndGroup($event)"
+                    >
+                        <as-split-area
+                            class="confirm-splitter"
+                            [minSize]="splitterMinSize"
+                            [size]="splitSizeGroup.selected"
+                        >
+                            <div class="confirm-user__title">
+                                <div class="confirm-user__title-name">
+                                    <label-translation
+                                        keyword="WIDGET_Confirm_Approval__Group_Selected"
+                                    ></label-translation
+                                    >&nbsp;
+                                    {{ !!totalGroupChecked ? '(' + totalGroupChecked + ')' : '' }}
+                                </div>
+                            </div>
+                            <div #groupChecked class="confirm-user__checkbox-group mini-scrollbar">
+                                <table class="table" *ngIf="!fullGroupUnCheck">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">
+                                                <span>
+                                                    <label-translation
+                                                        keyword="WIDGET_Confirm_Approval__Urgent"
+                                                    ></label-translation
+                                                ></span>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="">
+                                        <ng-container *ngFor="let item of groups; let i = index">
+                                            <ng-container *ngIf="item.checked">
+                                                <tr
+                                                    [class.cursor-pointer]="isSetPriority"
+                                                    [class.container--disabled]="item.IsKost === 1"
+                                                    (dblclick)="onCheckedGroup(!item.checked, item)"
+                                                >
+                                                    <td>
+                                                        {{ item.InvoiceApprovalGroup }}
+                                                    </td>
+                                                </tr>
+                                            </ng-container>
+                                        </ng-container>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </as-split-area>
+                        <as-split-area
+                            class="confirm-splitter"
+                            [minSize]="splitterMinSize"
+                            [size]="splitSizeGroup.list"
+                        >
+                            <div class="confirm-user__title" [class.border-top]="!fullGroupUnCheck">
+                                <div class="confirm-user__title-name">
+                                    <label-translation
+                                        keyword="WIDGET_Confirm_Approval__Group_Approval"
+                                    ></label-translation>
+                                </div>
+                                <div class="confirm-user__search">
+                                    <mat-icon
+                                        class="icon delete"
+                                        aria-hidden="false"
+                                        matPrefix
+                                        (click)="clearSearchGroupText()"
+                                        >cancel</mat-icon
+                                    >
+                                    <div class="confirm-user__search-box">
+                                        <mat-icon class="search-image" aria-hidden="false" matPrefix>search</mat-icon>
+                                        <input
+                                            [ngModel]="searchGroupValue"
+                                            (ngModelChange)="searchGroup($event)"
+                                            placeholder="Search group"
+                                        />
+                                    </div>
+                                </div>
+                                <div>
+                                    <div
+                                        class="toolbar-icon icon-transform draw-icon"
+                                        [attr.control-key]="'btn_edit_group_approval'"
+                                        [ngClass]="{ disabled: isEmpty }"
+                                        (click)="openGroupManagement(); onSelectGroupInGroupManagement(groups[0])"
+                                        data-placement="bottom"
+                                        [tooltip]="tooltipGroupManagement"
+                                        container="body"
+                                    ></div>
+                                </div>
+                            </div>
+                            <div class="confirm-user__checkbox-group mini-scrollbar" *ngIf="!fullGroupChecked">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">
+                                                <span
+                                                    ><label-translation
+                                                        keyword="WIDGET_Confirm_Approval__Group_Name"
+                                                    ></label-translation
+                                                ></span>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="mini-scrollbar">
+                                        <ng-container *ngFor="let item of groups; let i = index">
+                                            <ng-container *ngIf="item.isShow && !item.checked">
+                                                <tr
+                                                    (dblclick)="onCheckedGroup(!item.checked, item)"
+                                                    [ngClass]="{ 'container--disabled': item.IsKost === 1 }"
+                                                >
+                                                    <td>
+                                                        {{ item.InvoiceApprovalGroup }}
+                                                    </td>
+                                                </tr>
+                                            </ng-container>
+                                        </ng-container>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </as-split-area>
+                    </as-split>
+                </div>
+            </as-split-area>
+            <as-split-area class="confirm-splitter">
+                <div class="confirm-user__person">
+                    <as-split
+                        direction="vertical"
+                        [gutterSize]="3"
+                        style="height: 100%"
+                        (dragEnd)="dragEndUser($event)"
+                    >
+                        <as-split-area
+                            class="confirm-splitter"
+                            [minSize]="splitterMinSize"
+                            [size]="splitSizeUser.selected"
+                            style="height: 100%; border-bottom: 2px solid rgb(0, 159, 255)"
+                        >
+                            <div class="confirm-user__title pl-0">
+                                <div class="confirm-user__title-name user">
+                                    <label-translation
+                                        keyword="WIDGET_Confirm_Approval__User_Selected"
+                                    ></label-translation
+                                    >&nbsp;
+                                    <div class="confirm-user__title-total">
+                                        {{ !!totalUserChecked ? '(' + totalUserChecked + ')' : '' }}
+                                    </div>
+                                </div>
+                                <div>
+                                    <div
+                                        class="toolbar-icon icon-transform clean-icon"
+                                        [attr.control-key]="'user-approval-confirm_clear'"
+                                        [attr.hotkey-width]="19"
+                                        [attr.hotkey-height]="19"
+                                        [class.disabled]="fullUnCheck"
+                                        (click)="clearAllSelected()"
+                                        data-placement="bottom"
+                                        container="body"
+                                        [tooltip]="tooltipClearAll"
+                                    ></div>
+                                </div>
+                            </div>
+
+                            <div
+                                #userChecked
+                                class="confirm-user__checkbox-group mini-scrollbar"
+                                cdkDropList
+                                (cdkDropListDropped)="drop($event)"
+                                (cdkDropListSorted)="cdkDragMoved($event)"
+                            >
+                                <table class="table">
+                                    <thead>
+                                        <tr *ngIf="!fullUnCheck">
+                                            <th scope="col" [class.d-none]="!isSetPriority"><span></span></th>
+                                            <th scope="col" [class.d-none]="!isSetPriority">
+                                                <span
+                                                    ><label-translation
+                                                        keyword="WIDGET_Confirm_Approval__Prio"
+                                                    ></label-translation
+                                                ></span>
+                                            </th>
+                                            <th scope="col">
+                                                <span
+                                                    ><label-translation
+                                                        keyword="WIDGET_Confirm_Approval__User_Name"
+                                                    ></label-translation
+                                                ></span>
+                                            </th>
+                                            <th scope="col">
+                                                <span
+                                                    ><label-translation
+                                                        keyword="WIDGET_Confirm_Approval__Min_Amount"
+                                                    ></label-translation
+                                                ></span>
+                                            </th>
+                                            <th scope="col">
+                                                <span
+                                                    ><label-translation
+                                                        keyword="WIDGET_Confirm_Approval__Max_Amount"
+                                                    ></label-translation
+                                                ></span>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="">
+                                        <ng-container *ngFor="let item of users; let i = index">
+                                            <ng-container *ngIf="item.checked">
+                                                <tr
+                                                    [class.invalid]="item.invalid"
+                                                    [class.cursor-pointer]="isSetPriority"
+                                                    [tooltip]="item.invalid && tooltipCantApprove"
+                                                    container="body"
+                                                    cdkDrag
+                                                    [cdkDragDisabled]="!isSetPriority"
+                                                    (dblclick)="onCheckedUser(!item.checked, item)"
+                                                >
+                                                    <td [class.d-none]="!isSetPriority" class="icon-drag">
+                                                        <mat-icon
+                                                            aria-hidden="false"
+                                                            [svgIcon]="svgPrev"
+                                                            container="body"
+                                                            [tooltip]="tooltipDragAndDrop"
+                                                        ></mat-icon>
+                                                    </td>
+                                                    <td [class.d-none]="!isSetPriority">
+                                                        {{ i + 1 }}
+                                                    </td>
+                                                    <td>
+                                                        {{ item.Username }}
+                                                    </td>
+                                                    <td>
+                                                        {{ item.MinAmountRange || 0 }}
+                                                    </td>
+                                                    <td>
+                                                        {{ item.MaxAmountRange || 0 }}
+                                                    </td>
+                                                </tr>
+                                                <!-- <div class="line"></div> -->
+                                            </ng-container>
+                                        </ng-container>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </as-split-area>
+                        <as-split-area class="confirm-splitter" [minSize]="splitterMinSize" [size]="splitSizeUser.list">
+                            <div class="confirm-user__title">
+                                <div class="confirm-user__title-name">
+                                    <label-translation
+                                        keyword="WIDGET_Confirm_Approval__User_Approval"
+                                    ></label-translation>
+                                </div>
+                                <div class="confirm-user__search">
+                                    <mat-icon
+                                        class="icon delete"
+                                        aria-hidden="false"
+                                        matPrefix
+                                        (click)="clearSearchText()"
+                                        >cancel</mat-icon
+                                    >
+                                    <div class="confirm-user__search-box">
+                                        <mat-icon class="search-image" aria-hidden="false" matPrefix>search</mat-icon>
+                                        <input
+                                            [ngModel]="searchValue"
+                                            (ngModelChange)="searchUser($event)"
+                                            #searchConfirmUserBox
+                                            placeholder="Search user"
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="confirm-user__checkbox-group mini-scrollbar">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">
+                                                <span
+                                                    ><label-translation
+                                                        keyword="WIDGET_Confirm_Approval__User_Name"
+                                                    ></label-translation
+                                                ></span>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="">
+                                        <ng-container *ngFor="let item of users; let i = index">
+                                            <ng-container *ngIf="item.isShow && !item.checked">
+                                                <tr (dblclick)="onCheckedUser(!item.checked, item)">
+                                                    <!-- <td>
+                                                        {{ i + 1 }}
+                                                    </td> -->
+                                                    <td>
+                                                        {{ item.Username }}
+                                                    </td>
+                                                </tr>
+                                            </ng-container>
+                                        </ng-container>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </as-split-area>
+                    </as-split>
+                </div>
+            </as-split-area>
+        </as-split>
+    </div>
+</div>
+
+<ng-template #groupManagementPopup let-close="close">
+    <div class="group-management">
+        <div class="group-management__container">
+            <div class="group-management__title">
+                <label-translation keyword="WIDGET_Confirm_Approval__Group"></label-translation>
+            </div>
+            <div class="group-management__content mini-scrollbar">
+                <div
+                    *ngFor="let item of groups"
+                    class="group-management__item"
+                    [ngClass]="{ selected: groupSelected?.IdRepInvoiceApprovalGroup == item.IdRepInvoiceApprovalGroup }"
+                    (click)="onSelectGroupInGroupManagement(item)"
+                    (dblclick)="onSelectGroupInGroupManagement(item); openPopupEditGroupInformation()"
+                >
+                    <div class="group-management__item-title">
+                        {{ item.InvoiceApprovalGroup }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="group-management__container">
+            <div class="group-management__title">
+                <label-translation keyword="WIDGET_Confirm_Approval__User_Selected"></label-translation>
+            </div>
+            <div class="group-management__content mini-scrollbar">
+                <div class="group-management__item" *ngFor="let item of groupUsers">
+                    <div class="group-management__item-title">
+                        {{ item.Username }}
+                    </div>
+                </div>
+                <div class="group-management__empty" *ngIf="!!groupSelected && !groupUsers.length">
+                    <div class="group-management__empty-container">
+                        <div class="image-icon user-empty-icon"></div>
+                        <div class="group-management__empty-title">
+                            <label-translation keyword="WIDGET_Confirm_Approval__No_User"></label-translation>
+                        </div>
+                        <div class="group-management__empty-action" (click)="openPopupEditGroupInformation()">
+                            <label-translation keyword="WIDGET_Confirm_Approval__Add_User"></label-translation>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="popup-action">
+        <div class="popup-action__button" (click)="openPopupEditGroupInformation(true)">
+            <label-translation keyword="POPUP_action__New"></label-translation>
+        </div>
+        <div
+            class="popup-action__button primary"
+            [ngClass]="{ disabled: !groupSelected }"
+            (click)="openPopupEditGroupInformation()"
+        >
+            <label-translation keyword="POPUP_action__Edit"></label-translation>
+        </div>
+        <div
+            class="popup-action__button danger"
+            [ngClass]="{ disabled: !groupSelected }"
+            (click)="openPopupConfirmDelete()"
+        >
+            <label-translation keyword="POPUP_action__Delete"></label-translation>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #groupInformationPopup let-close="close">
+    <div class="group-editable" XnEnterForm>
+        <div class="group-editable__group-header d-flex">
+            <div class="group-editable__group-name d-flex">
+                <mat-form-field class="w-50">
+                    <mat-label>
+                        <label-translation keyword="WIDGET_Confirm_Approval__Group_Name"></label-translation>
+                    </mat-label>
+                    <input matInput [(ngModel)]="groupName" (change)="onChangeValueGroup()" [attr.enter-break]="true" />
+                </mat-form-field>
+                <div class="group-editable__checkbox">
+                    <mat-form-field>
+                        <mat-label>
+                            <label-translation keyword="WIDGET_Confirm_Approval__Kostenstelle"></label-translation>
+                        </mat-label>
+                        <input
+                            type="text"
+                            placeholder="Kostenstelle"
+                            matInput
+                            #autocompleteKostenstelleInput
+                            [matAutocomplete]="auto"
+                            [(ngModel)]="kostenstelleSelected"
+                            (ngModelChange)="changeKostenstelleText(kostenstelleSelected)"
+                            (blur)="onKostenstelleBlur()"
+                            (keydown.enter)="closeKostenstelleDropdown()"
+                            [attr.enter-break]="true"
+                        />
+                        <button
+                            class="toolbar-icon icon-delete border-none"
+                            mat-button
+                            *ngIf="!!kostenstelleSelected"
+                            matSuffix
+                            mat-icon-button
+                            aria-label="Clear"
+                            (click)="clearKostenstelle()"
+                        >
+                            <mat-icon [ngStyle]="ngStyleMatIcon">close</mat-icon>
+                        </button>
+                        <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayKostenstelleFn">
+                            <mat-option *ngFor="let option of kostenstelleFiltered" [value]="option">
+                                {{ option.Description }}
+                            </mat-option>
+                        </mat-autocomplete>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="group-editable__group-search">
+                <div class="confirm-user__search-box">
+                    <mat-icon class="search">search</mat-icon>
+                    <input
+                        [ngModel]="searchValueInDialog"
+                        (ngModelChange)="searchUserInDialog($event, columnSearch)"
+                        placeholder="Search User"
+                        [attr.enter-break]="true"
+                    />
+                    <mat-icon class="icon delete" matPrefix (click)="searchUserInDialog('', columnSearch)">
+                        cancel</mat-icon
+                    >
+                </div>
+            </div>
+        </div>
+        <div class="group-editable__table xoonit-grid">
+            <xn-ag-grid
+                #xnAgGridComponent
+                [id]="'3b9523c5-497d-4bff-bee2-d3528ac5dedf'"
+                [globalProperties]="globalProperties"
+                [serverPaging]="false"
+                [suppressContextMenu]="true"
+                [dataSource]="userData"
+                [readOnly]="false"
+                isEditting="true"
+                rowSelection="multiple"
+                (cellEditingStopped)="onCellEditingStopped($event)"
+                (cellValueChanged)="updateUsersSelected($event)"
+            >
+            </xn-ag-grid>
+        </div>
+    </div>
+    <div class="popup-footer d-flex">
+        <div class="popup-footer__count-user-select d-flex">
+            <label-translation keyword="WIDGET_Confirm_Approval__User_Selected"></label-translation>: &nbsp;
+            <strong>{{ numberUsersSelected }}</strong>
+        </div>
+        <div class="popup-action">
+            <div class="popup-action__button" (click)="close(); userAssignedGroup = []; groupName = ''">
+                <label-translation keyword="POPUP_action__Cancel"></label-translation>
+            </div>
+            <div
+                class="popup-action__button primary"
+                [ngClass]="{ disabled: valueChange || disabledButtonUpdateGroup || !groupName }"
+                (click)="updateGroup(close)"
+            >
+                <label-translation keyword="POPUP_action__Save"></label-translation>
+            </div>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #confirmDeletePopup let-close="close">
+    <div class="confirm-dialog__content">
+        <label-translation keyword="WIDGET_Confirm_Approval__Delete_Group"></label-translation>: &nbsp;
+        <b>{{ groupSelected?.InvoiceApprovalGroup }}</b> ?
+    </div>
+    <div class="popup-action">
+        <div class="popup-action__button" (click)="close()">
+            <label-translation keyword="POPUP_action__No"></label-translation>
+        </div>
+        <div class="popup-action__button danger" (click)="deleteGroupSelected(close)">
+            <label-translation keyword="POPUP_action__Yes_Delete"></label-translation>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #tooltipUrgent>
+    <label-translation [keyword]="'TOOLTIP__Urgent_Invoice'"></label-translation>
+</ng-template>
+
+<ng-template #tooltipSetPriority>
+    <label-translation [keyword]="'TOOLTIP__Set_Priority'"></label-translation>
+</ng-template>
+
+<ng-template #tooltipSkipRule>
+    <label-translation [keyword]="'TOOLTIP__Skip_Rule'"></label-translation>
+</ng-template>
+
+<ng-template #tooltipGroupManagement>
+    <label-translation [keyword]="'TOOLTIP__Group_Management'"></label-translation>
+</ng-template>
+
+<ng-template #tooltipClearAll>
+    <label-translation [keyword]="'TOOLTIP__Clear_All_User'"></label-translation>
+</ng-template>
+
+<ng-template #tooltipCantApprove>
+    <label-translation [keyword]="'TOOLTIP__Cant_Approve'"></label-translation>
+</ng-template>
+
+<ng-template #tooltipDragAndDrop>
+    <label-translation [keyword]="'TOOLTIP__Drag_Drop'"></label-translation>
+</ng-template>

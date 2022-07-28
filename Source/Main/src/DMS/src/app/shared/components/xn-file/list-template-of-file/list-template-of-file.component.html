@@ -1,0 +1,52 @@
+<div class="col-xs-12  form-group  list-template-of-file">
+    <div class="col-xs-12  xn__form-header">
+        <span class="no-margin">Template Name</span>
+    </div>
+    <div class="col-xs-12"
+      [ngStyle]="{'display': !(isModeEditing && allowEdit) ? '' : 'none'}">
+        <p>{{templateCtr.text}}</p>
+    </div>
+    <div class="col-xs-12  no-padding  list-template-of-file-cbo"
+        [ngStyle]="{'display': (isModeEditing && allowEdit) ? '' : 'none'}">
+        <wj-combo-box #templateCtr
+              class="custom-wj-input-control xn-select"
+              placeholder="Please select"
+              [itemsSource]="templates"
+              [displayMemberPath]="'textValue'"
+              [selectedValuePath]="'idValue'"
+              [isEditable]="true"
+              [isRequired]="false"
+              (selectedIndexChanged)="changeTemplate()"
+              (gotFocus)="onFocusTemplate()">
+        </wj-combo-box>
+        <control-messages [xn-trigger-click-inside-cbo]="templateCtr"
+	                      icon="object-group">
+	      </control-messages>
+    </div>
+    <div class="col-xs-12  xn__form-header">
+        <span class="no-margin">Columns Name</span>
+    </div>
+    <div class="col-xs-12"
+    [ngClass]="{'list-template-of-file-label': (isModeEditing && allowEdit), 'list-template-of-file-label--non-hd': !(isModeEditing && allowEdit)}"
+    [perfectScrollbar]="{suppressScrollX: true, suppressScrollY: false}">
+  		<p *ngFor="let item of labelList">
+  			{{item}}
+  		</p>
+    </div>
+    <div class="col-xs-12  ltof-group-button">
+      <label class="template-file-name">{{(labelList && labelList.length && templateCtr.text) ? templateCtr.text + '_SampleData.txt' : ''}}</label>
+      <div class="file-action-button">
+        <a mat-raised-button
+          [ngClass]="{'xn-disabled': isDisableDownloadButton}"
+          class="pull-left  margin-left--sm"
+          (click)="downloadFileClick();">
+            <a tooltip="Download template file"
+               placement="top"
+               container="body"
+               class="blue-color">
+                <i aria-hidden="true" class="fa fa-download"></i>
+            </a>
+        </a>
+      </div>
+    </div>
+</div>

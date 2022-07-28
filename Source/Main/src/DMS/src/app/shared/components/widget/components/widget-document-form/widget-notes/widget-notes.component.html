@@ -1,0 +1,135 @@
+<div class="widget-header"></div>
+<div class="dms-list-widget scroll-bar-custom">
+    <div *ngIf="notesList && notesList.length">
+        <div class="dms-widget">
+            <div
+                *ngFor="let note of notesList"
+                class="form-group dynamic-notes"
+                (mouseenter)="onMouseEnter(note)"
+                (mouseleave)="onMouseLeave(note)"
+            >
+                <mat-form-field class="dms-custom-control default-color" [class.custom-error]="note.IsError">
+                    <input
+                        matInput
+                        type="text"
+                        id="{{ note.TemporaryId }}"
+                        [placeholder]="note.FieldName"
+                        [(ngModel)]="note.FieldValue"
+                        (ngModelChange)="onChangedField($event, note.TemporaryId)"
+                        (focus)="onFocus(note)"
+                        (blur)="onFocusOut(note)"
+                        (keyup.enter)="onEnter(note)"
+                        required
+                    />
+                </mat-form-field>
+                <img
+                    *ngIf="note.FieldValue && note.isShowIconClearField"
+                    src="public/imgs/standard_action_cross-circle.svg"
+                    alt="clear text"
+                    class="btn-clear-field"
+                    (mousedown)="clearTextField(note.TemporaryId)"
+                />
+                <img
+                    src="public/imgs/icon-remove.svg"
+                    alt="remove field"
+                    (click)="removeNote(note)"
+                    class="icon-button icon-button-right"
+                />
+                <mat-error *ngIf="note.IsError"> {{ note.FieldName }} is <strong>required</strong> </mat-error>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-container *ngIf="newNoteFormGroup">
+    <p-dialog
+        header=""
+        [(visible)]="isShowDialog"
+        [styleClass]="dialogClass"
+        appendTo="body"
+        modal="true"
+        [draggable]="false"
+        [resizable]="false"
+        responsive="true"
+        [width]="dialogWidth"
+        (onHide)="close()"
+    >
+        <p-header>
+            <div class="modal-header--information">
+                <div class="mat-btn-close-popup toolbar-icon close-dialog-icon" (click)="close()"></div>
+            </div>
+        </p-header>
+        <form [formGroup]="newNoteFormGroup" class="dms-list-widget">
+            <div class="row">
+                <div class="col-xs-12 form-dms-control">
+                    <mat-form-field class="dms-custom-control default-color">
+                        <input
+                            xnEnteBreakDown
+                            [xnControlsData]="newNoteListControlData"
+                            type="text"
+                            placeholder="Neues Feld"
+                            id="{{ newNoteControlsName.name }}"
+                            matInput
+                            [formControlName]="newNoteControlsName.name"
+                            [matAutocomplete]="auto"
+                            (keydown.enter)="onEnterFieldName($event)"
+                            required
+                        />
+                        <mat-autocomplete #auto="matAutocomplete">
+                            <mat-option *ngFor="let item of autoCompleteFilteredOptions | async" [value]="item.value">
+                                {{ item.value }}
+                            </mat-option>
+                        </mat-autocomplete>
+                    </mat-form-field>
+                    <ng-template
+                        [ngTemplateOutlet]="RequiredErrMsgNewNote"
+                        [ngTemplateOutletContext]="{ controlName: newNoteControlsName.name, displayName: 'Neues Feld' }"
+                    >
+                    </ng-template>
+                </div>
+                <div class="col-xs-12 form-dms-control">
+                    <mat-form-field class="dms-custom-control default-color">
+                        <input
+                            xnEnteBreakDown
+                            [xnControlsData]="newNoteListControlData"
+                            type="text"
+                            placeholder="Neuen Wert"
+                            id="{{ newNoteControlsName.value }}"
+                            matInput
+                            [formControlName]="newNoteControlsName.value"
+                            (keydown.enter)="onEnterFieldName()"
+                            (focus)="onFocusFieldValue($event)"
+                            required
+                        />
+                    </mat-form-field>
+                    <ng-template
+                        [ngTemplateOutlet]="RequiredErrMsgNewNote"
+                        [ngTemplateOutletContext]="{
+                            controlName: newNoteControlsName.value,
+                            displayName: 'Neuen Wert'
+                        }"
+                    >
+                    </ng-template>
+                </div>
+            </div>
+        </form>
+        <p-footer>
+            <div class="row">
+                <div class="col-xs-6 btn-note left" (click)="onAddNewNote()" [class.disabled]="!newNoteFormGroup.valid">
+                    <span class="btn-Add"> Add </span>
+                </div>
+                <div
+                    class="col-xs-6 btn-note right"
+                    (click)="onAddNoteAndContinue()"
+                    [class.disabled]="!newNoteFormGroup.valid"
+                >
+                    <span class="btn-continue"> Add & Continue </span>
+                </div>
+            </div>
+        </p-footer>
+    </p-dialog>
+</ng-container>
+
+<ng-template #RequiredErrMsgNewNote let-controlName="controlName" let-displayName="displayName">
+    <mat-error *ngIf="isRequired(controlName)"> {{ displayName }} is <strong>required</strong> </mat-error>
+</ng-template>

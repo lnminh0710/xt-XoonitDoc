@@ -1,0 +1,72 @@
+<p-dialog
+    *ngIf="showDialog"
+    [styleClass]="'xn-p-dialog-resizable'"
+    [(visible)]="showDialog"
+    modal="true"
+    width="600"
+    responsive="true"
+    appendTo="body"
+    [resizable]="false"
+    [draggable]="true"
+    [contentStyle]="{ 'padding-bottom': 0, 'padding-top': 0 }"
+>
+    <p-header>
+        <div class="modal-header--information">
+            <span class="header-text"><label-translation [keyword]="'Save profile'"></label-translation></span>
+            <!-- <button type="button" mat-flat-button class="mat-btn-close-popup" aria-label="Close" (click)="close()">
+                <span class="fa fa-fw fa-close"></span>
+            </button> -->
+            <div class="toolbar-icon close-dialog-icon" (click)="close()"></div>
+        </div>
+    </p-header>
+    <div class="col-xs-12 padding-top--lg">
+        <div class="col-xs-12 no-padding">
+            <label for="profileName" class="control-label col-sm-4 required"
+                ><label-translation [keyword]="'Profile name'"></label-translation>:
+            </label>
+            <div class="col-sm-8">
+                <input
+                    class="form-control"
+                    type="text"
+                    id="profileName"
+                    name="profileName"
+                    [(ngModel)]="profileName"
+                    [ngClass]="{ 'er-br': !!errorMessage }"
+                    autocomplete="off"
+                />
+                <div [hidden]="!errorMessage" class="alert alert-danger">
+                    <label-translation [keyword]="errorMessage"></label-translation>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-12 no-padding">
+            <label for="profileName" class="control-label col-sm-4"
+                ><label-translation [keyword]="'Is global'"></label-translation>:
+            </label>
+            <div class="col-sm-8">
+                <mat-checkbox color="primary" [(ngModel)]="isGlobal"> </mat-checkbox>
+            </div>
+        </div>
+        <div class="col-xs-12 no-padding">
+            <label for="profileName" class="control-label col-sm-4"
+                ><label-translation [keyword]="'Save with value'"></label-translation>:
+            </label>
+            <div class="col-sm-8">
+                <mat-checkbox color="primary" [(ngModel)]="isSaveWithValue"> </mat-checkbox>
+            </div>
+        </div>
+    </div>
+
+    <p-footer>
+        <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+            <button label="Cancel" type="button" mat-flat-button (click)="close()">
+                <span><label-translation [keyword]="'Cancel'"></label-translation></span>
+            </button>
+            <button type="button" mat-flat-button class="mat-btn-orange" (click)="save()">
+                <span class="fa fa-save"></span>
+                <span class="bt-t-i"><label-translation [keyword]="'Save'"></label-translation></span>
+            </button>
+        </div>
+        <div class="widget-info__resize_bottom xn-icon__resize icon-black"></div>
+    </p-footer>
+</p-dialog>

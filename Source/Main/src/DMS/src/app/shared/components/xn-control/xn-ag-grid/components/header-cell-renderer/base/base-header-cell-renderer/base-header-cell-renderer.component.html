@@ -1,0 +1,24 @@
+<div class="ag-cell-label-container" role="presentation"
+     (mouseenter)="mouseEnter($event)"
+     (mouseleave) ="mouseLeave($event)">
+    <span ref="eMenu" #menuButton class="ag-header-icon ag-header-cell-menu-button"  [ngClass]="menuStatus"
+          (click)="onMenuClicked($event)">
+        <span class="ag-icon ag-icon-menu"></span>
+    </span>
+    <div ref="eLabel" class="ag-header-cell-label" role="presentation"
+         (click)="onSortRequested($event)">
+        <span ref="eText" class="ag-header-cell-text" [ngClass]="contentStyle" role="columnheader">
+            <ng-container *ngTemplateOutlet="template; context: templateContext"></ng-container>
+        </span>
+        <span ref="eSortOrder" class="ag-header-icon ag-sort-order ag-hidden"></span>
+        <span ref="eSortAsc" [ngClass]="ascSort" class="ag-header-icon ag-sort-ascending-icon">
+            <span class="ag-icon ag-icon-asc"></span>
+        </span>
+        <span ref="eSortDesc" [ngClass]="descSort" class="ag-header-icon ag-sort-descending-icon">
+            <span class="ag-icon ag-icon-desc"></span>
+        </span>
+        <span ref="eSortNone" [ngClass]="noSort" class="ag-header-icon ag-sort-none-icon ag-hidden">
+            <span class="ag-icon ag-icon-none"></span>
+        </span>
+    </div>
+</div>

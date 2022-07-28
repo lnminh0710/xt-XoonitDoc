@@ -1,0 +1,58 @@
+<div
+    bsModal
+    [config]="{ ignoreBackdropClick: true }"
+    #xnMessageModal="bs-modal"
+    class="modal fade xn-modal confirm-dialog"
+    tabindex="-1"
+    role="dialog"
+    aria-hidden="true"
+    aria-labelledby="xnMessageModal"
+    id="xn-modal-message-main"
+    (focus)="onFocusModal()"
+>
+    <div
+        *ngIf="isRenderMessage"
+        id="xn-bs-modal"
+        class="modal-dialog  {{ modalSizeCssClass[messageOption.modalSize] }}  {{ messageOption.customClass }}"
+    >
+        <div class="modal-content notice">
+            <div class="modal-header">
+                <div class="image-icon warning-icon" *ngIf="!!messageOption.header.iconClass"></div>
+                <div class="header-text">
+                    <label-translation
+                        *ngIf="messageOption.header.text && !hasTranslatePopup"
+                        [keyword]="'Message_Modal__btn_' + messageOption.header.text"
+                    ></label-translation>
+                    <span *ngIf="hasTranslatePopup">{{ messageOption.header.text }}</span>
+                </div>
+                <div class="toolbar-icon close-dialog-icon" (click)="closeClicked()"></div>
+            </div>
+            <div
+                *ngIf="isRender"
+                class="modal-body xn-translate-text-html"
+                id="xn-bs-modal-body"
+                [innerHTML]="messageBody | sanitizeHtml"
+                [perfectScrollbar]="{ suppressScrollX: false, suppressScrollY: false }"
+            ></div>
+            <div class="modal-footer" *ngIf="messageOption.footer && messageOption.footer.buttonList">
+                <button
+                    #buttonfooter
+                    *ngFor="let item of messageOption.footer.buttonList; index as i"
+                    class="mat-raised-button {{ buttonClass[item.buttonType] }} {{ item.customClass }}"
+                    type="button"
+                    (click)="item.callBackFunc($event)"
+                    autofocus
+                    [disabled]="item.disabled"
+                    (keydown.ArrowLeft)="onKeyLeft($event, i)"
+                    (keydown.ArrowRight)="onKeyRight($event, i)"
+                >
+                    <label-translation
+                        *ngIf="item && item.text && !hasTranslatePopup"
+                        [keyword]="'Message_Modal__btn_' + item.text"
+                    ></label-translation>
+                    <span *ngIf="hasTranslatePopup">{{ item.text }}</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

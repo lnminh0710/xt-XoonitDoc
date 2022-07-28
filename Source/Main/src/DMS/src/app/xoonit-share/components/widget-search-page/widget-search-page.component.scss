@@ -1,0 +1,51 @@
+@import '../../../../sass_files/color.scss';
+
+.search-page {
+    height: calc(100vh - var(--app-header-height));
+    background-color: $blue20;
+    padding: 10% 30%;
+
+    ::ng-deep .mat-form-field {
+        background-color: $white;
+        border-radius: 35px;
+        height: 60px;
+        font-family: 'rbt_Regular';
+        padding: 0 2rem !important;
+        box-shadow: 1px 5px 25px $grey3;
+
+        .mat-form-field-wrapper {
+            margin-top: 5px;
+
+            .mat-icon {
+                position: relative;
+                top: 6px;
+                font-size: 250%;
+                margin-right: 50px;
+            }
+            input {
+                font-size: 20px;
+            }
+        }
+    }
+
+    .img-wrapper {
+        margin-top: 40px;
+
+        .bg-image {
+            height: 300px;
+            background-repeat: no-repeat;
+            background-size: contain;
+            background-position: 50%;
+
+            &.contact {
+                background-image: url(../../../../public/imgs/search-page/contact.svg);
+            }
+            &.document {
+                background-image: url(../../../../public/imgs/search-page/document.svg);
+            }
+            &.approval {
+                background-image: url(../../../../public/imgs/search-page/document.svg);
+            }
+        }
+    }
+}

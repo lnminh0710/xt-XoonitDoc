@@ -1,0 +1,18 @@
+<div class="file-manager__content detail">
+  <ag-grid-angular
+    #fileGrid
+    style="width: 100% ; border-width: 0px"
+    class="ag-theme-balham"
+    [columnDefs]="columnDefs"
+    [defaultColDef]="defaultColDef"
+    [animateRows]="true"
+    [gridOptions]="gridOptions"
+    [rowData]="rowData"
+    [domLayout]="'autoHeight'"
+    enableColResize
+    rowSelection="multiple"
+    (gridReady)="onGridReady($event)"
+    (selectionChanged)="onSelectionChanged()"
+  >
+  </ag-grid-angular>
+</div>

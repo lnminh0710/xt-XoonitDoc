@@ -1,0 +1,7 @@
+<div #hotKey class="hot-key_suggestion"
+     *ngIf="isHotKeyActive && deferHotKeyDisplay && !isShowHotkeyDialog"
+     [ngClass]="{'has-short-key': (hotKeyValue && hotKeyValue.value), 'has-not-short-key': (!hotKeyValue || !hotKeyValue.value)}"
+     (dblclick)="editHotkey($event)">
+</div>
+
+<hotkey-dialog *ngIf="isShowHotkeyDialog" (onClose)="closeForm()"></hotkey-dialog>

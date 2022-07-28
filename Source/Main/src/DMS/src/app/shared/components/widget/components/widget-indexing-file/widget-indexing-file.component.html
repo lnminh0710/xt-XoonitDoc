@@ -1,0 +1,189 @@
+<div class="widget-explorer">
+    <div class="widget-header" *ngIf="!!selectedFolder">
+        <button
+            mat-icon-button
+            class="btn-action icon-transform color-blue"
+            style="padding: 6px; padding-top: 0"
+            (click)="expandWidget()"
+            #popRefresh="bs-tooltip"
+            container="body"
+            data-placement="bottom"
+            [tooltip]="isFullScreen ? 'Minimize' : 'Full screen'"
+            [attr.control-key]="'indexing-file__fullscreen-minimize'"
+        >
+            <mat-icon
+                [svgIcon]="isFullScreen ? IconNamesEnum.FULL_SCREEN_MINIMIZE : IconNamesEnum.FULL_SCREEN"
+            ></mat-icon>
+        </button>
+        <div
+            *ngIf="!selectedFolder?.isUser && !selectedFolder?.isCompany && selectedFolder?.canEdit"
+            [attr.control-key]="'document-viewer__upload'"
+            class="toolbar-icon icon-transform upload-icon"
+            style="padding: 6px"
+            #popUpload="bs-tooltip"
+            container="body"
+            (click)="isShowUpload = true"
+            data-placement="bottom"
+            [tooltip]="'Upload'"
+        ></div>
+        <div
+            *ngIf="!selectedFolder?.isUser && !selectedFolder?.isCompany && selectedFolder?.canDelete"
+            [attr.control-key]="'document-viewer__delete'"
+            class="toolbar-icon icon-transform delete-icon"
+            [class.xn-disabled]="!selectedFile?.IdDocumentContainerFiles"
+            style="padding: 6px"
+            #popUpload="bs-tooltip"
+            container="body"
+            (click)="showConfirmDeleteFile()"
+            data-placement="bottom"
+            [tooltip]="'Delete'"
+        ></div>
+        <div class="flex-1"></div>
+        <button
+            *ngIf="!selectedFolder?.isUser && !selectedFolder?.isCompany"
+            mat-icon-button
+            class="btn-action icon-transform"
+            style="padding: 6px; padding-top: 0"
+            (click)="refreshListData()"
+            #popRefresh="bs-tooltip"
+            container="body"
+            data-placement="bottom"
+            [tooltip]="'Refresh'"
+            [attr.control-key]="'document-viewer__refresh'"
+        >
+            <mat-icon [svgIcon]="svgIconUndo"></mat-icon>
+        </button>
+        <img
+            *ngIf="!selectedFolder?.isUser && !selectedFolder?.isCompany && currentViewType === VIEW_TYPE_CONSTANT.GRID"
+            class="view-type active"
+            style="padding: 6px"
+            src="public/imgs/iconspace_List.svg"
+            alt="view-list"
+            (click)="changeViewMode(VIEW_TYPE_CONSTANT.LIST)"
+        />
+        <img
+            *ngIf="!selectedFolder?.isUser && !selectedFolder?.isCompany && currentViewType === VIEW_TYPE_CONSTANT.LIST"
+            class="view-type active"
+            style="padding: 6px"
+            src="public/imgs/iconspace_Grid.svg"
+            alt="view-grid"
+            (click)="changeViewMode(VIEW_TYPE_CONSTANT.GRID)"
+        />
+    </div>
+    <div
+        class="widget-file-explorer-container mini-scrollbar drop-files"
+        dnd-droppable
+        [dropZones]="['upload-document']"
+    >
+        <form class="box" enctype="multipart/form-data" id="form-upload-file">
+            <ng-container [ngSwitch]="isLoading && !files" *ngIf="!!selectedFolder">
+                <ng-container *ngSwitchCase="true" [ngTemplateOutlet]="loadingSpinnerTemplate"></ng-container>
+
+                <ng-container *ngSwitchCase="false" [ngTemplateOutlet]="filesTemplate"></ng-container>
+            </ng-container>
+            <div *ngIf="selectedFolder?.canEdit" class="upload-animation">
+                <div class="upload-animation__image"></div>
+                <div class="upload-animation__title">Drop files to upload</div>
+            </div>
+        </form>
+    </div>
+
+    <ng-template #filesTemplate>
+        <div
+            class="empty-container"
+            *ngIf="files && !files.length && selectedFolder?.canRead && selectedFolder?.canEdit"
+        >
+            <div>DROP A FILE TO UPLOAD</div>
+        </div>
+
+        <div class="files-list" *ngIf="files && files.length && selectedFolder?.canRead">
+            <ng-container [ngSwitch]="currentViewType">
+                <ng-container *ngSwitchCase="VIEW_TYPE_CONSTANT.GRID">
+                    <ng-container *ngFor="let file of filesDisplay">
+                        <div
+                            class="file view-grid cursor-pointer"
+                            [class.selected-file]="
+                                selectedFile?.IdDocumentContainerFiles === file.IdDocumentContainerFiles ||
+                                selectedFilesKey.includes(file.IdDocumentContainerFiles)
+                            "
+                            (click)="onClickFile(file, true, $event)"
+                            title="{{ file.DocumentName }}"
+                        >
+                            <div class="file-icon {{ file.extension }}"></div>
+                            <div
+                                class="file-name"
+                                #popUpload="bs-tooltip"
+                                container="body"
+                                data-placement="top"
+                                [tooltip]="file.DocumentName"
+                            >
+                                {{ file.DocumentName }}
+                            </div>
+                        </div>
+                    </ng-container>
+                </ng-container>
+                <ng-container *ngSwitchCase="VIEW_TYPE_CONSTANT.LIST">
+                    <!-- <ng-container *ngFor="let file of filesDisplay">
+                            <div
+                                class="file view-list cursor-pointer display-flex"
+                                [class.selected-file]="
+                                    selectedFile &&
+                                    selectedFile.IdDocumentContainerFiles === file.IdDocumentContainerFiles
+                                "
+                                (click)="onClickFile(file)"
+                                title="{{ file.FileName }}"
+                            >
+                                <div class="file-icon {{ file.extension }}"></div>
+                                <div class="file-name flex-middle">{{ file.FileName }}</div>
+                            </div>
+                        </ng-container> -->
+                    <div *ngIf="fileList?.columns?.length && selectedFolder?.canRead" class="file-list xoonit-grid">
+                        <xn-ag-grid
+                            #xnAgGrid
+                            [id]="'7a3916cf-adb0-4c55-b8e7-8e8ca6fc92cc'"
+                            [globalProperties]="globalProperties"
+                            [serverPaging]="false"
+                            [suppressContextMenu]="false"
+                            [dataSource]="fileList"
+                            [rowHeight]="36"
+                            [readOnly]="true"
+                            [autoSelectCurrentRowAfterChangingData]="true"
+                            [rowSelection]="'multiple'"
+                            [suppressRowClickSelection]="false"
+                            (rowClick)="onRowClick($event, false)"
+                            (rowDoubleClicked)="onRowClick($event, true)"
+                        >
+                        </xn-ag-grid>
+                    </div>
+                </ng-container>
+            </ng-container>
+        </div>
+    </ng-template>
+
+    <ng-template #loadingSpinnerTemplate>
+        <div class="indicator-center-wrapper">
+            <i class="fa fa-spinner fa-spin" style="font-size: 24px"></i>
+        </div>
+    </ng-template>
+</div>
+
+<widget-upload
+    *ngIf="isShowUpload && selectedFolder?.canEdit"
+    (onClose)="isShowUpload = false; filesUpload = []"
+    (onUploadFinished)="refreshListData($event)"
+    [fileUploaded]="filesUpload"
+    [idPriceTag]="idPriceTag"
+    [selectedFolder]="selectedFolder"
+></widget-upload>
+
+<ng-template #confirmDelete let-close="close">
+    <div class="popup-content">
+        <div class="popup-content__title">
+            <label>Do you want delete this/these file(s)?</label>
+        </div>
+        <div class="popup-action">
+            <div class="popup-action__button ml-4" (click)="close()">No</div>
+            <div class="popup-action__button primary" (click)="deleteFile(close)">Yes</div>
+        </div>
+    </div>
+</ng-template>

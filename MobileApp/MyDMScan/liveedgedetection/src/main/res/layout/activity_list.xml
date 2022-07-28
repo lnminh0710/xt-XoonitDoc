@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar"
+        android:alpha="0.5" />
+
+
+    <include
+        android:id="@+id/toolbar_listview"
+        layout="@layout/toolbar_listview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:dividerHeight="0dp"
+        android:divider="@null"
+        android:layout_alignParentBottom="true" />
+
+    <ListView
+        android:layout_marginTop="10dp"
+        android:id="@+id/list_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/toolbar_listview"
+        android:layout_below="@id/layoutcheck"
+        android:layout_weight="1"
+        android:choiceMode="multipleChoice"
+        android:dividerHeight="2dp"
+        tools:ignore="ObsoleteLayoutParam">
+
+    </ListView>
+
+    <LinearLayout
+        android:id="@+id/layoutcheck"
+        android:layout_width="match_parent"
+        android:layout_height="47dp"
+        android:layout_below="@id/toolbar"
+        android:layout_marginTop="0dp"
+        android:orientation="horizontal">
+
+        <CheckBox
+            android:id="@+id/checkBoxAll"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+
+            android:layout_weight="0"
+            android:background="@drawable/checkbox_selector"
+            android:button="@color/white"
+            android:onClick="EditListView"
+            android:visibility="visible" />
+
+        <ImageButton
+            android:id="@+id/btnDone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:layout_marginTop="5dp"
+            android:layout_weight="0"
+            android:background="@android:color/transparent"
+            android:contentDescription="@string/todo"
+            android:onClick="DoneSave"
+            android:src="@drawable/ic_check_circle_black_24dp" />
+
+        <TextView
+            android:id="@+id/txtNrOfDoc"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="0"
+            android:gravity="right"
+            android:textAlignment="textEnd"
+            android:textColor="#F00000"
+            android:textSize="20sp"
+            android:verticalScrollbarPosition="defaultPosition"
+            tools:ignore="RtlCompat" />
+    </LinearLayout>
+
+
+</RelativeLayout>

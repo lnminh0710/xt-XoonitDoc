@@ -1,0 +1,84 @@
+@import '../../../../../sass_files/color.scss';
+
+.pagination-group-container {
+    display: flex;
+    flex-flow: column wrap;
+    margin-top: 13px;
+    margin-bottom: 12px;
+    padding: 0 12px;
+
+    & .pagination-group {
+        height: 24px;
+        display: flex;
+        flex-flow: row nowrap;
+        align-items: baseline;
+        justify-content: flex-end;
+
+        &.page-size-group {
+            margin-bottom: 3.5px;
+        }
+
+        &.page-group {
+            margin-top: 3.5px;
+        }
+    }
+
+    & .pagination-item {
+        padding: 0px 1px;
+        height: inherit;
+        font-size: 14px;
+        color: $gray-slate;
+        margin-right: 7px;
+    }
+
+    & .page-number,
+    & .page-size {
+        width: 47px;
+
+        &.mr-7 {
+            margin-right: 7px !important;
+        }
+        & input {
+            height: inherit;
+            font-size: inherit;
+            padding: 0;
+            font-size: 14px;
+            color: $blue-4;
+            margin-right: 7px;
+        }
+    }
+
+    & .navigation-page {
+        margin-left: 0;
+        margin-right: 0;
+
+        & .btn-group,
+        button {
+            height: inherit;
+        }
+
+        button {
+            width: 24px;
+            position: relative;
+            padding-left: 0px;
+            padding-right: 0px;
+
+            &:hover {
+                background-color: $gray-slate;
+            }
+
+            &:disabled {
+                background-color: rgba($black, 0.1);
+                cursor: default !important;
+                pointer-events: none;
+            }
+
+            & i {
+                // position: absolute;
+                // left: 6px;
+                // top: 5px;
+                vertical-align: super;
+            }
+        }
+    }
+}

@@ -1,0 +1,21 @@
+.widget-header {
+    .actions-list {
+        margin-top: -8px;
+
+        &.left {
+            justify-content: flex-start;
+        }
+        &.right {
+            justify-content: flex-end;
+        }
+
+        & .btn-action .mat-icon {
+            width: 22px;
+            height: 22px;
+        }
+    }
+}
+
+.widget-mydm-form-container {
+    height: calc(100% - var(--widget-header-class-height));
+}

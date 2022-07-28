@@ -1,0 +1,8 @@
+<div class="widget_content" [perfectScrollbar]="{}">
+    <widget-dynamic-form #widgetDynamic
+                         [dynamicFormGroupDef]="formGroupDef"
+                         (formInitialized)="dynamicFormInitialized($event)"                         
+                         (dataChanged)="dataChanged($event)"
+                         (onControlIconClick)="onControlIconClick($event)">
+    </widget-dynamic-form>
+</div>

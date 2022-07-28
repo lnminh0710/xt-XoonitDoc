@@ -1,0 +1,9 @@
+<mat-error *ngIf="condition">
+    <img src="public/imgs/icon-error.svg" alt="error">
+    <ng-container *ngIf="typeErr !== ERROR_MES_TYPE_ENUM.REQUIRED; else fieldNameError">
+        <label-translation [keyword]="displayMessageError"></label-translation>
+    </ng-container>
+</mat-error>
+<ng-template #fieldNameError>
+    {{fieldName}}&nbsp;<label-translation [keyword]="'XN_ERROR_MESSAGE_IsRequired'"></label-translation>
+</ng-template>

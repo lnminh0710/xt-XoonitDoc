@@ -1,0 +1,25 @@
+:host ::ng-deep {
+    .html-input-control {
+        &__title {
+            color: rgba(0, 0, 0, 0.54);
+            font-size: 10px;
+            letter-spacing: 0.33px;
+            line-height: 16px;
+        }
+
+        &__container {
+            position: relative;
+            overflow: auto;
+            line-height: 20px;
+        }
+
+        &.activated {
+            .mat-form-field-underline {
+                display: none;
+            }
+        }
+        textarea {
+            height: unset !important;
+        }
+    }
+}

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    android:background="#00424141"
+    android:descendantFocusability="blocksDescendants"
+    android:orientation="horizontal">
+
+    <android.support.v7.widget.AppCompatCheckBox
+        android:id="@+id/selectionCheck"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@drawable/checkbox_selector"
+        android:button="@color/white"
+        android:clickable="false" />
+
+    <ImageView
+        android:id="@+id/Bitmap"
+        android:layout_width="75dp"
+        android:layout_height="100dp"
+        android:layout_margin="2dp"
+        android:layout_weight="0"
+        android:background="#006B6969" />
+
+
+    <RelativeLayout
+        android:id="@+id/linemidlle"
+        android:layout_width="fill_parent"
+        android:layout_height="100dp"
+        android:layout_margin="2dp"
+        android:layout_weight="1"
+        android:background="#006B6969"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/imageIdType"
+            android:layout_width="111dp"
+            android:layout_height="50dp"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="4dp"
+            android:layout_toEndOf="@+id/textNote"
+            android:gravity="fill_horizontal|top|start"
+            android:text="imageType"
+            android:textAllCaps="false"
+            android:textColor="#3D5AFE"
+            android:textColorHighlight="#3D5AFE"
+            android:textColorHint="#3D5AFE"
+            android:textColorLink="#3D5AFE"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/imageProperty"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/imageIdType"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="-11dp"
+            android:layout_toEndOf="@+id/textNote"
+            android:gravity="fill_horizontal|top|start"
+            android:text="ImageProperty"
+            android:textAllCaps="false"
+            android:textColor="#104DEB"
+            android:textSize="18sp"
+            android:textStyle="normal" />
+
+        <ImageView
+            android:id="@+id/textNote"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="2dp"
+            android:layout_marginEnd="2dp"
+            android:src="@drawable/ic_note" />
+
+    </RelativeLayout>
+
+</LinearLayout>

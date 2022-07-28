@@ -1,0 +1,83 @@
+<div class="widget-role-group-container d-flex">
+    <as-split #horizontalSplit direction="horizontal" [gutterSize]="5">
+        <as-split-area [size]="splitterConfig.leftHorizontal" [minSize]="3">
+            <div class="group-role">
+                <management-list
+                    #groupRole
+                    [widgetId]="'widget-group-role'"
+                    [type]="TypeOfList.ICON"
+                    [headerTitle]="'Group Role'"
+                    [list]="roleGroups"
+                    [iconTemplateForAll]="iconTemplate"
+                    (onAdd)="addRoleGroupItem()"
+                    (onEdit)="editRoleGroupItem($event)"
+                    (onDelete)="deleteRoleGroupItem($event)"
+                >
+                </management-list>
+            </div>
+        </as-split-area>
+        <as-split-area [size]="splitterConfig.rightHorizontal" [minSize]="3">
+            <div class="tab-wrapper" [ngClass]="{ 'h-100': loading }">
+                <div class="tab-header">
+                    <div
+                        class="header-label"
+                        [class.active]="selectedTab === RoleGroupTab.ROLE"
+                        (click)="selectedTab = RoleGroupTab.ROLE"
+                    >
+                        <label-translation [keyword]="'WIDGET_ROLE_GROUP_Role'"></label-translation>
+                    </div>
+                    <div
+                        class="header-label"
+                        [class.active]="selectedTab === RoleGroupTab.MEMBER"
+                        (click)="selectedTab = RoleGroupTab.MEMBER"
+                    >
+                        <label-translation [keyword]="'WIDGET_ROLE_GROUP_Member'"></label-translation>
+                    </div>
+                </div>
+                <ng-container *ngIf="selectedRoleGroupItem">
+                    <div class="tab-content" [class.d-none]="loading">
+                        <xn-checkbox-tree
+                            *ngIf="!!roles?.length"
+                            [class.d-none]="selectedTab !== RoleGroupTab.ROLE"
+                            [data]="roles"
+                            (getSelectedList)="changeStatus($event)"
+                        ></xn-checkbox-tree>
+                        <management-list
+                            [class.d-none]="selectedTab !== RoleGroupTab.MEMBER"
+                            [widgetId]="'widget-group-role-member'"
+                            [type]="TypeOfList.ICON"
+                            [headerTitle]="'Add User'"
+                            [list]="members"
+                            [hideAllEditButton]="true"
+                            (onAdd)="addMember()"
+                            (onDelete)="deleteMember($event)"
+                        ></management-list>
+                    </div>
+                    <ng-container *ngIf="loading">
+                        <div class="h-75 d-flex align-items-center justify-content-center">
+                            <i class="fa fa-spinner fa-spin fa-2x"></i>
+                        </div>
+                    </ng-container>
+                </ng-container>
+            </div>
+        </as-split-area>
+    </as-split>
+</div>
+
+<ng-template #addEditPopup let-close="close">
+    <user-management-popup
+        [optionShowPopup]="optionShowPopup"
+        [nameInput]="'Group Name'"
+        [listName]="roleGroups"
+        [nameEditing]="editingRoleGroupItem"
+        [closeFunc]="close"
+        (onSendValue)="addSuccess($event)"
+    ></user-management-popup>
+</ng-template>
+
+<ng-template #iconTemplate>
+    <i class="icon fal fa-users"></i>
+</ng-template>
+<ng-template #iconUserTemplate>
+    <i class="icon fal fa-user"></i>
+</ng-template>

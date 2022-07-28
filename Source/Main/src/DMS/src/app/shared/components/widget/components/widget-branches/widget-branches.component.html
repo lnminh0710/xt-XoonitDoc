@@ -1,0 +1,52 @@
+<div class="widget-branches">
+    <div class="action">
+        <div class="button" [ngClass]="{ disabled: isEmpty || isLoading }" (click)="showDialogModifyBrand()">
+            Add new branch
+        </div>
+        <!-- <div class="button disabled-custom" [ngClass]="{ disabled: isEmpty || isLoading }" (click)="isShowUpload = true">
+            Upload branch
+        </div> -->
+    </div>
+    <div class="content-container" *ngIf="isLoading">
+        <div class="loading"></div>
+    </div>
+    <div *ngIf="dataSource.data.length" class="grid-panel xoonit-grid custom-grid table-grid mini-scrollbar">
+        <xn-ag-grid
+            #xnAgGrid
+            [id]="'3b9523c5-497d-4bff-beef-d3528ac5bdbd'"
+            [globalProperties]="globalProperties"
+            [serverPaging]="false"
+            [suppressContextMenu]="false"
+            [dataSource]="dataSource"
+            [readOnly]="true"
+            [parentInstance]="that"
+            [rowHeight]="32"
+            (editUser)="editBranch($event)"
+            (deleteUser)="deleteBranch($event)"
+            (rowDoubleClicked)="editBranch($event)"
+        >
+        </xn-ag-grid>
+    </div>
+    <div *ngIf="!dataSource.data.length && !isEmpty && !isLoading" class="content-container">
+        <i class="icon fal fa-list-alt"></i>
+        <div class="title">No branch found</div>
+    </div>
+    <div *ngIf="isEmpty" class="content-container">
+        <i class="icon fal fa-list-alt"></i>
+        <div class="title">Please select headquarter</div>
+    </div>
+</div>
+
+<widget-upload-branches *ngIf="isShowUpload" (onClose)="onCloseUploadDialog($event)"></widget-upload-branches>
+
+<ng-template #confirmDelete let-close="close">
+    <div class="popup-content">
+        <div class="popup-content__title">
+            <label>Delete Branch: {{ itemDelete?.BranchName }}?</label>
+        </div>
+        <div class="popup-action">
+            <div class="popup-action__button ml-4" (click)="close()">Cancel</div>
+            <div class="popup-action__button primary" (click)="handleDelete(close)">Delete</div>
+        </div>
+    </div>
+</ng-template>

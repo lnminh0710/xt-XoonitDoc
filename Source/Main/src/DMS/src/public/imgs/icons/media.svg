@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="52px" height="60px" viewBox="0 0 52 60" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>1A295D38-C0E4-46EC-952C-4AF217590F7A</title>
+    <defs>
+        <linearGradient x1="50%" y1="0.453111342%" x2="50%" y2="100%" id="linearGradient-1">
+            <stop stop-color="#B3B3B3" offset="0%"></stop>
+            <stop stop-color="#939393" offset="100%"></stop>
+        </linearGradient>
+        <path d="M30,0 L42.6464466,0 C46.5124399,0 50,3.48756014 50,7.35355339 L50,20 L30,0 Z" id="path-2"></path>
+        <filter x="-20.0%" y="-30.0%" width="140.0%" height="140.0%" filterUnits="objectBoundingBox" id="filter-3">
+            <feOffset dx="0" dy="-2" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="1" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feComposite in="shadowBlurOuter1" in2="SourceAlpha" operator="out" result="shadowBlurOuter1"></feComposite>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.0909637238 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="Page-2" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="L39.-Email" transform="translate(-740.000000, -504.000000)">
+            <g id="files-icon-picture-copy-3" transform="translate(740.000000, 504.000000)">
+                <g id="PDF">
+                    <path d="M30,0 L50,20 L50,53 C50,56.8659932 46.8659932,60 43,60 L7,60 C3.13400675,60 0,56.8659932 0,53 L0,7 C0,3.13400675 3.13400675,0 7,0 L30,0 Z" id="Combined-Shape" fill="url(#linearGradient-1)"></path>
+                    <g id="Path" transform="translate(40.000000, 10.000000) scale(-1, -1) translate(-40.000000, -10.000000) ">
+                        <use fill="black" fill-opacity="1" filter="url(#filter-3)" xlink:href="#path-2"></use>
+                        <use fill-opacity="0.4" fill="#FFFFFF" fill-rule="evenodd" xlink:href="#path-2"></use>
+                    </g>
+                </g>
+                <path d="M37,28.9328859 C37,27.8653691 36.1346309,27 35.0671141,27 L14.9328859,27 C13.8653691,27 13,27.8653691 13,28.9328859 L13,47.6174497 C13,48.6849664 13.8653691,49.5503356 14.9328859,49.5503356 L35.0671141,49.5503356 C36.1346309,49.5503356 37,48.6849664 37,47.6174497 L37,28.9328859 Z M20.3288591,29.4161074 L23.7919463,29.4161074 L23.7919463,32.1543624 L20.3288591,32.1543624 L20.3288591,29.4161074 Z M17.9127517,47.1342282 L15.4161074,47.1342282 L15.4161074,44.3959732 L17.9127517,44.3959732 L17.9127517,47.1342282 Z M17.9127517,32.1543624 L15.4161074,32.1543624 L15.4161074,29.4161074 L17.9127517,29.4161074 L17.9127517,32.1543624 Z M23.7919463,47.1342282 L20.3288591,47.1342282 L20.3288591,44.3959732 L23.7919463,44.3959732 L23.7919463,47.1342282 Z M22.9060403,40.5066846 L22.9060403,36.0435705 C22.9060403,35.3791409 23.3786309,35.1333423 23.9344966,35.4972886 L27.1750604,37.6131544 C27.7309262,37.9771007 27.7354362,38.5726711 27.1795705,38.936698 L23.9322416,41.0529664 C23.3763758,41.4169933 22.9060403,41.1711141 22.9060403,40.5066846 Z M29.6711409,47.1342282 L26.2080537,47.1342282 L26.2080537,44.3959732 L29.6711409,44.3959732 L29.6711409,47.1342282 Z M29.6711409,32.1543624 L26.2080537,32.1543624 L26.2080537,29.4161074 L29.6711409,29.4161074 L29.6711409,32.1543624 Z M34.5838926,47.1342282 L32.0872483,47.1342282 L32.0872483,44.3959732 L34.5838926,44.3959732 L34.5838926,47.1342282 Z M34.5838926,32.1543624 L32.0872483,32.1543624 L32.0872483,29.4161074 L34.5838926,29.4161074 L34.5838926,32.1543624 Z" id="Shape" fill="#FFFFFF" fill-rule="nonzero"></path>
+                <g id="video-player" transform="translate(13.000000, 27.000000)"></g>
+            </g>
+        </g>
+    </g>
+</svg>

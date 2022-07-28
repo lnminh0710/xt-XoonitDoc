@@ -1,0 +1,310 @@
+<div *ngIf="isRenderForm"
+     [ngClass]="{'submitted': formGroup.submitted}"
+     class="xn-form-container height-pc-100">
+    <form [formGroup]="formGroup" id="userProfileFormGroup" class="form-horizontal  height-pc-100">
+        <control-focus #focusControl
+                       [formName]="'userProfileFormGroup'"
+                       [isFocusOnFirstControl]="true"></control-focus>
+        <div class="avata-box {{avataCss}}"
+             [ngClass]="{'move-avatar-box': useInDropdown}">
+            <div class="avata-wraper">
+                <label class="btn  no-padding no-outline">
+                    <i *ngIf="imageLoaded" class="user-profile-plus-icon fa fa-camera"></i>
+                    <div>
+                        <img class="avata"
+                             [ngClass]="{'move-avatar': useInDropdown}"
+                             id="userAvata"
+                             [imageLoader]="loginPictureUrl+ '&w=300'"
+                             [imageNameDefault]="'avata-default.png'"
+                             (loaded)="avataLoaded($event)"
+                             alt="Avatar" />
+                    </div>
+                    <input type="file" id="userAvataUpload" accept="image/*" style="display: none">
+                </label>
+            </div>
+            <i *ngIf="imageLoaded && !useInDropdown" class="avata-hint">(Click to change avatar)</i>
+            <div *ngIf="uploadMessage" class="alert alert-danger">{{uploadMessage}}</div>
+        </div>
+        <div class="{{userProfileCss}}  height-pc-100 no-padding"
+             [perfectScrollbar]="perfectScrollbarConfig">
+            <div class="xn__form-header">
+                <span [ngClass]="{'no-margin': useInDropdown}">Profile detail</span>
+            </div>
+            <div class="form-group">
+                <label for="language" class="control-label  col-sm-4">Application Language</label>
+                <div class="col-sm-8">
+                    <div class="full-width">
+                        <wj-combo-box #idRepLanguage
+                                      selectFirstIfOnlyOne
+                                      formControlName="idRepLanguage"
+                                      class="custom-wj-input-control xn-select"
+                                      [itemsSource]="languages"
+                                      [displayMemberPath]="'textValue'"
+                                      [selectedValuePath]="'idValue'"
+                                      [isRequired]="false"
+                                      placeholder="Please select"
+                                      (gotFocus)="idRepLanguage.isDroppedDown = true">
+                        </wj-combo-box>
+                        <control-messages [control]="formGroup.controls.idRepLanguage"
+                                          [xn-trigger-click-inside-cbo]="idRepLanguage"
+                                          [icon]="'language'">
+                        </control-messages>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="loginWithName" class="control-label  col-sm-4">Login name</label>
+                <div class="col-sm-8">
+                    <div class="full-width">
+                        <app-xn-input-debounce cssClass="xn-input"
+                                               id="user-profile-user-name"
+                                               [hasIndicator]="true"
+                                               [hasSearchButton]="false"
+                                               [isLoading]="isSearchingUserName"
+                                               [hasValidation]="true"
+                                               formControlName="loginWithName"
+                                               delayTimer="600">
+                        </app-xn-input-debounce>
+                        <control-messages [type]="'textbox'"
+                                          [control]="formGroup.controls.loginWithName"
+                                          [icon]="'align-justify'">
+                        </control-messages>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="nickName" class="control-label  col-sm-4">Nick name</label>
+                <div class="col-sm-8">
+                    <div class="full-width">
+                        <input type="text"
+                               class="form-control  xn-input"
+                               name="nickName"
+                               formControlName="nickName"
+                               autocomplete="off" />
+                        <control-messages [type]="'textbox'"
+                                          [icon]="'align-justify'">
+                        </control-messages>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="firstName" class="control-label  col-sm-4">First name</label>
+                <div class="col-sm-8">
+                    <div class="full-width">
+                        <input type="text"
+                               class="form-control  xn-input"
+                               name="firstName"
+                               formControlName="firstName"
+                               autocomplete="off" />
+                        <control-messages [type]="'textbox'"
+                                          [control]="formGroup.controls.firstName"
+                                          [icon]="'align-justify'">
+                        </control-messages>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="lastName" class="control-label  col-sm-4">Last name</label>
+                <div class="col-sm-8">
+                    <div class="full-width">
+                        <input type="text"
+                               class="form-control  xn-input"
+                               name="lastName"
+                               formControlName="lastName"
+                               autocomplete="off" />
+                        <control-messages [type]="'textbox'"
+                                          [control]="formGroup.controls.lastName"
+                                          [icon]="'align-justify'">
+                        </control-messages>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="fullName" class="control-label  col-sm-4">Display name</label>
+                <div class="col-sm-8">
+                    <div class="full-width">
+                        <input type="text"
+                               class="form-control  xn-input"
+                               name="fullName"
+                               formControlName="fullName"
+                               autocomplete="off" />
+                        <control-messages [type]="'textbox'"
+                                          [control]="formGroup.controls.fullName"
+                                          [icon]="'align-justify'">
+                        </control-messages>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="dateOfBirth" class="control-label  col-sm-4">Date of birth</label>
+                <div class="col-sm-8">
+                    <div class="full-width">
+                        <xn-date-picker #dateOfBirth
+                                        formControlName="dateOfBirth"
+                                        class="xn-input"
+                                        [min]="'1900-01-01'"
+                                        [isRequired]="false"
+                                        [dontAutoFillDateWhenEnter]="true"
+                                        [placeholder]="'MM/dd/yyyy'">
+                        </xn-date-picker>
+                        <control-messages [xn-trigger-click-inside-cbo]="dateOfBirth"
+                                          [type]="'textbox'"
+                                          [icon]="'calendar'">
+                        </control-messages>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="email" class="control-label  col-sm-4">Email</label>
+                <div class="col-sm-8">
+                    <div class="full-width">
+                        <app-xn-input-debounce cssClass="xn-input"
+                                               id="user-profile-email"
+                                               [value]=""
+                                               [hasIndicator]="true"
+                                               [hasSearchButton]="false"
+                                               [isLoading]="isSearchingUserEmail"
+                                               [hasValidation]="true"
+                                               formControlName="email"
+                                               delayTimer="600">
+                        </app-xn-input-debounce>
+                        <control-messages [type]="'textbox'"
+                                          [control]="formGroup.controls.email"
+                                          [icon]="'envelope-o'">
+                        </control-messages>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="validFrom" class="control-label  col-sm-4">Valid from</label>
+                <div class="col-sm-8"
+                     [ngClass]="{'xn-disabled': isUserEditting}">
+                    <div class="full-width">
+                        <xn-date-picker #validFrom
+                                        formControlName="validFrom"
+                                        class="xn-input"
+                                        [min]="'1900-01-01'"
+                                        [isRequired]="false"
+                                        [isDisabled]="isUserEditting"
+                                        [placeholder]="'MM/dd/yyyy'">
+                        </xn-date-picker>
+                        <control-messages [xn-trigger-click-inside-cbo]="validFrom"
+                                          [control]="formGroup.controls.validFrom"
+                                          [icon]="'calendar'">
+                        </control-messages>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="validTo" class="control-label  col-sm-4">Valid to</label>
+                <div class="col-sm-8"
+                     [ngClass]="{'xn-disabled': isUserEditting}">
+                    <div class="full-width">
+                        <xn-date-picker #validTo
+                                        formControlName="validTo"
+                                        class="xn-input"
+                                        [min]="'1900-01-01'"
+                                        [isRequired]="false"
+                                        [isDisabled]="isUserEditting"
+                                        [placeholder]="'MM/dd/yyyy'">
+                        </xn-date-picker>
+                        <control-messages [xn-trigger-click-inside-cbo]="validTo"
+                                          [control]="formGroup.controls.validTo"
+                                          [icon]="'calendar'">
+                        </control-messages>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group" *ngIf="isUserEditting">
+                <label for="currentCipher" class="control-label  col-sm-4">Current password</label>
+                <div class="col-sm-8">
+                    <div class="full-width"
+                         [ngClass]="{'control-force-invalid-border': oldPasswordIsWrong}">
+                        <input class="form-control  xn-input  cipher"
+                               name="currentCipher"
+                               formControlName="currentCipher"
+                               autocomplete="off"
+                               (keyup)="passwordKeyPess()" />
+                        <control-messages #controlMessagePassword
+                                          [type]="'textbox'"
+                                          [control]="formGroup.controls.currentCipher"
+                                          [icon]="'key'">
+                        </control-messages>
+                        <div *ngIf="oldPasswordIsWrong">
+                            <div class="alert alert-danger">Current password is wrong</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="cipher" class="control-label  col-sm-4">New password</label>
+                <div class="col-sm-8">
+                    <div class="full-width"
+                         [ngClass]="{'control-force-invalid-border': !passwordIsMatched || !passwordIsCorrect}">
+                        <input class="form-control  xn-input  cipher"
+                               name="cipher"
+                               formControlName="cipher"
+                               autocomplete="off"
+                               (keyup)="passwordKeyPess()"/>
+                        <control-messages #controlMessagePassword
+                                          [type]="'textbox'"
+                                          [control]="formGroup.controls.cipher"
+                                          [icon]="'key'">
+                        </control-messages>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="reCipher" class="control-label  col-sm-4">Retype password</label>
+                <div class="col-sm-8">
+                    <div class="full-width"
+                         [ngClass]="{'control-force-invalid-border': !passwordIsMatched || !passwordIsCorrect}">
+                        <input class="form-control  xn-input  cipher"
+                               name="reCipher"
+                               formControlName="reCipher"
+                               autocomplete="off"
+                               (keyup)="passwordKeyPess()"/>
+                        <control-messages #controlMessagePassword
+                                          [type]="'textbox'"
+                                          [control]="formGroup.controls.reCipher"
+                                          [icon]="'key'">
+                        </control-messages>
+
+                        <div *ngIf="!passwordIsMatched || !passwordIsCorrect">
+                            <div *ngIf="!passwordIsCorrect" class="alert alert-danger">
+                                <p>
+                                    Specifies the user password the value can't be null. Password must match the following security policies:
+                                </p>
+                                <ul>
+                                    <li>Minimum 8 characters</li>
+                                    <li>At least 1 Uppercase Alphabet</li>
+                                    <li>At least 1 Lowercase Alphabet</li>
+                                    <li>At least 1 Number</li>
+                                    <li>At least one special</li>
+                                </ul>
+                            </div>
+                            <div *ngIf="passwordIsCorrect && !passwordIsMatched" class="alert alert-danger">Password is not match</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="!isUserEditting"
+             class="col-xs-12  col-md-4  height-pc-100">
+            <div class="xn__form-header">
+                <span>Roles</span>
+            </div>
+            <div style="height: calc(100% - 30px)">
+                <xn-ag-grid *ngIf="roleDatasource && roleDatasource.columns && roleDatasource.columns.length"
+                            [id]="gridId"
+                            [dataSource]="roleDatasource"
+                            [readOnly]="false"
+                            [allowSelectAll]="true"
+                            [fitWidthColumn]="true"
+                            (cellEditStopped)="onRoleChanged($event)"
+                            (onMarkedAsSelectedAll)="onRoleChanged($event)">
+                </xn-ag-grid>
+            </div>
+        </div>
+    </form>
+</div>

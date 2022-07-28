@@ -1,0 +1,1485 @@
+<ng-template #popTemplate>
+    <widget-user-editing-list
+        *ngIf="isOpenUserEditingList && data && data.idRepWidgetType == WidgetTypeView.FieldSet"
+        (toggleClicked)="onToggleClicked($event)"
+        [isUserClickToggle]="isUserClickToggle"
+        [parent]="elementRef"
+        [data]="notifyItems"
+    >
+    </widget-user-editing-list>
+</ng-template>
+<div
+    class="box box-default handle"
+    style="height: 100%"
+    [ngStyle]="{ border: showInDialog ? '' : widgetBorderColor }"
+    (contextmenu)="onContextMenu($event)"
+    [ngClass]="{
+        'read-only-mode': !allowDesignEdit,
+        'show-in-dialog': showInDialog,
+        'edit-mode': allowDesignEdit,
+        'edit-table-mode':
+            (widgetTranslationComponent && widgetTranslationComponent.editMode) ||
+            isOnEditingTable ||
+            isOnEditFileExplorer ||
+            isEditAllWidgetMode,
+        'edit-country-mode': isOnEditingCountry || isOnEditTreeView,
+        'edit-field-mode': widgetFormComponent && widgetFormComponent.editFieldMode,
+        'edit-form-mode':
+            (widgetFormComponent && widgetFormComponent.editFormMode && !widgetFormComponent.editDisplayMode) ||
+            widgetDocumentFormComponent,
+        'hover-box-view-mode': (hoverBox && !allowDesignEdit) || showInDialog,
+        'hover-box': hoverBox || showInDialog,
+        'no-border':
+            !(allowDesignEdit && !linkableWidget) &&
+            (widgetStyle.border === false || (widgetStyle.border === null && widgetStyle.globalBorder === false)),
+        'linkable-widget': allowDesignEdit && (linkableWidget || linkedWidgetCoverDisplay || linkedSuccessWidget),
+        'unlinked-widget': allowDesignEdit && !linkableWidget && !linkedWidgetCoverDisplay && !linkedSuccessWidget,
+        'active-widget': isActiveWidget
+    }"
+    widgetMenuProcess
+    [data]="data"
+    [menuStatusSettings]="menuStatusSettings"
+    [edittingWidgetStatus]="
+        isOnEditingTable ||
+        (widgetFormComponent &&
+            (widgetFormComponent.editFieldMode || widgetFormComponent.editFormMode) &&
+            !widgetFormComponent.editDisplayMode)
+    "
+    [displayReadonlyGridAsForm]="displayReadonlyGridAsForm"
+    [context-menu-directive]="contextMenuData"
+    [isShowMenu]="!allowDesignEdit"
+    [wantToLeftClick]="false"
+    [xnDropTarget]="{ zone: 'widget' }"
+    (xnDrop)="onConnectWidget($event, data)"
+    xn-click-outside
+    (clickOutside)="onClickOutside($event)"
+    (mouseenter)="onWidgetHover($event)"
+    (mouseleave)="data.idRepWidgetType !== WidgetTypeView.FileManager && onWidgetLeave($event)"
+    (drop)="onDataDrop($event)"
+>
+    <div
+        class="u-e"
+        #signalRPopover="bs-popover"
+        [popover]="popTemplate"
+        container="body"
+        placement="bottom"
+        triggers=""
+        [isOpen]="isOpenUserEditingList && data && data.idRepWidgetType == WidgetTypeView.FieldSet"
+        containerClass="pp-ue"
+    ></div>
+
+    <ng-container *ngTemplateOutlet="boxHeaderTemplate || defaultBoxHeader; context: { widgetModuleInfo: this }">
+    </ng-container>
+
+    <ng-template #defaultBoxHeader>
+        <div
+            class="box-header widget-menu-status-main-container ignore-context-menu"
+            [ngClass]="{ 'editing-title-mode': editingTitle, 'no-title': showInDialog }"
+            *ngIf="
+                allowDesignEdit ||
+                (data.idRepWidgetType != WidgetTypeView.Document &&
+                    data.idRepWidgetType != WidgetTypeView.OrderDataEntry &&
+                    !isHideToolbar)
+            "
+        >
+            <div
+                class="menu-status-middle-container"
+                [ngStyle]="{
+                    display:
+                        showInDialog || (!showInDialog && data.idRepWidgetType && !allowDesignEdit && !editingTitle)
+                            ? 'block'
+                            : 'none'
+                }"
+                [hidden]="
+                    (allowDesignEdit || isHideWidetToolbarSpecialCase) &&
+                    data.idRepWidgetType != WidgetTypeView.CustomerHistory &&
+                    data.idRepWidgetType != WidgetTypeView.FileExplorer &&
+                    data.idRepWidgetType != WidgetTypeView.ToolFileTemplate &&
+                    data.idRepWidgetType != WidgetTypeView.FileExplorerWithLabel
+                "
+                [ngClass]="{ 'no-transition': data.idRepWidgetType == WidgetTypeView.EditableGrid }"
+            >
+                <xn-widget-menu-status
+                    *ngIf="accessRightAll"
+                    [hidden]="isSplitterDragging"
+                    [ngStyle]="{ opacity: menuStatusOpacity }"
+                    [showInDialog]="showInDialog"
+                    [dataInput]="initwidgetMenuStatusData"
+                    [settings]="menuStatusSettings"
+                    [allowEdit]="allowDesignEdit"
+                    [allowTableEditRow]="allowEditRow"
+                    [allowTableAddNewRow]="allowNewRowAdd"
+                    [allowTableDeleteRow]="allowRowDelete"
+                    [allowColTranslation]="allowColTranslation"
+                    [disableButtonEditWidget]="disableButtonEditWidget"
+                    [iconColor]="customWidgetMenuStatusStyle.iconColor || customWidgetMenuStatusStyle.globalIconColor"
+                    [isSwitchedFromGridToForm]="
+                        data.idRepWidgetType == WidgetTypeView.DataGrid && displayReadonlyGridAsForm
+                    "
+                    [isFolderManagement]="data.idRepWidgetType == WidgetTypeView.FileManager"
+                    [gridWidgetDatasource]="
+                        data.idRepWidgetType == WidgetTypeView.DataGrid ||
+                        data.idRepWidgetType == WidgetTypeView.EditableGrid ||
+                        data.idRepWidgetType == WidgetTypeView.EditableTable ||
+                        data.idRepWidgetType == WidgetTypeView.TableWithFilter
+                            ? dataSourceTable
+                            : null
+                    "
+                    [gridWidgetComponent]="data.idRepWidgetType == WidgetTypeView.EditableGrid ? agGridComponent : null"
+                    [showFieldsTranslation]="data.idRepWidgetApp == 106"
+                    [currentModule]="currentModule"
+                    [globalProperties]="globalProperties"
+                    [listenKeyRequestItem]="listenKeyRequestItem"
+                    [widgetReloadMode]="reloadMode"
+                    [isShowToolPanelSetting]="isShowToolPanelSetting"
+                    [treeViewMode]="allowTreeView"
+                    [accessRight]="accessRightAll"
+                    [selectedNodes]="selectedNodes"
+                    [groupTotal]="groupTotal"
+                    [(groupNumber)]="groupNumber"
+                    (onEditWidget)="editWidget($event)"
+                    (onSaveWidget)="saveWidget($event)"
+                    (onResetWidget)="resetWidget()"
+                    (onRemoveWidget)="removeWidget()"
+                    (onChangeDisplayMode)="changeDisplayMode($event)"
+                    (onChangeFieldFilter)="changeFieldFilter($event)"
+                    (onTreeViewExpandWidget)="onTreeViewExpandWidget($event)"
+                    (onChangeColumnLayoutsetting)="changeColumnLayoutsetting($event)"
+                    (onChangeRowSetting)="changeRowSetting($event)"
+                    (onChangeWidgetFormType)="changeWidgetFormType($event)"
+                    (onPropertiesItemClick)="onPropertiesItemClickHandler($event)"
+                    (onClickUploadFiles)="onUploadFileClick($event)"
+                    (onClickDeleteFiles)="onClickDeleteFiles()"
+                    (onOpenTranslateWidget)="openTranslateWidget($event)"
+                    (onOpenArticleTranslate)="openArticleTranslate()"
+                    (onPrintWidget)="printWidget()"
+                    (onToolbarFilterValueChanged)="onToolbarFilterValueChangedHandler($event)"
+                    (onToolbarButtonsToggle)="onToolbarButtonsToggleHandler($event)"
+                    (onCursorFocusOutOfMenu)="onCursorFocusOutOfMenuToolbar($event)"
+                    (onOpenFieldTranslateWidget)="onOpenFieldTranslateWidget($event)"
+                    (onCellDirectionChanged)="onCellDirectionChanged($event)"
+                    (onAddWidgetTemplate)="onAddWidgetTemplate()"
+                    (onRefresh)="onRefreshWidget()"
+                    (onChangeWidgetTemplate)="onChangeWidgetTemplate($event)"
+                    (onSuccessRoleSaved)="onSuccessRoleSaved($event)"
+                    (onNextDoubletteGroup)="onNextDoubletteGroup($event)"
+                >
+                </xn-widget-menu-status>
+            </div>
+            <div
+                *ngIf="!showInDialog"
+                [ngClass]="{
+                    'box-header-title-index':
+                        !allowDesignEdit &&
+                        widgetMenuStatusComponent &&
+                        (widgetMenuStatusComponent.showToolButtons ||
+                            widgetMenuStatusComponent.isShowToolButtonsWihoutClick),
+                    'no-tool-bar': isHideWidetToolbarSpecialCase,
+                    'full-width': isToolbarButtonsShowed,
+                    'has-slider': data.idRepWidgetType == 122 && data.idRepWidgetApp == 508
+                }"
+                class="box-header-title"
+                (dblclick)="editTitle(title)"
+                [hidden]="editingTitle && !allowDesignEdit"
+            >
+                <div class="main-title">
+                    {{ title.value }}
+                </div>
+                <widget-subtitle
+                    [widgetType]="data.idRepWidgetType"
+                    [gridData]="agGridComponent"
+                    [formData]="widgetFormComponent"
+                    [creditCardData]="xnCreditCard"
+                    [countryCheckListData]="countryCheckListData"
+                    [treeViewData]="xnTreeViewComponent"
+                    [fileExplorerData]="xnFileExplorerComponentCtrl"
+                    [translationData]="widgetTranslationComponent"
+                    [historyContainerData]="historyContainerComponent"
+                ></widget-subtitle>
+            </div>
+
+            <!-- Link box Button-->
+            <div
+                class="box-header-btns pull-right link-box no-padding"
+                *ngIf="accessRight.read && !showInDialog && allowDesignEdit && supportLinkWidget"
+                [xnDraggable]="{
+                    zone: 'widget',
+                    data: { srcWidgetDetail: data, mode: 'default' },
+                    callBack: dragDataTransferCallback
+                }"
+                (mouseenter)="onWidgetLinkHovering($event)"
+                (mouseleave)="onWidgetLinkUnHovering($event)"
+            >
+                <div *ngIf="linkedSuccessWidget; then successLinkedWidget; else unlinkedWidget"></div>
+
+                <ng-template #successLinkedWidget>
+                    <a
+                        title="Remove connected widget"
+                        mat-raised-button
+                        class="link-success mat-btn-small--icon"
+                        (click)="removeLinkWidget($event)"
+                    >
+                        <i class="fa fa-chain-broken grd-stack-ignore-icon"></i>
+                    </a>
+                </ng-template>
+                <ng-template #unlinkedWidget>
+                    <a title="Link widget" mat-raised-button class="mat-btn-small--icon" (click)="linkWidget($event)">
+                        <i class="fa fa-link grd-stack-ignore-icon"></i>
+                    </a>
+                </ng-template>
+            </div>
+
+            <!-- Remove box Button-->
+            <div
+                class="box-header-btns pull-right remove-box no-padding"
+                (click)="removeWidget()"
+                *ngIf="!showInDialog && allowDesignEdit"
+            >
+                <a title="Remove widget" mat-raised-button class="mat-btn-small--icon mat-btn-close-widget">
+                    <i class="fa fa-times grd-stack-ignore-icon"></i>
+                </a>
+            </div>
+            <div class="edit-title" *ngIf="!showInDialog && title" [hidden]="!editingTitle || allowDesignEdit">
+                <input
+                    class="form-control input-sm"
+                    (change)="onChangeTitle($event)"
+                    [value]="title.value"
+                    autocomplete="off"
+                />
+                <span class="box-header-btns pull-right">
+                    <a class="blue-color" title="Save Title" (click)="saveTitle()">
+                        <i class="fa fa-floppy-o"></i>
+                    </a>
+                </span>
+                <span class="box-header-btns pull-right">
+                    <a class="orange-color" title="Reset Title" (click)="resetTitle()">
+                        <i class="fa fa-undo"></i>
+                    </a>
+                </span>
+                <span class="box-header-btns pull-right">
+                    <a
+                        class="gray-color"
+                        title="Translate Title"
+                        [ngClass]="{ disabled: !title.value }"
+                        (click)="openTranslateTitle()"
+                    >
+                        <i class="fa fa-language"></i>
+                    </a>
+                </span>
+            </div>
+        </div>
+    </ng-template>
+
+    <div
+        class="box-detail-container"
+        [ngClass]="{
+            'scroll-visible': widgetStyle.showScrollBar && !allowDesignEdit,
+            'scroll-invisible': allowDesignEdit,
+            'widget-form-container': data.idRepWidgetType == WidgetTypeView.FieldSet,
+            'hidden-toolbar':
+                !allowDesignEdit &&
+                (data.idRepWidgetType == WidgetTypeView.Document ||
+                    data.idRepWidgetType == WidgetTypeView.OrderDataEntry ||
+                    isHideToolbar)
+        }"
+        [hidden]="preventRenderDataMode || isSplitterDragging"
+    >
+        <div *ngIf="noEntryData" class="no-entry-data-layer">
+            <div>No entry data</div>
+        </div>
+        <ng-container *ngFor="let widgetState of widgetStates">
+            <!-- Overlay layer -->
+            <!-- Body layer -->
+            <div
+                class="box-body widget-form-container"
+                *ngIf="widgetState.data.idRepWidgetType == WidgetTypeView.FieldSet"
+                [hidden]="!widgetState.selected"
+                [style.background-color]="widgetStyle.backgroundColor || widgetStyle.globalBackgroundColor"
+                [perfectScrollbar]="perfectScrollbarConfig"
+            >
+                <ng-container *ngTemplateOutlet="widgetFormTemplate; context: { widgetState: widgetState }">
+                </ng-container>
+            </div>
+
+            <div
+                class="box-body widget-form-container"
+                *ngIf="widgetState.data.idRepWidgetType == WidgetTypeView.TreeView"
+                [hidden]="!widgetState.selected"
+                [style.background-color]="widgetStyle.backgroundColor || widgetStyle.globalBackgroundColor"
+                [perfectScrollbar]="perfectScrollbarConfig"
+            >
+                <div class="padding-left--md">
+                    <ng-container *ngTemplateOutlet="widgetTreeViewTemplate; context: { widgetState: widgetState }">
+                    </ng-container>
+                </div>
+            </div>
+
+            <div
+                class="widget-form-container full-width-height"
+                *ngIf="widgetState.data.idRepWidgetType == WidgetTypeView.Country"
+                [hidden]="!widgetState.selected"
+                [style.background-color]="widgetStyle.backgroundColor || widgetStyle.globalBackgroundColor"
+                [perfectScrollbar]="perfectScrollbarConfig"
+            >
+                <ng-container *ngTemplateOutlet="widgetCountryCheckListTemplate; context: { widgetState: widgetState }">
+                </ng-container>
+            </div>
+
+            <div
+                class="box-body"
+                *ngIf="widgetState.data.idRepWidgetType == WidgetTypeView.Upload"
+                [style.background-color]="widgetStyle.backgroundColor || widgetStyle.globalBackgroundColor"
+            >
+                <ng-container [ngSwitch]="widgetState.data.idRepWidgetApp">
+                    <widget-import-upload-file *ngSwitchCase="WidgetAppView.WidgetImportUploadFile">
+                    </widget-import-upload-file>
+                </ng-container>
+            </div>
+
+            <div
+                class="box-body"
+                *ngIf="widgetState.data.idRepWidgetType == WidgetTypeView.FileExplorer"
+                [hidden]="!widgetState.selected"
+                [style.background-color]="widgetStyle.backgroundColor || widgetStyle.globalBackgroundColor"
+                [perfectScrollbar]="perfectScrollbarConfig"
+            >
+                <ng-container *ngTemplateOutlet="widgetFileExplorer; context: { widgetState: widgetState }">
+                </ng-container>
+            </div>
+            <div
+                class="box-body"
+                [hidden]="!widgetState.selected"
+                *ngIf="widgetState.data.idRepWidgetType == WidgetTypeView.FileExplorerWithLabel"
+                [style.background-color]="widgetStyle.backgroundColor || widgetStyle.globalBackgroundColor"
+                [perfectScrollbar]="perfectScrollbarConfig"
+            >
+                <ng-container *ngTemplateOutlet="widgetFileExplorerWithLabel; context: { widgetState: widgetState }">
+                </ng-container>
+            </div>
+            <div
+                class="box-body"
+                [hidden]="!widgetState.selected"
+                *ngIf="widgetState.data.idRepWidgetType == WidgetTypeView.ToolFileTemplate"
+                [style.background-color]="widgetStyle.backgroundColor || widgetStyle.globalBackgroundColor"
+                [perfectScrollbar]="perfectScrollbarConfig"
+            >
+                <ng-container *ngTemplateOutlet="widgetToolFileTemplate; context: { widgetState: widgetState }">
+                </ng-container>
+            </div>
+            <div
+                class="box-body"
+                [hidden]="!widgetState.selected"
+                *ngIf="widgetState.data.idRepWidgetType == WidgetTypeView.WidgetAttachmentViewer"
+                [style.background-color]="widgetStyle.backgroundColor || widgetStyle.globalBackgroundColor"
+                [perfectScrollbar]="perfectScrollbarConfig"
+            >
+                <widget-attachment-viewer (onMaximizeWidget)="maximizeWidget($event)"></widget-attachment-viewer>
+            </div>
+            <div
+                class="box-body"
+                [hidden]="!widgetState.selected"
+                *ngIf="widgetState.data.idRepWidgetType == WidgetTypeView.WidgetDocumentViewer"
+                [style.background-color]="widgetStyle.backgroundColor || widgetStyle.globalBackgroundColor"
+                [perfectScrollbar]="perfectScrollbarConfig"
+            >
+                <widget-document-viewer (onMaximizeWidget)="maximizeWidget($event)"></widget-document-viewer>
+            </div>
+            <div
+                class="box-body"
+                [hidden]="!widgetState.selected"
+                *ngIf="widgetState.data.idRepWidgetType == WidgetTypeView.WidgetImageGallery"
+                [style.background-color]="widgetStyle.backgroundColor || widgetStyle.globalBackgroundColor"
+                [perfectScrollbar]="perfectScrollbarConfig"
+            >
+                <widget-image-gallery (onMaximizeWidget)="maximizeWidget($event)"></widget-image-gallery>
+            </div>
+            <div
+                class="box-body"
+                [hidden]="!widgetState.selected"
+                *ngIf="widgetState.data.idRepWidgetType == WidgetTypeView.WidgetPriceTag"
+                [style.background-color]="widgetStyle.backgroundColor || widgetStyle.globalBackgroundColor"
+                [perfectScrollbar]="perfectScrollbarConfig"
+            >
+                <widget-price-tag (onMaximizeWidget)="maximizeWidget($event)"></widget-price-tag>
+            </div>
+            <div
+                class="box-body"
+                [hidden]="!widgetState.selected"
+                *ngIf="widgetState.data.idRepWidgetType == WidgetTypeView.WidgetNoteForm"
+                [style.background-color]="widgetStyle.backgroundColor || widgetStyle.globalBackgroundColor"
+                [perfectScrollbar]="perfectScrollbarConfig"
+            >
+                <widget-note-form></widget-note-form>
+            </div>
+            <div
+                class="box-body"
+                [hidden]="!widgetState.selected"
+                *ngIf="widgetState.data.idRepWidgetType == WidgetTypeView.WidgetInvoiceAddonV2"
+                [style.background-color]="widgetStyle.backgroundColor || widgetStyle.globalBackgroundColor"
+                [perfectScrollbar]="perfectScrollbarConfig"
+            >
+                <widget-invoice-addon-v2 #widgetDynamicItem [widgetProperties]="properties"></widget-invoice-addon-v2>
+            </div>
+            <div
+                class="box-body"
+                [hidden]="!widgetState.selected"
+                *ngIf="widgetState.data.idRepWidgetType == WidgetTypeView.WidgetPaymentOverview"
+                [style.background-color]="widgetStyle.backgroundColor || widgetStyle.globalBackgroundColor"
+                [perfectScrollbar]="perfectScrollbarConfig"
+            >
+                <widget-payment-overview
+                    #widgetDynamicItem
+                    [globalProperties]="globalProperties"
+                    [widgetProperties]="properties"
+                ></widget-payment-overview>
+            </div>
+            <div
+                class="box-body"
+                [hidden]="!widgetState.selected"
+                *ngIf="widgetState.data.idRepWidgetType == WidgetTypeView.WidgetInvoiceAddon"
+                [style.background-color]="widgetStyle.backgroundColor || widgetStyle.globalBackgroundColor"
+                [perfectScrollbar]="perfectScrollbarConfig"
+            >
+                <widget-invoice-addon></widget-invoice-addon>
+            </div>
+            <div
+                class="box-body"
+                [hidden]="!widgetState.selected"
+                *ngIf="widgetState.data.idRepWidgetType == WidgetTypeView.WidgetInvoiceSupplierInformation"
+                [style.background-color]="widgetStyle.backgroundColor || widgetStyle.globalBackgroundColor"
+                [perfectScrollbar]="perfectScrollbarConfig"
+            >
+                <widget-invoice-supplier-information
+                    #widgetDynamicItem
+                    [widgetProperties]="properties"
+                    [globalProperties]="globalProperties"
+                ></widget-invoice-supplier-information>
+            </div>
+
+            <div
+                class="box-body widget-form-container"
+                *ngIf="
+                    widgetState.data.idRepWidgetType == WidgetTypeView.CustomerLogo ||
+                    widgetState.data.idRepWidgetType == WidgetTypeView.CustomerSummary ||
+                    widgetState.data.idRepWidgetType == WidgetTypeView.CustomerCommunication ||
+                    widgetState.data.idRepWidgetType == WidgetTypeView.ArticleDetailView
+                "
+                [hidden]="!widgetState.selected"
+                [style.background-color]="widgetStyle.backgroundColor || widgetStyle.globalBackgroundColor"
+                [perfectScrollbar]="perfectScrollbarConfig"
+            >
+                <ng-template [ngIf]="widgetState.data.idRepWidgetType == WidgetTypeView.CustomerLogo">
+                    <customer-logo #widgetComponent [widgetDetail]="widgetState.data"></customer-logo>
+                </ng-template>
+
+                <ng-template [ngIf]="widgetState.data.idRepWidgetType == WidgetTypeView.CustomerSummary">
+                    <customer-summary [widgetDetail]="widgetState.data" [fieldFormatStyle]="widgetStyle.fieldStyle">
+                    </customer-summary>
+                </ng-template>
+
+                <ng-template [ngIf]="widgetState.data.idRepWidgetType == WidgetTypeView.CustomerCommunication">
+                    <customer-communication #widgetComponent [widgetDetail]="widgetState.data"></customer-communication>
+                </ng-template>
+
+                <!--<ng-template [ngIf]="widgetState.data.idRepWidgetType == WidgetTypeView.ArticleDetailView">
+                  <article-detail-view #widgetComponent [widgetDetail]="widgetState.data"></article-detail-view>
+                  <article-detail-upload [currentModule]="currentModule" [widgetDetail]="widgetState.data" (isCompletedRender)="isWidgetCompletedRender($event)" (onReloadWidget)="onReloadWidget()"> </article-detail-upload>
+                </ng-template>-->
+            </div>
+
+            <div
+                class="table-box-body"
+                [style.background-color]="widgetStyle.backgroundColor || widgetStyle.globalBackgroundColor"
+                *ngIf="widgetState.data.idRepWidgetType == WidgetTypeView.DataGrid"
+                [hidden]="displayReadonlyGridAsForm || !widgetState.selected"
+            >
+                <ng-container
+                    *ngTemplateOutlet="widgetTableTemplate; context: { widgetState: widgetState, readOnly: true }"
+                >
+                </ng-container>
+            </div>
+
+            <div
+                class="table-box-body"
+                [style.background-color]="widgetStyle.backgroundColor || widgetStyle.globalBackgroundColor"
+                *ngIf="widgetState.data.idRepWidgetType == WidgetTypeView.EditableGrid"
+                [hidden]="!widgetState.selected"
+            >
+                <ng-container
+                    *ngTemplateOutlet="widgetTableTemplate; context: { widgetState: widgetState, readOnly: false }"
+                >
+                </ng-container>
+            </div>
+
+            <div
+                class="box-body"
+                *ngIf="widgetState.data.idRepWidgetType == WidgetTypeView.EditableRoleTreeGrid"
+                [style.background-color]="widgetStyle.backgroundColor || widgetStyle.globalBackgroundColor"
+            >
+                <ng-container
+                    *ngTemplateOutlet="widgetTableTemplate; context: { widgetState: widgetState, readOnly: false }"
+                >
+                </ng-container>
+            </div>
+
+            <div
+                class="box-body"
+                *ngIf="widgetState.data.idRepWidgetType == WidgetTypeView.DocumentProcessing"
+                [style.background-color]="widgetStyle.backgroundColor || widgetStyle.globalBackgroundColor"
+                [perfectScrollbar]="perfectScrollbarConfig"
+            >
+                <document-form
+                    [data]="widgetState.data"
+                    [currentModule]="currentModule"
+                    [isActivated]="widgetState.selected"
+                    [filterMode]="selectedFilter"
+                    [groupFieldFilter]="groupFieldFilter"
+                    [widgetMenuStatusComponent]="widgetMenuStatusComponent"
+                    [parentInstance]="this"
+                    (onFormChanged)="onWidgetEdited($event)"
+                    (onSaveDataSuccess)="saveSuccessWidget($event)"
+                    (dispatchData)="onRowClick($event)"
+                >
+                </document-form>
+            </div>
+
+            <div
+                class="box-body"
+                *ngIf="widgetState.data.idRepWidgetType === WidgetTypeView.PdfViewer"
+                [style.background-color]="widgetStyle.backgroundColor || widgetStyle.globalBackgroundColor"
+                [perfectScrollbar]="perfectScrollbarConfig"
+            >
+                <pdf-widget [rowData]="rowDataChange" [currentModule]="currentModule"></pdf-widget>
+            </div>
+
+            <div
+                class="box-body"
+                *ngIf="widgetState.data.idRepWidgetType === WidgetTypeView.Chart"
+                [style.background-color]="widgetStyle.backgroundColor || widgetStyle.globalBackgroundColor"
+            >
+                <chart-widget
+                    #chartWidget
+                    [data]="widgetState.data"
+                    [layoutPageInfo]="layoutPageInfoWidget"
+                    [chartData]="chartData"
+                    [chartSeries]="chartSeries"
+                    [chartType]="chartTypes"
+                    [scheme]="chartColorScheme"
+                    [gradient]="optionChart.pieChart.gradients"
+                    [legend]="optionChart.pieChart.showLegend"
+                    [legendTitle]="optionChart.pieChart.legendTitle"
+                    [tooltipDisabled]="optionChart.pieChart.disableTooltip"
+                    [labels]="optionChart.pieChart.showDataLabel"
+                    [explodeSlices]="optionChart.pieChart.explodeSlices"
+                    [gradientsBarChart]="optionChart.barChart.gradients"
+                    [showXAxis]="optionChart.barChart.showXAxis"
+                    [showYAxis]="optionChart.barChart.showYAxis"
+                    [showGirdLinesBarChart]="optionChart.barChart.showGirdLines"
+                    [showLegendBarChart]="optionChart.barChart.showLegend"
+                    [disableTooltipBarChart]="optionChart.barChart.disableTooltipBarChart"
+                    [showXAxisLabel]="optionChart.barChart.showXAxisLabel"
+                    [xAxisLabel]="optionChart.barChart.xAxisLabel"
+                    [showYAxisLabel]="optionChart.barChart.showYAxisLabel"
+                    [yAxisLabel]="optionChart.barChart.yAxisLabel"
+                    [paddingBetweenBars]="optionChart.barChart.paddingBetweenBars"
+                    [legendTitleBarChart]="optionChart.barChart.legendTitle"
+                    [showXAxisAreaLineChart]="optionChart.areaLineChart.showXAxisAreaLineChart"
+                    [showYAxisAreaLineChart]="optionChart.areaLineChart.showYAxisAreaLineChart"
+                    [showGirdLinesAreaLineChart]="optionChart.areaLineChart.showGirdLinesAreaLineChart"
+                    [gradientsAreaLineChart]="optionChart.areaLineChart.gradientsAreaLineChart"
+                    [showLegendAreaLineChart]="optionChart.areaLineChart.showLegendAreaLineChart"
+                    [disableTooltipAreaLineChart]="optionChart.areaLineChart.disableTooltipAreaLineChart"
+                    [showXAxisLabelAreaLineChart]="optionChart.areaLineChart.showXAxisLabelAreaLineChart"
+                    [xAxisLabelAreaLineChart]="optionChart.areaLineChart.xAxisLabelAreaLineChart"
+                    [showYAxisLabelAreaLineChart]="optionChart.areaLineChart.showYAxisLabelAreaLineChart"
+                    [yAxisLabelAreaLineChart]="optionChart.areaLineChart.yAxisLabelAreaLineChart"
+                    [legendTitleAreaLineChart]="optionChart.areaLineChart.legendTitleAreaLineChart"
+                    [autoScale]="optionChart.areaLineChart.autoScale"
+                    [timeline]="optionChart.areaLineChart.timeline"
+                    [lineInterpolation]="optionChart.areaLineChart.lineInterpolation"
+                ></chart-widget>
+            </div>
+
+            <!-- DMS -->
+            <!-- Widget document-->
+            <div
+                class="box-body widget-document-container"
+                *ngIf="widgetState.data.idRepWidgetType == WidgetTypeView.Document"
+                [hidden]="!widgetState.selected"
+                [style.background-color]="widgetStyle.backgroundColor || widgetStyle.globalBackgroundColor"
+            >
+                <ng-container [ngSwitch]="widgetState.data.idRepWidgetApp">
+                    <document-image-ocr
+                        *ngSwitchCase="WidgetAppView.WidgetImageOCRReadOnly"
+                        #wgDocument
+                        (dispatchData)="onRowClick($event)"
+                        [dataSource]="widgetState.data"
+                        [gridItemConfig]="gridItemConfig"
+                        [readonly]="true"
+                        [Id]="
+                            widgetState.data &&
+                            widgetState.data.contentDetail &&
+                            widgetState.data.contentDetail.data &&
+                            widgetState.data.contentDetail.data[0] &&
+                            widgetState.data.contentDetail.data[0][0].IdDocumentContainerOcr
+                        "
+                        (onMaximizeWidget)="maximizeWidget($event)"
+                    ></document-image-ocr>
+                    <document-image-ocr
+                        *ngSwitchCase="WidgetAppView.WidgetImageOCR"
+                        #wgDocument
+                        (dispatchData)="onRowClick($event)"
+                        [dataSource]="widgetState.data"
+                        [gridItemConfig]="gridItemConfig"
+                        [Id]="
+                            widgetState.data &&
+                            widgetState.data.contentDetail &&
+                            widgetState.data.contentDetail.data &&
+                            widgetState.data.contentDetail.data[0] &&
+                            widgetState.data.contentDetail.data[0][0].IdDocumentContainerOcr
+                        "
+                        (onMaximizeWidget)="maximizeWidget($event)"
+                    ></document-image-ocr>
+                </ng-container>
+                <!-- <form-management></form-management> -->
+            </div>
+            <div
+                class="box-body widget-document-container widget-image-slider"
+                *ngIf="widgetState.data.idRepWidgetType == WidgetTypeView.OrderDataEntry"
+                [hidden]="!widgetState.selected"
+                [style.background-color]="widgetStyle.backgroundColor || widgetStyle.globalBackgroundColor"
+            >
+                <image-slider
+                    #dataEntryScanningStatusComponent
+                    [gridItemConfig]="gridItemConfig"
+                    [dataSource]="widgetState.data"
+                    (dispatchData)="onRowClick($event)"
+                ></image-slider>
+            </div>
+            <!-- Widget File manager-->
+            <div
+                class="box-body widget-document-container"
+                *ngIf="widgetState.data.idRepWidgetType == WidgetTypeView.FileManager"
+                [hidden]="!widgetState.selected"
+                [style.background-color]="widgetStyle.backgroundColor || widgetStyle.globalBackgroundColor"
+            >
+                <ng-container [ngSwitch]="widgetState.data.idRepWidgetApp">
+                    <file-manager
+                        *ngSwitchCase="WidgetAppView.WidgetFileManager"
+                        #wgFile
+                        (dispatchData)="onRowClick($event)"
+                        [dataSource]="widgetState.data"
+                    ></file-manager>
+                    <widget-file-explorer
+                        *ngSwitchCase="WidgetAppView.WidgetFileExplorer"
+                        [widgetDetail]="widgetState.data"
+                        (dispatchData)="onRowClick($event)"
+                    ></widget-file-explorer>
+                    <widget-indexing-file
+                        *ngSwitchCase="WidgetAppView.WidgetIndexingFile"
+                        [globalProperties]="globalProperties"
+                        [widgetDetail]="widgetState.data"
+                        (dispatchData)="onRowClick($event)"
+                        (onMaximizeWidget)="maximizeWidget($event)"
+                    ></widget-indexing-file>
+                </ng-container>
+            </div>
+            <div
+                class="box-body widget-document-container"
+                *ngIf="widgetState.data.idRepWidgetType == WidgetTypeView.ScanningConfig"
+                [hidden]="!widgetState.selected"
+                [style.background-color]="widgetStyle.backgroundColor || widgetStyle.globalBackgroundColor"
+            >
+                <scanning-configuration #wgScanningConfiguration [allowDesignEdit]="allowDesignEdit" [tabID]="tabID">
+                </scanning-configuration>
+            </div>
+            <div
+                class="box-body widget-document-container"
+                *ngIf="widgetState.data.idRepWidgetType == WidgetTypeView.ScanningImageViewer"
+                [hidden]="!widgetState.selected"
+                [style.background-color]="widgetStyle.backgroundColor || widgetStyle.globalBackgroundColor"
+            >
+                <scanning-image-preview #wgScanningImagePreview [dataSource]="widgetState.data" [tabID]="tabID">
+                </scanning-image-preview>
+            </div>
+            <div
+                class="box-body widget-document-container"
+                *ngIf="widgetState.data.idRepWidgetType == WidgetTypeView.ScanningAction"
+                [hidden]="!widgetState.selected"
+                [style.background-color]="widgetStyle.backgroundColor || widgetStyle.globalBackgroundColor"
+            >
+                <scanning-action #wgScanningAction></scanning-action>
+            </div>
+
+            <div
+                class="box-body widget-document-container"
+                *ngIf="widgetState.data.idRepWidgetType == WidgetTypeView.ScanningImageList"
+                [hidden]="!widgetState.selected"
+                [style.background-color]="widgetStyle.backgroundColor || widgetStyle.globalBackgroundColor"
+            >
+                <scanning-image-list #wgScanningImageList [tabID]="tabID"></scanning-image-list>
+            </div>
+            <div
+                class="box-body widget-document-container"
+                *ngIf="widgetState.data.idRepWidgetType == WidgetTypeView.Cloud"
+                [hidden]="!widgetState.selected"
+                [style.background-color]="widgetStyle.backgroundColor || widgetStyle.globalBackgroundColor"
+            >
+                <cloud-configuration #wgScanningConfiguration></cloud-configuration>
+            </div>
+            <div
+                class="box-body widget-document-container"
+                *ngIf="widgetState.data.idRepWidgetType == WidgetTypeView.CloudViewer"
+                [hidden]="!widgetState.selected"
+                [style.background-color]="widgetStyle.backgroundColor || widgetStyle.globalBackgroundColor"
+            >
+                <cloud-viewer #wgScanningConfiguration></cloud-viewer>
+            </div>
+            <div
+                class="box-body widget-document-container"
+                *ngIf="widgetState.data.idRepWidgetType == WidgetTypeView.ExportConfiguration"
+                [hidden]="!widgetState.selected"
+                [style.background-color]="widgetStyle.backgroundColor || widgetStyle.globalBackgroundColor"
+            >
+                <export-configuration #wgScanningConfiguration></export-configuration>
+            </div>
+
+            <div
+                class="box-body"
+                *ngIf="widgetState.data.idRepWidgetType === WidgetTypeView.WidgetInvoiceApprovalConfirm"
+                [style.background-color]="widgetStyle.backgroundColor || widgetStyle.globalBackgroundColor"
+            >
+                <ng-container [ngSwitch]="widgetState.data.idRepWidgetApp">
+                    <invoice-approval-confirm-history *ngSwitchCase="WidgetAppView.InvoiceApprovalConfirm">
+                    </invoice-approval-confirm-history>
+                    <invoice-approval-confirm-user
+                        *ngSwitchCase="WidgetAppView.InvoiceApprovalConfirmProcessing"
+                        [globalProperties]="globalProperties"
+                        [tabID]="tabID"
+                    >
+                    </invoice-approval-confirm-user>
+                </ng-container>
+            </div>
+            <div
+                class="box-body"
+                *ngIf="widgetState.data.idRepWidgetType === WidgetTypeView.WidgetInvoiceApprovalMandantOverview"
+                [style.background-color]="widgetStyle.backgroundColor || widgetStyle.globalBackgroundColor"
+            >
+                <widget-invoice-mandant-overview
+                    #widgetDynamicItem
+                    [widgetProperties]="properties"
+                    [globalProperties]="globalProperties"
+                ></widget-invoice-mandant-overview>
+            </div>
+            <div
+                class="box-body"
+                *ngIf="widgetState.data.idRepWidgetType === WidgetTypeView.WidgetOwnerDocument"
+                [style.background-color]="widgetStyle.backgroundColor || widgetStyle.globalBackgroundColor"
+            >
+                <widget-owner-document
+                    #widgetDynamicItem
+                    [widgetProperties]="properties"
+                    [globalProperties]="globalProperties"
+                ></widget-owner-document>
+            </div>
+            <!--Widget form management-->
+            <div
+                class="box-body widget-document-container"
+                *ngIf="widgetState.data.idRepWidgetType == WidgetTypeView.FormManagement"
+                [hidden]="!widgetState.selected"
+                [style.background-color]="widgetStyle.backgroundColor || widgetStyle.globalBackgroundColor"
+            >
+                <form-management></form-management>
+            </div>
+
+            <!--Widget form-->
+            <div
+                class="box-body"
+                *ngIf="widgetState.data.idRepWidgetType == WidgetTypeView.WidgetForm"
+                [style.background-color]="widgetStyle.backgroundColor || widgetStyle.globalBackgroundColor"
+            >
+                <ng-container [ngSwitch]="widgetState.data.idRepWidgetApp">
+                    <widget-mydm-form
+                        *ngSwitchCase="WidgetAppView.WidgetMyDMForm"
+                        [tabID]="tabID"
+                        (onMaximizeWidget)="maximizeWidget($event)"
+                    ></widget-mydm-form>
+                    <widget-invoice-info-approval
+                        #widgetDynamicItem
+                        *ngSwitchCase="WidgetAppView.WidgetInvoiceInfoApproval"
+                        [tabID]="tabID"
+                        [widgetProperties]="properties"
+                    ></widget-invoice-info-approval>
+                    <widget-supplier-info-approval
+                        #widgetDynamicItem
+                        *ngSwitchCase="WidgetAppView.WidgetSupplierInfoApproval"
+                        [tabID]="tabID"
+                        [widgetProperties]="properties"
+                    ></widget-supplier-info-approval>
+                </ng-container>
+            </div>
+
+            <div
+                class="table-box-body"
+                [style.background-color]="widgetStyle.backgroundColor || widgetStyle.globalBackgroundColor"
+                *ngIf="widgetState.data.idRepWidgetType == WidgetTypeView.SynchronizeElasticsSearch"
+            >
+                <elastic-search-sync-main [searchSyncGridId]="'b89cc526-ab69-4b16-af33-2c13ce9a7703'">
+                </elastic-search-sync-main>
+            </div>
+
+            <div
+                class="box-body"
+                *ngIf="widgetState.data.idRepWidgetType === WidgetTypeView.WidgetViewer"
+                [style.background-color]="widgetStyle.backgroundColor || widgetStyle.globalBackgroundColor"
+            >
+                <widget-viewer [widget-detail]="widgetState.data"></widget-viewer>
+            </div>
+
+            <div
+                class="box-body"
+                *ngIf="widgetState.data.idRepWidgetType === WidgetTypeView.DocumentPath"
+                style="background-color: #ffffff00 !important"
+            >
+                <widget-document-path></widget-document-path>
+            </div>
+            <div
+                class="box-body"
+                *ngIf="widgetState.data.idRepWidgetType === WidgetTypeView.ModulesOverview"
+                [style.background-color]="widgetStyle.backgroundColor || widgetStyle.globalBackgroundColor"
+            >
+                <widget-modules-overview [dataSource]="widgetState.data"></widget-modules-overview>
+            </div>
+            <div
+                class="box-body"
+                *ngIf="widgetState.data.idRepWidgetType === WidgetTypeView.ElasticSearch"
+                [style.background-color]="widgetStyle.backgroundColor || widgetStyle.globalBackgroundColor"
+            >
+                <ng-container [ngSwitch]="widgetState.data.idRepWidgetApp">
+                    <widget-elastic-search *ngSwitchCase="WidgetAppView.WidgetElasticSearch"></widget-elastic-search>
+                    <widget-es-mydm-management *ngSwitchCase="WidgetAppView.WidgetElasticSearchMyDmManagement">
+                    </widget-es-mydm-management>
+                </ng-container>
+            </div>
+
+            <div
+                class="box-body widget-document-container"
+                *ngIf="widgetState.data.idRepWidgetType == WidgetTypeView.Kontakt"
+                [style.background-color]="widgetStyle.backgroundColor || widgetStyle.globalBackgroundColor"
+            >
+                <ng-container [ngSwitch]="widgetState.data.idRepWidgetApp">
+                    <widget-kontakt *ngSwitchCase="WidgetAppView.WidgetContactCapture"></widget-kontakt>
+                    <widget-contact-detail
+                        *ngSwitchCase="WidgetAppView.WidgetContactDetail"
+                        (onMaximizeWidget)="maximizeWidget($event)"
+                    ></widget-contact-detail>
+                </ng-container>
+            </div>
+            <div
+                class="box-body widget-document-container"
+                *ngIf="widgetState.data.idRepWidgetType == WidgetTypeView.InvoiceInfo"
+                [style.background-color]="widgetStyle.backgroundColor || widgetStyle.globalBackgroundColor"
+            >
+                <widget-invoice-info></widget-invoice-info>
+            </div>
+            <div
+                class="box-body widget-document-container"
+                *ngIf="widgetState.data.idRepWidgetType == WidgetTypeView.BankInfo"
+                [style.background-color]="widgetStyle.backgroundColor || widgetStyle.globalBackgroundColor"
+            >
+                <widget-bank-info></widget-bank-info>
+            </div>
+            <div
+                class="box-body widget-document-container"
+                *ngIf="widgetState.data.idRepWidgetType == WidgetTypeView.NotesForm"
+                [style.background-color]="widgetStyle.backgroundColor || widgetStyle.globalBackgroundColor"
+            >
+                <widget-notes></widget-notes>
+            </div>
+            <div
+                class="box-body widget-document-container"
+                *ngIf="widgetState.data.idRepWidgetType == WidgetTypeView.ContractForm"
+                [style.background-color]="widgetStyle.backgroundColor || widgetStyle.globalBackgroundColor"
+            >
+                <widget-contract></widget-contract>
+            </div>
+            <div
+                class="box-body"
+                *ngIf="widgetState.data.idRepWidgetType === WidgetTypeView.WidgetActions"
+                [style.background-color]="widgetStyle.backgroundColor || widgetStyle.globalBackgroundColor"
+            >
+                <ng-container [ngSwitch]="widgetState.data.idRepWidgetApp">
+                    <widget-dms-actions *ngSwitchCase="WidgetAppView.WidgetDmsActions"></widget-dms-actions>
+                    <widget-toggle-captured-form *ngSwitchCase="WidgetAppView.WidgetToggleCapturedForm">
+                    </widget-toggle-captured-form>
+                </ng-container>
+            </div>
+            <div
+                class="box-body widget-document-container"
+                *ngIf="widgetState.data.idRepWidgetType == WidgetTypeView.WidgetClassification"
+                [style.background-color]="widgetStyle.backgroundColor || widgetStyle.globalBackgroundColor"
+            >
+                <widget-classification></widget-classification>
+            </div>
+            <div
+                class="box-body"
+                *ngIf="widgetState.data.idRepWidgetType === WidgetTypeView.WidgetScanner"
+                [style.background-color]="widgetStyle.backgroundColor || widgetStyle.globalBackgroundColor"
+            >
+                <widget-scanner></widget-scanner>
+            </div>
+            <div
+                class="box-body"
+                *ngIf="widgetState.data.idRepWidgetType === WidgetTypeView.WidgetScanSummary"
+                [style.background-color]="widgetStyle.backgroundColor || widgetStyle.globalBackgroundColor"
+            >
+                <widget-scan-summary></widget-scan-summary>
+            </div>
+
+            <div
+                class="box-body"
+                *ngIf="widgetState.data.idRepWidgetType === WidgetTypeView.WidgetContactList"
+                [style.background-color]="widgetStyle.backgroundColor || widgetStyle.globalBackgroundColor"
+            >
+                <widget-contact-list></widget-contact-list>
+            </div>
+
+            <div
+                class="box-body"
+                *ngIf="widgetState.data.idRepWidgetType === WidgetTypeView.WidgetAttachment"
+                [style.background-color]="widgetStyle.backgroundColor || widgetStyle.globalBackgroundColor"
+            >
+                <widget-attachment (dispatchData)="onRowClick($event)"></widget-attachment>
+            </div>
+
+            <div
+                class="box-body"
+                *ngIf="widgetState.data.idRepWidgetType === WidgetTypeView.WidgetMyDmSummary"
+                [style.background-color]="widgetStyle.backgroundColor || widgetStyle.globalBackgroundColor"
+            >
+                <widget-mydm-summary></widget-mydm-summary>
+            </div>
+
+            <div
+                class="box-body tree-view"
+                *ngIf="widgetState.data.idRepWidgetType === WidgetTypeView.WidgetMyContactTree"
+                [style.background-color]="widgetStyle.backgroundColor || widgetStyle.globalBackgroundColor"
+            >
+                <widget-my-contact-tree></widget-my-contact-tree>
+            </div>
+
+            <div
+                class="box-body tree-view"
+                *ngIf="widgetState.data.idRepWidgetType === WidgetTypeView.WidgetStructureTree"
+                [style.background-color]="widgetStyle.backgroundColor || widgetStyle.globalBackgroundColor"
+            >
+                <ng-container [ngSwitch]="widgetState.data.idRepWidgetApp">
+                    <widget-mydm-folder-tree *ngSwitchCase="WidgetAppView.WidgetMyDmFolderTree">
+                    </widget-mydm-folder-tree>
+                    <widget-contact-folder-tree *ngSwitchCase="WidgetAppView.WidgetFolderStructTree">
+                    </widget-contact-folder-tree>
+                    <widget-favourite-folder *ngSwitchCase="WidgetAppView.WidgetFavouriteFolder">
+                    </widget-favourite-folder>
+                    <widget-mydm-folder-tree *ngSwitchCase="WidgetAppView.WidgetExportTree"></widget-mydm-folder-tree>
+                    <widget-capture-folder-tree
+                        *ngSwitchCase="WidgetAppView.WidgetScanTree"
+                        #widgetDynamicItem
+                        [allowEdit]="true"
+                        [tabID]="tabID"
+                    >
+                    </widget-capture-folder-tree>
+                    <widget-capture-folder-tree
+                        #widgetDynamicItem
+                        *ngSwitchCase="WidgetAppView.WidgetImportTree"
+                        [tabID]="tabID"
+                        [allowEdit]="true"
+                    >
+                    </widget-capture-folder-tree>
+                    <widget-indexing-folder-tree
+                        #widgetDynamicItem
+                        *ngSwitchCase="WidgetAppView.WidgetIndexingTree"
+                        [tabID]="tabID"
+                        [allowEdit]="true"
+                    >
+                    </widget-indexing-folder-tree>
+
+                    <widget-capture-folder-tree
+                        #widgetDynamicItem
+                        *ngSwitchCase="WidgetAppView.WidgetCaptureTree"
+                        [tabID]="tabID"
+                    >
+                    </widget-capture-folder-tree>
+                    <widget-email-folder-tree
+                        #widgetDynamicItem
+                        *ngSwitchCase="WidgetAppView.WidgetEmailFolderTree"
+                        [tabID]="tabID"
+                        [allowEdit]="true"
+                    >
+                    </widget-email-folder-tree>
+                </ng-container>
+            </div>
+
+            <div
+                class="box-body"
+                *ngIf="widgetState.data.idRepWidgetType === WidgetTypeView.SearchAndFilterTable"
+                [style.background-color]="widgetStyle.backgroundColor || widgetStyle.globalBackgroundColor"
+            >
+                <widget-search-mydm></widget-search-mydm>
+            </div>
+
+            <div
+                class="box-body"
+                *ngIf="widgetState.data.idRepWidgetType === WidgetTypeView.WidgetHistory"
+                [style.background-color]="widgetStyle.backgroundColor || widgetStyle.globalBackgroundColor"
+            >
+                <widget-scanning-history [globalProperties]="globalProperties"></widget-scanning-history>
+            </div>
+
+            <div
+                class="box-body tree-view"
+                *ngIf="widgetState.data.idRepWidgetType === WidgetTypeView.UserManagementV2"
+                [style.background-color]="widgetStyle.backgroundColor || widgetStyle.globalBackgroundColor"
+            >
+                <ng-container [ngSwitch]="widgetState.data.idRepWidgetApp">
+                    <widget-user-management-v2 #widgetDynamicItem *ngSwitchCase="WidgetAppView.WidgetUserManagementV2">
+                    </widget-user-management-v2>
+                    <widget-user-group #widgetDynamicItem *ngSwitchCase="WidgetAppView.WidgetUserGroupManagement">
+                    </widget-user-group>
+                    <widget-role #widgetDynamicItem *ngSwitchCase="WidgetAppView.WidgetRoleManagement"> </widget-role>
+                    <widget-role-group #widgetDynamicItem *ngSwitchCase="WidgetAppView.WidgetRoleGroupManagement">
+                    </widget-role-group>
+                </ng-container>
+            </div>
+
+            <div
+                class="box-body"
+                *ngIf="widgetState.data.idRepWidgetType === WidgetTypeView.UserManagement"
+                [style.background-color]="widgetStyle.backgroundColor || widgetStyle.globalBackgroundColor"
+            >
+                <widget-user-management [globalProperties]="globalProperties"></widget-user-management>
+            </div>
+
+            <div
+                class="box-body"
+                *ngIf="widgetState.data.idRepWidgetType == WidgetTypeView.WidgetEmailViewer"
+                [style.background-color]="widgetStyle.backgroundColor || widgetStyle.globalBackgroundColor"
+            >
+                <ng-container [ngSwitch]="widgetState.data.idRepWidgetApp">
+                    <widget-email-viewer
+                        *ngSwitchCase="WidgetAppView.WidgetEmailViewer"
+                        (onPrintWidget)="printWidget()"
+                        (onMaximizeWidget)="maximizeWidget($event)"
+                    ></widget-email-viewer>
+                    <widget-email-list
+                        [globalProperties]="globalProperties"
+                        *ngSwitchCase="WidgetAppView.WidgetEmailList"
+                        (onMaximizeWidget)="maximizeWidget($event)"
+                    ></widget-email-list>
+                </ng-container>
+            </div>
+            <div
+                class="box-body"
+                *ngIf="widgetState.data.idRepWidgetType == WidgetTypeView.WidgetEmailAttachment"
+                [style.background-color]="widgetStyle.backgroundColor || widgetStyle.globalBackgroundColor"
+            >
+                <widget-email-attachment (onMaximizeWidget)="maximizeWidget($event)"></widget-email-attachment>
+            </div>
+            <div
+                class="box-body"
+                *ngIf="widgetState.data.idRepWidgetType == WidgetTypeView.EditTableCustom"
+                [style.background-color]="widgetStyle.backgroundColor || widgetStyle.globalBackgroundColor"
+            >
+                <widget-position-detail [globalProperties]="globalProperties"></widget-position-detail>
+            </div>
+            <div
+                class="box-body"
+                *ngIf="widgetState.data.idRepWidgetType == WidgetTypeView.PaymentInformation"
+                [style.background-color]="widgetStyle.backgroundColor || widgetStyle.globalBackgroundColor"
+            >
+                <widget-payment-information #widgetDynamicItem [widgetProperties]="properties">
+                </widget-payment-information>
+            </div>
+            <div
+                class="box-body"
+                [hidden]="!widgetState.selected"
+                *ngIf="widgetState.data.idRepWidgetType == WidgetTypeView.HeadquarterList"
+                [style.background-color]="widgetStyle.backgroundColor || widgetStyle.globalBackgroundColor"
+                [perfectScrollbar]="perfectScrollbarConfig"
+            >
+                <widget-headquarter-management></widget-headquarter-management>
+            </div>
+            <div
+                class="box-body"
+                *ngIf="widgetState.data.idRepWidgetType == WidgetTypeView.WidgetBranch"
+                [style.background-color]="widgetStyle.backgroundColor || widgetStyle.globalBackgroundColor"
+            >
+                <widget-branches [globalProperties]="globalProperties"></widget-branches>
+            </div>
+            <!-- <div
+              class="box-body"
+              *ngIf="widgetState.data.idRepWidgetType === WidgetTypeView.Cloud"
+              [style.background-color]="widgetStyle.backgroundColor || widgetStyle.globalBackgroundColor">
+              <ng-container [ngSwitch]="widgetState.data.idRepWidgetApp">
+                <widget-cloud-management *ngSwitchCase="WidgetAppView.WidgetCloudManagement"></widget-cloud-management>
+              </ng-container>
+            </div> -->
+        </ng-container>
+
+        <div class="cover-edit-mode" *ngIf="allowDesignEdit">&nbsp;</div>
+
+        <div *ngIf="!widgetStyle.showScrollBar && !hoverBox">
+            <arrow-animation
+                *ngIf="scrollStatus && scrollStatus.top"
+                [blinkMode]="true"
+                [mode]="'top'"
+                [directiveScroll]="directiveScroll"
+                [scrollStatus]="scrollStatus"
+                (onScroll)="onScroll($event)"
+                (onScrollHover)="onScrollHover($event)"
+                (onScrollUnHover)="onScrollUnHover($event)"
+                style="position: absolute; right: 12px; top: 15px"
+            >
+            </arrow-animation>
+
+            <arrow-animation
+                *ngIf="scrollStatus && scrollStatus.bottom"
+                [blinkMode]="true"
+                [mode]="'bottom'"
+                [directiveScroll]="directiveScroll"
+                [scrollStatus]="scrollStatus"
+                (onScroll)="onScroll($event)"
+                (onScrollHover)="onScrollHover($event)"
+                (onScrollUnHover)="onScrollUnHover($event)"
+                style="position: absolute; right: 8px; bottom: 15px"
+            >
+            </arrow-animation>
+
+            <arrow-animation
+                *ngIf="scrollStatus && scrollStatus.left"
+                [blinkMode]="true"
+                [mode]="'left'"
+                [directiveScroll]="directiveScroll"
+                [scrollStatus]="scrollStatus"
+                (onScroll)="onScroll($event)"
+                (onScrollHover)="onScrollHover($event)"
+                (onScrollUnHover)="onScrollUnHover($event)"
+                style="position: absolute; left: 10px; bottom: 5px"
+            >
+            </arrow-animation>
+
+            <arrow-animation
+                *ngIf="scrollStatus && scrollStatus.right"
+                [blinkMode]="true"
+                [mode]="'right'"
+                [directiveScroll]="directiveScroll"
+                [scrollStatus]="scrollStatus"
+                (onScroll)="onScroll($event)"
+                (onScrollHover)="onScrollHover($event)"
+                (onScrollUnHover)="onScrollUnHover($event)"
+                style="position: absolute; right: 27px; bottom: 9px"
+            >
+            </arrow-animation>
+        </div>
+    </div>
+</div>
+
+<widget-reload-message
+    *ngIf="isShowReloadMessage"
+    [userJustSaved]="userJustSaved"
+    [isBlockUI]="reloadMessageIsBlockUI"
+    [isShowReloadButton]="reloadMessageIsBlockUI"
+    (reload)="onReloadMessage($event)"
+    (cancel)="onCancelMessage($event)"
+    (whenMouseIn)="onMouseInReloadMessage()"
+    (whenMouseOut)="onMouseOutReloadMessage()"
+>
+</widget-reload-message>
+
+<div
+    class="link-widget-container"
+    [ngClass]="{
+        'link-widget-cover-mode': allowDesignEdit && linkedWidgetCoverDisplay,
+        'support-link-widget-cover-mode': allowDesignEdit && supportLinkedWidgetCoverDisplay,
+        'unlink-widget-cover-mode': allowDesignEdit && !linkedSuccessWidget
+    }"
+    [xnDropTarget]="{ zone: 'widget' }"
+    (xnDrop)="onConnectWidget($event, data)"
+    *ngIf="allowDesignEdit"
+>
+    <div *ngIf="linkedWidgetCoverDisplay || supportLinkedWidgetCoverDisplay">
+        <div class="link-icon">
+            <div class="link-icon__radius">
+                <i class="fa fa-link"></i>
+            </div>
+        </div>
+        <div class="link-text" *ngIf="linkedWidgetCoverDisplay">Connected</div>
+        <div class="link-text" *ngIf="supportLinkedWidgetCoverDisplay">Drag here to connect</div>
+    </div>
+</div>
+
+<widget-module-info-translation
+    *ngIf="isTranslateDataTextOnly || (allowWidgetInfoTranslation && isRenderWidgetInfoTranslation)"
+    [translateTextGridId]="'c0013e96-2167-4278-a300-58276a7166e5'"
+    [data]="data"
+    [combinationTranslateMode]="combinationTranslateMode"
+    [isTranslateDataTextOnly]="isTranslateDataTextOnly"
+    [keyword]="translationDataKeyword"
+    (onHide)="onHiddenWidgetInfoTranslation($event)"
+    (resetWidgetTranslation)="resetWidgetTranslation($event)"
+    (isCompletedRender)="reattach()"
+    #widgetInfoTranslation
+>
+</widget-module-info-translation>
+
+<div class="access-right-cover" *ngIf="!accessRight.read">
+    <h3>Access rights are needed to view the content</h3>
+</div>
+
+<ng-template #widgetFormTemplate let-widgetState="widgetState">
+    <widget-form
+        #widgetComponent
+        [dataSource]="widgetState.data"
+        [currentModule]="currentModule"
+        [isForceReset]="forceResetWidgetForm"
+        [isActivated]="widgetState.selected"
+        [filterMode]="selectedFilter"
+        [formType]="widgetFormType"
+        [fieldFilters]="fieldFilters"
+        [isDesignWidgetMode]="allowDesignEdit && !linkableWidget"
+        [formStyle]="formStyle"
+        [inlineLabelStyle]="inlineLabelStyle"
+        [importantFormStyle]="importantFormStyle"
+        [fieldStyle]="fieldFormatStyle"
+        [dataStyle]="dataFormatStyle"
+        [resized]="resizedLocal"
+        [readonly]="!accessRight.edit"
+        [globalProperties]="globalProperties"
+        [isDialogMode]="showInDialog"
+        [supportDOBCountryFormat]="supportDOBCountryFormat"
+        [controlUpdated]="userJustSaved"
+        (onFormChanged)="onWidgetEdited($event)"
+        (onEditFormField)="onEditFormField($event)"
+        (onCancelEditFormField)="onCancelEditFormField($event)"
+        (formLoaded)="widgetFormLoadedHandler($event)"
+        (onPdfFieldClick)="onPdfColumnClickHandler($event)"
+        (onTrackingFieldClick)="onTrackingColumnClickHandler($event)"
+        (onReturnRefundFieldClick)="onReturnRefundColumnClickHandler($event)"
+        (isCompletedRender)="isWidgetCompletedRender($event)"
+        (dispatchData)="onRowClick($event)"
+    ></widget-form>
+</ng-template>
+
+<ng-template #widgetTreeViewTemplate let-widgetState="widgetState">
+    <div class="padding-left--md">
+        <app-xn-tree-view
+            #xnTreeViewComponent
+            [widgetDetail]="widgetState.data"
+            [widgetModuleInfo]="moduleInfo"
+            [isActivated]="widgetState.selected"
+            (dataChange)="treeViewDataChange($event)"
+            (noEntryDataEvent)="noEntryDataEvent($event)"
+        >
+        </app-xn-tree-view>
+    </div>
+</ng-template>
+
+<ng-template #widgetCountryCheckListTemplate let-widgetState="widgetState">
+    <xn-country-check-list
+        [editMode]="false"
+        [widgetDetail]="widgetState.data"
+        [isActivated]="widgetState.selected"
+        (outputData)="getDataForCountryCheckList($event)"
+        (noEntryDataEvent)="noEntryDataEvent($event)"
+        (isCompletedRender)="isWidgetCompletedRender($event)"
+    >
+    </xn-country-check-list>
+</ng-template>
+
+<!--<ng-template #widgetArticleMediaManager let-widgetState="widgetState">
+  <article-media-manager
+    [currentModule]="currentModule"
+    [widgetDetail]="widgetState.data"
+    (noEntryDataEvent)="noEntryDataEvent($event)"
+    (saveDataSuccess)="saveSuccessWidget(data)"
+    (isCompletedRender)="isWidgetCompletedRender($event)"
+  >
+  </article-media-manager>
+</ng-template>-->
+<ng-template #widgetFileExplorer let-widgetState="widgetState">
+    <xn-file-explorer
+        #xnFileExplorerComponentCtrl
+        [xnTableUploadedFilesGridId]="'fd82357e-22a2-469f-8e0c-78f113ffc9f8'"
+        [data]="widgetState.data"
+        [gridStyle]="gridStyle"
+        [isShowHeader]="false"
+        [showTotalRow]="showTotalRow"
+        [rowGrouping]="rowGrouping"
+        [pivoting]="pivoting"
+        [columnFilter]="columnFilter"
+        [fileUploadModuleType]="fileUploadModuleTypeView.BusinessCost"
+        [parentInstance]="widgetInstance"
+        [filterMode]="selectedFilter"
+        [fieldFilters]="fieldFilters"
+        [listenKeyRequestItem]="listenKeyRequestItem"
+        [globalProperties]="globalProperties"
+        [columnsLayoutSettings]="columnsLayoutSettings"
+        [isShowToolPanels]="columnsLayoutSettings && columnsLayoutSettings.isShowToolPanels"
+        [allowEdit]="accessRight.edit || accessRight.delete"
+        [sheetName]="title.value"
+        (onHeaderColsUpdated)="widgetMenuStatusComponent && widgetMenuStatusComponent.manualAddFieldFilters($event)"
+        (onRowMarkedAsDeleted)="onRowMarkedAsDeleted($event)"
+        (onDeletedFiles)="onDeletedFiles($event)"
+        (changeColumnLayout)="onChangeColumnLayoutHandler($event)"
+        (onUpdateFilesCompleted)="onUpdateFilesCompleted($event)"
+        (toggleFileEditModeAction)="toggleFileEditMode($event)"
+    ></xn-file-explorer>
+</ng-template>
+<ng-template #widgetFileExplorerWithLabel let-widgetState="widgetState">
+    <xn-file-explorer
+        #xnFileExplorerComponentCtrl
+        [xnTableUploadedFilesGridId]="'af27ddcc-4252-499c-aecd-0c4e971cf159'"
+        [data]="widgetState.data"
+        [gridStyle]="gridStyle"
+        [isShowHeader]="false"
+        [fileUploadModuleType]="fileUploadModuleTypeView.Campaign"
+        [filterMode]="selectedFilter"
+        [globalProperties]="globalProperties"
+        [properties]="properties"
+        [fieldFilters]="fieldFilters"
+        [listenKeyRequestItem]="listenKeyRequestItem"
+        [parentInstance]="widgetInstance"
+        [columnsLayoutSettings]="columnsLayoutSettings"
+        [isShowToolPanels]="columnsLayoutSettings && columnsLayoutSettings.isShowToolPanels"
+        [allowEdit]="accessRight.edit || accessRight.delete"
+        [sheetName]="title.value"
+        (onHeaderColsUpdated)="widgetMenuStatusComponent && widgetMenuStatusComponent.manualAddFieldFilters($event)"
+        (onRowMarkedAsDeleted)="onRowMarkedAsDeleted($event)"
+        (onDeletedFiles)="onDeletedFiles($event)"
+        (onUpdateFilesCompleted)="onUpdateFilesCompleted($event)"
+        (onFileExplorerEditingAction)="onFileExplorerEditingHandler()"
+        (changeColumnLayout)="onChangeColumnLayoutHandler($event)"
+        (callRefreshWidgetDataAction)="callRefreshWidgetDataHanlder()"
+        (toggleFileEditModeAction)="toggleFileEditMode($event)"
+    ></xn-file-explorer>
+</ng-template>
+<ng-template #widgetToolFileTemplate let-widgetState="widgetState">
+    <xn-file-explorer
+        #xnFileExplorerComponentCtrl
+        [xnTableUploadedFilesGridId]="'d0e8bb38-efc5-4798-980b-84485ea34a94'"
+        [data]="widgetState.data"
+        [gridStyle]="gridStyle"
+        [isShowHeader]="false"
+        [fileUploadModuleType]="fileUploadModuleTypeView.ToolsFileTemplate"
+        [filterMode]="selectedFilter"
+        [globalProperties]="globalProperties"
+        [fieldFilters]="fieldFilters"
+        [listenKeyRequestItem]="listenKeyRequestItem"
+        [columnsLayoutSettings]="columnsLayoutSettings"
+        [parentInstance]="widgetInstance"
+        [isShowToolPanels]="columnsLayoutSettings && columnsLayoutSettings.isShowToolPanels"
+        [allowEdit]="accessRight.edit || accessRight.delete"
+        [sheetName]="title.value"
+        (onHeaderColsUpdated)="widgetMenuStatusComponent && widgetMenuStatusComponent.manualAddFieldFilters($event)"
+        (onRowMarkedAsDeleted)="onRowMarkedAsDeleted($event)"
+        (onDeletedFiles)="onDeletedFiles($event)"
+        (onUpdateFilesCompleted)="onUpdateFilesCompleted($event)"
+        (onFileExplorerEditingAction)="onFileExplorerEditingHandler()"
+        (changeColumnLayout)="onChangeColumnLayoutHandler($event)"
+        (callRefreshWidgetDataAction)="callRefreshWidgetDataHanlder()"
+        (toggleFileEditModeAction)="toggleFileEditMode($event)"
+    ></xn-file-explorer>
+</ng-template>
+
+<ng-template #widgetTableTemplate let-widgetState="widgetState" let-readOnly="readOnly">
+    <ng-container [ngSwitch]="masterDetailComponent">
+        <ng-container *ngSwitchCase="'OrderProcessing'">
+            <ng-template
+                #rowTemplate
+                let-data="data"
+                let-columns="columns"
+                let-renderCallback="renderCallback"
+                let-dispatchData="dispatchData"
+            >
+                <order-detail-summary
+                    [itemData]="data"
+                    [columns]="columns"
+                    [showCustomerInfo]="true"
+                    [renderCallback]="renderCallback"
+                    [currentModule]="currentModule"
+                    [dispatchData]="dispatchData"
+                >
+                </order-detail-summary>
+            </ng-template>
+            <ng-container
+                *ngTemplateOutlet="
+                    gridTemplate;
+                    context: { widgetState: widgetState, rowTemplate: rowTemplate, readOnly: readOnly }
+                "
+            >
+            </ng-container>
+        </ng-container>
+        <ng-container *ngSwitchDefault>
+            <ng-container *ngTemplateOutlet="gridTemplate; context: { widgetState: widgetState, readOnly: readOnly }">
+            </ng-container>
+        </ng-container>
+    </ng-container>
+    <ng-template #gridTemplate let-widgetState="widgetState" let-rowTemplate="rowTemplate" let-readOnly="readOnly">
+        <xn-ag-grid
+            #widgetComponent
+            [orderProcessingProcess]="widgetComponent"
+            [rowDetailTemplateRef]="rowTemplate"
+            [isActivated]="widgetState.selected"
+            [widgetDetail]="widgetState.data"
+            [readOnly]="readOnly"
+            [masterDetail]="allowMasterDetail"
+            [isEditting]="isOnEditingTable"
+            [gridStyle]="gridStyle"
+            [dataSource]="widgetState.tableData.dataSourceTable"
+            [allowDelete]="!readOnly && allowRowDelete && accessRight.delete"
+            [enterMovesDown]="enterMovesDown"
+            [currentModule]="currentModule"
+            [globalProperties]="globalProperties"
+            [properties]="properties"
+            [showTotalRow]="showTotalRow"
+            [rowGrouping]="rowGrouping"
+            [pivoting]="pivoting"
+            [columnFilter]="columnFilter"
+            [fitWidthColumn]="allowFitColumn"
+            [isShowToolPanels]="columnsLayoutSettings && columnsLayoutSettings.isShowToolPanels"
+            [columnsLayoutSettings]="columnsLayoutSettings"
+            [autoSaveColumnsLayout]="false"
+            [parentInstance]="widgetInstance"
+            [treeViewMode]="allowTreeView"
+            [customTooltip]="buildCustomTooltip(widgetState.data.idRepWidgetApp)"
+            [allowSetColumnState]="widgetState.data.idRepWidgetApp != 107"
+            [canExport]="accessRight.export"
+            [rowSelection]="rowSelection"
+            [sheetName]="title.value"
+            [rowDrag]="allowRowDrag"
+            [rowNumer]="allowRowNumer"
+            (changeColumnLayout)="onChangeColumnLayoutHandler($event)"
+            (rowDoubleClicked)="onRowDoubleClickHandler($event)"
+            (cellEditingStarted)="onTableEditStart($event)"
+            (cellEditingStopped)="onTableEditEnd($event)"
+            (cellValueChanged)="onTableEditSuccess($event)"
+            (onRowMarkedAsDelete)="onRowMarkedAsDeleted($event)"
+            (hasValidationError)="hasValidationErrorHandler($event)"
+            (rowClick)="onRowClick($event)"
+            (downloadClick)="onDownloadFile($event)"
+            (onReloadWidget)="onReloadWidget()"
+            (settingClick)="onSettingClickHandler($event)"
+            (saveColumnsLayoutAction)="saveColumnsLayoutHandle()"
+        >
+        </xn-ag-grid>
+    </ng-template>
+</ng-template>
+
+<widget-context-menu
+    [isSelectingText]="isSelectingTextContextMenu"
+    [textField]="textFieldContextMenu"
+    [isMaximized]="isMaximized"
+    [widgetCommonAction]="widgetDynamicItem"
+    (onSaveSetting)="changeFieldFilter($event)"
+    (onMaximizeWidget)="maximizeWidget($event)"
+>
+</widget-context-menu>

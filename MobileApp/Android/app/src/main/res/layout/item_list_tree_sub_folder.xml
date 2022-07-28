@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cardItemContainer"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="4dp"
+    android:layout_marginBottom="4dp"
+    android:background="@color/blue_2"
+    android:padding="20dp">
+
+    <TextView
+        android:id="@+id/tvSubFolderName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:textColor="@color/blue_light"
+        android:textSize="14dp"
+        tools:text="Rend / Mortgage" />
+
+    <TextView
+        android:id="@+id/tvSubFolderCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@+id/btnArrowRight"
+        android:background="@drawable/bg_green_light_round_corner"
+        android:paddingLeft="10dp"
+        android:paddingTop="2dp"
+        android:paddingRight="10dp"
+        android:paddingBottom="2dp"
+        android:textStyle="bold"
+        android:textColor="@color/green_dark"
+        android:textSize="12dp"
+        tools:text="65" />
+
+    <ImageButton
+        android:id="@+id/btnArrowRight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="12dp"
+        android:background="@color/transparent"
+        android:src="@drawable/ic_arrow_right" />
+</RelativeLayout>

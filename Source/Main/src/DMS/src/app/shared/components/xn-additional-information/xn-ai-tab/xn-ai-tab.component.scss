@@ -1,0 +1,151 @@
+@import "src/sass_files/size.scss";
+
+.ai-tab-summary-wrapper {
+  position: relative;
+  height: 33px;
+  margin: 0 auto;
+  overflow: visible;
+}
+
+.ai-tab-summary-list {
+  position: absolute;
+  min-width: 3000px;
+}
+
+.ai-tab-summary-list li {
+  display: table-cell;
+  position: relative;
+  vertical-align: middle;
+  width: 120px;
+  text-align: center;
+}
+
+.ai-scroller {
+  text-align: center;
+  cursor: pointer;
+  display: none;
+  padding: 7px;
+  white-space: no-wrap;
+  vertical-align: middle;
+  background-color: #0f5e8c;
+  color: #fff;
+  opacity: 0.8;
+  position: absolute;
+  z-index: 848;
+  height: 33px;
+}
+
+.ai-scroller-right {
+  right: 0;
+}
+
+.ai-scroller-left {
+  /*left: 0;*/
+}
+
+.ai-tab-header-container {
+  overflow: visible;
+}
+
+.ai-tab-content-container {
+  .tab-pane {
+    height: 100%;
+  }
+}
+
+@media (max-width: $min-md-size) {
+  .ai-tab-header-container {
+    overflow: hidden;
+  }
+}
+
+:host ::ng-deep ul {
+  li.ai-tab-summary {
+    min-height: 33px;
+    max-height: 33px;
+
+    &:first-child {
+      margin-left: 5px;
+    }
+
+    > a {
+      padding: 4px !important;
+      margin-right: 2px;
+      min-height: 33px;
+      max-height: 33px;
+
+      > span {
+        > .panel {
+          margin-bottom: 0;
+          border: none;
+          -webkit-box-shadow: none;
+          -moz-box-shadow: none;
+          box-shadow: none;
+
+          .panel-heading,
+          .panel-body,
+          .panel-footer {
+            padding: 5px;
+          }
+
+          > .panel-heading {
+            padding-top: 4px;
+            padding-bottom: 2px;
+            border: none !important;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+
+            &.heading-sm {
+              padding: 0;
+            }
+          }
+        }
+      }
+    }
+
+    &.active {
+      > a {
+        &.active {
+          > span {
+            .panel {
+              > .panel-heading {
+                padding-top: 0;
+                background-color: #fff;
+              }
+
+              > .panel-body {
+                padding-top: 0;
+              }
+            }
+
+            span.close-btn-container {
+              position: absolute;
+              right: 15px;
+              top: 5px;
+            }
+
+            span.refresh-btn-container {
+              position: absolute;
+              right: 2px;
+              top: 5px;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.ai-tab-plus {
+  height: 33px;
+}
+
+.mat-button {
+  padding: 0;
+  min-width: 0;
+}
+
+.ai-scroller {
+  width: 33px;
+}

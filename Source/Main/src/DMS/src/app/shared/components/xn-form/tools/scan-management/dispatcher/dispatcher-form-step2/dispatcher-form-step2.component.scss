@@ -1,0 +1,30 @@
+$spacing: 5px;
+$command-height: 30px;
+
+.dispatcher-step2 {
+    padding-top: ($spacing*2);
+    height: 100%;
+
+    .table-border {
+        line-height: 26px;
+    }
+
+    .xn__form-header {
+        i {
+            float: left;
+            font-size: 22px;
+            line-height: 27px;
+            margin-right: $spacing;
+        }
+    }
+
+    .dispatcher-form__step2__left {
+        height: calc(100% - #{($command-height + $spacing)});
+        min-height: ($spacing*40);
+    }
+
+    .pool-grid,
+    .pool-grid--left {
+        height: calc(100% - #{($command-height + ($spacing*2))});
+    }
+}

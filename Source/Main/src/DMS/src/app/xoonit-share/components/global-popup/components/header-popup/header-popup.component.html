@@ -1,0 +1,25 @@
+<div *ngIf="header" class="header d-flex flex-row justify-content-between">
+    <div class="icon">
+        <ng-container *ngIf="header.icon">
+            <ng-container [ngSwitch]="header.icon.type">
+                <ng-container *ngSwitchCase="'material'">
+                    <mat-icon aria-hidden="false">{{ header.icon.content }}</mat-icon>
+                </ng-container>
+                <ng-container *ngSwitchCase="'resource'">
+                    <mat-icon aria-hidden="false" inline="true" [svgIcon]="header.icon.content"></mat-icon>
+                </ng-container>
+            </ng-container>
+        </ng-container>
+    </div>
+    <div class="title" *ngIf="!header.withTranslate">
+        <label-translation [keyword]="header.title"></label-translation>
+    </div>
+    <div class="title" *ngIf="header.withTranslate">
+        <label-translation [keyword]="header.title"></label-translation>
+    </div>
+    <div class="close-popup">
+        <button mat-icon-button (click)="close()">
+            <mat-icon aria-hidden="false" [svgIcon]="iconCloseHeader"></mat-icon>
+        </button>
+    </div>
+</div>

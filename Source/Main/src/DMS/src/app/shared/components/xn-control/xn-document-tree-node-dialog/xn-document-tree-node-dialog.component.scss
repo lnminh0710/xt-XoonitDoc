@@ -1,0 +1,8 @@
+.document-tree-node-container {
+    font-size: 14px;
+}
+
+:host ::ng-deep .input-field {
+    margin-top: 20px;
+    padding-bottom: 0 !important;
+}

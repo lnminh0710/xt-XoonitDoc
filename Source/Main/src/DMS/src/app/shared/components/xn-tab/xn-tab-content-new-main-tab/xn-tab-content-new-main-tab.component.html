@@ -1,0 +1,53 @@
+<!--<div *ngIf="config"
+     [ngSwitch]="config.activeModuleId"
+     [perfectScrollbar]="perfectScrollbarConfig"
+     [ngStyle]="contentStyle">    
+    <ng-template [ngSwitchCase]="1">
+        <app-ad-form *ngIf="isRenderAdmin"
+                     (outputData)="onChanged($event)"
+                     [config]="administrtionConfig"
+                     [searchIndexKey]="searchIndexKey"></app-ad-form>
+    </ng-template>
+    <ng-template [ngSwitchCase]="3">
+        <article-form (outputData)="onChanged($event)"></article-form>
+    </ng-template>    
+    <ng-template [ngSwitchCase]="6">
+        <app-business-cost-form switchForm="header" (outputData)="onChanged($event)"></app-business-cost-form>
+    </ng-template>
+    <ng-template [ngSwitchCase]="31">
+        <app-stock-correction [globalProperties]="globalProperties"
+                              [gridId]="'f9b5c2c7-4a80-4791-81a7-396d4211bcd0'"
+                              (outputData)="onChanged($event)"></app-stock-correction>
+    </ng-template>
+    <ng-template [ngSwitchCase]="32">
+        <warehouse-movement-updating-form (outputData)="onChanged($event)"></warehouse-movement-updating-form>
+    </ng-template>
+    <ng-template [ngSwitchCase]="30">
+        <purchase-form-combine (outputData)="onChanged($event)"></purchase-form-combine>
+    </ng-template>
+    <ng-container *ngSwitchDefault>
+        <ng-container [widgetSavingProcess]="widgetSavingProcessConfig"
+                      [ofModule]="ofModule"
+                      [tabID]="tabContent.TabID"
+                      (outputData)="onChanged($event)"
+                      *ngIf="tabContent.EditForm">
+            <ng-container *ngIf="!tabContent.EditForm.SimpleTabs;then default else simpleTab">
+            </ng-container>
+            <ng-template #default>
+                <app-xn-tab-page-view [data]="tabContent.EditForm"
+                                      [isActivated]="true"
+                                      [tabID]="tabContent.TabID">
+                </app-xn-tab-page-view>
+            </ng-template>
+            <ng-template #simpleTab>
+                <xn-tab-content-simple-tabs [data]="tabContent.EditForm"
+                                            [isActivated]="tabContent.active"
+                                            [globalProperties]="globalProperties"
+                                            [tabID]="tabContent.TabID"
+                                            *ngIf="tabContent.loaded && tabContent.EditForm.SimpleTabs"
+                                            (onFormChanged)="onMainTabChanged($event)">
+                </xn-tab-content-simple-tabs>
+            </ng-template>
+        </ng-container>
+    </ng-container>
+</div>-->

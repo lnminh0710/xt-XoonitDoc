@@ -1,0 +1,20 @@
+<div class="tool__tab-container">
+    <tabset #scanAssignmentTab>
+        <tab heading="Select Pool"
+            (select)="selectTab(1)">
+            <dispatcher-form-step1 #dispatcherStep1
+                                   [poolLeftGridId]="poolLeftGridStep1Id"
+                                   [poolRightGridId]="poolRightGridStep1Id"
+                                   [globalProperties]="globalProperties">
+            </dispatcher-form-step1>
+        </tab>
+        <tab heading="Select Dispatcher"
+            (select)="selectTab(2)">
+            <dispatcher-form-step2 #dispatcherStep2
+                                   [poolLeftGridId]="poolLeftGridStep2Id"
+                                   [poolRightGridId]="poolRightGridStep2Id"
+                                   [globalProperties]="globalProperties">
+            </dispatcher-form-step2>
+        </tab>
+    </tabset>
+</div>

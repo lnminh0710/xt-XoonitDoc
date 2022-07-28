@@ -1,0 +1,87 @@
+<div
+    class="xn-document-tree-header-wrapper d-flex flex-row justify-content-between"
+    *ngIf="xnDocumentTreeService.structureSettingsChanged$ | async as varStructureTreeSettings"
+>
+    <div
+        *ngIf="hasCollaspeExpand"
+        class="w28px-h28px toggle-collapse-tree"
+        [ngStyle]="varStructureTreeSettings.isCollapsedTree && { 'margin-left': '6px' }"
+    >
+        <button
+            mat-icon-button
+            class="w28px-h28px lh-28px icon-transform"
+            (click)="toggleCollapseTree($event)"
+            #popHidden="bs-tooltip"
+            container="body"
+            data-placement="bottom"
+            [tooltip]="varStructureTreeSettings.isCollapsedTree ? 'Expand tree' : 'Collapse tree'"
+        >
+            <mat-icon
+                *ngIf="!varStructureTreeSettings.isCollapsedTree"
+                [svgIcon]="IconNamesEnum.XN_DOCUMENT_TREE_Toggle_Collapse_Tree"
+                inline="true"
+            ></mat-icon>
+            <mat-icon
+                *ngIf="varStructureTreeSettings.isCollapsedTree"
+                [svgIcon]="IconNamesEnum.XN_DOCUMENT_TREE_Hamburger"
+                inline="true"
+            ></mat-icon>
+        </button>
+    </div>
+    <div class="title" [hidden]="varStructureTreeSettings.isCollapsedTree">
+        <label-translation [keyword]="'COMMON_LABEL__Structure_Tree'"></label-translation>
+    </div>
+    <ng-content></ng-content>
+    <div
+        *ngIf="hasBtnReload"
+        class="ml-auto"
+        style="margin-right: 6px"
+        [hidden]="varStructureTreeSettings.isCollapsedTree"
+    >
+        <button
+            mat-icon-button
+            class="btn-action icon-transform"
+            style="top: -3px"
+            (click)="reload()"
+            #popRefresh="bs-tooltip"
+            container="body"
+            data-placement="bottom"
+            [tooltip]="'Refresh'"
+            [attr.control-key]="'document-viewer__refresh'"
+        >
+            <mat-icon [svgIcon]="IconNamesEnum.WIDGET_MYDM_FORM_Reset"></mat-icon>
+        </button>
+    </div>
+    <div *ngIf="hasBtnShowActive" style="margin-right: 6px" [hidden]="varStructureTreeSettings.isCollapsedTree">
+        <mat-slide-toggle
+            color="accent"
+            style="padding-top: 6px"
+            [ngModel]="varStructureTreeSettings.activeFoldersOnly"
+            (ngModelChange)="toggleActiveTreeNodes($event)"
+            #popHidden="bs-tooltip"
+            container="body"
+            data-placement="bottom"
+            [tooltip]="varStructureTreeSettings.activeFoldersOnly ? 'Show all' : 'Show active only'"
+        ></mat-slide-toggle>
+    </div>
+    <div
+        *ngIf="hasBtnExpand"
+        class="w28px-h28px toggle-collapse-folders"
+        [hidden]="varStructureTreeSettings.isCollapsedTree"
+    >
+        <button
+            mat-icon-button
+            class="w-100 h-100 lh-18px icon-transform"
+            (click)="toggleCollapseFolderTree($event)"
+            #popHand="bs-tooltip"
+            container="body"
+            data-placement="bottom"
+            [tooltip]="xnDocumentTreeService.isCollapsedFolder ? 'Expand' : 'Collapse'"
+        >
+            <i
+                class="fa fa-chevron-down"
+                [ngStyle]="!xnDocumentTreeService.isCollapsedFolder && { transform: 'rotate(180deg)' }"
+            ></i>
+        </button>
+    </div>
+</div>

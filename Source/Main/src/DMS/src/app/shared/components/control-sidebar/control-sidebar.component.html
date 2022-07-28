@@ -1,0 +1,148 @@
+<!-- Control Sidebar -->
+<aside class="control-sidebar control-sidebar-dark">
+    <!--<ul class="nav nav-tabs nav-justified control-sidebar-tabs">
+            <li [ngClass]="{'active': mode == 0}" *ngIf="mode == 0">
+                <a tabindex="-1" href="#control-sidebar-home-tab" data-toggle="tab" aria-expanded="false"><i class="fa fa-home"></i></a>
+            </li>
+            <li class="" [ngClass]="{'active': mode == 1}" *ngIf="mode == 1">
+                <a tabindex="-1" href="#control-sidebar-theme-demo-options-tab" data-toggle="tab" aria-expanded="true"><i class="fa fa-wrench"></i></a>
+            </li>
+        </ul>-->
+    <!-- Tab panes -->
+    <div class="tab-content main-tab" [perfectScrollbar]="{ suppressScrollX: true, suppressScrollY: false }">
+        <!-- Home tab content -->
+        <div id="control-sidebar-theme-demo-options-tab" class="tab-pane active">
+            <div class="content">
+                <!-- <div *ngIf="accessRight.skin && accessRight.skin.read">
+                    <h4 class="control-sidebar-heading">Skins</h4>
+                    <wj-combo-box #skinCombobox
+                                  selectFirstIfOnlyOne
+                                  class="custom-wj-input-control xn-select no-padding"
+                                  *ngIf="htmlSkins && (htmlSkins.length >= 0)"
+                                  [itemsSource]="htmlSkins"
+                                  [isEditable]="false"
+                                  [isContentHtml]="true"
+                                  [displayMemberPath]="'textValue'"
+                                  [selectedValuePath]="'idValue'"
+                                  (selectedIndexChanged)="changeSkin(skinCombobox.selectedItem)"
+                                  (gotFocus)="isSkinComboboxFocused = true; skinCombobox.isDroppedDown = true"
+                                  (lostFocus)="isSkinComboboxFocused = false">
+                    </wj-combo-box>
+                </div> -->
+
+                <h4 class="control-sidebar-heading">
+                    <label-translation [keyword]="'Aside__Languages'"></label-translation>
+                </h4>
+                <wj-combo-box
+                    #languageCombobox
+                    selectFirstIfOnlyOne
+                    class="custom-wj-input-control xn-select no-padding"
+                    *ngIf="htmlLanguages && htmlLanguages.length >= 0"
+                    [itemsSource]="htmlLanguages"
+                    [isEditable]="false"
+                    [isContentHtml]="true"
+                    [displayMemberPath]="'textValue'"
+                    [selectedValuePath]="'idValue'"
+                    (selectedIndexChanged)="changeLanguage(languageCombobox.selectedItem)"
+                    (gotFocus)="isLanguageComboboxFocused = true; languageCombobox.isDroppedDown = true"
+                    (lostFocus)="isLanguageComboboxFocused = false"
+                >
+                </wj-combo-box>
+
+                <h4 class="control-sidebar-heading">
+                    <label-translation [keyword]="'Aside__Settings'"></label-translation>
+                </h4>
+                <div>
+                    <!--<a *ngIf="accessRight.globalSettings && accessRight.globalSettings.read"
+                       class="btn-text cursor-pointer"
+                       mat-button
+                       tabindex="-1"
+                       (click)="openGlobalWidgetSetting()">
+                        Global Settings
+                    </a>-->
+
+                    <ng-template [ngIf]="showWidgetLayoutSettings() && hasPermission">
+                        <a
+                            *ngIf="
+                                isShowWidgetSetting &&
+                                accessRight.widgetCustomization &&
+                                accessRight.widgetCustomization.read
+                            "
+                            class="btn-text cursor-pointer"
+                            mat-button
+                            tabindex="-1"
+                            (click)="openWidgetTemplateSetting()"
+                        >
+                            <label-translation [keyword]="'Aside__Widget_Customization'"></label-translation>
+                        </a>
+                        <a
+                            *ngIf="
+                                enableLayoutCustomization &&
+                                accessRight.designPageLayout &&
+                                accessRight.designPageLayout.read
+                            "
+                            class="btn-text cursor-pointer"
+                            mat-button
+                            tabindex="-1"
+                            (click)="editLayoutSetting($event)"
+                        >
+                            <label-translation [keyword]="'Aside__Design_Page_Layout'"></label-translation>
+                        </a>
+                    </ng-template>
+
+                    <a
+                        *ngIf="accessRight.applyWidgetSettings && accessRight.applyWidgetSettings.read && hasPermission"
+                        class="btn-text cursor-pointer"
+                        mat-button
+                        tabindex="-1"
+                        (click)="applyWidgetSettings()"
+                    >
+                        <label-translation [keyword]="'Aside__Apply_Widget_Settings'"></label-translation>
+                    </a>
+
+                    <!-- <a class="btn-text cursor-pointer"
+       mat-button
+       tabindex="-1">
+        <label-translation [keyword]="'Aside__System_Translate'"></label-translation>
+        <mat-slide-toggle class="mat-primary translate-toggle"
+                          (change)="toggleSystemTranslate()"
+                          [(ngModel)]="tranlationStatus">
+        </mat-slide-toggle>
+    </a> -->
+
+                    <a class="btn-text cursor-pointer" mat-button tabindex="-1" (click)="resetDefaultWidget()">
+                        <label-translation [keyword]="'Aside__System_Reset_Default_Widget'"></label-translation>
+                    </a>
+
+                    <a class="btn-text cursor-pointer" mat-button tabindex="-1" *ngIf="hasPermission">
+                        <label-translation
+                            (click)="clickToggle()"
+                            [keyword]="'Aside__System_Translate'"
+                        ></label-translation>
+                        <mat-slide-toggle
+                            class="mat-primary translate-toggle"
+                            (change)="toggleSystemTranslate()"
+                            [(ngModel)]="tranlationStatus"
+                        >
+                        </mat-slide-toggle>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</aside>
+<div class="control-sidebar-bg"></div>
+<widget-template-setting
+    (onToggle)="onWidgetTemplateToggle($event)"
+    [ngClass]="{ 'widdget-template': isWidgetTemplate }"
+    [activeModule]="ofModuleLocal"
+    [activeSubModule]="activeSubModuleState | async"
+>
+    <label-translation [keyword]="'Aside__Loading_widget_template_settting'"></label-translation>
+</widget-template-setting>
+<edit-layout-setting *ngIf="isLayoutSetting"></edit-layout-setting>
+<dialog-apply-widget-settings
+    *ngIf="showDialogApplyWidgetSettings"
+    [currentUser]="currentUser"
+    (onClose)="onCloseDialogApplyWidgetSettings()"
+></dialog-apply-widget-settings>

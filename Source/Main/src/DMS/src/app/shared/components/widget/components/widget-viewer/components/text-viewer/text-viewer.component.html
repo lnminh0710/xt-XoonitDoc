@@ -1,0 +1,27 @@
+<div class="full-width-height text-viewer-container" tabindex="0" #textViewerContainer>
+    <div class="search-box" #searchBox>
+        <div class="flex-container flex-row search-box-container">
+            <div class="search-input-group">
+                <input #searchInput type="text" class="search-text" (change)="searchText($event)" />
+                <div class="search-count" *ngIf="structureDataText.searchResults">
+                    {{structureDataText.searchResults.iteratorTextResult}}</div>
+            </div>
+            <div class="search-border"></div>
+            <div class="search-btn-wrapper">
+                <div class="search-btn-group">
+                    <div class="search-btn btn-prev" (click)="scrollToPrev()">
+                        <span><i class="fa fa-chevron-left"></i></span>
+                    </div>
+                    <div class="search-btn btn-next" (click)="scrollToNext()">
+                        <span><i class="fa fa-chevron-right"></i></span>
+                    </div>
+                    <div class="search-btn btn-cancel" (click)="cancelSearch($event)">
+                        <span><i class="fa fa-times"></i></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <pre #fileTextViewer></pre>
+</div>

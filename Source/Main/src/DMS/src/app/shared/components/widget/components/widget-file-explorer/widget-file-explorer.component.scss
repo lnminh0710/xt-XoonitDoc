@@ -1,0 +1,169 @@
+@import 'src/sass_files/size.scss';
+.widget-explorer {
+    .widget-header {
+        background: transparent;
+        text-align: right;
+        margin: 0;
+
+        .view-type {
+            cursor: pointer;
+            filter: brightness(50%);
+
+            &.active {
+                filter: brightness(100%);
+            }
+        }
+    }
+
+    .widget-file-explorer-container {
+        height: 100%;
+
+        & .indicator-center-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100%;
+
+            > * {
+                margin: auto;
+            }
+        }
+
+        & .indicator-bottom-center-wrapper {
+            display: block;
+            position: relative;
+            bottom: 100px;
+            text-align: center;
+        }
+
+        & .scrollbar-container {
+            height: 85vh;
+            margin: 30px 0px;
+        }
+
+        & .files-list {
+            display: flex;
+            height: 100%;
+            flex-direction: row;
+            flex-wrap: wrap;
+            align-content: flex-start;
+            .file {
+                &.view-grid {
+                    display: flex;
+                    flex-direction: column;
+                    width: 117px;
+                    height: 144px;
+                    margin: 0px 20px;
+                    align-items: center;
+
+                    > .file-icon {
+                        height: 84px;
+                        width: 70px;
+                        margin-bottom: 12px;
+                        background-repeat: no-repeat;
+                        background-position: center;
+
+                        &.pdf {
+                            background: url('src/public/imgs/icon-PDF.png');
+                        }
+                    }
+
+                    > .file-name {
+                        line-height: 1.5em;
+                        height: 3em;
+                        text-align: center;
+                        font-size: 14px;
+                        text-overflow: ellipsis;
+                        overflow: hidden;
+                        width: 100%;
+                        white-space: nowrap;
+                    }
+                }
+                &.view-list {
+                    display: flex;
+                    flex-direction: row;
+                    padding: 7px 30px;
+                    margin-right: 7px;
+                    width: 100%;
+
+                    > .file-icon {
+                        width: 30px;
+                        height: 36px;
+                        margin-right: 15px;
+                        background-repeat: no-repeat;
+                        background-size: contain;
+
+                        &.pdf {
+                            background-image: url('src/public/imgs/icon-PDF.png');
+                        }
+                        > .file-name {
+                            line-height: 1.5em;
+                            height: 3em;
+                            font-size: 14px;
+                            text-overflow: ellipsis;
+                            overflow: hidden;
+                            width: 100%;
+                            white-space: nowrap;
+                        }
+                    }
+                }
+            }
+        }
+
+        .explorer-header {
+            width: 100%;
+            .path {
+                font-size: large;
+            }
+            .search-box {
+                position: relative;
+
+                .search-input {
+                    width: 100%;
+                    padding: 5px 15px 5px 45px;
+                    border: none;
+                    border-radius: 35px;
+                    font-size: large;
+                }
+
+                .search-icon {
+                    position: absolute;
+                    top: 6px;
+                    left: 12%;
+                    height: 22px;
+
+                    @media (min-width: $lg-size) {
+                        left: 8%;
+                    }
+
+                    @media (min-width: $sreen2K-size) {
+                        left: 7%;
+                    }
+                }
+            }
+        }
+
+        ::ng-deep &.ui-dialog.ui-widget {
+            div.ui-dialog-content {
+                padding: 0.3em;
+                height: calc(100% - 50px) !important;
+
+                #tab-container {
+                    min-height: inherit !important;
+                    max-height: inherit !important;
+
+                    .tree-widget {
+                        min-height: inherit !important;
+                        max-height: inherit !important;
+
+                        .document-tree-container {
+                            height: 760px !important;
+                            min-height: 760px !important;
+                            max-height: 760px !important;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

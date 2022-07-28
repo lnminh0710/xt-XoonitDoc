@@ -1,0 +1,29 @@
+<div class="xn__credit-card" *ngIf="isRendered">
+    <div *ngIf="config.headerText" class="xn__form-header">
+        <span class="xn__form-header--same-position">{{config.headerText}}</span>
+    </div>
+    <div [perfectScrollbar]="perfectScrollbarConfig" *ngIf="_editMode">
+        <div class="col-xs-12  col-sm-6  no-padding-right  colum-item" *ngFor="let item of creditCards">
+            <mat-checkbox
+                color="primary"
+                [(ngModel)]="item.select"
+                (change)="itemChanged()">
+                <img src="public/assets/img/blank.gif"
+                    class="credit  credit-{{item.iconFileName.toLowerCase()}}"
+                    alt="{{item.textValue}}" />
+                <span>{{item.textValue}}</span>
+            </mat-checkbox>
+        </div>
+    </div>
+    <div [perfectScrollbar]="perfectScrollbarConfig" *ngIf="!_editMode">
+        <ng-template ngFor let-item [ngForOf]="creditCards">
+            <div *ngIf="item.select" class="col-xs-12  col-sm-6  no-padding-right  colum-item">
+                <i (dblclick)="callChangeToEditMode(item.iconFileName)" id="view-{{item.iconFileName.toLowerCase()}}" class="fa fa-circle active"></i>
+                <img src="public/assets/img/blank.gif"
+                     class="credit  credit-{{item.iconFileName.toLowerCase()}}"
+                     alt="{{item.textValue}}" />
+                <span>{{item.textValue}}</span>
+            </div>
+        </ng-template>
+    </div>
+</div>

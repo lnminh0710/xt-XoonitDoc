@@ -1,0 +1,1013 @@
+<p-dialog
+    header=""
+    [(visible)]="showDialog"
+    modal="true"
+    width="1024"
+    responsive="true"
+    appendTo="body"
+    [resizable]="false"
+    [draggable]="true"
+    [contentStyle]="{ 'padding-bottom': 0, 'padding-top': 0 }"
+>
+    <p-header>
+        <div class="modal-header--information">
+            <span class="header-text">Date Format</span>
+            <!-- <div class="toolbar-icon close-dialog-icon" (click)="close()"></div> -->
+            <div class="toolbar-icon close-dialog-icon" (click)="close()"></div>
+        </div>
+    </p-header>
+    <div class="row xn-padding--md">
+        <div class="col-xs-4 grid-content" [perfectScrollbar]="perfectScrollbarConfig">
+            <div class="list-group no-margin">
+                <a
+                    *ngFor="let item of listItem"
+                    class="list-group-item cursor-pointer"
+                    [ngClass]="{ disabled: item.disabled, 'padding-left-30px': !item.disabled, active: item.active }"
+                    (click)="item.disabled ? null : selectDateFormat(item)"
+                    >{{ item.format }}</a
+                >
+            </div>
+        </div>
+        <div class="col-xs-8 grid-content">
+            <h5>
+                Example:&nbsp;<strong>{{ dateSample }}</strong>
+            </h5>
+            <input
+                type="text"
+                class="form-control"
+                placeholder="Custom format"
+                name="customDateFormat"
+                [(ngModel)]="customDateFormat"
+                (input)="onCustomDateFormatChanged($event)"
+                autocomplete="off"
+            />
+            <div class="margin-top--md">
+                <h5>Accepted patterns:</h5>
+                <div class="reference-table">
+                    <table class="table table-striped table-bordered no-margin">
+                        <thead>
+                            <tr>
+                                <th><!-- react-text: 5154 -->Unit<!-- /react-text --></th>
+                                <th><!-- react-text: 5156 -->Prior<!-- /react-text --></th>
+                                <th><!-- react-text: 5158 -->Pattern<!-- /react-text --></th>
+                                <th><!-- react-text: 5160 -->Result examples<!-- /react-text --></th>
+                                <th><!-- react-text: 5162 -->Notes<!-- /react-text --></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><!-- react-text: 5166 -->Era<!-- /react-text --></td>
+                                <td><!-- react-text: 5168 -->140<!-- /react-text --></td>
+                                <td><!-- react-text: 5170 -->G..GGG<!-- /react-text --></td>
+                                <td><!-- react-text: 5172 -->AD, BC<!-- /react-text --></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td><!-- react-text: 5178 -->GGGG<!-- /react-text --></td>
+                                <td><!-- react-text: 5180 -->Anno Domini, Before Christ<!-- /react-text --></td>
+                                <td><!-- react-text: 5182 -->2<!-- /react-text --></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td><!-- react-text: 5187 -->GGGGG<!-- /react-text --></td>
+                                <td><!-- react-text: 5189 -->A, B<!-- /react-text --></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td><!-- react-text: 5193 -->Calendar year<!-- /react-text --></td>
+                                <td><!-- react-text: 5195 -->130<!-- /react-text --></td>
+                                <td><!-- react-text: 5197 -->y<!-- /react-text --></td>
+                                <td><!-- react-text: 5199 -->44, 1, 1900, 2017, 9999<!-- /react-text --></td>
+                                <td><!-- react-text: 5201 -->4<!-- /react-text --></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td><!-- react-text: 5206 -->yo<!-- /react-text --></td>
+                                <td><!-- react-text: 5208 -->44th, 1st, 1900th, 9999999th<!-- /react-text --></td>
+                                <td><!-- react-text: 5210 -->4,5<!-- /react-text --></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td><!-- react-text: 5215 -->yy<!-- /react-text --></td>
+                                <td><!-- react-text: 5217 -->44, 01, 00, 17<!-- /react-text --></td>
+                                <td><!-- react-text: 5219 -->4<!-- /react-text --></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td><!-- react-text: 5224 -->yyy<!-- /react-text --></td>
+                                <td><!-- react-text: 5226 -->044, 001, 123, 999<!-- /react-text --></td>
+                                <td><!-- react-text: 5228 -->4<!-- /react-text --></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td><!-- react-text: 5233 -->yyyy<!-- /react-text --></td>
+                                <td><!-- react-text: 5235 -->0044, 0001, 1900, 2017<!-- /react-text --></td>
+                                <td><!-- react-text: 5237 -->4<!-- /react-text --></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td><!-- react-text: 5242 -->yyyyy<!-- /react-text --></td>
+                                <td><!-- react-text: 5244 -->...<!-- /react-text --></td>
+                                <td><!-- react-text: 5246 -->2,4<!-- /react-text --></td>
+                            </tr>
+                            <tr>
+                                <td><!-- react-text: 5249 -->Local week-numbering year<!-- /react-text --></td>
+                                <td><!-- react-text: 5251 -->130<!-- /react-text --></td>
+                                <td><!-- react-text: 5253 -->Y<!-- /react-text --></td>
+                                <td><!-- react-text: 5255 -->44, 1, 1900, 2017, 9000<!-- /react-text --></td>
+                                <td><!-- react-text: 5257 -->4<!-- /react-text --></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td><!-- react-text: 5262 -->Yo<!-- /react-text --></td>
+                                <td><!-- react-text: 5264 -->44th, 1st, 1900th, 9999999th<!-- /react-text --></td>
+                                <td><!-- react-text: 5266 -->4,5<!-- /react-text --></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td><!-- react-text: 5271 -->YY<!-- /react-text --></td>
+                                <td><!-- react-text: 5273 -->44, 01, 00, 17<!-- /react-text --></td>
+                                <td><!-- react-text: 5275 -->4,6<!-- /react-text --></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td><!-- react-text: 5280 -->YYY<!-- /react-text --></td>
+                                <td><!-- react-text: 5282 -->044, 001, 123, 999<!-- /react-text --></td>
+                                <td><!-- react-text: 5284 -->4<!-- /react-text --></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td><!-- react-text: 5289 -->YYYY<!-- /react-text --></td>
+                                <td><!-- react-text: 5291 -->0044, 0001, 1900, 2017<!-- /react-text --></td>
+                                <td><!-- react-text: 5293 -->4,6<!-- /react-text --></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td><!-- react-text: 5298 -->YYYYY<!-- /react-text --></td>
+                                <td><!-- react-text: 5300 -->...<!-- /react-text --></td>
+                                <td><!-- react-text: 5302 -->2,4<!-- /react-text --></td>
+                            </tr>
+                            <tr>
+                                <td><!-- react-text: 5305 -->ISO week-numbering year<!-- /react-text --></td>
+                                <td><!-- react-text: 5307 -->130<!-- /react-text --></td>
+                                <td><!-- react-text: 5309 -->R<!-- /react-text --></td>
+                                <td><!-- react-text: 5311 -->-43, 1, 1900, 2017, 9999, -9999<!-- /react-text --></td>
+                                <td><!-- react-text: 5313 -->4,5<!-- /react-text --></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td><!-- react-text: 5318 -->RR<!-- /react-text --></td>
+                                <td><!-- react-text: 5320 -->-43, 01, 00, 17<!-- /react-text --></td>
+                                <td><!-- react-text: 5322 -->4,5<!-- /react-text --></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td><!-- react-text: 5327 -->RRR<!-- /react-text --></td>
+                                <td><!-- react-text: 5329 -->-043, 001, 123, 999, -999<!-- /react-text --></td>
+                                <td><!-- react-text: 5331 -->4,5<!-- /react-text --></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td><!-- react-text: 5336 -->RRRR<!-- /react-text --></td>
+                                <td><!-- react-text: 5338 -->-0043, 0001, 2017, 9999, -9999<!-- /react-text --></td>
+                                <td><!-- react-text: 5340 -->4,5<!-- /react-text --></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td><!-- react-text: 5345 -->RRRRR<!-- /react-text --></td>
+                                <td><!-- react-text: 5347 -->...<!-- /react-text --></td>
+                                <td><!-- react-text: 5349 -->2,4,5<!-- /react-text --></td>
+                            </tr>
+                            <tr>
+                                <td><!-- react-text: 5352 -->Extended year<!-- /react-text --></td>
+                                <td><!-- react-text: 5354 -->130<!-- /react-text --></td>
+                                <td><!-- react-text: 5356 -->u<!-- /react-text --></td>
+                                <td><!-- react-text: 5358 -->-43, 1, 1900, 2017, 9999, -999<!-- /react-text --></td>
+                                <td><!-- react-text: 5360 -->4<!-- /react-text --></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td><!-- react-text: 5365 -->uu<!-- /react-text --></td>
+                                <td><!-- react-text: 5367 -->-43, 01, 99, -99<!-- /react-text --></td>
+                                <td><!-- react-text: 5369 -->4<!-- /react-text --></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td><!-- react-text: 5374 -->uuu<!-- /react-text --></td>
+                                <td><!-- react-text: 5376 -->-043, 001, 123, 999, -999<!-- /react-text --></td>
+                                <td><!-- react-text: 5378 -->4<!-- /react-text --></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td><!-- react-text: 5383 -->uuuu<!-- /react-text --></td>
+                                <td><!-- react-text: 5385 -->-0043, 0001, 2017, 9999, -9999<!-- /react-text --></td>
+                                <td><!-- react-text: 5387 -->4<!-- /react-text --></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td><!-- react-text: 5392 -->uuuuu<!-- /react-text --></td>
+                                <td><!-- react-text: 5394 -->...<!-- /react-text --></td>
+                                <td><!-- react-text: 5396 -->2,4<!-- /react-text --></td>
+                            </tr>
+                            <tr>
+                                <td><!-- react-text: 5399 -->Quarter (formatting)<!-- /react-text --></td>
+                                <td><!-- react-text: 5401 -->120<!-- /react-text --></td>
+                                <td><!-- react-text: 5403 -->Q<!-- /react-text --></td>
+                                <td><!-- react-text: 5405 -->1, 2, 3, 4<!-- /react-text --></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td><!-- react-text: 5411 -->Qo<!-- /react-text --></td>
+                                <td><!-- react-text: 5413 -->1st, 2nd, 3rd, 4th<!-- /react-text --></td>
+                                <td><!-- react-text: 5415 -->5<!-- /react-text --></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td><!-- react-text: 5420 -->QQ<!-- /react-text --></td>
+                                <td><!-- react-text: 5422 -->01, 02, 03, 04<!-- /react-text --></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td><!-- react-text: 5428 -->QQQ<!-- /react-text --></td>
+                                <td><!-- react-text: 5430 -->Q1, Q2, Q3, Q4<!-- /react-text --></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td><!-- react-text: 5436 -->QQQQ<!-- /react-text --></td>
+                                <td><!-- react-text: 5438 -->1st quarter, 2nd quarter, ...<!-- /react-text --></td>
+                                <td><!-- react-text: 5440 -->2<!-- /react-text --></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td><!-- react-text: 5445 -->QQQQQ<!-- /react-text --></td>
+                                <td><!-- react-text: 5447 -->1, 2, 3, 4<!-- /react-text --></td>
+                                <td><!-- react-text: 5449 -->4<!-- /react-text --></td>
+                            </tr>
+                            <tr>
+                                <td><!-- react-text: 5452 -->Quarter (stand-alone)<!-- /react-text --></td>
+                                <td><!-- react-text: 5454 -->120<!-- /react-text --></td>
+                                <td><!-- react-text: 5456 -->q<!-- /react-text --></td>
+                                <td><!-- react-text: 5458 -->1, 2, 3, 4<!-- /react-text --></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td><!-- react-text: 5464 -->qo<!-- /react-text --></td>
+                                <td><!-- react-text: 5466 -->1st, 2nd, 3rd, 4th<!-- /react-text --></td>
+                                <td><!-- react-text: 5468 -->5<!-- /react-text --></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td><!-- react-text: 5473 -->qq<!-- /react-text --></td>
+                                <td><!-- react-text: 5475 -->01, 02, 03, 04<!-- /react-text --></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td><!-- react-text: 5481 -->qqq<!-- /react-text --></td>
+                                <td><!-- react-text: 5483 -->Q1, Q2, Q3, Q4<!-- /react-text --></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td><!-- react-text: 5489 -->qqqq<!-- /react-text --></td>
+                                <td><!-- react-text: 5491 -->1st quarter, 2nd quarter, ...<!-- /react-text --></td>
+                                <td><!-- react-text: 5493 -->2<!-- /react-text --></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td><!-- react-text: 5498 -->qqqqq<!-- /react-text --></td>
+                                <td><!-- react-text: 5500 -->1, 2, 3, 4<!-- /react-text --></td>
+                                <td><!-- react-text: 5502 -->3<!-- /react-text --></td>
+                            </tr>
+                            <tr>
+                                <td><!-- react-text: 5505 -->Month (formatting)<!-- /react-text --></td>
+                                <td><!-- react-text: 5507 -->110<!-- /react-text --></td>
+                                <td><!-- react-text: 5509 -->M<!-- /react-text --></td>
+                                <td><!-- react-text: 5511 -->1, 2, ..., 12<!-- /react-text --></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td><!-- react-text: 5517 -->Mo<!-- /react-text --></td>
+                                <td><!-- react-text: 5519 -->1st, 2nd, ..., 12th<!-- /react-text --></td>
+                                <td><!-- react-text: 5521 -->5<!-- /react-text --></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td><!-- react-text: 5526 -->MM<!-- /react-text --></td>
+                                <td><!-- react-text: 5528 -->01, 02, ..., 12<!-- /react-text --></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td><!-- react-text: 5534 -->MMM<!-- /react-text --></td>
+                                <td><!-- react-text: 5536 -->Jan, Feb, ..., Dec<!-- /react-text --></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td><!-- react-text: 5542 -->MMMM<!-- /react-text --></td>
+                                <td><!-- react-text: 5544 -->January, February, ..., December<!-- /react-text --></td>
+                                <td><!-- react-text: 5546 -->2<!-- /react-text --></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td><!-- react-text: 5551 -->MMMMM<!-- /react-text --></td>
+                                <td><!-- react-text: 5553 -->J, F, ..., D<!-- /react-text --></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td><!-- react-text: 5557 -->Month (stand-alone)<!-- /react-text --></td>
+                                <td><!-- react-text: 5559 -->110<!-- /react-text --></td>
+                                <td><!-- react-text: 5561 -->L<!-- /react-text --></td>
+                                <td><!-- react-text: 5563 -->1, 2, ..., 12<!-- /react-text --></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td><!-- react-text: 5569 -->Lo<!-- /react-text --></td>
+                                <td><!-- react-text: 5571 -->1st, 2nd, ..., 12th<!-- /react-text --></td>
+                                <td><!-- react-text: 5573 -->5<!-- /react-text --></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td><!-- react-text: 5578 -->LL<!-- /react-text --></td>
+                                <td><!-- react-text: 5580 -->01, 02, ..., 12<!-- /react-text --></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td><!-- react-text: 5586 -->LLL<!-- /react-text --></td>
+                                <td><!-- react-text: 5588 -->Jan, Feb, ..., Dec<!-- /react-text --></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td><!-- react-text: 5594 -->LLLL<!-- /react-text --></td>
+                                <td><!-- react-text: 5596 -->January, February, ..., December<!-- /react-text --></td>
+                                <td><!-- react-text: 5598 -->2<!-- /react-text --></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td><!-- react-text: 5603 -->LLLLL<!-- /react-text --></td>
+                                <td><!-- react-text: 5605 -->J, F, ..., D<!-- /react-text --></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td><!-- react-text: 5609 -->Local week of year<!-- /react-text --></td>
+                                <td><!-- react-text: 5611 -->100<!-- /react-text --></td>
+                                <td><!-- react-text: 5613 -->w<!-- /react-text --></td>
+                                <td><!-- react-text: 5615 -->1, 2, ..., 53<!-- /react-text --></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td><!-- react-text: 5621 -->wo<!-- /react-text --></td>
+                                <td><!-- react-text: 5623 -->1st, 2nd, ..., 53th<!-- /react-text --></td>
+                                <td><!-- react-text: 5625 -->5<!-- /react-text --></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td><!-- react-text: 5630 -->ww<!-- /react-text --></td>
+                                <td><!-- react-text: 5632 -->01, 02, ..., 53<!-- /react-text --></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td><!-- react-text: 5636 -->ISO week of year<!-- /react-text --></td>
+                                <td><!-- react-text: 5638 -->100<!-- /react-text --></td>
+                                <td><!-- react-text: 5640 -->I<!-- /react-text --></td>
+                                <td><!-- react-text: 5642 -->1, 2, ..., 53<!-- /react-text --></td>
+                                <td><!-- react-text: 5644 -->5<!-- /react-text --></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td><!-- react-text: 5649 -->Io<!-- /react-text --></td>
+                                <td><!-- react-text: 5651 -->1st, 2nd, ..., 53th<!-- /react-text --></td>
+                                <td><!-- react-text: 5653 -->5<!-- /react-text --></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td><!-- react-text: 5658 -->II<!-- /react-text --></td>
+                                <td><!-- react-text: 5660 -->01, 02, ..., 53<!-- /react-text --></td>
+                                <td><!-- react-text: 5662 -->5<!-- /react-text --></td>
+                            </tr>
+                            <tr>
+                                <td><!-- react-text: 5665 -->Day of month<!-- /react-text --></td>
+                                <td><!-- react-text: 5667 -->90<!-- /react-text --></td>
+                                <td><!-- react-text: 5669 -->d<!-- /react-text --></td>
+                                <td><!-- react-text: 5671 -->1, 2, ..., 31<!-- /react-text --></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td><!-- react-text: 5677 -->do<!-- /react-text --></td>
+                                <td><!-- react-text: 5679 -->1st, 2nd, ..., 31st<!-- /react-text --></td>
+                                <td><!-- react-text: 5681 -->5<!-- /react-text --></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td><!-- react-text: 5686 -->dd<!-- /react-text --></td>
+                                <td><!-- react-text: 5688 -->01, 02, ..., 31<!-- /react-text --></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td><!-- react-text: 5692 -->Day of year<!-- /react-text --></td>
+                                <td><!-- react-text: 5694 -->90<!-- /react-text --></td>
+                                <td><!-- react-text: 5696 -->D<!-- /react-text --></td>
+                                <td><!-- react-text: 5698 -->1, 2, ..., 365, 366<!-- /react-text --></td>
+                                <td><!-- react-text: 5700 -->6<!-- /react-text --></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td><!-- react-text: 5705 -->Do<!-- /react-text --></td>
+                                <td><!-- react-text: 5707 -->1st, 2nd, ..., 365th, 366th<!-- /react-text --></td>
+                                <td><!-- react-text: 5709 -->5<!-- /react-text --></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td><!-- react-text: 5714 -->DD<!-- /react-text --></td>
+                                <td><!-- react-text: 5716 -->01, 02, ..., 365, 366<!-- /react-text --></td>
+                                <td><!-- react-text: 5718 -->6<!-- /react-text --></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td><!-- react-text: 5723 -->DDD<!-- /react-text --></td>
+                                <td><!-- react-text: 5725 -->001, 002, ..., 365, 366<!-- /react-text --></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td><!-- react-text: 5731 -->DDDD<!-- /react-text --></td>
+                                <td><!-- react-text: 5733 -->...<!-- /react-text --></td>
+                                <td><!-- react-text: 5735 -->2<!-- /react-text --></td>
+                            </tr>
+                            <tr>
+                                <td><!-- react-text: 5738 -->Day of week (formatting)<!-- /react-text --></td>
+                                <td><!-- react-text: 5740 -->90<!-- /react-text --></td>
+                                <td><!-- react-text: 5742 -->E..EEE<!-- /react-text --></td>
+                                <td><!-- react-text: 5744 -->Mon, Tue, Wed, ..., Su<!-- /react-text --></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td><!-- react-text: 5750 -->EEEE<!-- /react-text --></td>
+                                <td><!-- react-text: 5752 -->Monday, Tuesday, ..., Sunday<!-- /react-text --></td>
+                                <td><!-- react-text: 5754 -->2<!-- /react-text --></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td><!-- react-text: 5759 -->EEEEE<!-- /react-text --></td>
+                                <td><!-- react-text: 5761 -->M, T, W, T, F, S, S<!-- /react-text --></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td><!-- react-text: 5767 -->EEEEEE<!-- /react-text --></td>
+                                <td><!-- react-text: 5769 -->Mo, Tu, We, Th, Fr, Su, Sa<!-- /react-text --></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td><!-- react-text: 5773 -->ISO day of week (formatting)<!-- /react-text --></td>
+                                <td><!-- react-text: 5775 -->90<!-- /react-text --></td>
+                                <td><!-- react-text: 5777 -->i<!-- /react-text --></td>
+                                <td><!-- react-text: 5779 -->1, 2, 3, ..., 7<!-- /react-text --></td>
+                                <td><!-- react-text: 5781 -->5<!-- /react-text --></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td><!-- react-text: 5786 -->io<!-- /react-text --></td>
+                                <td><!-- react-text: 5788 -->1st, 2nd, ..., 7th<!-- /react-text --></td>
+                                <td><!-- react-text: 5790 -->5<!-- /react-text --></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td><!-- react-text: 5795 -->ii<!-- /react-text --></td>
+                                <td><!-- react-text: 5797 -->01, 02, ..., 07<!-- /react-text --></td>
+                                <td><!-- react-text: 5799 -->5<!-- /react-text --></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td><!-- react-text: 5804 -->iii<!-- /react-text --></td>
+                                <td><!-- react-text: 5806 -->Mon, Tue, Wed, ..., Su<!-- /react-text --></td>
+                                <td><!-- react-text: 5808 -->5<!-- /react-text --></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td><!-- react-text: 5813 -->iiii<!-- /react-text --></td>
+                                <td><!-- react-text: 5815 -->Monday, Tuesday, ..., Sunday<!-- /react-text --></td>
+                                <td><!-- react-text: 5817 -->2,5<!-- /react-text --></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td><!-- react-text: 5822 -->iiiii<!-- /react-text --></td>
+                                <td><!-- react-text: 5824 -->M, T, W, T, F, S, S<!-- /react-text --></td>
+                                <td><!-- react-text: 5826 -->5<!-- /react-text --></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td><!-- react-text: 5831 -->iiiiii<!-- /react-text --></td>
+                                <td><!-- react-text: 5833 -->Mo, Tu, We, Th, Fr, Su, Sa<!-- /react-text --></td>
+                                <td><!-- react-text: 5835 -->5<!-- /react-text --></td>
+                            </tr>
+                            <tr>
+                                <td><!-- react-text: 5838 -->Local day of week (formatting)<!-- /react-text --></td>
+                                <td><!-- react-text: 5840 -->90<!-- /react-text --></td>
+                                <td><!-- react-text: 5842 -->e<!-- /react-text --></td>
+                                <td><!-- react-text: 5844 -->2, 3, 4, ..., 1<!-- /react-text --></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td><!-- react-text: 5850 -->eo<!-- /react-text --></td>
+                                <td><!-- react-text: 5852 -->2nd, 3rd, ..., 1st<!-- /react-text --></td>
+                                <td><!-- react-text: 5854 -->5<!-- /react-text --></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td><!-- react-text: 5859 -->ee<!-- /react-text --></td>
+                                <td><!-- react-text: 5861 -->02, 03, ..., 01<!-- /react-text --></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td><!-- react-text: 5867 -->eee<!-- /react-text --></td>
+                                <td><!-- react-text: 5869 -->Mon, Tue, Wed, ..., Su<!-- /react-text --></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td><!-- react-text: 5875 -->eeee<!-- /react-text --></td>
+                                <td><!-- react-text: 5877 -->Monday, Tuesday, ..., Sunday<!-- /react-text --></td>
+                                <td><!-- react-text: 5879 -->2<!-- /react-text --></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td><!-- react-text: 5884 -->eeeee<!-- /react-text --></td>
+                                <td><!-- react-text: 5886 -->M, T, W, T, F, S, S<!-- /react-text --></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td><!-- react-text: 5892 -->eeeeee<!-- /react-text --></td>
+                                <td><!-- react-text: 5894 -->Mo, Tu, We, Th, Fr, Su, Sa<!-- /react-text --></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td><!-- react-text: 5898 -->Local day of week (stand-alone)<!-- /react-text --></td>
+                                <td><!-- react-text: 5900 -->90<!-- /react-text --></td>
+                                <td><!-- react-text: 5902 -->c<!-- /react-text --></td>
+                                <td><!-- react-text: 5904 -->2, 3, 4, ..., 1<!-- /react-text --></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td><!-- react-text: 5910 -->co<!-- /react-text --></td>
+                                <td><!-- react-text: 5912 -->2nd, 3rd, ..., 1st<!-- /react-text --></td>
+                                <td><!-- react-text: 5914 -->5<!-- /react-text --></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td><!-- react-text: 5919 -->cc<!-- /react-text --></td>
+                                <td><!-- react-text: 5921 -->02, 03, ..., 01<!-- /react-text --></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td><!-- react-text: 5927 -->ccc<!-- /react-text --></td>
+                                <td><!-- react-text: 5929 -->Mon, Tue, Wed, ..., Su<!-- /react-text --></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td><!-- react-text: 5935 -->cccc<!-- /react-text --></td>
+                                <td><!-- react-text: 5937 -->Monday, Tuesday, ..., Sunday<!-- /react-text --></td>
+                                <td><!-- react-text: 5939 -->2<!-- /react-text --></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td><!-- react-text: 5944 -->ccccc<!-- /react-text --></td>
+                                <td><!-- react-text: 5946 -->M, T, W, T, F, S, S<!-- /react-text --></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td><!-- react-text: 5952 -->cccccc<!-- /react-text --></td>
+                                <td><!-- react-text: 5954 -->Mo, Tu, We, Th, Fr, Su, Sa<!-- /react-text --></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td><!-- react-text: 5958 -->AM, PM<!-- /react-text --></td>
+                                <td><!-- react-text: 5960 -->80<!-- /react-text --></td>
+                                <td><!-- react-text: 5962 -->a..aaa<!-- /react-text --></td>
+                                <td><!-- react-text: 5964 -->AM, PM<!-- /react-text --></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td><!-- react-text: 5970 -->aaaa<!-- /react-text --></td>
+                                <td><!-- react-text: 5972 -->a.m., p.m.<!-- /react-text --></td>
+                                <td><!-- react-text: 5974 -->2<!-- /react-text --></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td><!-- react-text: 5979 -->aaaaa<!-- /react-text --></td>
+                                <td><!-- react-text: 5981 -->a, p<!-- /react-text --></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td><!-- react-text: 5985 -->AM, PM, noon, midnight<!-- /react-text --></td>
+                                <td><!-- react-text: 5987 -->80<!-- /react-text --></td>
+                                <td><!-- react-text: 5989 -->b..bbb<!-- /react-text --></td>
+                                <td><!-- react-text: 5991 -->AM, PM, noon, midnight<!-- /react-text --></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td><!-- react-text: 5997 -->bbbb<!-- /react-text --></td>
+                                <td><!-- react-text: 5999 -->a.m., p.m., noon, midnight<!-- /react-text --></td>
+                                <td><!-- react-text: 6001 -->2<!-- /react-text --></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td><!-- react-text: 6006 -->bbbbb<!-- /react-text --></td>
+                                <td><!-- react-text: 6008 -->a, p, n, mi<!-- /react-text --></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td><!-- react-text: 6012 -->Flexible day period<!-- /react-text --></td>
+                                <td><!-- react-text: 6014 -->80<!-- /react-text --></td>
+                                <td><!-- react-text: 6016 -->B..BBB<!-- /react-text --></td>
+                                <td><!-- react-text: 6018 -->at night, in the morning, ...<!-- /react-text --></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td><!-- react-text: 6024 -->BBBB<!-- /react-text --></td>
+                                <td><!-- react-text: 6026 -->at night, in the morning, ...<!-- /react-text --></td>
+                                <td><!-- react-text: 6028 -->2<!-- /react-text --></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td><!-- react-text: 6033 -->BBBBB<!-- /react-text --></td>
+                                <td><!-- react-text: 6035 -->at night, in the morning, ...<!-- /react-text --></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td><!-- react-text: 6039 -->Hour [1-12]<!-- /react-text --></td>
+                                <td><!-- react-text: 6041 -->70<!-- /react-text --></td>
+                                <td><!-- react-text: 6043 -->h<!-- /react-text --></td>
+                                <td><!-- react-text: 6045 -->1, 2, ..., 11, 12<!-- /react-text --></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td><!-- react-text: 6051 -->ho<!-- /react-text --></td>
+                                <td><!-- react-text: 6053 -->1st, 2nd, ..., 11th, 12th<!-- /react-text --></td>
+                                <td><!-- react-text: 6055 -->5<!-- /react-text --></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td><!-- react-text: 6060 -->hh<!-- /react-text --></td>
+                                <td><!-- react-text: 6062 -->01, 02, ..., 11, 12<!-- /react-text --></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td><!-- react-text: 6066 -->Hour [0-23]<!-- /react-text --></td>
+                                <td><!-- react-text: 6068 -->70<!-- /react-text --></td>
+                                <td><!-- react-text: 6070 -->H<!-- /react-text --></td>
+                                <td><!-- react-text: 6072 -->0, 1, 2, ..., 23<!-- /react-text --></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td><!-- react-text: 6078 -->Ho<!-- /react-text --></td>
+                                <td><!-- react-text: 6080 -->0th, 1st, 2nd, ..., 23rd<!-- /react-text --></td>
+                                <td><!-- react-text: 6082 -->5<!-- /react-text --></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td><!-- react-text: 6087 -->HH<!-- /react-text --></td>
+                                <td><!-- react-text: 6089 -->00, 01, 02, ..., 23<!-- /react-text --></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td><!-- react-text: 6093 -->Hour [0-11]<!-- /react-text --></td>
+                                <td><!-- react-text: 6095 -->70<!-- /react-text --></td>
+                                <td><!-- react-text: 6097 -->K<!-- /react-text --></td>
+                                <td><!-- react-text: 6099 -->1, 2, ..., 11, 0<!-- /react-text --></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td><!-- react-text: 6105 -->Ko<!-- /react-text --></td>
+                                <td><!-- react-text: 6107 -->1st, 2nd, ..., 11th, 0th<!-- /react-text --></td>
+                                <td><!-- react-text: 6109 -->5<!-- /react-text --></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td><!-- react-text: 6114 -->KK<!-- /react-text --></td>
+                                <td><!-- react-text: 6116 -->1, 2, ..., 11, 0<!-- /react-text --></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td><!-- react-text: 6120 -->Hour [1-24]<!-- /react-text --></td>
+                                <td><!-- react-text: 6122 -->70<!-- /react-text --></td>
+                                <td><!-- react-text: 6124 -->k<!-- /react-text --></td>
+                                <td><!-- react-text: 6126 -->24, 1, 2, ..., 23<!-- /react-text --></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td><!-- react-text: 6132 -->ko<!-- /react-text --></td>
+                                <td><!-- react-text: 6134 -->24th, 1st, 2nd, ..., 23rd<!-- /react-text --></td>
+                                <td><!-- react-text: 6136 -->5<!-- /react-text --></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td><!-- react-text: 6141 -->kk<!-- /react-text --></td>
+                                <td><!-- react-text: 6143 -->24, 01, 02, ..., 23<!-- /react-text --></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td><!-- react-text: 6147 -->Minute<!-- /react-text --></td>
+                                <td><!-- react-text: 6149 -->60<!-- /react-text --></td>
+                                <td><!-- react-text: 6151 -->m<!-- /react-text --></td>
+                                <td><!-- react-text: 6153 -->0, 1, ..., 59<!-- /react-text --></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td><!-- react-text: 6159 -->mo<!-- /react-text --></td>
+                                <td><!-- react-text: 6161 -->0th, 1st, ..., 59th<!-- /react-text --></td>
+                                <td><!-- react-text: 6163 -->5<!-- /react-text --></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td><!-- react-text: 6168 -->mm<!-- /react-text --></td>
+                                <td><!-- react-text: 6170 -->00, 01, ..., 59<!-- /react-text --></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td><!-- react-text: 6174 -->Second<!-- /react-text --></td>
+                                <td><!-- react-text: 6176 -->50<!-- /react-text --></td>
+                                <td><!-- react-text: 6178 -->s<!-- /react-text --></td>
+                                <td><!-- react-text: 6180 -->0, 1, ..., 59<!-- /react-text --></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td><!-- react-text: 6186 -->so<!-- /react-text --></td>
+                                <td><!-- react-text: 6188 -->0th, 1st, ..., 59th<!-- /react-text --></td>
+                                <td><!-- react-text: 6190 -->5<!-- /react-text --></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td><!-- react-text: 6195 -->ss<!-- /react-text --></td>
+                                <td><!-- react-text: 6197 -->00, 01, ..., 59<!-- /react-text --></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td><!-- react-text: 6201 -->Seconds timestamp<!-- /react-text --></td>
+                                <td><!-- react-text: 6203 -->40<!-- /react-text --></td>
+                                <td><!-- react-text: 6205 -->t<!-- /react-text --></td>
+                                <td><!-- react-text: 6207 -->512969520<!-- /react-text --></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td><!-- react-text: 6213 -->tt<!-- /react-text --></td>
+                                <td><!-- react-text: 6215 -->...<!-- /react-text --></td>
+                                <td><!-- react-text: 6217 -->2<!-- /react-text --></td>
+                            </tr>
+                            <tr>
+                                <td><!-- react-text: 6220 -->Fraction of second<!-- /react-text --></td>
+                                <td><!-- react-text: 6222 -->30<!-- /react-text --></td>
+                                <td><!-- react-text: 6224 -->S<!-- /react-text --></td>
+                                <td><!-- react-text: 6226 -->0, 1, ..., 9<!-- /react-text --></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td><!-- react-text: 6232 -->SS<!-- /react-text --></td>
+                                <td><!-- react-text: 6234 -->00, 01, ..., 99<!-- /react-text --></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td><!-- react-text: 6240 -->SSS<!-- /react-text --></td>
+                                <td><!-- react-text: 6242 -->000, 0001, ..., 999<!-- /react-text --></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td><!-- react-text: 6248 -->SSSS<!-- /react-text --></td>
+                                <td><!-- react-text: 6250 -->...<!-- /react-text --></td>
+                                <td><!-- react-text: 6252 -->2<!-- /react-text --></td>
+                            </tr>
+                            <tr>
+                                <td><!-- react-text: 6255 -->Milliseconds timestamp<!-- /react-text --></td>
+                                <td><!-- react-text: 6257 -->20<!-- /react-text --></td>
+                                <td><!-- react-text: 6259 -->T<!-- /react-text --></td>
+                                <td><!-- react-text: 6261 -->512969520900<!-- /react-text --></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td><!-- react-text: 6267 -->TT<!-- /react-text --></td>
+                                <td><!-- react-text: 6269 -->...<!-- /react-text --></td>
+                                <td><!-- react-text: 6271 -->2<!-- /react-text --></td>
+                            </tr>
+                            <tr>
+                                <td><!-- react-text: 6274 -->Timezone (ISO-8601 w/ Z)<!-- /react-text --></td>
+                                <td><!-- react-text: 6276 -->10<!-- /react-text --></td>
+                                <td><!-- react-text: 6278 -->X<!-- /react-text --></td>
+                                <td><!-- react-text: 6280 -->-08, +0530, Z<!-- /react-text --></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td><!-- react-text: 6286 -->XX<!-- /react-text --></td>
+                                <td><!-- react-text: 6288 -->-0800, +0530, Z<!-- /react-text --></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td><!-- react-text: 6294 -->XXX<!-- /react-text --></td>
+                                <td><!-- react-text: 6296 -->-08:00, +05:30, Z<!-- /react-text --></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td><!-- react-text: 6302 -->XXXX<!-- /react-text --></td>
+                                <td><!-- react-text: 6304 -->-0800, +0530, Z, +123456<!-- /react-text --></td>
+                                <td><!-- react-text: 6306 -->2<!-- /react-text --></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td><!-- react-text: 6311 -->XXXXX<!-- /react-text --></td>
+                                <td><!-- react-text: 6313 -->-08:00, +05:30, Z, +12:34:56<!-- /react-text --></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td><!-- react-text: 6317 -->Timezone (ISO-8601 w/o Z)<!-- /react-text --></td>
+                                <td><!-- react-text: 6319 -->10<!-- /react-text --></td>
+                                <td><!-- react-text: 6321 -->x<!-- /react-text --></td>
+                                <td><!-- react-text: 6323 -->-08, +0530, +00<!-- /react-text --></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td><!-- react-text: 6329 -->xx<!-- /react-text --></td>
+                                <td><!-- react-text: 6331 -->-0800, +0530, +0000<!-- /react-text --></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td><!-- react-text: 6337 -->xxx<!-- /react-text --></td>
+                                <td><!-- react-text: 6339 -->-08:00, +05:30, +00:00<!-- /react-text --></td>
+                                <td><!-- react-text: 6341 -->2<!-- /react-text --></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td><!-- react-text: 6346 -->xxxx<!-- /react-text --></td>
+                                <td><!-- react-text: 6348 -->-0800, +0530, +0000, +123456<!-- /react-text --></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td><!-- react-text: 6354 -->xxxxx<!-- /react-text --></td>
+                                <td><!-- react-text: 6356 -->-08:00, +05:30, +00:00, +12:34:56<!-- /react-text --></td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <p-footer>
+        <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+            <button label="Cancel" type="button" mat-raised-button (click)="close()">
+                <span class="ui-button-text ui-c">Cancel</span>
+            </button>
+            <button
+                label="Save"
+                type="button"
+                mat-raised-button
+                class="mat-btn-blue"
+                [disabled]="disabledApplyBtn"
+                (click)="apply()"
+            >
+                <span class="ui-button-text ui-c">Apply</span>
+            </button>
+        </div>
+    </p-footer>
+</p-dialog>

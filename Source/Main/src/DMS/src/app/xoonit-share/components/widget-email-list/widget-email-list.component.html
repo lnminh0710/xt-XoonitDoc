@@ -1,0 +1,104 @@
+<div class="widget-header w-100 d-flex flex-row flex-nowrap">
+    <div class="left w-100 d-flex flex-row flex-nowrap">
+        <mat-icon
+            class="icon-transform color-blue"
+            style="top: -9px; margin: 0 8px; cursor: pointer"
+            #popUpload="bs-tooltip"
+            container="body"
+            data-placement="bottom"
+            [tooltip]="isFullScreen ? 'Minimize' : 'Full screen'"
+            (click)="expandWidget()"
+            [attr.control-key]="'email-list__fullscreen-minimize'"
+            aria-hidden="false"
+            [svgIcon]="isFullScreen ? IconNamesEnum.FULL_SCREEN_MINIMIZE : IconNamesEnum.FULL_SCREEN"
+        ></mat-icon>
+        <div
+            *ngIf="!selectedFolder?.isCompany && selectedFolder?.canEdit"
+            [attr.control-key]="'document-viewer__upload'"
+            class="toolbar-icon icon-transform upload-icon"
+            style="padding: 6px"
+            #popUpload="bs-tooltip"
+            container="body"
+            (click)="isShowUpload = true"
+            data-placement="bottom"
+            [tooltip]="'Upload'"
+        ></div>
+    </div>
+    <div
+        class="actions-list right w-100 d-flex flex-row flex-nowrap"
+        style="margin-top: 0"
+        *ngIf="fileList && selectedFolder?.canRead"
+    >
+        <mat-icon
+            class="icon-transform"
+            style="margin: 0 8px; cursor: pointer"
+            #popUpload="bs-tooltip"
+            container="body"
+            data-placement="bottom"
+            [tooltip]="'Refresh'"
+            (click)="getFiles()"
+            [attr.control-key]="'email-list__refresh'"
+            aria-hidden="false"
+            [svgIcon]="IconNamesEnum.WIDGET_MYDM_FORM_Reset"
+        ></mat-icon>
+    </div>
+</div>
+<div class="widget-email-list w-100">
+    <div
+        class="widget-file-explorer-container mini-scrollbar drop-files"
+        dnd-droppable
+        [dropZones]="['upload-document']"
+    >
+        <form class="box" enctype="multipart/form-data" id="form-upload-file">
+            <div class="file-list xoonit-grid" *ngIf="fileList?.columns?.length && selectedFolder?.canRead">
+                <xn-ag-grid
+                    #xnAgGrid
+                    [id]="'bb67ff80-8302-4a89-ba44-f1563ff58f95'"
+                    [globalProperties]="globalProperties"
+                    [serverPaging]="false"
+                    [suppressContextMenu]="false"
+                    [dataSource]="fileList"
+                    [rowHeight]="38"
+                    [readOnly]="true"
+                    [autoSelectCurrentRowAfterChangingData]="false"
+                    [rowSelection]="'multiple'"
+                    [suppressRowClickSelection]="false"
+                    [rowDragMultiRow]="true"
+                    [rowDragEntireRow]="true"
+                    [dropZoneElementText]="'.node-content-wrapper'"
+                    [suppressMoveWhenRowDragging]="true"
+                    (rowClick)="onRowClick($event, false)"
+                    (rowDoubleClicked)="onRowClick($event, true)"
+                    (dropAction)="showConfirmDrop($event)"
+                >
+                </xn-ag-grid>
+            </div>
+            <div *ngIf="selectedFolder?.canEdit" class="upload-animation">
+                <div class="upload-animation__image"></div>
+                <div class="upload-animation__title">Drop files to upload</div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<widget-upload
+    *ngIf="isShowUpload && selectedFolder?.canEdit"
+    (onClose)="isShowUpload = false; filesUpload = []"
+    (onUploadFinished)="refreshListData($event)"
+    [fileUploaded]="filesUpload"
+    [selectedFolder]="selectedFolder"
+    [acceptFileTypes]="'.eml,message/rfc822,.msg'"
+    [idRepDocumentGuiType]="ID_REP_DOC_GUID_TYPE_CONSTANT.EMAIL"
+></widget-upload>
+
+<ng-template #confirmMove let-close="close">
+    <div class="popup-content">
+        <div class="popup-content__title">
+            <label>Do you want move this/these file(s)?</label>
+        </div>
+        <div class="popup-action">
+            <div class="popup-action__button ml-4" (click)="close()">No</div>
+            <div class="popup-action__button primary" (click)="onDropAction(close)">Yes</div>
+        </div>
+    </div>
+</ng-template>

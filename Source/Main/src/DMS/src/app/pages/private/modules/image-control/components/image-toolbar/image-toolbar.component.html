@@ -1,0 +1,452 @@
+<div class="image-toolbar" *ngIf="!isLoading && !isRotation">
+    <ng-content *ngIf="!viewAllPage"></ng-content>
+    <div>
+        <div
+            [attr.control-key]="'document-viewer__ungroup'"
+            class="toolbar-icon icon-transform ungroup-icon"
+            *ngIf="viewAllPage && isBase64"
+            #popUpload="bs-tooltip"
+            container="body"
+            data-placement="bottom"
+            (click)="unGroup()"
+            [tooltip]="tooltipUngroupButton"
+        ></div>
+    </div>
+    <div>
+        <div
+            [attr.control-key]="'document-viewer__fullpage'"
+            class="toolbar-icon icon-transform"
+            [class.disabled]="!isSelectDocType"
+            [class.full-screen-icon]="!isFullScreen"
+            [class.minimize-icon]="isFullScreen"
+            (click)="expandWidget()"
+            #popUpload="bs-tooltip"
+            container="body"
+            data-placement="bottom"
+            [tooltip]="isFullScreen ? 'Minimize' : 'Full screen'"
+        ></div>
+    </div>
+    <div>
+        <div
+            [attr.control-key]="'document-viewer__share'"
+            class="toolbar-icon icon-transform share-icon"
+            [class.disabled]="!isSelectDocType"
+            *ngIf="!viewAllPage && toolbarConfig.isShowShare"
+            (click)="share()"
+            #popUpload="bs-tooltip"
+            container="body"
+            data-placement="bottom"
+            [tooltip]="tooltipShareButton"
+        ></div>
+    </div>
+    <div>
+        <div
+            class="toolbar-icon icon-transform download-icon"
+            [attr.control-key]="'document-viewer__download'"
+            [class.disabled]="!isSelectDocType"
+            *ngIf="!viewAllPage && toolbarConfig.isShowDownload"
+            #popUpload="bs-tooltip"
+            container="body"
+            data-placement="bottom"
+            [tooltip]="tooltipDownloadButton"
+            (click)="downloadDocument()"
+        ></div>
+    </div>
+    <div>
+        <div
+            class="toolbar-icon icon-transform envelope-icon"
+            [attr.control-key]="'document-viewer__envelope'"
+            [class.disabled]="!isSelectDocType"
+            *ngIf="!viewAllPage && toolbarConfig.isShowSendMail"
+            #popEmail="bs-tooltip"
+            container="body"
+            data-placement="bottom"
+            [tooltip]="tooltipEmailButton"
+            (click)="sendMail()"
+        ></div>
+    </div>
+    <div>
+        <div
+            class="toolbar-icon icon-transform print-icon"
+            [attr.control-key]="'document-viewer__print'"
+            [class.disabled]="!isSelectDocType"
+            *ngIf="!viewAllPage && toolbarConfig.isShowPrinter"
+            #popPrint="bs-tooltip"
+            container="body"
+            data-placement="bottom"
+            [tooltip]="tooltipPrintButton"
+            (click)="print()"
+        ></div>
+    </div>
+    <div class="image-toolbar__space" *ngIf="viewAllPage"></div>
+
+    <!-- <div>
+        <div
+            *ngIf="viewAllPage"
+            class="toolbar-icon icon-transform ungroup-icon"
+            [attr.control-key]="'document-viewer__view-info'"
+            #popPrint="bs-tooltip"
+            container="body"
+            data-placement="bottom"
+            [tooltip]="Ungroup"
+            (click)="onToggleViewImageInfo(false)"
+        ></div>
+    </div> -->
+    <div>
+        <div
+            *ngIf="viewAllPage"
+            class="toolbar-icon icon-transform cancel-icon"
+            [attr.control-key]="'document-viewer__cancel'"
+            #popPrint="bs-tooltip"
+            container="body"
+            data-placement="bottom"
+            [tooltip]="tooltipCloseWithoutSaveButton"
+            (click)="onToggleViewImageInfo(false)"
+        ></div>
+    </div>
+    <div>
+        <div
+            class="toolbar-icon icon-transform save-icon"
+            [attr.control-key]="'document-viewer__save'"
+            #popPrint="bs-tooltip"
+            container="body"
+            data-placement="bottom"
+            *ngIf="viewAllPage"
+            [tooltip]="tooltipSaveAndCloseButton"
+            (click)="onToggleViewImageInfo(true)"
+        ></div>
+    </div>
+
+    <div>
+        <div
+            class="toolbar-icon icon-transform keyword-icon"
+            [attr.control-key]="'document-viewer__keyword'"
+            [class.disabled]="!isSelectDocType"
+            #popPrint="bs-tooltip"
+            container="body"
+            data-placement="bottom"
+            *ngIf="!viewAllPage && toolbarConfig.isShowKeyword"
+            [tooltip]="tooltipKeywordButton"
+            (click)="onClickKeyword()"
+        ></div>
+    </div>
+    <div>
+        <div
+            class="image-toolbar__todo icon-transform"
+            [attr.control-key]="'document-viewer__todo'"
+            [class.disabled]="!isSelectDocType"
+            *ngIf="!viewAllPage && toolbarConfig.isShowTodo"
+            (click)="onClickTodo()"
+        >
+            <div><div class="todo-text-icon">ToDo</div></div>
+            <div>
+                <div
+                    class="image-toolbar__todo-checkbox icon-transform"
+                    [class.disabled]="!isSelectDocType"
+                    [ngClass]="{ checked: isShowTodo, unchecked: !isShowTodo }"
+                ></div>
+            </div>
+        </div>
+    </div>
+    <div class="image-toolbar__space" [class.disabled]="!isSelectDocType" *ngIf="!viewAllPage && !isBase64"></div>
+    <div>
+        <!-- (click)="applyDataAI()" -->
+        <div
+            class="toolbar-icon icon-transform ai-icon"
+            [attr.control-key]="'document-viewer__ai-data'"
+            [class.disabled]="!isSelectDocType"
+            (click)="openExtractedMasterData()"
+            *ngIf="!viewAllPage && toolbarConfig.isShowApplyAIData"
+            #popAI="bs-tooltip"
+            container="body"
+            data-placement="bottom"
+            [tooltip]="tooltipAutoFillDataButton"
+        ></div>
+    </div>
+    <div>
+        <div
+            class="toolbar-icon icon-transform qr-code-icon"
+            [attr.control-key]="'document-viewer__qr-code'"
+            [class.disabled]="!isSelectDocType"
+            (click)="applyDataQRCode()"
+            *ngIf="!viewAllPage && toolbarConfig.isShowApplyQRData && !!JsonQRCode"
+            #popQRCode="bs-tooltip"
+            container="body"
+            data-placement="bottom"
+            [tooltip]="tooltipAutoFillQRCodeButton"
+        ></div>
+    </div>
+    <div>
+        <div
+            class="toolbar-icon icon-transform clean-icon"
+            [attr.control-key]="'document-viewer__clean'"
+            [class.disabled]="!isSelectDocType"
+            (click)="onClean()"
+            *ngIf="!viewAllPage && toolbarConfig.isShowClean"
+            #popHand="bs-tooltip"
+            container="body"
+            data-placement="bottom"
+            [tooltip]="tooltipCleanButton"
+        ></div>
+    </div>
+    <!-- <div><div
+        class="toolbar-icon icon-transform"
+        [ngClass]="{ 'hand-icon': !isMove, 'draw-icon': isMove }"
+        [class.disabled]="!isSelectDocType"
+        (click)="onToggleMove(-90)"
+        *ngIf="!viewAllPage && toolbarConfig.isShowMoveMode"
+        #popHand="bs-tooltip"
+        container="body"
+        data-placement="bottom"
+        [tooltip]="isMove ? 'Draw rectangle' : 'Move'"
+    ></div></div> -->
+    <!-- <div><div
+        class="toolbar-icon icon-transform draw-icon"
+        (click)="editDocument()"
+        *ngIf="!viewAllPage && toolbarConfig.isShowEditMode"
+        #popHand="bs-tooltip" container="body"
+        data-placement="bottom"
+        [tooltip]="Edit"
+    ></div></div> -->
+    <div>
+        <div
+            class="toolbar-icon icon-transform rotate-left-icon"
+            [attr.control-key]="'document-viewer__rotate-left'"
+            [class.disabled]="!isSelectDocType"
+            (click)="onClickRotate(-90)"
+            *ngIf="!viewAllPage && !isShowRotateMode"
+            #popRotateL="bs-tooltip"
+            container="body"
+            data-placement="bottom"
+            [tooltip]="tooltipRotateLeftButton"
+        ></div>
+    </div>
+    <div>
+        <div
+            class="toolbar-icon icon-transform rotate-right-icon"
+            [attr.control-key]="'document-viewer__rotate-right'"
+            [class.disabled]="!isSelectDocType"
+            (click)="onClickRotate(90)"
+            *ngIf="!viewAllPage && !isShowRotateMode"
+            #popRotateR="bs-tooltip"
+            container="body"
+            data-placement="bottom"
+            [tooltip]="tooltipRotateRightButton"
+        ></div>
+    </div>
+    <div>
+        <div
+            class="toolbar-icon icon-transform rotate-right-icon"
+            [attr.control-key]="'document-viewer__rotate-right'"
+            [class.disabled]="!isSelectDocType"
+            (click)="onClickRotate()"
+            *ngIf="!viewAllPage && isShowRotateMode"
+            #popRotateR="bs-tooltip"
+            container="body"
+            data-placement="bottom"
+            [tooltip]="tooltipRotateImageButton"
+        ></div>
+    </div>
+
+    <div>
+        <div
+            class="toolbar-icon icon-transform view-actual-size-icon"
+            [attr.control-key]="'document-viewer__view-actual-size'"
+            [class.disabled]="!isSelectDocType"
+            (click)="onClickViewActualSize()"
+            *ngIf="!viewAllPage"
+            #popViewActualSize="bs-tooltip"
+            container="body"
+            data-placement="bottom"
+            [tooltip]="tooltipViewActualSizeButton"
+        ></div>
+    </div>
+    <div>
+        <div
+            class="toolbar-icon icon-transform zoom-out-icon"
+            [attr.control-key]="'document-viewer__zoom-out'"
+            [class.disabled]="!isSelectDocType"
+            (click)="onClickZoom(0.8)"
+            *ngIf="!viewAllPage"
+            #popZoomout="bs-tooltip"
+            container="body"
+            data-placement="bottom"
+            [tooltip]="tooltipZoomOutButton"
+        ></div>
+    </div>
+    <div>
+        <div
+            class="toolbar-icon icon-transform zoom-in-icon"
+            [attr.control-key]="'document-viewer__zoom-in'"
+            [class.disabled]="!isSelectDocType"
+            (click)="onClickZoom(1.2)"
+            *ngIf="!viewAllPage"
+            #popZoomin="bs-tooltip"
+            container="body"
+            data-placement="bottom"
+            [tooltip]="tooltipZoomInButton"
+        ></div>
+    </div>
+    <div>
+        <div
+            class="toolbar-icon icon-transform ocr-manually"
+            [attr.control-key]="'document-viewer__ocr-manually'"
+            [class.disabled]="!isSelectDocType"
+            (click)="onClickOCRManually()"
+            *ngIf="!viewAllPage && toolbarConfig.isShowOCRManually"
+            #popRotateR="bs-tooltip"
+            container="body"
+            data-placement="bottom"
+            [tooltip]="tooltipRefreshOcrButton"
+        ></div>
+    </div>
+    <div>
+        <div
+            *ngIf="!toolbarConfig.isHideGroupIcon && !viewAllPage"
+            class="toolbar-icon icon-transform list-page-icon"
+            [attr.control-key]="'document-viewer__view-all-page'"
+            [class.disabled]="!isSelectDocType"
+            #popPrint="bs-tooltip"
+            container="body"
+            data-placement="bottom"
+            [tooltip]="tooltipShowAllPagesButton"
+            (click)="onToggleViewImageInfo(false)"
+        ></div>
+    </div>
+</div>
+<div class="image-toolbar" *ngIf="isLoading">
+    <img class="image-toolbar__loading" src="/public/assets/img/loading.gif" alt="" />
+</div>
+<!--      Rotation mode         -->
+<div class="image-toolbar image-toolbar__rotation" *ngIf="!isLoading && isRotation">
+    <div>
+        <div
+            class="toolbar-icon icon-transform rotate-left-icon"
+            [attr.control-key]="'document-viewer__rotate-left'"
+            (click)="onClickRotate(-90)"
+            #popRotateL="bs-tooltip"
+            container="body"
+            data-placement="bottom"
+            [tooltip]="tooltipRotateLeftButton"
+        ></div>
+    </div>
+    <div>
+        <div
+            class="toolbar-icon icon-transform rotate-right-icon"
+            [attr.control-key]="'document-viewer__rotate-right'"
+            (click)="onClickRotate(90)"
+            #popRotateR="bs-tooltip"
+            container="body"
+            data-placement="bottom"
+            [tooltip]="tooltipRotateRightButton"
+        ></div>
+    </div>
+    <div>
+        <div
+            class="toolbar-icon icon-transform zoom-out-icon"
+            [attr.control-key]="'document-viewer__zoom-out'"
+            [class.disabled]="!isSelectDocType"
+            (click)="onClickZoom(0.8)"
+            *ngIf="!viewAllPage"
+            #popZoomout="bs-tooltip"
+            container="body"
+            data-placement="bottom"
+            [tooltip]="tooltipZoomOutButton"
+        ></div>
+    </div>
+    <div>
+        <div
+            class="toolbar-icon icon-transform zoom-in-icon"
+            [attr.control-key]="'document-viewer__zoom-in'"
+            [class.disabled]="!isSelectDocType"
+            (click)="onClickZoom(1.2)"
+            *ngIf="!viewAllPage"
+            #popZoomin="bs-tooltip"
+            container="body"
+            data-placement="bottom"
+            [tooltip]="tooltipZoomInButton"
+        ></div>
+    </div>
+    <!-- <div><div class="image-toolbar__space"></div></div> -->
+
+    <div>
+        <div
+            class="toolbar-icon icon-transform save-icon"
+            [attr.control-key]="'document-viewer__save'"
+            #popPrint="bs-tooltip"
+            container="body"
+            data-placement="bottom"
+            [tooltip]="tooltipSaveAndCloseButton"
+            (click)="onToggleRotationMode(true)"
+        ></div>
+    </div>
+    <div>
+        <div
+            class="toolbar-icon icon-transform cancel-icon"
+            [attr.control-key]="'document-viewer__cancel'"
+            #popPrint="bs-tooltip"
+            container="body"
+            data-placement="bottom"
+            [tooltip]="tooltipCloseWithoutSaveButton"
+            (click)="onToggleRotationMode(false)"
+        ></div>
+    </div>
+</div>
+
+<ng-template #tooltipUngroupButton>
+    <label-translation [keyword]="'IMAGE_TOOLBAR__Ungroup'"></label-translation>
+</ng-template>
+<ng-template #tooltipShareButton>
+    <label-translation [keyword]="'IMAGE_TOOLBAR__Share'"></label-translation>
+</ng-template>
+<ng-template #tooltipDownloadButton>
+    <label-translation [keyword]="'IMAGE_TOOLBAR__Download'"></label-translation>
+</ng-template>
+<ng-template #tooltipEmailButton>
+    <label-translation [keyword]="'IMAGE_TOOLBAR__Email'"></label-translation>
+</ng-template>
+<ng-template #tooltipPrintButton>
+    <label-translation [keyword]="'IMAGE_TOOLBAR__Print'"></label-translation>
+</ng-template>
+<ng-template #tooltipCloseWithoutSaveButton>
+    <label-translation [keyword]="'IMAGE_TOOLBAR__CloseWithoutSave'"></label-translation>
+</ng-template>
+<ng-template #tooltipSaveAndCloseButton>
+    <label-translation [keyword]="'IMAGE_TOOLBAR__SaveAndClose'"></label-translation>
+</ng-template>
+<ng-template #tooltipKeywordButton>
+    <label-translation [keyword]="'IMAGE_TOOLBAR__Keyword'"></label-translation>
+</ng-template>
+<ng-template #tooltipAutoFillDataButton>
+    <label-translation [keyword]="'IMAGE_TOOLBAR__AutoFillData'"></label-translation>
+</ng-template>
+<ng-template #tooltipAutoFillQRCodeButton>
+    <label-translation [keyword]="'IMAGE_TOOLBAR__AutoFillQRCode'"></label-translation>
+</ng-template>
+<ng-template #tooltipCleanButton>
+    <label-translation [keyword]="'IMAGE_TOOLBAR__Clean'"></label-translation>
+</ng-template>
+<ng-template #tooltipRotateLeftButton>
+    <label-translation [keyword]="'IMAGE_TOOLBAR__RotateLeft'"></label-translation>
+</ng-template>
+<ng-template #tooltipRotateRightButton>
+    <label-translation [keyword]="'IMAGE_TOOLBAR__RotateRight'"></label-translation>
+</ng-template>
+<ng-template #tooltipRotateImageButton>
+    <label-translation [keyword]="'IMAGE_TOOLBAR__RotateImage'"></label-translation>
+</ng-template>
+<ng-template #tooltipViewActualSizeButton>
+    <label-translation [keyword]="'IMAGE_TOOLBAR__ViewActualSize'"></label-translation>
+</ng-template>
+<ng-template #tooltipZoomOutButton>
+    <label-translation [keyword]="'IMAGE_TOOLBAR__ZoomOut'"></label-translation>
+</ng-template>
+<ng-template #tooltipZoomInButton>
+    <label-translation [keyword]="'IMAGE_TOOLBAR__ZoomIn'"></label-translation>
+</ng-template>
+<ng-template #tooltipRefreshOcrButton>
+    <label-translation [keyword]="'IMAGE_TOOLBAR__RefreshOcr'"></label-translation>
+</ng-template>
+<ng-template #tooltipShowAllPagesButton>
+    <label-translation [keyword]="'IMAGE_TOOLBAR__ShowAllPages'"></label-translation>
+</ng-template>

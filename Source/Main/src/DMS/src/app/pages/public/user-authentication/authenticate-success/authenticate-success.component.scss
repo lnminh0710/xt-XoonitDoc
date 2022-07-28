@@ -1,0 +1,26 @@
+@import '../user.authentication.scss';
+
+.authenticate {
+
+    &.page-info {
+        .header {
+            margin-bottom: 75px;
+        }
+    }
+    .logo {
+        &.mobile-screen {
+            display: block;
+            height: 100px;
+            padding: 29px;
+            background-color: $blue-12;
+            width: 91%;
+            margin-left: 20px;
+            margin-top: 5px;
+            margin-bottom: 25px;
+            .mydm-logo {
+                margin-left: 0;
+                margin-top: 0;
+            }
+        }
+    }
+}

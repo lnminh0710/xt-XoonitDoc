@@ -1,0 +1,102 @@
+.tab-content {
+    //background-color: rgba(39, 51, 149, 0.8);
+    border-radius: 12px;
+    //margin-top: 5px;
+}
+
+.tab-container,
+.tabs-form-wrapper {
+    height: 100%;
+    width: 100%;
+}
+
+.tabs-switcher {
+    z-index: 999;
+    position: absolute;
+    height: 32px;
+    width: 94%;
+    top: 17px;
+    left: 12px;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+
+    .tab-icon {
+        cursor: pointer;
+        background-position: center !important;
+        background-repeat: no-repeat !important;
+    }
+
+    .tabs-list {
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: flex-start;
+
+        .tab-icon {
+            margin: 0 16px;
+            width: 32px;
+            height: 32px;
+            margin: 0 8px;
+            filter: opacity(0.3) !important;
+
+            &.active {
+                filter: opacity(1) !important;
+            }
+        }
+    }
+
+    .action-list {
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-flow: row nowrap;
+        flex-flow: row nowrap;
+        -ms-flex-pack: start;
+        justify-content: flex-start;
+
+        .action-item {
+            margin-left: 20px;
+            align-self: center;
+            cursor: pointer;
+
+            &.action-icon {
+                &.toggle-contact {
+                    width: 16px;
+                    height: 20px;
+                    background: url('src/public/imgs/icon-contact-person.svg');
+                }
+
+                &.add-note {
+                    width: 28px;
+                    height: 28px;
+                    background: url('src/public/imgs/plus-2.svg');
+                }
+
+                &.btn-ocr {
+                    background: url('src/public/imgs/icon-ai.svg') no-repeat center;
+                    background-size: 20px;
+                    width: 20px;
+                    height: 20px;
+                }
+
+                &.toggle-contact,
+                &.btn-ocr {
+                    filter: opacity(0.3) !important;
+
+                    &.active {
+                        filter: opacity(1) !important;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.tab-pane {
+    display: none;
+    height: 100%;
+    width: 100%;
+
+    &.active {
+        display: block;
+    }
+}

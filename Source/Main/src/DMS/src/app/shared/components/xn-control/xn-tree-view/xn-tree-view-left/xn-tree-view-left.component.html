@@ -1,0 +1,60 @@
+<div class="tree-node  xn-tree-node"
+     *ngFor="let treeNode of treeViewData"
+     id="{{treeNode.id}}">
+    <div class="tree-view__left-side"
+         (click)="treeNodeClick(treeNode)"
+         [ngStyle]="treeViewLeftSideLevel"
+         [ngClass]="{'tree-view-selected': treeNode.isSelected}">
+        <i *ngIf="!treeNode.children || !treeNode.children.length"
+           class="have-not-child  fa tree-node__icon fa-caret-right  tree-node__icon--collapse"></i>
+        <i *ngIf="treeNode.children && treeNode.children.length"
+           class="fa tree-node__icon"
+           [ngClass]="{'fa-caret-down  tree-node__icon--expand':treeNode.expand, 'fa-caret-right  tree-node__icon--collapse':!treeNode.expand}"
+           (click)="expandNodeClick(treeNode)"></i>
+        <mat-checkbox color="primary"
+                      class="tree-view__node-select"
+                      *ngIf="config && config.editMode && !treeNode.isRename"
+                      [(ngModel)]="treeNode.select"
+                      value="{{treeNode.select}}"
+                      (change)="checkboxChange(treeNode)">
+            <div class="text-ellipsis  tree-view-node-text"
+                 (click)="treeNodeNameClick($event,treeNode)"
+                 (dblclick)="treeNodeNameClickDblClick($event,treeNode)">{{treeNode.text}}</div>
+        </mat-checkbox>
+        <mat-checkbox color="primary"
+                      class="tree-view__node-select"
+                      *ngIf="config && config.editMode && !!treeNode.isRename"
+                      [(ngModel)]="treeNode.select"
+                      value="{{treeNode.select}}">
+            <input class="tree-view-input"
+                   autofocus
+                   (keydown)="onKeyDown($event)"
+                   (blur)="onBlur(treeNode, $event)"
+                   [(ngModel)]="treeNode.text"
+                   id="inputCatName{{treeNode.id}}"
+                   autocomplete="off" />
+        </mat-checkbox>
+        <div *ngIf="(config && !config.editMode)" class="tree-view__node-select">
+            <i class="fa  fa-circle  active"></i>
+        </div>
+        <span class="tree-node__text  margin-left--sm"
+              *ngIf="(config && !config.editMode)"
+              [ngClass]="{'tree-view-node__view-mode': treeNode.isMain}">
+            {{treeNode.text}} {{setPercentTextViewMode(treeNode.percent)}}
+        </span>
+    </div>
+    <app-xn-tree-view-left *ngIf="treeNode.children && treeNode.children.length"
+                           [mainHtmlId]="mainHtmlId"
+                           [leftHtmlId]="leftHtmlId"
+                           [rightHtmlId]="rightHtmlId"
+                           [data]="treeNode.children"
+                           [mainData]="mainData"
+                           [rawData]="rawData"
+                           [config]="config"
+                           [ngClass]="{'tree-view__child--expand':treeNode.expand, 'tree-view__child--collapse':!treeNode.expand}"
+                           (dataChange)="onDataChange($event)"
+                           (itemSelect)="treeNodeClick($event)"
+                           (textChanged)="treeNodeTextChnageHandler()"
+                           (unRename)="unRenameHandler()">
+    </app-xn-tree-view-left>
+</div>

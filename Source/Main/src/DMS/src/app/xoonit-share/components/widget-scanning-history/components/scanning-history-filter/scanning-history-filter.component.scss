@@ -1,0 +1,102 @@
+@import '../../../../sass_files/color.scss';
+
+.eraser {
+    position: absolute;
+    background: url('~public/imgs/icon-erase.svg') no-repeat center;
+    background-size: 16px 14px;
+    width: 16px;
+    height: 14px;
+    top: 4px;
+    right: 5px;
+    display: none;
+
+    &.show {
+        display: block;
+    }
+
+    &:hover {
+        cursor: pointer;
+    }
+
+    &:active {
+        transform: scale(0.8);
+    }
+}
+
+.controls-filter-container {
+    margin-left: 24px;
+    margin-right: 12px;
+    margin-top: 17px;
+    display: flex;
+    flex-direction: row wrap;
+    justify-content: space-around;
+
+    & .control-filter {
+        display: flex;
+        flex-direction: column;
+        margin-right: 12px;
+        width: 125px;
+
+        & ::ng-deep .form-control {
+            height: 32px;
+            font-size: 14px;
+        }
+
+        & .label-control {
+            font-size: 12px;
+            margin-bottom: 8px;
+        }
+
+        &.categories-dropdown {
+            & .select-control {
+                display: block;
+
+                & .selected-value {
+                    width: 88%;
+                    height: 70%;
+                }
+
+                & .icon-dropdown-wrapper {
+                    position: absolute !important;
+                }
+
+                & .selected-value,
+                & .item-label {
+                    font-size: 14px;
+                }
+
+                & ul.dropdown-menu {
+                    & li {
+                        & .dropdown-item {
+                            & .custom-control {
+                                & .item-label {
+                                    width: 100%;
+                                    padding: 5px 15px;
+
+                                    &:hover {
+                                        cursor: pointer;
+                                    }
+
+                                    &:hover,
+                                    &.active {
+                                        background-color: $blue-endeavour;
+                                        color: $white;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        &.user-input,
+        &.categories-dropdown {
+            width: 176px;
+        }
+
+        & .control {
+            width: 100%;
+        }
+    }
+}

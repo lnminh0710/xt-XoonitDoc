@@ -1,0 +1,59 @@
+.ue-w {
+	width: 130px;
+	.ue-h {
+		height: 18px;
+		margin:	-3px -6px 0;
+	    padding: 2px 5px 0;
+	    background-color: orange;
+        border-radius: 2px 2px 0 0;
+        cursor: pointer;
+
+		.ue-i {
+			float: left;
+		}
+		.ue-i-e {
+		    float: left;
+			width: 45px;
+		    overflow: hidden;
+		    text-overflow: ellipsis;
+		    white-space: nowrap;
+		}
+		.ue-i-i {
+			float: left;
+			i {
+			    font-size: 20px;
+			    position: absolute;
+			    top: 1px;
+			    right: 5px;
+			    cursor: pointer;
+			}	
+		}
+	}
+	.ue-b {
+	    box-shadow: 0px 3px 10px 0px rgba(0,0,0,0.7);
+		margin: 0 -6px;
+	    background: #fff;
+	    padding: 5px;
+	    border-radius: 2px 0 2px 2px;
+	    width: 300px;
+    	margin-left: -164px;
+	    .ui-u {
+	    	color: #fff;
+	    	text-align: center;
+	    	margin: 0 -5px 3px;
+	    	cursor: pointer;
+	    }
+		.u-i {
+    		border-radius: 3px;
+		    margin-bottom: 5px;
+		    padding: 0 5px;
+		    border: 1px solid;
+    		.ui-i {
+			    overflow: hidden;
+			    text-overflow: ellipsis;
+			    white-space: nowrap;
+			    width: 280px;
+    		}
+		}
+	}
+}

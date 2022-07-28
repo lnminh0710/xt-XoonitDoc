@@ -1,0 +1,33 @@
+.cell-download-file {
+    line-height: normal;
+
+    .icon {
+        display: inline-block;
+        padding-right: 10px;
+
+        &.single {
+            margin-top: 5px;
+        }
+
+        .fa {
+            color: red;
+        }
+
+        .badge {
+            position: absolute;
+            left: 18px;
+            background-color: #417bdf;
+            padding: 2px 4px;
+            font-size: 8px;
+            font-weight: normal;
+        }
+    }
+
+    .file {
+        cursor: pointer;
+    }
+
+    wj-combo-box {
+        width: 90%;
+    }
+}

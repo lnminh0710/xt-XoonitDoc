@@ -1,0 +1,229 @@
+<ng-container [ngSwitch]="config?.inputType">
+    <div class="form-control-wrapper" [ngStyle]="config?.style" [formGroup]="formGroup" enterNextFocus>
+        <ng-container *ngSwitchCase="ControlInputTypeEnum.TEXT">
+            <mat-form-field
+                [ngClass]="{ 'mat-field-invalid-disabled': !!formGroup.controls[config.formControlName].errors }"
+                class="w-100 input-field"
+                attr.control-key="{{ config.formControlName }}"
+                            (mouseenter)="onMouseEnter(formGroup.controls[config.formControlName])"
+                            (mouseleave)="onMouseLeave(formGroup.controls[config.formControlName])"
+                            (mouseover)="onMouseOver(formGroup.controls[config.formControlName])"
+                            (dblclick)="onDblClick(formGroup.controls[config.formControlName])">
+                <mat-label> <label-translation [keyword]="config.label"></label-translation></mat-label>
+                <input #matInputElement
+                       matInput                       
+                       [ngStyle]="{ 'font-family': config.formControlName === 'ESRNr' ? 'ocr-b-std' : '', 'font-size': config.formControlName === 'ESRNr' ? '1rem' : '' }"
+                       [formControlName]="config.formControlName"
+                       [attr.minlength]="config.minLength"
+                       [attr.maxlength]="config.maxLength"
+                       [attr.min]="config.min"
+                       [attr.max]="config.max"
+                       [attr.pattern]="config.setting?.Validators?.Pattern?.Regex"
+                       (keypress)="keyPress($event)"
+                       (focus)="onFocus(formGroup.controls[config.formControlName])"
+                       (blur)="onBlur(formGroup.controls[config.formControlName])"
+                       (keydown)="onKeydown.emit($event)"
+                       (keyup)="onKeyup.emit($event)" />
+                <span matSuffix>
+                    <ng-content select="[additionalMatIcon]"></ng-content>
+                </span>
+                <button mat-button
+                        *ngIf="config.showBtnClearValue"
+                        matSuffix
+                        mat-icon-button
+                        aria-label="Clear"
+                        tabIndex="-1"
+                        (mousedown)="clearCtrlValue(formGroup.controls[config.formControlName])">
+                    <mat-icon [ngStyle]="ngStyleMatIcon">close</mat-icon>
+                </button>
+                <!--<mat-error>
+            <ng-template [ngTemplateOutlet]="matErrMsg"
+                         [ngTemplateOutletContext]="{
+                                                        control: formGroup.controls[config.formControlName],
+                                                        controlConfig: config
+                                                    }">
+            </ng-template>
+        </mat-error>-->
+            </mat-form-field>
+            <!--<hotkey-setting></hotkey-setting>-->
+
+            <mat-error class='translateY'>
+                <ng-template [ngTemplateOutlet]="matErrMsg"
+                             [ngTemplateOutletContext]="{
+                                                                control: formGroup.controls[config.formControlName],
+                                                                controlConfig: config
+                                                            }">
+                </ng-template>
+            </mat-error>
+        </ng-container>
+
+        <ng-container *ngSwitchCase="ControlInputTypeEnum.TEXT_AREA">
+            <mat-form-field
+                [ngClass]="{ 'mat-field-invalid-disabled': !!formGroup.controls[config.formControlName].errors }"
+                class="w-100"
+                attr.control-key="{{ config.formControlName }}"
+                            (mouseenter)="onMouseEnter(formGroup.controls[config.formControlName])"
+                            (mouseleave)="onMouseLeave(formGroup.controls[config.formControlName])"
+                            (dblclick)="onDblClick(formGroup.controls[config.formControlName])">
+                <mat-label><label-translation [keyword]="config.label"></label-translation></mat-label>
+                <textarea #matInputElement
+                          matInput
+                          attr.control-key="{{config.formControlName}}"
+                          [formControlName]="config.formControlName"
+                          [attr.minlength]="config.minLength"
+                          [attr.maxlength]="config.maxLength"
+                          [attr.min]="config.min"
+                          [attr.max]="config.max"
+                          [attr.cols]="config?.cols"
+                          [attr.rows]="config?.rows"
+                          (focus)="onFocus(formGroup.controls[config.formControlName])"
+                          (blur)="onBlur(formGroup.controls[config.formControlName])"
+                          (keydown)="onKeydown.emit($event)"
+                          (keyup)="onKeyup.emit($event)"></textarea>
+                <button mat-button
+                        *ngIf="config.showBtnClearValue"
+                        matSuffix
+                        mat-icon-button
+                        aria-label="Clear"
+                        tabIndex="-1"
+                        (mousedown)="clearCtrlValue(formGroup.controls[config.formControlName])">
+                    <mat-icon [ngStyle]="ngStyleMatIcon">close</mat-icon>
+                </button>
+                <!--<mat-error>
+                    <ng-template [ngTemplateOutlet]="matErrMsg"
+                                 [ngTemplateOutletContext]="{
+                            control: formGroup.controls[config.formControlName],
+                            controlConfig: config
+                        }">
+                    </ng-template>
+                </mat-error>-->
+            </mat-form-field>
+            <mat-error class='translateY'>
+                <ng-template [ngTemplateOutlet]="matErrMsg"
+                             [ngTemplateOutletContext]="{
+                            control: formGroup.controls[config.formControlName],
+                            controlConfig: config
+                        }">
+                </ng-template>
+            </mat-error>
+        </ng-container>
+
+        <ng-container *ngSwitchCase="ControlInputTypeEnum.NUMBER">
+            <mat-form-field
+                [ngClass]="{ 'mat-field-invalid-disabled': !!formGroup.controls[config.formControlName].errors }"
+                class="w-100"
+                attr.control-key="{{ config.formControlName }}"
+                            (mouseenter)="onMouseEnter(formGroup.controls[config.formControlName])"
+                            (mouseleave)="onMouseLeave(formGroup.controls[config.formControlName])"
+                            (dblclick)="onDblClick(formGroup.controls[config.formControlName])">
+                <mat-label><label-translation [keyword]="config.label"></label-translation></mat-label>
+                <input #matInputElement
+                       matInput
+                       type="number"                       
+                       [formControlName]="config.formControlName"
+                       [attr.minlength]="config.minLength"
+                       [attr.maxlength]="config.maxLength"
+                       [attr.min]="config.min"
+                       [attr.max]="config.max"
+                       [attr.pattern]="config.setting?.Validators?.Pattern?.Regex"
+                       (keypress)="keyPress($event)"
+                       (focus)="onFocus(formGroup.controls[config.formControlName])"
+                       (blur)="onBlur(formGroup.controls[config.formControlName])"
+                       (keydown)="onKeydown.emit($event)"
+                       (keyup)="onKeyup.emit($event)" />
+                <ng-content select="[additionalMatIcon]"></ng-content>
+                <button mat-button
+                        *ngIf="config.showBtnClearValue"
+                        matSuffix
+                        mat-icon-button
+                        aria-label="Clear"
+                        tabIndex="-1"
+                        (mousedown)="clearCtrlValue(formGroup.controls[config.formControlName])">
+                    <mat-icon [ngStyle]="ngStyleMatIcon">close</mat-icon>
+                </button>
+                <!--<mat-error>
+                    <ng-template [ngTemplateOutlet]="matErrMsg"
+                                 [ngTemplateOutletContext]="{
+                            control: formGroup.controls[config.formControlName],
+                            controlConfig: config
+                        }">
+                    </ng-template>
+                </mat-error>-->
+            </mat-form-field>
+            <mat-error class='translateY'>
+                <ng-template [ngTemplateOutlet]="matErrMsg"
+                             [ngTemplateOutletContext]="{
+                            control: formGroup.controls[config.formControlName],
+                            controlConfig: config
+                        }">
+                </ng-template>
+            </mat-error>
+        </ng-container>
+
+        <ng-container *ngSwitchCase="ControlInputTypeEnum.INTEGER">
+            <mat-form-field
+                [ngClass]="{ 'mat-field-invalid-disabled': !!formGroup.controls[config.formControlName].errors }"
+                class="w-100"
+                attr.control-key="{{ config.formControlName }}"
+                            (mouseenter)="onMouseEnter(formGroup.controls[config.formControlName])"
+                            (mouseleave)="onMouseLeave(formGroup.controls[config.formControlName])"
+                            (dblclick)="onDblClick(formGroup.controls[config.formControlName])">
+                <mat-label> <label-translation [keyword]="config.label"></label-translation></mat-label>
+                <input #matInputElement
+                       matInput
+                       type="number"
+                       [formControlName]="config.formControlName"
+                       [attr.minlength]="config.minLength"
+                       [attr.maxlength]="config.maxLength"
+                       [attr.min]="config.min"
+                       [attr.max]="config.max"
+                       [attr.pattern]="config.setting?.Validators?.Pattern?.Regex"
+                       (keypress)="keyPress($event)"
+                       (focus)="onFocus(formGroup.controls[config.formControlName])"
+                       (blur)="onBlur(formGroup.controls[config.formControlName])"
+                       (keydown)="onKeydown.emit($event)"
+                       (keyup)="onKeyup.emit($event)" />
+                <ng-content select="[additionalMatIcon]"></ng-content>
+                <button mat-button
+                        *ngIf="config.showBtnClearValue"
+                        matSuffix
+                        mat-icon-button
+                        aria-label="Clear"
+                        tabIndex="-1"
+                        (mousedown)="clearCtrlValue(formGroup.controls[config.formControlName])">
+                    <mat-icon [ngStyle]="ngStyleMatIcon">close</mat-icon>
+                </button>
+                <!--<mat-error>
+            <ng-template
+                [ngTemplateOutlet]="matErrMsg"
+                [ngTemplateOutletContext]="{
+                    control: formGroup.controls[config.formControlName],
+                    controlConfig: config
+                }"
+            >
+            </ng-template>
+        </mat-error>-->
+            </mat-form-field>
+            <mat-error class='translateY'>
+                <ng-template [ngTemplateOutlet]="matErrMsg"
+                             [ngTemplateOutletContext]="{
+                            control: formGroup.controls[config.formControlName],
+                            controlConfig: config
+                        }">
+                </ng-template>
+            </mat-error>
+        </ng-container>
+    </div>
+</ng-container>
+
+<ng-template #matErrMsg let-control="control" let-controlConfig="controlConfig">
+    <ng-container *ngIf="control.errors?.required">
+        {{ controlConfig.label }} <label-translation [keyword]="'COMMON_LABEL__is_required'"></label-translation>
+    </ng-container>
+    <ng-container *ngIf="control.errors?.maxlength">
+        This field is required max length as {{ control.errors?.maxlength.requiredLength }}
+    </ng-container>
+    <ng-container *ngIf="control.errors?.pattern">
+        {{ config.setting?.Validators?.Pattern.Message }}
+    </ng-container>
+</ng-template>

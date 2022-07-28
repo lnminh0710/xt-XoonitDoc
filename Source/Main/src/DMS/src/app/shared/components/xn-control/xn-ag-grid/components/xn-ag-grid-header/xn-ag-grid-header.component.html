@@ -1,0 +1,70 @@
+<div class="title-container"
+     *ngIf="isShowedHeader"
+     [ngClass]="{'has-border': hasHeaderBorder}">
+    <div>
+        <label-translation [keyword]="headerTitle"></label-translation>
+    </div>
+    <div>
+        <label-translation [keyword]="'XN_AG_GRID_HEADER__Number_Of_Entries'"></label-translation>
+         {{totalResults}}
+    </div>
+</div>
+<div class="controls-container"
+     *ngIf="hasSearch || hasFilterBox || isShowedEditButtons">
+    <div class="search-n-filter-box">
+        <div *ngIf="hasSearch" class="search-box">
+            <div class="input-group">
+                <app-xn-input-debounce delayTimer="600"
+                                       placeholder="Search"
+                                       [value]="searchText"
+                                       [hasIndicator]="true"
+                                       [hasSearchButton]="true"
+                                       [isLoading]="isSearching"
+                                       (onValueChanged)="doSearch($event)"
+                                       (onSearchButtonClicked)="searchClicked($event)"
+                                       cssClass="form-control input-sm">
+                </app-xn-input-debounce>
+            </div>
+        </div>
+
+        <div *ngIf="hasFilterBox" class="filter-box">
+            <div class="input-group">
+                <input type="text"
+                       class="form-control input-sm"
+                       placeholder="Filter"
+                       [(ngModel)]="filter"
+                       (keyup)="onFilterKeyup()"
+                       autocomplete="off" />
+                <span class="input-group-addon">
+                    <i class="fa fa-filter"
+                       aria-hidden="true"></i>
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class="edit-button-box"
+         *ngIf="!readOnly && isShowedEditButtons">
+        <a class="btn btn-primary btn-sm btn-upload-editable-table cursor-pointer"
+           title="Upload file"
+           (click)="uploadFile()"
+           *ngIf="allowUploadFile">
+            <i class="fa fa-upload" aria-hidden="true"></i>
+        </a>
+
+        <a class="btn btn-primary btn-sm btn-plus-editable-table cursor-pointer"
+           [ngClass]="[allowAddNew && hasValidationError ? 'disabled' : '']"
+           title="Add New Row"
+           (click)="addNewRow()"
+           *ngIf="allowAddNew">
+            <i class="fa fa-plus" aria-hidden="true"></i>
+        </a>
+
+        <a class="btn btn-primary btn-sm btn-del-editable-table cursor-pointer"
+           [ngClass]="[allowDelete && !isMarkedAsDelete ? 'disabled' : '']"
+           (click)="deleteRows()"
+           title="Delete"
+           *ngIf="allowDelete">
+            <i class="fa fa-trash-o" aria-hidden="true"></i>
+        </a>
+    </div>
+</div>

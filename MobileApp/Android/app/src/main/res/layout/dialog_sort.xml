@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/texthead"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:gravity="center"
+        android:text="@string/sortby"
+        android:textColor="@color/colorblue"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <RadioGroup
+        android:id="@+id/radio_Group"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/buttonSelect"
+        android:layout_below="@id/texthead">
+
+        <GridLayout
+            android:id="@+id/OnSelectItem"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:columnCount="1"
+            android:rowCount="4">
+
+            <RadioButton
+                android:id="@+id/radOption1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_row="0"
+                android:layout_column="0"
+                android:layout_margin="10dp"
+                android:padding="5dp"
+                android:text="Doc Name (A to Z)"
+                android:textSize="15sp" />
+
+            <RadioButton
+                android:id="@+id/radOption2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_row="1"
+                android:layout_column="0"
+                android:layout_margin="10dp"
+                android:padding="5dp"
+                android:text="Doc Name (Z to A)"
+                android:textSize="15sp" />
+
+            <RadioButton
+                android:id="@+id/radOption3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_row="2"
+                android:layout_column="0"
+                android:layout_margin="10dp"
+                android:padding="5dp"
+                android:text="Creation Time"
+                android:textSize="15sp" />
+
+            <RadioButton
+                android:id="@+id/radOption4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_row="3"
+                android:layout_column="0"
+                android:layout_margin="10dp"
+                android:padding="5dp"
+                android:text="Creation Time"
+                android:textSize="15sp" />
+        </GridLayout>
+    </RadioGroup>
+
+    <RelativeLayout
+        android:id="@+id/buttonSelect"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:gravity="bottom">
+
+        <TextView
+            android:id="@+id/btnCancel"
+            android:layout_width="72dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="200dp"
+            android:layout_marginBottom="10dp"
+            android:background="#FFFFFF"
+            android:gravity="center"
+            android:text="Cancel"
+            android:textColor="@color/colorblue"
+            android:textSize="20dp" />
+
+        <TextView
+            android:id="@+id/btnOk"
+            android:layout_width="72dp"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@id/btnCancel"
+            android:layout_gravity="center"
+            android:layout_marginLeft="80dp"
+            android:layout_marginBottom="10dp"
+            android:background="@color/colorblue"
+            android:gravity="center"
+            android:text="OK"
+            android:textColor="#FFFFFF"
+            android:textSize="20dp" />
+    </RelativeLayout>
+</RelativeLayout>

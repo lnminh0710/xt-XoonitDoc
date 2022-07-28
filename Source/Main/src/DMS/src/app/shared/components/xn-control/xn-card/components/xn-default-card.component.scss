@@ -1,0 +1,136 @@
+@import "src/sass_files/color.scss";
+
+.card:not(.show-only-icon-badge) {
+    position: relative;
+    border-radius: 10px !important;
+    width: 100%;
+    padding: 0 !important;
+    overflow: auto;
+    box-shadow: none;
+}
+
+.card.mat-card.active .tab-icon {
+    background-color: $blue-berry;
+}
+
+.card-title {
+    height: 44px;
+    margin-bottom: 20px;
+
+    & .tab-icon {
+        width: 32px;
+        height: 32px;
+        margin-left: 12px;
+        margin-top: 12px;
+        position: relative;
+
+        &.contact,
+        &.invoice,
+        &.bank,
+        &.notes {
+            border-radius: 50%;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: 18px;
+        }
+
+        &.contact {
+            background-image: url('~/public/imgs/icon-tab-contact.png');
+        }
+
+        &.invoice {
+            background-image: url('~/public/imgs/icon-tab-invoice.png');
+        }
+
+        &.bank {
+            background-image: url('~/public/imgs/icon-tab-bank.png');
+        }
+
+        &.notes {
+            background-image: url('~/public/imgs/icon-tab-notes.png');
+        }
+
+        & > span.badge {
+            height: 17px;
+            position: absolute;
+            top: -5px;
+            left: 24px;
+            bottom: 20px;
+
+            &.all-completed {
+                background-color: #00CD98;
+            }
+
+            &.none-completed {
+                background-color: #FF3657;
+            }
+
+            &.partial-completed {
+                background-color: #F6B900;
+            }
+        }
+    }
+    
+    & .tab-title {
+        margin-top: auto;
+        margin-left: 8px;
+
+        & > p {
+            margin-bottom: auto;
+            height: 19px;
+            font-size: 14px;
+            letter-spacing: 0.15px;
+            line-height: 16px;
+        }
+    }
+}
+
+.card-body {
+    height: 106px;
+    padding-top: 0px;
+    padding-left: 12px;
+
+    & .body-wrapper {
+        & .value-field {
+            color: #A6A7B2;
+            font-size: 12px;
+            font-weight: 300;
+            line-height: 14px;
+        }
+    }
+}
+
+.card.show-only-icon-badge { /* use when drag splitter width size <= 200 in xn-vertical-tab-header.component */
+    box-shadow: none !important;
+    border: none !important;
+    background: none !important;
+
+    & .card-title {
+        & .tab-icon {
+            width: 48px;
+            height: 48px;
+            margin: auto;
+            margin-top: 8px;
+
+            &.contact,
+            &.invoice,
+            &.bank,
+            &.notes {
+                background-size: 36px !important;
+            }
+
+            & > span.badge {
+                top: -6px;
+                left: 33px;
+            }
+        }
+
+        & .tab-title {
+            display: none;
+        }
+    }
+
+    & .card-body {
+        display: none;
+    }
+}

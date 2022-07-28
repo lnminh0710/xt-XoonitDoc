@@ -1,0 +1,138 @@
+@import 'src/sass_files/color.scss';
+
+.mat-checkbox--check-all {
+    .mat-checkbox-layout {
+        margin-top: 3px;
+    }
+}
+
+mat-checkbox {
+    .mat-checkbox-inner-container {
+        height: 15px !important;
+        width: 15px !important;
+    }
+
+    &.delivery-charge {
+        label {
+            margin-bottom: 0;
+        }
+
+        .mat-checkbox-ripple {
+            top: -5px;
+            left: -5px;
+            right: -5px;
+            bottom: -5px;
+        }
+    }
+
+    &.mat-checkbox-indeterminate, &.mat-checkbox-checked {
+        &.mat-invoice {
+            .mat-checkbox-background {
+                background-color: $color-invoice;
+            }
+        }
+
+        &.mat-order {
+            .mat-checkbox-background {
+                background-color: $color-order;
+            }
+        }
+
+        &.mat-offer {
+            .mat-checkbox-background {
+                background-color: $color-offer;
+            }
+        }
+    }
+}
+
+mat-radio-button {
+    .mat-radio-outer-circle,
+    .mat-radio-inner-circle {
+        height: 15px !important;
+        width: 15px !important;
+        top: 2.5px;
+        left: 2.5px;
+    }
+
+    .mat-radio-label {
+        margin-top: -5px;
+    }
+
+    .mat-radio-label-content {
+        padding-top: 4px;
+    }
+}
+
+
+.mat-checkbox--in-textbox {
+    .mat-checkbox-layout {
+        margin-top: 6px;
+        margin-left: -3px;
+    }
+}
+
+.mat-radio-label,
+.mat-checkbox-layout {
+    font-weight: 400;
+}
+
+filter-menu {
+    .mat-radio-label,
+    .mat-checkbox-label,
+    .mat-radio-label-content {
+        padding-left: 3px;
+    }
+
+    .mat-checkbox-inner-container {
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+
+    .mat-checkbox-inner-container,
+    .mat-radio-container {
+        margin-left: 5px;
+        top: 3px;
+    }
+}
+
+app-xn-tree-view-left,
+app-xn-tree-view-right,
+property-panel-grid-value-dialog,
+property-panel-grid-value,
+filter-menu {
+    .mat-checkbox-layout {
+        margin-bottom: 0;
+    }
+}
+
+property-panel-grid-value-dialog,
+property-panel-grid-value {
+    .mat-checkbox-layout {
+        padding-left: 5px;
+    }
+
+    .mat-checkbox-label {
+        margin-left: -5px;
+    }
+}
+
+campaign-country-t1b-form {
+    .mat-checkbox-layout {
+        height: 0px;
+    }
+    edit-checkbox-component {
+        .mat-checkbox-layout {
+            margin-bottom: 18px;
+        }
+    }
+}
+
+wj-flex-grid {
+    .mat-checkbox-ripple {
+        top: -5px;
+        bottom: -5px;
+        left: -5px;
+        right: -5px;
+    }
+}

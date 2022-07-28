@@ -1,0 +1,22 @@
+<ng-template #hotkeyPopup let-close="close">
+    <div class="popup-content mini-scrollbar">
+        <div class="hotkey-form">
+            <mat-form-field class="w-100 input-field">
+                <mat-label>Enter Hot Key</mat-label>
+                <input matInput [formControl]="hotkeySettingControl">
+                <mat-error *ngIf="hotkeySettingControl.errors">
+                    <ng-container *ngIf="hotkeySettingControl.errors.invalid">
+                        Invalid Hotkey
+                    </ng-container>
+                    <ng-container *ngIf="hotkeySettingControl.errors.exists">
+                        The value already in use
+                    </ng-container>
+                </mat-error>
+            </mat-form-field>
+        </div>
+    </div>
+    <div class="popup-action">
+        <div class="popup-action__button" (click)="close()">Cancel</div>
+        <div class="popup-action__button primary" (click)="saveSetting()">Save</div>
+    </div>
+</ng-template>

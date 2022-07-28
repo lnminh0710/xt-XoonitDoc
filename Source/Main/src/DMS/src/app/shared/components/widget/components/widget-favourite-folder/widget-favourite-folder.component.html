@@ -1,0 +1,18 @@
+<div class="favourite-folder-tree-wrapper">
+    <div class="tree-folder">
+        <xn-document-tree [shouldGetDocumentQuantity]="false" [modeTree]="MODE_TREE_ENUM.SELECTABLE_FOLDER"
+            [dataTree]="docTreeList"
+            (onDblClickOnNode)="dblClickOnNode($event)"
+            (okActionFolder)="okActionFolderName($event)"
+            (cancelActionFolder)="cancelActionFolderName($event)" #xnDocumentTree>
+
+            <ng-template #rightClickMenuOnNode let-node="node">
+                <div (click)="addContactToFavouriteFolder({ event: $event, node: node })">Assign the document to favorite folder</div>
+            </ng-template>
+            
+            <ng-template #rightClickMenuOnTree let-treeComponent="treeComponent">
+                <div (click)="newFolder({ event: $event, treeComponent: treeComponent })">New folder</div>
+            </ng-template>
+        </xn-document-tree>
+    </div>
+</div>

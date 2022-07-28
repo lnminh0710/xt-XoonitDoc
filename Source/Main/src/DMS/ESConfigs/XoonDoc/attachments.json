@@ -1,0 +1,36 @@
+{
+    "properties": {
+        "updateDate": {
+            "type": "keyword"
+        },
+        "createDate": {
+            "type": "keyword"
+        },
+
+        "rootName": {
+            "type": "keyword"
+        },
+        "toDoNotes": {
+            "type": "keyword"
+        },
+        "scannedFilename": {
+            "type": "keyword"
+        },
+        "mediaName": {
+            "type": "keyword"
+        },
+        "clientId": {
+            "type": "keyword"
+        },
+        "searchKeyWords": {
+            "type": "keyword"
+        },
+        "groupName": {
+            "type": "keyword"
+        },
+
+        "fullText_RemovedHtml": {
+            "type": "keyword"
+        }
+    }
+}

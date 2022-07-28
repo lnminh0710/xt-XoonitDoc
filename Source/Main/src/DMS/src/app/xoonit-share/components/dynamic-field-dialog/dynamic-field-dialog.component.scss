@@ -1,0 +1,13 @@
+.dynamic-field-container {
+    font-size: 14px;
+
+    ::ng-deep .mat-dialog-title {
+        h5 {
+            font-size: 16px;
+        }
+    }
+
+    .overflow-unset {
+        overflow: unset;
+    }
+}

@@ -1,0 +1,261 @@
+<div class="text-center">
+    <ng-container [ngSwitch]="mode">
+        <button
+            *ngSwitchCase="'Mediacode'"
+            mat-raised-button
+            class="mat-btn-non-fix--icon mat-btn-small mat-btn-blue"
+            [ngClass]="{'btn-media-code-disable': params && params.data.IsSetMediaCodeArticlePrice == 0}"
+            (click)="btnClick()"
+        >
+            <i class="fa fa-usd"></i>
+        </button>
+        <button
+            *ngSwitchCase="'Delete'"
+            mat-raised-button
+            class="mat-btn-non-fix--icon mat-btn-small mat-btn-red"
+            [disabled]="params && (params.data.IsCanDeleted === 0 || params.data.IsCanDeleted === false)"
+            (click)="btnClick()"
+        >
+            <i class="fa fa-trash-o"></i>
+        </button>
+        <button
+            *ngSwitchCase="'Return'"
+            mat-raised-button
+            class="mat-btn-non-fix--icon mat-btn-small mat-btn-blue"
+            (click)="btnClick()"
+        >
+            <i class="fa fa-exchange"></i>
+        </button>
+        <button *ngSwitchCase="'Add'" mat-raised-button class="mat-btn-small mat-btn-blue add-btn" (click)="btnClick()">
+            <ng-container *ngTemplateOutlet="Add"></ng-container>
+        </button>
+        <ng-template [ngSwitchCase]="'StartStop'">
+            <button
+                *ngIf="!params.data || params.data.HasChildren == 0"
+                mat-raised-button
+                class="mat-btn-non-fix--icon mat-btn-small"
+                [ngClass]="{'mat-btn-red': value !== '1',
+                                'mat-btn-green': value == '1' }"
+                (click)="btnClick(value)"
+            >
+                <i
+                    class="fa"
+                    [ngClass]="{'fa-stop': value !== '1',
+                               'fa-play': value === '1' }"
+                ></i>
+            </button>
+        </ng-template>
+        <ng-template [ngSwitchCase]="'Run'">
+            <button
+                *ngIf="!params.data || params.data.HasChildren == 0"
+                mat-raised-button
+                [disabled]="value === '2'"
+                class="mat-btn-non-fix--icon mat-btn-small mat-btn-green"
+                (click)="btnClick()"
+            >
+                <i class="fa fa-play"></i>
+            </button>
+        </ng-template>
+        <ng-template [ngSwitchCase]="'Setting'">
+            <button
+                *ngIf="!params.data || params.data.HasChildren == 0"
+                mat-raised-button
+                class="mat-btn-non-fix--icon mat-btn-small mat-btn-blue"
+                (click)="btnClick()"
+            >
+                <i class="fa fa-ellipsis-h"></i>
+            </button>
+        </ng-template>
+        <ng-template [ngSwitchCase]="'Download'">
+            <button mat-raised-button class="mat-btn-non-fix--icon mat-btn-small mat-btn-blue" (click)="btnClick()">
+                <i class="fa fa-download"></i>
+            </button>
+        </ng-template>
+        <ng-template [ngSwitchCase]="'rowColCheckAll'">
+            <button mat-raised-button class="mat-btn-non-fix--icon mat-btn-small" (click)="btnClick('vertical')">
+                <i class="fa fa-long-arrow-down"></i>
+            </button>
+            <button mat-raised-button class="mat-btn-non-fix--icon mat-btn-small" (click)="btnClick('horizontal')">
+                <i class="fa fa-long-arrow-right"></i>
+            </button>
+        </ng-template>
+        <ng-template [ngSwitchCase]="'Edit'">
+            <button mat-raised-button class="mat-btn-non-fix--icon mat-btn-small mat-btn-orange" (click)="btnClick()">
+                <i class="fa fa-pencil"></i>
+            </button>
+        </ng-template>
+        <ng-template [ngSwitchCase]="'FilterExtended'">
+            <button mat-raised-button class="mat-btn-non-fix--icon mat-btn-small mat-btn-blue" (click)="btnClick()">
+                <i class="fa fa-eye"></i>
+            </button>
+        </ng-template>
+        <button
+            *ngSwitchDefault
+            class="mat-btn-non-fix--icon mat-btn-small"
+            [ngClass]="{'mat-btn-orange': mode === 'Unblock' || mode === 'EditRow',
+                            'mat-btn-blue': mode !== 'Unblock' && mode !== 'EditRow'}"
+            (click)="btnClick()"
+            mat-raised-button
+            [disabled]="!value"
+        >
+            <ng-container [ngSwitch]="mode">
+                <i *ngSwitchCase="'Tracking'" class="fa fa-truck"></i>
+                <i *ngSwitchCase="'InvoicePDF'" class="fa fa-file-pdf-o"></i>
+                <i *ngSwitchCase="'PDF'" class="fa fa-file-pdf-o"></i>
+                <i *ngSwitchCase="'EditRow'" class="fa fa-pencil"></i>
+                <i *ngSwitchCase="'SendLetter'" class="fa fa-envelope-open-o"></i>
+                <i *ngSwitchCase="'Unblock'" class="fa fa-unlock"></i>
+            </ng-container>
+        </button>
+        <ng-template [ngSwitchCase]="'Archive'">
+            <button
+                mat-raised-button
+                class="mat-btn-non-fix--icon mat-btn-small mat-btn-blue btn-archive"
+                (click)="btnClick()"
+                title="Archive"
+            >
+                <i class="fa fa-check-circle-o"></i>
+            </button>
+        </ng-template>
+        <ng-template [ngSwitchCase]="'loginActived'">
+            <span
+                class="dot"
+                [class.block]="loginActived && loginActived === '0'"
+                [class.confirmed]="loginActived && loginActived === '1'"
+                [class.unconfirmed]="loginActived && loginActived === '2'"
+            ></span>
+            <span><label-translation [keyword]="title"></label-translation></span>
+            <img
+                *ngIf="loginActived && loginActived === '2'"
+                (click)="btnClick()"
+                alt="resend"
+                class="resend icon-transform"
+                src="public/imgs/resend_icon.svg"
+                #popUpload="bs-tooltip"
+                container="body"
+                data-placement="left"
+                [tooltip]="'Resend email'"
+            />
+        </ng-template>
+        <ng-template [ngSwitchCase]="'userStatus'">
+            <span
+                (click)="btnClick()"
+                class="user-status cusor-poiter"
+                [class.inactive]="isActive && isActive === '0'"
+                [class.active]="isActive && isActive === '1' && loginActived && loginActived === '1'"
+                [class.active-unconfirm]="isActive && isActive === '1' && loginActived && loginActived === '2'"
+            >
+                <label-translation [keyword]="title"></label-translation>
+            </span>
+            <span
+                (click)="btnClick('forceActive')"
+                class="user-force-active"
+                *ngIf="isActive && isActive === '1' && loginActived && loginActived === '2'"
+            >
+                <label-translation [keyword]="'Force Active'"></label-translation>
+            </span>
+        </ng-template>
+        <ng-template [ngSwitchCase]="'EditDelete'">
+            <div class="action-group-button group-button-hover">
+                <div
+                    class="toolbar-icon fal fa-pencil"
+                    #popUpload="bs-tooltip"
+                    container="body"
+                    data-placement="right"
+                    [tooltip]="'Edit'"
+                    (click)="actionGroupClick('edit')"
+                ></div>
+                <div
+                    class="toolbar-icon fal fa-trash disabled-custom"
+                    #popUpload="bs-tooltip"
+                    container="body"
+                    data-placement="right"
+                    [tooltip]="'Delete'"
+                    (click)="actionGroupClick('delete')"
+                ></div>
+            </div>
+        </ng-template>
+        <ng-template [ngSwitchCase]="'editDeleteAction'">
+            <div class="action-group-button group-button-hover">
+                <div
+                    class="toolbar-icon draw-icon"
+                    #popUpload="bs-tooltip"
+                    container="body"
+                    data-placement="right"
+                    [tooltip]="Edit"
+                    (click)="actionGroupClick('edit')"
+                ></div>
+                <div
+                    class="toolbar-icon delete-red-icon"
+                    #popUpload="bs-tooltip"
+                    container="body"
+                    data-placement="right"
+                    [tooltip]="Delete"
+                    (click)="actionGroupClick('delete')"
+                ></div>
+                <div
+                    class="toolbar-icon key-icon"
+                    #popUpload="bs-tooltip"
+                    container="body"
+                    data-placement="right"
+                    [tooltip]="'Reset Password'"
+                    (click)="actionGroupClick('reset')"
+                ></div>
+            </div>
+        </ng-template>
+        <ng-template [ngSwitchCase]="'addDeleteAction'">
+            <ng-container *ngIf="isShowButtonCustom">
+                <button
+                    *ngIf="isShowDelCustom || !params?.node?.lastChild"
+                    mat-raised-button
+                    class="mat-btn-non-fix--icon mat-btn-small mat-btn-red ml-1"
+                    (click)="btnClick('delete')"
+                >
+                    <i class="fa fa-trash-o"></i>
+                </button>
+
+                <button
+                    *ngIf="params?.node?.lastChild"
+                    mat-raised-button
+                    class="mat-btn-non-fix--icon mat-btn-small mat-btn-green ml-1"
+                    (click)="btnClick('add')"
+                >
+                    <i class="fa fa-plus"></i>
+                </button>
+            </ng-container>
+        </ng-template>
+        <ng-template [ngSwitchCase]="'deleteAndMoreAction'">
+            <div class="display-flex action-group-button group-button-hover">
+                <div
+                    class="toolbar-icon delete-red-icon"
+                    #popUpload="bs-tooltip"
+                    container="body"
+                    data-placement="right"
+                    [tooltip]="Delete"
+                    (click)="actionGroupClick('delete')"
+                ></div>
+                <div
+                    class="toolbar-icon flex-middle"
+                    style="cursor: pointer; font-size: 14px"
+                    #popUpload="bs-tooltip"
+                    container="body"
+                    data-placement="right"
+                    [tooltip]="'More'"
+                    (click)="actionGroupClick('more')"
+                >
+                    <i class="fa fa-ellipsis-h"></i>
+                </div>
+            </div>
+        </ng-template>
+    </ng-container>
+</div>
+
+<ng-template #Add>
+    <label-translation [keyword]="'Add'"></label-translation>
+</ng-template>
+<ng-template #Edit>
+    <label-translation [keyword]="'Edit'"></label-translation>
+</ng-template>
+<ng-template #Delete>
+    <label-translation [keyword]="'Delete'"></label-translation>
+</ng-template>

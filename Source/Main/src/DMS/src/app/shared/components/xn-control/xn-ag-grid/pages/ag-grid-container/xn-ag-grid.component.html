@@ -1,0 +1,115 @@
+<xn-ag-grid-header
+    #xnAgGridHeader
+    [isShowedHeader]="isShowedHeader"
+    [hasHeaderBorder]="hasHeaderBorder"
+    [headerTitle]="headerTitle"
+    [totalResults]="gridOptions && gridOptions.rowData ? gridOptions.rowData.length : 0"
+    [hasSearch]="hasSearch"
+    [hasFilterBox]="hasFilterBox"
+    [allowUploadFile]="allowUploadFile"
+    [allowAddNew]="allowAddNew"
+    [allowDelete]="allowDelete"
+    [isShowedEditButtons]="isShowedEditButtons"
+    [isMarkedAsDelete]="isMarkedAsDelete"
+    [hasValidationError]="hasValidationErrorLocal"
+    [isSearching]="isSearching"
+    (onSearch)="onGridHeaderSearch($event)"
+    (onFilter)="onGridHeaderFilter($event)"
+    (onUpload)="uploadFile()"
+    (onAdd)="addNewRow()"
+    (onDeleteRows)="deleteRows()"
+>
+</xn-ag-grid-header>
+<!--  // TamTV will update later
+[floatingFilter]="columnFilter"
+-->
+<ag-grid-angular
+    #agGrid
+    *ngIf="gridOptions"
+    class="ag-theme-balham"
+    [ngClass]="{
+        'has-header': isShowedHeader && !(isShowedEditButtons || hasSearch || hasFilterBox),
+        'has-search': !isShowedHeader && (isShowedEditButtons || hasSearch || hasFilterBox),
+        'has-search-n-header': isShowedHeader && (isShowedEditButtons || hasSearch || hasFilterBox)
+    }"
+    [gridOptions]="gridOptions"
+    [columnDefs]="gridOptions.columnDefs"
+    [rowData]="gridOptions.rowData"
+    [pinnedBottomRowData]="pinnedBottomRowData"
+    [pinnedTopRowData]="pinnedTopRowData"
+    [sideBar]="sideBar"
+    [defaultColDef]="gridOptions.defaultColDef"
+    [suppressDragLeaveHidesColumns]="true"
+    [suppressContextMenu]="suppressContextMenu"
+    [popupParent]="popupParent"
+    [getContextMenuItems]="buildContextMenuItems"
+    [rowDragManaged]="true"
+    [rowDragEntireRow]="rowDragEntireRow"
+    [rowDragMultiRow]="rowDragMultiRow"
+    [animateRows]="true"
+    [colResizeDefault]="colResizeDefault"
+    [rowSelection]="rowSelection"
+    [suppressRowClickSelection]="suppressRowClickSelection"
+    [suppressRowDrag]="true"
+    [suppressMoveWhenRowDragging]="suppressMoveWhenRowDragging"
+    [suppressCopyRowsToClipboard]="true"
+    [rowGroupPanelShow]="rowGroupPanelShow"
+    [masterDetail]="masterDetail"
+    [detailCellRenderer]="detailCellRenderer"
+    [detailRowHeight]="detailRowHeight"
+    [headerHeight]="headerHeight"
+    [domLayout]="domLayout"
+    [localeText]="localeText"
+    [pagination]="false"
+    [treeData]="treeData"
+    [groupDefaultExpanded]="groupDefaultExpanded"
+    [autoGroupColumnDef]="autoGroupColumnDef"
+    [getDataPath]="getDataPath"
+    (gridReady)="onReady($event)"
+    (columnResized)="onColumnResized($event)"
+    (rowDoubleClicked)="onRowDoubleClicked($event)"
+    (rowClicked)="onRowClicked($event)"
+    (rowEditingStarted)="onRowEditingStarted($event)"
+    (rowEditingStopped)="onRowEditingStopped($event)"
+    (cellEditingStarted)="onCellEditingStarted($event)"
+    (cellEditingStopped)="onCellEditingStopped($event)"
+    (cellValueChanged)="onCellValueChanged($event)"
+    (selectionChanged)="onSelectionChanged($event)"
+    (cellFocused)="onCellFocused($event)"
+    (columnVisible)="columnVisible($event)"
+    (columnMoved)="onColumnMoved($event)"
+    (columnPinned)="onColumnPinned($event)"
+    (dragStopped)="onDragStopped($event)"
+    (gridSizeChanged)="onGridSizeChanged($event)"
+    (sortChanged)="sortChanged($event)"
+    (columnRowGroupChanged)="onColumnRowGroupChanged($event)"
+    (cellClicked)="onCellClicked($event)"
+    (cellContextMenu)="onCellContextMenu($event)"
+    (rowDragEnd)="onRowDragEnd($event)"
+    (rowGroupOpened)="onRowGroupOpened($event)"
+    (resendEmailActivationClick)="onResendEmailActivationClick($event)"
+    (deleteUser)="onDeleteUserClick($event)"
+    (editUser)="onEditUserClick($event)"
+    (resetPass)="onResetPassClick($event)"
+>
+</ag-grid-angular>
+<ng-container *ngIf="serverPaging">
+    <div class="no-padding paging-grid" [ngClass]="{ 'p-p-i': isUsedSearchTextboxInside }">
+        <xn-pagination
+            [boundaryLinks]="true"
+            [itemsPerPage]="pageSize"
+            [paginationFromPopup]="paginationFromPopup"
+            [pageIndex]="pageIndex"
+            [totalItems]="totalResults"
+            [(ngModel)]="currentPage"
+            (pageChanged)="currentPageChanged($event)"
+            (pageNumberDefault)="onPageNumberDefault($event)"
+            [maxSize]="6"
+        >
+        </xn-pagination>
+    </div>
+</ng-container>
+
+<div *ngIf="serverPaging && isSearching" class="i" [ngClass]="{ 'i-d-e': isUsedSearchTextboxInside }">
+    <i class="fa fa-spinner fa-pulse fa-3x"></i>
+</div>

@@ -1,0 +1,104 @@
+<!-- for version 1 -->
+<!-- <ng-template #extractedDataTemplate let-close="close">
+    <div class="wrapper-body">
+        <div class="extracted-data">
+            <div *ngIf="showMandant" class="extracted-item mandant" [class.col-xs-6]="showSupplier"
+                [class.col-xs-12]="!showSupplier">
+                <extracted-data-handler [dataSource]="mandantData" [globalProperties]="globalProperties"
+                    (rowSelected)="rowSelectedAction($event)">
+                </extracted-data-handler>
+            </div>
+            <div *ngIf="showSupplier" class="extracted-item supplier" [class.col-xs-6]="showMandant"
+                [class.col-xs-12]="!showMandant">
+                <extracted-data-handler [dataSource]="supplierData" [globalProperties]="globalProperties"
+                    (rowSelected)="rowSelectedAction($event)">
+                </extracted-data-handler>
+            </div>
+        </div>
+        <div class="button-wrapper">
+            <button class="btn-cmd btn-cmd-default" (click)="closeDialog(close)">
+                <label-translation [keyword]="'Cancel'"></label-translation>
+            </button>
+            <button class="btn-cmd btn-cmd-primary" (click)="acceptAction(close)"
+                [class.disabled]="(mandantData?.typeDataSet === TYPE_DATA_SET.DATA_TABLE && !mandantSelected) || (supplierData?.typeDataSet === TYPE_DATA_SET.DATA_TABLE && !supplierSelected)">
+                <label-translation [keyword]="'Accept'"></label-translation>
+            </button>
+        </div>
+    </div>
+</ng-template> -->
+
+<ng-template #extractedDataTemplate let-close="close">
+    <div class="wrapper-body">
+        <div class="extracted-data">
+            <as-split direction="horizontal" [gutterSize]="2">
+                <as-split-area [size]="50">
+                    <div class="row wrapper-extracted-element">
+                        <div class="extracted-item mandant col-xs-4">
+                            <div cdkDropList #mandantWrapper="cdkDropList" [cdkDropListData]="mandantList"
+                                cdkDropListSortingDisabled
+                                (cdkDropListDropped)="drop($event, EXTRACTED_MASTER_DATA_PERSON_TYPE.MANDANT)"
+                                [cdkDropListConnectedTo]="contactsWrapper">
+                                <extracted-data-handler #mandantExtractDataHandler [dataSource]="mandantData"
+                                    [globalProperties]="globalProperties" (rowSelected)="rowSelectedAction($event)"
+                                    (clearData)="clearFormData($event)">
+                                </extracted-data-handler>
+                            </div>
+                        </div>
+                        <div class="extracted-item contacts col-xs-4">
+                            <div class="header">
+                                <h4 class="txt-header">
+                                    <label-translation [keyword]="'EXTRACTED_DATA_APPROVAL_PROCESSING__CONTACTS'">
+                                    </label-translation>
+                                </h4>
+                            </div>
+                            <div cdkDropList #contactsWrapper="cdkDropList" [cdkDropListData]="contactList"
+                                cdkDropListSortingDisabled [cdkDropListConnectedTo]="[mandantWrapper, supplierWrapper]"
+                                class="main contact-list mini-scrollbar">
+                                <div class="contact-box" *ngFor="let item of contactList" cdkDrag [cdkDragData]="item"
+                                    (dblclick)="!!item[ID_PERSON_KEY] && [EXTRACTED_MASTER_DATA_PERSON_TYPE.MANDANT, EXTRACTED_MASTER_DATA_PERSON_TYPE.SUPPLIER].includes(item[PERSON_TYPE_KEY]) && setDataByWidgetType(item[PERSON_TYPE_KEY], item)">
+                                    <i class="fa fa-th grid-icon"
+                                        [class.blue]="!!item[ID_PERSON_KEY] && item[PERSON_TYPE_KEY] === EXTRACTED_MASTER_DATA_PERSON_TYPE.MANDANT"
+                                        [class.orange]="!!item[ID_PERSON_KEY] && item[PERSON_TYPE_KEY] === EXTRACTED_MASTER_DATA_PERSON_TYPE.SUPPLIER"
+                                        container="body" [tooltip]="tooltipDragAndDrop"></i>
+                                    <span [innerHTML]="item.FullAddress"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="extracted-item supplier col-xs-4">
+                            <div cdkDropList #supplierWrapper="cdkDropList" [cdkDropListData]="supplierList"
+                                cdkDropListSortingDisabled
+                                (cdkDropListDropped)="drop($event, EXTRACTED_MASTER_DATA_PERSON_TYPE.SUPPLIER)"
+                                [cdkDropListConnectedTo]="contactsWrapper">
+                                <extracted-data-handler #supplierExtractDataHandler [dataSource]="supplierData"
+                                    [globalProperties]="globalProperties" (rowSelected)="rowSelectedAction($event)"
+                                    (clearData)="clearFormData($event)">
+                                </extracted-data-handler>
+                            </div>
+                        </div>
+                    </div>
+                </as-split-area>
+                <as-split-area [size]="50">
+                    <div class="extracted-item doc-viewer">
+                        <document-image-ocr #wgDocument [gridItemConfig]="globalProperties" [showInDialog]="true">
+                        </document-image-ocr>
+                    </div>
+                </as-split-area>
+            </as-split>
+        </div>
+        <div class="button-wrapper">
+            <button class="btn-cmd btn-cmd-default" (click)="closeDialog(close)" #elBtnClose>
+                <label-translation [keyword]="'Cancel'"></label-translation>
+            </button>
+            <button class="btn-cmd btn-cmd-primary" (click)="acceptAction(close)" [class.disabled]="
+                    (mandantData?.typeDataSet === TYPE_DATA_SET.DATA_TABLE && !mandantSelected) ||
+                    (supplierData?.typeDataSet === TYPE_DATA_SET.DATA_TABLE && !supplierSelected)
+                ">
+                <label-translation [keyword]="'Accept'"></label-translation>
+            </button>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #tooltipDragAndDrop>
+    <label-translation [keyword]="'TOOLTIP__Drag_Drop'"></label-translation>
+</ng-template>

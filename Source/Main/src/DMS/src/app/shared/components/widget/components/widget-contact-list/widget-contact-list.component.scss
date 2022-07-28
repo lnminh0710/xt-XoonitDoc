@@ -1,0 +1,33 @@
+.contact-list-wrapper {
+  width: 100%;
+  height: 100%;
+
+  .gs-result-wrapper {
+    height: 100%;
+  }
+}
+
+.search-box {
+  display: flex;
+  align-items: flex-start;
+  padding-top: 10px;
+
+  .header-title {
+    text-transform: uppercase;
+    color: #ffffff;
+    font-size: large;
+    align-self: center;
+    padding-left: 2%;
+  }
+
+  .header-search {
+    margin-right: 2%;
+    
+    .search-input {
+      background-color: #082742;
+      border-radius: 20px !important;
+      border-color: transparent;
+      color: #ffffff;
+    }
+  }
+}

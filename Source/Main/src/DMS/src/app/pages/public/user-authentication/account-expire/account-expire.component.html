@@ -1,0 +1,42 @@
+<div class="authenticate page-info row">
+  <!-- Website -->
+  <div class="col-md-6 left-side no-background hidden-xs hidden-sm">
+    <div class="mydm-logo cusor-pointer" (click)="redirectToRootPage()">
+    </div>
+    <div class="display-flex h-100">
+      <div class="flex-middle w-100">
+        <h1 class="header">Token Expired</h1>
+
+        <div class="body-message">
+          <h4>Your link is expired.</h4>
+          <h4>You need to resend another link.</h4>
+        </div>
+
+        <button class="btn-cmd btn-cmd-primary" (click)="resendEmail()">RESEND EMAIL</button>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6 right-side display-flex h-100 hidden-xs hidden-sm">
+    <img src="public/imgs/authenticate/bg_token_expired.svg" alt="image right side" class="flex-middle img-right-side">
+  </div>
+
+  <!-- mobile -->
+  <div class="col-xs-12 hidden-md hidden-lg right-side mobile-screen">
+    <img src="public/imgs/authenticate/bg_token_expired.svg" alt="image right side" class="flex-middle img-right-side">
+  </div>
+  <div class="col-xs-12 hidden-md hidden-lg left-side no-background mobile-screen">
+    <h1 class="header">Token Expired</h1>
+
+    <div class="body-message">
+      <h4>Your link is expired.</h4>
+      <h4>You need to resend another link.</h4>
+    </div>
+
+    <button class="btn-cmd btn-cmd-primary" (click)="resendEmail()">RESEND EMAIL</button>
+  </div>
+
+</div>
+
+<div *ngIf="isLoading" class="xn-loading">
+  <i class="fa fa-spinner fa-spin fa-2x"></i>
+</div>

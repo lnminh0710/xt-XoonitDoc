@@ -1,0 +1,72 @@
+@import '../../styles/common.scss';
+
+.form-management {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  background-color: #e7eaf1;
+  padding: 12px;
+  // %headerHeight : 30px;
+
+  &__title {
+    height: $header-height;
+    font-size: 14px;
+    font-weight: bold;
+    color: #424242;
+    display: flex;
+    align-items: center;
+  }
+  &__doctype {
+    width: 20%;
+    position: relative;
+  }
+  &__module {
+    width: 20%;
+    position: relative;
+    margin: 0 12px;
+  }
+
+  &__card {
+    height: calc(100% - #{$header-height});
+  }
+  &__action {
+    height: $header-height;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    &-button {
+      align-items: center;
+      background-color: #fff;
+      border: 1px solid #0069e8db;
+      border-radius: 3px;
+      box-shadow: 0 0 5px #0069e8;
+      cursor: pointer;
+      display: flex;
+      height: 24px;
+      justify-content: center;
+      margin-right: 5px;
+      user-select: none;
+      width: 100px;
+      h5 {
+        color: #0069e8;
+        text-align: center;
+      }
+      &.disabled {
+        border-color: #eeeeee;
+        box-shadow: unset;
+        cursor: unset;
+        h5 {
+          color: #bdbdbd;
+        }
+      }
+      &.is-assign {
+        border: unset;
+        box-shadow: unset;
+      }
+    }
+  }
+  &__field {
+    flex: 1;
+    height: calc(100% - #{$header-height});
+  }
+}

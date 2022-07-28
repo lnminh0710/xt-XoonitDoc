@@ -1,0 +1,36 @@
+{
+  "statusCode": 1,
+  "resultDescription": null,
+  "item": {
+    "data": [
+      {
+        "IdDocumentContainerOcr": 288,
+        "OCRText": "OCRText",
+        "OCRJson": "OCRJson",
+        "PageNr": 1,
+        "IdDocumentContainerScans": 161,
+        "IdDocumentTree": 70,
+        "FileName": "scan0150.tiff.1.png",
+        "ScannedPath": "\\\\file.xena.local\\MyDMS\\XenaScan\\rfi_xena\\20200413-165913.313",
+        "IdRepDocumentType": 1,
+        "DocumentType": "Invoice",
+        "OriginalFileName": "scan0150.tiff.pdf",
+        "RowNum": 1
+      },
+      {
+        "IdDocumentContainerOcr": 289,
+        "OCRText": "OCRText",
+        "OCRJson": "OCRJson",
+        "PageNr": 2,
+        "IdDocumentContainerScans": 161,
+        "IdDocumentTree": 70,
+        "FileName": "scan0150.tiff.2.png",
+        "ScannedPath": "\\\\file.xena.local\\MyDMS\\XenaScan\\rfi_xena\\20200413-165913.313",
+        "IdRepDocumentType": 1,
+        "DocumentType": "Invoice",
+        "OriginalFileName": "scan0150.tiff.pdf",
+        "RowNum": 2
+      }
+    ]
+  }
+}

@@ -1,0 +1,33 @@
+<div *ngIf="typeDataSet" class="extracted-handler">
+    <div class="header"
+        [class.blue]="typeDataSet === TYPE_DATA_SET.DYNAMIC_FORM && dataSource?.widgetType === WIDGET_TYPE.MANDANT"
+        [class.orange]="typeDataSet === TYPE_DATA_SET.DYNAMIC_FORM && dataSource?.widgetType === WIDGET_TYPE.SUPPLIER">
+        <h4 class="txt-header">
+            <label-translation *ngIf="dataSource?.widgetType === WIDGET_TYPE.MANDANT"
+                [keyword]="'EXTRACTED_DATA_APPROVAL_PROCESSING__mandant'"></label-translation>
+            <label-translation *ngIf="dataSource?.widgetType === WIDGET_TYPE.SUPPLIER"
+                [keyword]="'EXTRACTED_DATA_APPROVAL_PROCESSING__supplier'"></label-translation>
+        </h4>
+        <div class="toolbar-icon with-fa transform-icon"
+            *ngIf="isShowClear && typeDataSet === TYPE_DATA_SET.DYNAMIC_FORM" (click)="clearFormData()"
+            #popUpload="bs-tooltip" container="body" data-placement="bottom" [tooltip]="tooltipTrash">
+            <i class="fal fa-trash"></i>
+        </div>
+    </div>
+
+    <div *ngIf="typeDataSet === TYPE_DATA_SET.DATA_TABLE" class="main data-table">
+        <xn-ag-grid #xnAgGrid [id]="'ad09df5a-6bef-4ae4-bcf8-ad47b840c7b0'" [globalProperties]="globalProperties"
+            [serverPaging]="false" [suppressContextMenu]="false" [dataSource]="dataTableSource"
+            [autoSelectCurrentRowAfterChangingData]="false" (rowClick)="selectItem($event)">
+        </xn-ag-grid>
+    </div>
+
+    <div *ngIf="typeDataSet === TYPE_DATA_SET.DYNAMIC_FORM" class="main">
+        <widget-dynamic-form #wdDynamicForm [dynamicFormGroupDef]="dynamicFormGroupDefinition"
+            (dataChanged)="onDataChanged($event)"> </widget-dynamic-form>
+    </div>
+</div>
+
+<ng-template #tooltipTrash>
+    <label-translation [keyword]="'Import_Data_Matrix__Clear'"></label-translation>
+</ng-template>

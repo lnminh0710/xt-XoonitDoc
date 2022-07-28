@@ -1,0 +1,30 @@
+<div id="feedback-image-{{indexItem}}"
+    mwlResizable
+    [enableGhostResize]="'true'"
+    (resizeEnd)="onResizeStop($event)"
+    [resizeEdges]="{bottom: true, right: true, top: false, left: false}"
+
+    class="image-clip"
+    [style.left.px]="captureItem.left + translate.left"
+    [style.top.px]="captureItem.top + translate.top"
+    [style.width.px]="captureItem.width"
+    [style.height.px]="captureItem.height">
+    <button id="feedback-close-button-{{indexItem}}"
+            type="button"
+            mat-raised-button
+            class="mat-btn-close-popup"
+            aria-label="Close"
+            (click)="removeItemClicked()">
+        <span class="fa fa-fw fa-close"></span>
+    </button>
+    <div class="drag-content">
+    </div>
+    <div id="feedback-resize-right-{{indexItem}}"
+        class="resize-right" mwlResizeHandle
+           [resizeEdges]="{right: true}">
+    </div>
+    <div id="feedback-resize-bottom-{{indexItem}}"
+        class="resize-bottom" mwlResizeHandle
+           [resizeEdges]="{bottom: true}">
+    </div>
+</div>

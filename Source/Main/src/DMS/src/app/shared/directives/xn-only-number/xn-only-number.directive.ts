@@ -1,0 +1,44 @@
+import { Directive, HostListener, Input } from '@angular/core';
+
+@Directive({
+    selector: '[XnOnlyNumber]'
+})
+
+export class XnOnlyNumberDirective {
+
+    constructor() { }
+
+    @Input() XnOnlyNumber: boolean;
+    @Input() allowCharacters: Array<string> = [];
+
+    @HostListener('keydown', ['$event']) onKeyDown(event) {
+        const e = <KeyboardEvent>event;
+        if (this.XnOnlyNumber) {
+            if (this.allowControlKey(e) || this.allowCharacters.indexOf(e.key) > -1) {
+                // let it happen, don't do anything
+                return;
+            }
+            // Ensure that it is a number and stop the keypress
+            if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+                e.preventDefault();
+            }
+        }
+    }
+
+    private allowControlKey(e: any): boolean {
+        return [46, 8, 9, 27, 13, 110].indexOf(e.keyCode) !== -1 ||
+            // Allow: key "."
+            (e.key == '.') ||
+            // Allow: Ctrl+A
+            (e.keyCode == 65 && e.ctrlKey === true) ||
+            // Allow: Ctrl+C
+            (e.keyCode == 67 && e.ctrlKey === true) ||
+            // Allow: Ctrl+V
+            (e.keyCode == 86 && e.ctrlKey === true) ||
+            // Allow: Ctrl+X
+            (e.keyCode == 88 && e.ctrlKey === true) ||
+            // Allow: home, end, left, right
+            (e.keyCode >= 35 && e.keyCode <= 39);
+    }
+}
+

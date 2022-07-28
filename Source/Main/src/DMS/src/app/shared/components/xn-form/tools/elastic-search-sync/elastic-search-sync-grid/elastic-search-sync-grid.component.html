@@ -1,0 +1,16 @@
+<div class="e-g">
+    <xn-ag-grid #syncGrid
+                [id]="gridId"
+                *ngIf="dataSource && dataSource.columns && dataSource.columns.length"
+                [dataSource]="dataSource"
+                [isShowedHeader]="true"
+                [fitWidthColumn]="true">
+    </xn-ag-grid>
+    <div class="m  bg-disabled" *ngIf="isGettingData"></div>
+    <div class="c" *ngIf="isGettingData">
+        <div class="c-t">
+            <span>{{gettingDataMessage?gettingDataMessage:'Getting data to synchronize'}}</span>
+            <i class="fa  fa-spinner  fa-spin"></i>
+        </div>
+    </div>
+</div>

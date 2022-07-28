@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/primary_color">
+
+    <RelativeLayout
+        android:id="@+id/fragment_create_account_two"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/ic_background_mydm"
+        android:isScrollContainer="true"
+        android:orientation="vertical"
+        android:paddingStart="30dp"
+        android:paddingEnd="30dp">
+
+        <ImageButton
+            android:id="@+id/button_back_signup2"
+            android:layout_width="46dp"
+            android:layout_height="46dp"
+            android:layout_gravity="end|center"
+            android:layout_marginTop="10dp"
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_chevron_left_black_24dp" />
+
+        <ImageView
+            android:id="@+id/image_top"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/margin_30"
+            android:src="@drawable/ic_signup_step" />
+
+        <TextView
+            android:id="@+id/Text_NextStep"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/image_top"
+            android:layout_marginTop="10dp"
+            android:text="@string/next_step"
+            android:textColor="@color/white"
+            android:textSize="20dp"
+            android:textStyle="bold" />
+
+        <GridLayout
+            android:id="@+id/National"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/Text_NextStep"
+            android:layout_marginTop="40dp">
+
+            <androidx.appcompat.widget.AppCompatSpinner
+                android:id="@+id/spinner_national"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:backgroundTint="#00fF00"
+                android:popupBackground="@color/primary_color" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="1"
+                android:layout_columnWeight="2"
+                app:boxBackgroundMode="filled"
+                app:boxStrokeWidth="2dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edit_text_phonenumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:backgroundTint="@android:color/transparent"
+                    android:focusedByDefault="false"
+                    android:hint="@string/phone_number"
+                    android:inputType="phone"
+                    android:textSize="16dp"
+                    android:nextFocusDown="@id/spinner_month"
+                    android:nextFocusForward="@id/spinner_month"
+                    android:textColor="@color/white" />
+            </com.google.android.material.textfield.TextInputLayout>
+        </GridLayout>
+
+        <GridLayout
+            android:id="@+id/relativelayout_birthday"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/National"
+            android:layout_marginTop="24dp">
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layout_spinnerMonth"
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="0"
+                android:layout_columnWeight="1"
+                android:layout_marginEnd="5dp"
+                app:boxStrokeWidth="2dp"
+                app:endIconTint="#00fF00">
+
+                <AutoCompleteTextView
+                    android:id="@+id/spinner_month"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@android:color/transparent"
+                    android:editable="false"
+                    android:hint="Month"
+                    android:nextFocusDown="@id/spinner_day"
+                    android:nextFocusForward="@id/spinner_day"
+                    android:singleLine="true"
+                    android:textColor="@color/white"
+                    android:textSize="16dp"
+                    tools:ignore="Deprecated" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layout_spinnerday"
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="1"
+                android:layout_columnWeight="0.9"
+                android:layout_marginEnd="5dp"
+                app:boxStrokeWidth="2dp"
+                app:endIconTint="#00fF00">
+
+                <AutoCompleteTextView
+                    android:id="@+id/spinner_day"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:backgroundTint="@android:color/transparent"
+                    android:editable="false"
+                    android:hint="Day"
+                    android:nextFocusDown="@id/spinner_year"
+                    android:nextFocusForward="@id/spinner_year"
+                    android:singleLine="true"
+                    android:textColor="@color/white"
+                    android:textSize="16dp"
+                    tools:ignore="Deprecated" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layout_spinneryear"
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="2"
+                android:layout_columnWeight="0.9"
+                app:boxStrokeWidth="2dp"
+                app:endIconTint="#00fF00">
+
+                <AutoCompleteTextView
+                    android:id="@+id/spinner_year"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@android:color/transparent"
+                    android:editable="false"
+                    android:hint="Year"
+                    android:nextFocusDown="@id/spinner_language"
+                    android:nextFocusForward="@id/spinner_language"
+                    android:singleLine="true"
+                    android:textColor="@color/white"
+                    android:textSize="16dp"
+                    tools:ignore="Deprecated" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </GridLayout>
+
+        <TextView
+            android:id="@+id/text_birthday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/relativelayout_birthday"
+            android:layout_marginTop="12dp"
+            android:text="@string/your_birthday"
+            android:textColor="#9EA0A5"
+            android:textSize="14dp" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/layoutspinner_language"
+            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/text_birthday"
+            android:layout_marginTop="@dimen/margin_20"
+            app:endIconTint="#00fF00">
+
+            <AutoCompleteTextView
+                android:id="@+id/spinner_language"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginTop="10dp"
+                android:backgroundTint="@android:color/transparent"
+                android:editable="false"
+                android:hint="Choose Language"
+                android:nextFocusRight="@id/Checkbox_Term"
+                android:nextFocusDown="@id/Checkbox_Term"
+                android:nextFocusForward="@id/Checkbox_Term"
+                android:singleLine="true"
+                android:textColor="@color/white"
+                android:textSize="16dp"
+                tools:ignore="Deprecated" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <RelativeLayout
+            android:id="@+id/relativelayout_term"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/layoutspinner_language"
+            android:layout_marginTop="32dp">
+
+            <androidx.appcompat.widget.AppCompatCheckBox
+                android:id="@+id/Checkbox_Term"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:buttonTint="#FFFFFF"
+                android:checked="false"
+                android:nextFocusDown="@id/button_signup" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_toEndOf="@id/Checkbox_Term"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/term"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/by_creating_an_account_your_aggree_to_our"
+                    android:textColor="#FFFFFF"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/condition"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/term_and_conditions"
+                    android:textColor="#0091FF"
+                    android:textSize="15sp" />
+            </LinearLayout>
+        </RelativeLayout>
+
+        <Button
+            android:id="@+id/button_signup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/relativelayout_term"
+            android:layout_marginTop="32dp"
+            android:backgroundTint="#1665D8"
+            android:text="@string/sign_up"
+            android:textAllCaps="true"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <RelativeLayout
+            android:id="@+id/layout_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/button_signup"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="@dimen/margin_30"
+            android:layout_marginBottom="@dimen/margin_30">
+
+            <TextView
+                android:id="@+id/text_account"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/have_an_account"
+                android:textColor="#9EA0A5"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/text_SignIn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_toEndOf="@id/text_account"
+                android:clickable="true"
+                android:focusable="true"
+                android:text="@string/sign_in"
+                android:textColor="#0091FF"
+                android:textSize="15sp" />
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+</ScrollView>

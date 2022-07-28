@@ -1,0 +1,20 @@
+<div class="control form-group">
+    <input type="text" class="form-control{{formControlClassStyle}}" [(ngModel)]="typeaheadValue"
+        [typeahead]="dataSource" [typeaheadAsync]="true" typeaheadOptionField="{{typeaheadOptionField}}"
+        [typeaheadWaitMs]="typeaheadWaitMs || 500" (typeaheadOnSelect)="selectItem($event)"
+        (typeaheadNoResults)="noDataResults($event)" (input)="changeInputNull($event)" #inputTypeahead />
+
+    <ng-container *ngIf="noResults">
+        <div class="typeahead-no-results dropdown open">
+            <ul class="dropdown-menu" style="overflow-y: auto; height: auto;">
+                <li>
+                    <span>
+                        <!-- <label-translation [allowUpdateLanguage]="false"
+                        [keyword]="'COMMON_LABEL__No_Results'"></label-translation> -->
+                        TEST TRANSLATE
+                    </span>
+                </li>
+            </ul>
+        </div>
+    </ng-container>
+</div>

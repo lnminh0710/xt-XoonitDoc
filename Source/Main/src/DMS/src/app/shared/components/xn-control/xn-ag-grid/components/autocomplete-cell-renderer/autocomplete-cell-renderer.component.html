@@ -1,0 +1,17 @@
+<ng-container [ngSwitch]="cellStartedEdit">
+    <ng-container *ngSwitchCase="true">
+        <mat-form-field class="ag-grid-cell-autocomplete">
+            <input matInput [matAutocomplete]="autoCompleteRef" #autocompleteInput [ngModel]="searchText"
+                (ngModelChange)="valuechange($event)" />
+            <mat-autocomplete autoActiveFirstOption #autoCompleteRef="matAutocomplete"
+                [displayWith]="displayFn.bind(this)" (optionSelected)="selectOption($event)">
+                <mat-option *ngFor="let option of filterOptions | async" [value]="option">
+                    <span [title]="option.label">{{ option.label }}</span>
+                </mat-option>
+            </mat-autocomplete>
+        </mat-form-field>
+    </ng-container>
+    <ng-container *ngSwitchDefault>
+        <span>{{displayValue}}</span>
+    </ng-container>
+</ng-container>

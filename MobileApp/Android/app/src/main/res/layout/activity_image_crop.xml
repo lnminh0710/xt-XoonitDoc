@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black_1">
+
+    <include
+        android:id="@+id/toolbar_cropimmages"
+        layout="@layout/toolbar" />
+
+    <FrameLayout
+        android:id="@+id/framelayout_cropimage"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/gridlayout_bottom_cropimage"
+        android:layout_below="@id/toolbar_cropimmages">
+
+        <FrameLayout
+            android:id="@+id/crop_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="15dp"
+            android:layout_gravity="center">
+
+            <ImageView
+                android:id="@+id/crop_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:adjustViewBounds="true"
+                android:scaleType="fitXY" />
+        </FrameLayout>
+
+        <com.xoonit.camera.utils.PolygonView
+            android:id="@+id/polygonView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center" />
+    </FrameLayout>
+
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:id="@+id/gridlayout_bottom_cropimage"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom"
+        android:visibility="visible"
+        android:columnCount="2"
+        android:gravity="center_horizontal"
+        android:rowCount="2">
+        <Button
+            android:id="@+id/btnDocList"
+            android:layout_width="wrap_content"
+            android:layout_height="64dp"
+            android:layout_row="0"
+            style="@style/AppTheme.NoActionBar"
+            android:layout_rowSpan="1"
+            android:layout_column="0"
+            android:layout_columnSpan="1"
+            android:layout_columnWeight="1"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:backgroundTint="@android:color/white"
+            android:onClick="cropReject"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:text="@string/delete" />
+        <Button
+            android:id="@+id/btnAddDoc"
+            android:layout_width="wrap_content"
+            style="@style/Theme.AppCompat.NoActionBar"
+            android:layout_height="64dp"
+            android:layout_row="0"
+            android:layout_rowSpan="1"
+            android:layout_column="1"
+            android:layout_columnSpan="1"
+            android:layout_columnWeight="1"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:backgroundTint="@color/color_blue_button"
+            android:onClick="addDoc"
+            android:text="@string/accept"
+            android:textSize="16sp"
+            android:textColor="@color/white"/>
+    </GridLayout>
+</RelativeLayout>

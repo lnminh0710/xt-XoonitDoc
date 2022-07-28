@@ -1,0 +1,39 @@
+<ng-template #popTemplate>
+    <div class="article-failed">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th width="50%">Article Nr</th>
+                    <th class="status text-center">Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of failedArticleList">
+                    <td>{{ item }}</td>
+                    <td class="text-center status">
+                        <i class="fa fa-times warning" aria-hidden="true"></i>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</ng-template>
+
+<ng-container *ngIf="failedArticleList && failedArticleList.length; else defaultContent">
+    <a class="menu-header cursor-pointer" *ngIf="failedArticleList && failedArticleList.length"
+       triggers="mouseenter"
+       [popover]="popTemplate"
+       placement="bottom"
+       #pop="bs-popover"
+       [outsideClick]="true"
+       container="body"
+       containerClass="customer-history__header-menu">
+        <i class="fa fa-exclamation-triangle warning" aria-hidden="true"></i>
+    </a>
+</ng-container>
+
+<ng-template #defaultContent>
+    <span *ngIf="item && item.isSuccess"><i class="glyphicon glyphicon-ok success"></i></span>
+    <span *ngIf="item && item.isCancel"><i class="glyphicon glyphicon-ban-circle"></i></span>
+    <span *ngIf="item && item.isError"><i class="glyphicon glyphicon-remove"></i></span>
+</ng-template>

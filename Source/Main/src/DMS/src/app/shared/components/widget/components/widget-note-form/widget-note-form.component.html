@@ -1,0 +1,13 @@
+<note-control
+    [formControl]="notes"
+    [isDetail]="!!idInvoiceMainApproval || !!idDocument"
+    [currentUser]="currentUser"
+    [isHideAddButton]="mustHide"
+    [isHistoryDetail]="globalSearchHideState | async"
+    (onSaveForm)="saveForm($event)"
+    (onShare)="shareForm($event)"
+    (onDownload)="downloadForm($event)"
+    (onPrint)="printForm($event)"
+    (onFocusForm)="setFocusOCRScan($event)"
+></note-control>
+<email-note *ngIf="isShowEmailBox" [idMainDocument]="idDocument" (onClose)="isShowEmailBox = false"></email-note>

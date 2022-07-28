@@ -1,0 +1,50 @@
+<div *ngIf="widgetType"
+     [ngSwitch]="widgetType">
+    <ng-template [ngSwitchCase]="2">
+        <div *ngIf="gridData"
+             class="sub-title">N. of entires:&nbsp;{{gridData && gridData.gridOptions ? gridData.gridOptions.rowData.length : 0}}</div>
+    </ng-template>
+    <ng-template [ngSwitchCase]="3">
+        <div *ngIf="gridData"
+             class="sub-title">N. of entires:&nbsp;{{gridData && gridData.gridOptions ? gridData.gridOptions.rowData.length : 0}}</div>
+    </ng-template>
+    <ng-template [ngSwitchCase]="6">
+        <div *ngIf="creditCardData
+                    && creditCardData.selectedCreditCards"
+             class="sub-title">N. of selected CC:&nbsp;{{creditCardData.selectedCreditCards.length}}</div>
+    </ng-template>
+    <ng-template [ngSwitchCase]="10">
+        <div *ngIf="articleMediaManagerData
+                     && articleMediaManagerData.articleImageGalleryComponent
+                     && articleMediaManagerData.articleImageGalleryComponent.galleryImages"
+             class="sub-title">N. of images:&nbsp;{{articleMediaManagerData.articleImageGalleryComponent.galleryImages.length}}</div>
+    </ng-template>
+    <ng-template [ngSwitchCase]="11">
+        <div *ngIf="treeViewData
+                     && treeViewData
+                     && treeViewData.rawData"
+             class="sub-title">N. of selected categories:&nbsp;{{treeViewData.rawData.length}}</div>
+    </ng-template>
+    <ng-template [ngSwitchCase]="12">
+        <div *ngIf="fileExplorerData
+                    && fileExplorerData.xnTableUploadedFilesComponent
+                    && fileExplorerData.xnTableUploadedFilesComponent.wijmoGridComponent"
+             class="sub-title">N. of files:&nbsp;{{fileExplorerData.xnTableUploadedFilesComponent.wijmoGridComponent.gridData ? fileExplorerData.xnTableUploadedFilesComponent.wijmoGridComponent.gridData.items.length : 0}}</div>
+    </ng-template>
+    <ng-template [ngSwitchCase]="25">
+        <div *ngIf="fileExplorerData
+                    && fileExplorerData.xnTableUploadedFilesComponent
+                    && fileExplorerData.xnTableUploadedFilesComponent.wijmoGridComponent"
+             class="sub-title">N. of files:&nbsp;{{fileExplorerData.xnTableUploadedFilesComponent.wijmoGridComponent.gridData ? fileExplorerData.xnTableUploadedFilesComponent.wijmoGridComponent.gridData.items.length : 0}}</div>
+    </ng-template>
+    <ng-template [ngSwitchCase]="17">
+        <div *ngIf="translationData
+                    && translationData.wijmoGridComponent"
+             class="sub-title">N. of languages:&nbsp;{{translationData.wijmoGridComponent.gridData ? translationData.wijmoGridComponent.gridData.items.length : 0}}</div>
+    </ng-template>
+    <ng-template [ngSwitchCase]="18">
+        <div *ngIf="historyContainerData
+                    && historyContainerData.customerHistories"
+             class="sub-title">N. of entires:&nbsp;{{historyContainerData.customerHistories.length}}</div>
+    </ng-template>
+</div>

@@ -1,0 +1,12 @@
+<div class="menu-bar-wrapper">
+    <ng-container *ngFor="let module of modules; let i = index">
+        <div
+            class="menu"
+            (click)="selectModule(module, $event)"
+            [ngClass]="{ disabled: isDisabled && module.idSettingsGUI !== menuModuleId.cloud }"
+        >
+            <div class="icon-menu {{ module.iconName }}"></div>
+            <div class="title">{{ module.moduleName }}</div>
+        </div>
+    </ng-container>
+</div>

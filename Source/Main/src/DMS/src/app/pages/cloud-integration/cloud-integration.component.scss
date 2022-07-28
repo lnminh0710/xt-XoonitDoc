@@ -1,0 +1,12 @@
+.cloud-integration-wrapper {
+    width: 100vw;
+    height: 100vh;
+
+    .cloud-integration-root {
+        height: 100vh;
+    }
+
+    .widdget-template {
+        width: calc(100% - 50px) !important;
+    }
+}

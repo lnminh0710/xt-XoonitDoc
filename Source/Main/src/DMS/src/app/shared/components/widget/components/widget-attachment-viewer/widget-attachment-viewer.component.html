@@ -1,0 +1,71 @@
+<div class="viewer-container">
+    <div class="widget-header">
+        <attachment-toolbar
+            #toolbar
+            [isDisabledLeftIcons]="!src"
+            [isHidePrintIcon]="
+                type !== AttachmentType.IMAGE && type !== AttachmentType.PDF && type !== AttachmentType.TXT_JSON
+            "
+            [isHideRightIcons]="type !== AttachmentType.IMAGE && type !== AttachmentType.PDF && showXoonitMode !== 1"
+            [isShowSearchIcon]="type === AttachmentType.PDF"
+            [isShowSwitchMode]="showXoonitMode !== 0"
+            (onShare)="share()"
+            (onDownload)="download($event)"
+            (onPrint)="print()"
+            (onZoomOut)="zoomOut($event)"
+            (onZoomIn)="zoomIn($event)"
+            (onRotate)="rotate($event)"
+            (onViewActualSize)="viewActualSize()"
+            (onOpenSearch)="openSearch()"
+            (onSwitchMode)="switchXoonitMode = !switchXoonitMode"
+            (fullscreen)="expandWidget($event)"
+        ></attachment-toolbar>
+    </div>
+
+    <div *ngIf="src" class="content-viewer" [style.height.px]="height" [style.maxHeight.px]="height">
+        <ng-container [ngSwitch]="type">
+            <div class="image-viewer" *ngSwitchCase="AttachmentType.IMAGE">
+                <image-attachment-viewer #image [src]="src"></image-attachment-viewer>
+            </div>
+            <div class="pdf-viewer" *ngSwitchCase="AttachmentType.PDF">
+                <pdf-attachment-viewer #pdf [src]="src"></pdf-attachment-viewer>
+            </div>
+            <div class="office-viewer" *ngSwitchCase="AttachmentType.OFFICE">
+                <ng-container *ngIf="!switchXoonitMode">
+                    <office-attachment-viewer #office [src]="src"></office-attachment-viewer>
+                </ng-container>
+                <ng-container *ngIf="switchXoonitMode">
+                    <ng-container *ngIf="showXoonitMode === 2">
+                        <iframe [src]="htmlSrc | safe" frameborder="0"></iframe>
+                    </ng-container>
+                    <ng-container *ngIf="showXoonitMode === 1">
+                        <pdf-attachment-viewer #pdf [src]="htmlSrc"></pdf-attachment-viewer>
+                    </ng-container>
+                </ng-container>
+            </div>
+            <div class="txt-viewer" *ngSwitchCase="AttachmentType.TXT_JSON">
+                <txt-attachment-viewer #txtJson [src]="src"></txt-attachment-viewer>
+            </div>
+            <div class="media-viewer" *ngSwitchCase="AttachmentType.MEDIA">
+                <media-attachment-viewer #media [src]="src"></media-attachment-viewer>
+            </div>
+            <div class="media-viewer" *ngSwitchCase="AttachmentType.HTML">
+                <iframe [src]="src | safe" frameborder="0"></iframe>
+            </div>
+            <div class="unsupport-viewer" *ngSwitchCase="AttachmentType.NOT_SUPPORT">
+                <unsupport-attachment-viewer
+                    [name]="name"
+                    (onDownload)="download($event)"
+                ></unsupport-attachment-viewer>
+            </div>
+        </ng-container>
+    </div>
+</div>
+
+<attachment-email
+    *ngIf="isShowEmailBox"
+    [src]="src"
+    [paths]="[attachmentPath]"
+    [pages]="[{ FileName: 'FileName' }]"
+    (onClose)="isShowEmailBox = false"
+></attachment-email>

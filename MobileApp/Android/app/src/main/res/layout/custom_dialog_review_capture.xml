@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/background_dialog_review_capture">
+
+    <ImageButton
+        android:id="@+id/button_close_dialog"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="@dimen/margin_10"
+        android:layout_marginRight="16dp"
+        android:background="@drawable/ic_close_black_24dp" />
+
+    <TextView
+        android:id="@+id/textview_address_document_reviewdialog"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/button_close_dialog"
+        android:layout_marginTop="@dimen/margin_50"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:textSize="14dp"
+        tools:text="Invoice / Building / Diverses" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="24dp"
+        android:layout_marginTop="28dp"
+        android:layout_marginRight="24dp"
+        android:layout_marginBottom="16dp"
+        android:layout_above="@id/toolbar_bottom_review_capture"
+        android:layout_below="@id/textview_address_document_reviewdialog">
+
+        <ImageView
+            android:id="@+id/imageview_review_dialog_capture"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:adjustViewBounds="true"
+            android:src="@android:mipmap/sym_def_app_icon" />
+    </RelativeLayout>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/toolbar_bottom_review_capture"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="@dimen/margin_40"
+        android:layout_marginEnd="@dimen/margin_40"
+        android:layout_marginBottom="@dimen/margin_20"
+        android:background="#00182A"
+        app:cardCornerRadius="10dp">
+
+        <LinearLayout
+            android:id="@+id/action"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#00182A"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/cursor_dialog_capture"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:src="@drawable/ic_iconspace_cursor" />
+
+            <ImageButton
+                android:id="@+id/rotation_left_dialog_capture"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:src="@drawable/ic_iconspace_rotate_copy_2" />
+
+            <ImageButton
+                android:id="@+id/rotation_right_dialog_capture"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:src="@drawable/ic_iconspace_rotate_copy_3" />
+
+            <ImageButton
+                android:id="@+id/zoom_in_dialog_capture"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:src="@drawable/ic_iconspace_zoom_in" />
+
+            <ImageButton
+                android:id="@+id/zoom_out_dialog_capture"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:src="@drawable/ic_iconspace_zoom_out" />
+
+            <ImageButton
+                android:id="@+id/more_setting_dialog_capture"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:src="@drawable/ic_group_33_copy_3" />
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+</RelativeLayout>

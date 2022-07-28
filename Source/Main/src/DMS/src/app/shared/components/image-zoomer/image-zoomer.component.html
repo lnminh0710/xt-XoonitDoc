@@ -1,0 +1,139 @@
+<div id="image-zoomer-container">
+    <div id="image-zoomer-display">
+        <div id="toggle-handle"
+             [ngClass]="{'collapsed': smallImageCollapsed}"
+             (click)="toggleSmallImage()">
+        </div>
+        <div id="small-image-container"
+             [ngStyle]="{'opacity': smallImageCollapsed ? 0 : 1}">
+            <img *ngIf="imageUrl"
+                 id="small-image" border="0"
+                 [src]="'/api/FileManager/GetScanFile?name=' + imageUrl"
+                 (load)="initImageZoomer(null, true)" />
+        </div>
+    </div>
+    <div id="image-zoomer-control" class="text-right">
+        <div class="btn-group">
+            <span class="pull-left display-inline-block">
+                <input type="text" class="image-index form-control"
+                       value="{{currentImageIndex}}"
+                       maxlength="2"
+                       (input)="onImageIndexChanged($event)" />
+            </span>
+            <span class="image-total pull-left display-inline-block">
+                &nbsp;/{{totalImages}}
+            </span>
+        </div>
+        <div class="btn-group">
+            <a class="btn btn-warning btn-sm cursor-pointer padding-left--sm padding-right--sm"
+               [ngClass]="{'disabled' : currentImageIndex === 1 || !totalImages}"
+               (click)="prevImage()"
+               tooltip="Previous image"
+               placement="top"
+               container="body">
+                <i class="fa fa-chevron-left" aria-hidden="true"></i>
+            </a>
+            <a class="btn btn-warning btn-sm cursor-pointer padding-left--sm padding-right--sm"
+               [ngClass]="{'disabled' : currentImageIndex === totalImages || !totalImages}"
+               (click)="nextImage()"
+               tooltip="Next image"
+               placement="top"
+               container="body">
+                <i class="fa fa-chevron-right" aria-hidden="true"></i>
+            </a>
+        </div>
+        <div class="btn-group">
+            <a class="btn btn-default btn-sm cursor-pointer"
+               [ngClass]="{'disabled' : !imageUrl}"
+               (click)="downloadImage()"
+               tooltip="Download"
+               placement="top"
+               container="body">
+                <i class="fa fa-download" aria-hidden="true"></i>
+            </a>
+            <a class="btn btn-sm cursor-pointer"
+               [ngClass]="{'btn-primary' : !isLocked,
+                         'btn-danger' : isLocked,
+                         'disabled' : !imageUrl}"
+               (click)="toggleLock()"
+               [tooltip]="isLocked ? 'Unlock' : 'Lock'"
+               placement="top"
+               container="body">
+                <i *ngIf="!isLocked" class="fa fa-unlock-alt" aria-hidden="true"></i>
+                <i *ngIf="isLocked" class="fa fa-lock" aria-hidden="true"></i>
+            </a>
+            <a class="btn btn-default btn-sm cursor-pointer"
+               [ngClass]="{'disabled' : !imageUrl}"
+               (click)="zoomImage(true)"
+               tooltip="Zoom In"
+               placement="top"
+               container="body">
+                <i class="fa fa-search-plus" aria-hidden="true"></i>
+            </a>
+            <a class="btn btn-default btn-sm cursor-pointer"
+               [ngClass]="{'disabled' : !imageUrl}"
+               (click)="zoomImage(false)"
+               tooltip="Zoom out"
+               placement="top"
+               container="body">
+                <i class="fa fa-search-minus" aria-hidden="true"></i>
+            </a>
+            <a class="btn btn-default btn-sm cursor-pointer"
+               [ngClass]="{'disabled' : !imageUrl}"
+               (click)="manualMoveImage('up')"
+               tooltip="Move Up"
+               placement="top"
+               container="body">
+                <i class="fa fa-caret-up" aria-hidden="true"></i>
+            </a>
+            <a class="btn btn-default btn-sm cursor-pointer"
+               [ngClass]="{'disabled' : !imageUrl}"
+               (click)="manualMoveImage('down')"
+               tooltip="Move Down"
+               placement="top"
+               container="body">
+                <i class="fa fa-caret-down" aria-hidden="true"></i>
+            </a>
+            <a class="btn btn-default btn-sm cursor-pointer"
+               [ngClass]="{'disabled' : !imageUrl}"
+               (click)="manualMoveImage('left')"
+               tooltip="Move Left"
+               placement="top"
+               container="body">
+                <i class="fa fa-caret-left" aria-hidden="true"></i>
+            </a>
+            <a class="btn btn-default btn-sm cursor-pointer"
+               [ngClass]="{'disabled' : !imageUrl}"
+               (click)="manualMoveImage('right')"
+               tooltip="Move Right"
+               placement="top"
+               container="body">
+                <i class="fa fa-caret-right" aria-hidden="true"></i>
+            </a>
+            <a class="btn btn-default btn-sm cursor-pointer"
+               [ngClass]="{'disabled' : !imageUrl}"
+               (click)="rotateImage('right')"
+               tooltip="Rotate Right"
+               placement="top"
+               container="body">
+                <i class="fa fa-repeat" aria-hidden="true"></i>
+            </a>
+            <a class="btn btn-default btn-sm cursor-pointer"
+               [ngClass]="{'disabled' : !imageUrl}"
+               (click)="rotateImage('left')"
+               tooltip="Rotate Left"
+               placement="top"
+               container="body">
+                <i class="fa fa-undo" aria-hidden="true"></i>
+            </a>
+            <a class="btn btn-default btn-sm btn-danger cursor-pointer"
+               [ngClass]="{'disabled' : !imageUrl}"
+               (click)="initImageZoomer(0, true); rotateCount = 0"
+               tooltip="Reset"
+               placement="top"
+               container="body">
+                <i class="fa fa-refresh" aria-hidden="true"></i>
+            </a>
+        </div>
+    </div>
+</div>

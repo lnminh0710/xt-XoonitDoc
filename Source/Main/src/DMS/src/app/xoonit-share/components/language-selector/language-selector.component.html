@@ -1,0 +1,26 @@
+<div class="language-selector" [matMenuTriggerFor]="menu">
+    <div class="language-selector__code">
+        {{ currentLanguage?.languageCode || currentLanguage?.flag?.toUpperCase() }}
+    </div>
+    <div class="language-selector__flag">
+        <span class="flag flag-{{ currentLanguage?.flag }}"></span>
+    </div>
+    <div class="toolbar-icon with-fa">
+        <i class="fal fa-chevron-down"></i>
+    </div>
+</div>
+<mat-menu #menu="matMenu" [hasBackdrop]="true" class="languages-menu">
+    <div
+        mat-menu-item
+        *ngFor="let item of languages; let i = index"
+        class="language-item"
+        (click)="changeLanguage(item)"
+    >
+        <span class="flag flag-{{ item.flag }}"></span>
+        <span class="language-item__title">{{ item.name }}</span>
+        <div class="language-item__divide" *ngIf="i != 0"></div>
+        <div class="toolbar-icon with-fa" *ngIf="item.idRepLanguage == currentLanguage?.idRepLanguage">
+            <i class="fal fa-check"></i>
+        </div>
+    </div>
+</mat-menu>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    android:id="@+id/layoutPreview">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar_details" />
+
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="600dp"
+        android:layout_above="@id/toolbar_preview"
+        android:layout_below="@id/toolbar"
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="1dp">
+
+    </androidx.viewpager.widget.ViewPager>
+
+    <include
+        android:id="@+id/toolbar_preview"
+        layout="@layout/toolbar_preview"
+        android:layout_width="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_height="wrap_content" />
+
+
+
+</RelativeLayout>

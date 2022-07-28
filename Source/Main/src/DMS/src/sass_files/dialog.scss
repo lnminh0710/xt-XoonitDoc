@@ -1,0 +1,198 @@
+@import './color.scss';
+@import './variables.scss';
+
+%dialogMain {
+    background-color: $white;
+    border: unset !important;
+    box-shadow: unset !important;
+}
+
+%dialogHeader {
+}
+
+%displayCenter {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+$headerHeight: 43px;
+
+.caminada-flat-dialog {
+    background-color: $white;
+    border: unset !important;
+    box-shadow: unset !important;
+    &.fullscreen {
+        top: 55px !important;
+        left: 0 !important;
+    }
+    &__header {
+        background-color: $white;
+        color: $black;
+        height: $headerHeight;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    div.ui-dialog-titlebar {
+        border-radius: 10px 10px 0 0;
+        padding: unset !important;
+        background-color: $white;
+        height: $headerHeight;
+    }
+
+    div.ui-dialog-content {
+        height: calc(100% - #{$headerHeight}) !important;
+        color: $black;
+    }
+
+    &.with-footer {
+        div.ui-dialog-content {
+            height: calc(100% - 100px) !important;
+        }
+
+        .ui-dialog-footer {
+            background-color: $white;
+            height: 50px !important;
+            padding: 0 !important;
+            border-radius: 0 0 10px 10px;
+        }
+    }
+}
+
+.xoonit-crystal-dialog {
+    background-color: transparent;
+    border-width: 0 !important;
+    box-shadow: unset;
+    height: 90%;
+    width: 30%;
+
+    div.ui-dialog-titlebar {
+        background-color: transparent !important;
+        height: 0 !important;
+        padding: 0 !important;
+    }
+
+    div.ui-dialog-content {
+        padding: 0 !important;
+        height: 100% !important;
+    }
+}
+
+%button {
+    height: 32px;
+    width: 90px;
+    border-radius: 4px;
+    border: 1px solid #eeeeee;
+    color: #fff;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 6px;
+    cursor: pointer;
+}
+.confirm-dialog {
+    &__header {
+        display: flex;
+        align-items: center;
+        height: 100%;
+        padding: 0 20px;
+        font-family: rbt_Bold;
+        border-radius: 4px 4px 0 0;
+        // background-color: #31314d;
+    }
+    &__close-button {
+        cursor: pointer;
+    }
+    &__title {
+        flex: 1;
+        text-align: center;
+        font-size: large;
+    }
+    &__content {
+        width: 100%;
+        margin-bottom: 20px;
+        font-family: rbt_Regular;
+        font-size: 16px;
+        letter-spacing: 0.15px;
+        line-height: 21px;
+        text-align: center;
+        &-row {
+            width: 100%;
+            text-align: left;
+            padding-left: 10px;
+            &::before {
+                content: '\2022';
+            }
+        }
+    }
+    &__footer {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        height: 40px;
+    }
+    &__button-save {
+        @extend %button;
+        font-weight: bold;
+        width: 100px;
+        &.ajaxing {
+            background-color: #bdbdbd;
+            justify-content: flex-start;
+        }
+        &-title {
+            flex: 1;
+            text-align: center;
+        }
+    }
+    &__button-progress {
+        background: url('src/public/assets/img/loading-spinner.gif') center no-repeat;
+        background-size: 20px;
+        width: 20px;
+        height: 20px;
+    }
+    &__button-no-save {
+        @extend %button;
+    }
+    &__button-cancel {
+        @extend %button;
+    }
+    &__space {
+        flex: 1;
+    }
+    &__button--full-width {
+        width: 100%;
+        height: 100%;
+        background-color: #0049b0;
+        cursor: pointer;
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}
+
+.loading-dialog {
+    background-color: transparent;
+    border: unset !important;
+    box-shadow: unset !important;
+    .ui-dialog-titlebar {
+        display: none !important;
+    }
+    .ui-widget-content {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100% !important;
+        background-color: $white;
+        border-radius: 4px;
+    }
+}
+
+.popup-backdrop {
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.cdk-overlay-container {
+    z-index: 1050 !important;
+}

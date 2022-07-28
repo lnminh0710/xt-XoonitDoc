@@ -1,0 +1,34 @@
+.article-detail-view {
+    padding: 0 5px;
+    position: relative;
+
+    .left {
+        padding: 0 10px 0 5px;
+    }
+
+
+    .artilceNr {
+        font-weight: bold;
+        margin-bottom: 3px;
+        font-size: 14px;
+    }
+
+    .shortName {
+        margin-bottom: 7px;
+        color: #242bb1;
+        font-weight: bold;
+    }
+
+    .description {
+        margin-bottom: 10px;
+    }
+
+    .dimensions {
+        .title {
+            font-weight: bold;
+        }
+
+        .value {
+        }
+    }
+}

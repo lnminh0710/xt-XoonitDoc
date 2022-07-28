@@ -1,0 +1,11 @@
+<div class="document-image-empty" *ngIf="true">
+    <div class="document-image-empty__container">
+        <div class="document-image-empty__secondary-text" *ngIf="!title">
+            Please choose one attachment document from below tab
+        </div>
+        <div class="document-image-empty__secondary-text" *ngIf="title">
+            <label-translation [keyword]="title"></label-translation>
+        </div>
+        <div class="document-image-empty__image"></div>
+    </div>
+</div>

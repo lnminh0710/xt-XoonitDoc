@@ -1,0 +1,13 @@
+.form-control-wrapper {
+    ::ng-deep {
+        div.mat-radio-label-content {
+            width: 100%
+        }
+    }
+
+    div.mat-radio-label-wrapper {
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+    }   
+}

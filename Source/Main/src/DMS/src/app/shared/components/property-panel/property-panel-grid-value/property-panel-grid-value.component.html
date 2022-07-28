@@ -1,0 +1,161 @@
+<div [ngSwitch]="item.dataType">
+    <ng-template [ngSwitchCase]="'String'">
+        <input type="text"
+               class="no-boder"
+               [ngClass]="{'prop-dirty': item.dirty}"
+               [disabled]="item.disabled"
+               [ngModel]="item.value"
+               (ngModelChange)="onInputChanged($event)"
+               autocomplete="off" />
+    </ng-template>
+    <ng-template [ngSwitchCase]="'Number'">
+        <wj-input-number [isRequired]="false"
+                         [(value)]="item.value"
+                         [min]="0"
+                         [format]="'D'"
+                         class="no-border full-width no-margin-left"
+                         [ngClass]="{'prop-dirty': item.dirty}"
+                         (valueChanged)="onInputChanged(item.value)">
+        </wj-input-number>
+    </ng-template>
+    <ng-template [ngSwitchCase]="'Boolean'">
+        <mat-checkbox color="primary"
+                      class="checkbox-item"
+                      [(ngModel)]="item.value"
+                      [disabled]="item.disabled"
+                      (change)="onCheckboxChanged(item)">
+            {{item.valueDescription}}
+        </mat-checkbox>
+    </ng-template>
+    <ng-template [ngSwitchCase]="'Object'">
+        <wj-combo-box #propCombo
+                      wjDropdownHelper
+                      class="full-width no-border property-combobox"
+                      *ngIf="item.options && (item.options.length >= 0)"
+                      [itemsSource]="item.options"
+                      [displayMemberPath]="'value'"
+                      [selectedValuePath]="'key'"
+                      [isDisabled]="item.disabled"
+                      [isRequired]="false"
+                      [selectedValue]="item.value"
+                      [itemFormatter]="itemFormatterFunc"
+                      [isContentHtml]="true"
+                      (gotFocus)="propCombo.isDroppedDown = true; onPropComboFocused($event)">
+        </wj-combo-box>
+    </ng-template>
+    <ng-template [ngSwitchCase]="'MultiSelect'">
+        <div class="input-group full-width">
+            <input type="text"
+                   class="no-boder cursor-pointer"
+                   [readonly]="true"
+                   [disabled]="item.disabled"
+                   [ngModel]="multiSelectInputValue"
+                   (click)="showMultiSelectDialog(item)"
+                   autocomplete="off">
+            <span class="input-group-btn">
+                <button type="button"
+                        class="no-border  mat-btn-non-fix"
+                        mat-raised-button
+                        [disabled]="item.disabled"
+                        (click)="showMultiSelectDialog(item)">
+                    &hellip;
+                </button>
+            </span>
+        </div>
+    </ng-template>
+    <ng-template [ngSwitchCase]="'FieldFormat'">
+        <div class="input-group full-width">
+            <input type="text"
+                   class="no-boder cursor-pointer"
+                   [readonly]="true"
+                   [disabled]="item.disabled"
+                   (click)="showFieldFormatDialog(item)"
+                   autocomplete="off" />
+            <span class="input-group-btn">
+                <button type="button"
+                        class="no-border  mat-btn-non-fix"
+                        mat-raised-button
+                        [disabled]="item.disabled"
+                        (click)="showFieldFormatDialog(item)">
+                    &hellip;
+                </button>
+            </span>
+        </div>
+    </ng-template>
+    <ng-template [ngSwitchCase]="'Color'">
+        <wj-input-color #propColor
+                        class="full-width no-border"
+                        [ngClass]="{'prop-dirty': item.dirty}"
+                        [isDisabled]="item.disabled"
+                        [isRequired]="false"
+                        [(value)]="item.value"
+                        (gotFocus)="propColor.isDroppedDown = true">
+        </wj-input-color>
+    </ng-template>
+    <ng-template [ngSwitchCase]="'Order'">
+        <div class="input-group full-width">
+            <input type="text"
+                   class="no-boder cursor-pointer"
+                   [readonly]="true"
+                   [disabled]="item.disabled"
+                   (click)="showOrderByFieldDialog()"
+                   autocomplete="off" />
+            <span class="input-group-btn">
+                <button type="button"
+                        mat-raised-button
+                        class="no-border  mat-btn-non-fix"
+                        [disabled]="item.disabled"
+                        (click)="showOrderByFieldDialog()">
+                    &hellip;
+                </button>
+            </span>
+        </div>
+    </ng-template>
+    <ng-template [ngSwitchCase]="'DateFormat'">
+        <div class="input-group full-width">
+            <input type="text"
+                   class="no-boder cursor-pointer"
+                   [readonly]="true"
+                   [disabled]="item.disabled"
+                   [ngModel]="item.value"
+                   (click)="showDateFormatDialog(item)"
+                   autocomplete="off" />
+            <span class="input-group-btn">
+                <button type="button"
+                        mat-raised-button
+                        class="no-border  mat-btn-non-fix"
+                        [disabled]="item.disabled"
+                        (click)="showDateFormatDialog(item)">
+                    &hellip;
+                </button>
+            </span>
+        </div>
+    </ng-template>
+    <ng-template [ngSwitchCase]="'MultiSelectCombobox'">
+        <wj-multi-select #propMultiSelectCombobox
+                         wjDropdownHelper
+                         class="full-width no-border property-combobox"
+                         [itemsSource]="item.options"
+                         [displayMemberPath]="'value'"
+                         [selectedValuePath]="'key'"
+                         [isDisabled]="item.disabled"
+                         [isRequired]="false"
+                         (checkedItemsChanged)="onPropMultiSelectComboboxChanged(propMultiSelectCombobox)">
+        </wj-multi-select>
+    </ng-template>
+</div>
+
+<property-panel-grid-value-dialog *ngIf="item.dataType == 'MultiSelect'"
+                                  #propertyPanelGridValueDialog
+                                  (onApply)="onMultiSelectApply($event)"></property-panel-grid-value-dialog>
+<property-panel-order-field-dialog *ngIf="item.dataType == 'Order'"
+                                   #propertyPanelOrderFieldDialog
+                                   [usingModule]="usingModule"
+                                   (onApply)="onOrderNumberFieldApply($event)"></property-panel-order-field-dialog>
+<property-panel-grid-field-data-dialog *ngIf="item.dataType == 'FieldFormat'"
+                                       #propertyPanelGridFieldDataDialog
+                                       [usingModule]="usingModule"
+                                       (onApply)="onFieldFormatApply($event)"></property-panel-grid-field-data-dialog>
+<property-panel-date-format-dialog *ngIf="item.dataType == 'DateFormat'"
+                                   #propertyPanelDateFormatDialog
+                                   (onApply)="onDateFormatDialogApply($event)"></property-panel-date-format-dialog>

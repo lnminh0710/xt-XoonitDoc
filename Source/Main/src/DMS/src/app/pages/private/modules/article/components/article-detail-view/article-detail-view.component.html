@@ -1,0 +1,13 @@
+<div class="xn-form-container height-pc-100 article-detail-view">
+    <div class="col-xs-12 col-sm-5 left">
+        <xn-galleria-vertical *ngIf="articleDetail.idArticle"
+                              #galleryCtrl
+                              [images]="galleryImages"
+                              [zoomWindowId]="zoomWindowId"></xn-galleria-vertical>
+    </div>
+    <div class="col-xs-12 col-sm-7 no-padding" id="{{zoomWindowId}}">
+        <div class="artilceNr">{{articleDetail.artilceNr}}</div>
+        <div class="shortName">{{articleDetail.articleNameShort}}</div>
+        <div class="description" [innerHTML]="articleDetail.articleDescription | sanitizeHtml"></div>
+    </div>
+</div>

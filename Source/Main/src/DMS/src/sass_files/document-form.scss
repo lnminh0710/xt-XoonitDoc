@@ -1,0 +1,25 @@
+@import 'color.scss';
+
+.md-danger {
+    color: $red9;
+}
+
+.md-warning {
+    color: $yellow5;
+}
+
+.md-success {
+    color: $green4;
+}
+
+.md-bg-danger {
+    background-color: $red9;
+}
+
+.md-bg-warning {
+    background-color: $yellow5;
+}
+
+.md-bg-success {
+    background-color: $green4;
+}

@@ -1,0 +1,73 @@
+<p-dialog
+    *ngIf="showDialog"
+    header=""
+    [styleClass]="'prime-dialog-article-orders'"
+    [(visible)]="showDialog"
+    modal="true"
+    width="1200"
+    height="500"
+    positionTop="150"
+    responsive="true"
+    appendTo="body"
+    [resizable]="true"
+    [draggable]="true"
+    [contentStyle]="{ 'padding-bottom': 0, 'padding-top': 0 }"
+>
+    <p-header>
+        <div class="modal-header--information">
+            <span class="header-text">{{ headerTitle }}</span>
+            <div class="toolbar-icon close-dialog-icon" (click)="close()"></div>
+        </div>
+    </p-header>
+
+    <div class="row content-detail">
+        <div class="search-box">
+            <app-xn-input-debounce
+                delayTimer="600"
+                placeholder="Search Here"
+                [value]="keyword"
+                cssClass="gs__search-text-input"
+                id="txt-global-search-article"
+                [hasSearchButton]="true"
+                [isLoading]="isSearching"
+                [hasIndicator]="true"
+                (onValueChanged)="search($event)"
+                (onSearchButtonClicked)="search($event)"
+            >
+            </app-xn-input-debounce>
+        </div>
+        <!--<mat-checkbox color="primary" [(ngModel)]="isWithStarStatus">
+            Search with *
+        </mat-checkbox>-->
+        <div class="search-result">
+            <gs-result
+                #gsResult
+                [keyword]="keyword"
+                [searchIndex]="searchIndex"
+                [isWithStar]="isWithStarStatus"
+                [module]="module"
+                [dontAllowSearchWhenInit]="true"
+                [allowDrag]="allowDrag"
+                (onRowClicked)="rowClicked($event)"
+                (onRowDoubleClicked)="rowDoubleClicked($event)"
+                (onSearchCompleted)="onSearchCompleted($event)"
+            >
+            </gs-result>
+        </div>
+    </div>
+
+    <p-footer>
+        <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+            <button
+                label="Cancel"
+                pbutton=""
+                type="button"
+                mat-raised-button
+                class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"
+                (click)="ok()"
+            >
+                <span class="ui-button-text ui-c">Ok</span>
+            </button>
+        </div>
+    </p-footer>
+</p-dialog>

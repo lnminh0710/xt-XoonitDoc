@@ -1,0 +1,14 @@
+<app-xn-single-page-view *ngIf="!isDoublePage"
+                         [data]="tabPageView.Page"
+                         [isOrderDataEntry]="isOrderDataEntry"
+                         [isActivated]="isActivated"
+                         [tabID]="tabID"
+                         [isSplitterDragging]="isSplitterDragging">
+</app-xn-single-page-view>
+<app-xn-double-page-view *ngIf="isDoublePage"
+                         [data]="tabPageView.Split"
+                         [isOrderDataEntry]="isOrderDataEntry"
+                         [isActivated]="isActivated"
+                         [tabID]="tabID"
+                         [isSplitterDragging]="isSplitterDragging">
+</app-xn-double-page-view>

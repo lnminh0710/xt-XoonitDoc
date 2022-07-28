@@ -1,0 +1,11 @@
+.search-icon {
+    font-size: 15pt;
+    color: #3c8dbc;
+    cursor: pointer;
+}
+
+.active { 
+    .search-icon {
+        color: #f78535;
+    }
+}

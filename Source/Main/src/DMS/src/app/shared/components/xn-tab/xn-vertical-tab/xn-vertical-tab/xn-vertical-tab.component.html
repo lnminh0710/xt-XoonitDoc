@@ -1,0 +1,76 @@
+<div class="h-100 w-100">
+    <as-split #horizontalSplit
+              direction="horizontal"
+              (dragEnd)="dragEnd($event)"
+              (dragProgress)="dragProgress()"
+              [gutterSize]="5">
+        <as-split-area [size]="splitterConfig.leftHorizontal"
+                       [minSize]="3"
+                       id="capture-tree-section">
+            <xn-vertical-tab-header [data]="headerData"
+                                    [setting]="tabSetting"
+                                    [subTabSetting]="subTabSetting"
+                                    (onHeaderClick)="onTabHeaderClick()"></xn-vertical-tab-header>
+        </as-split-area>
+        <as-split-area [size]="splitterConfig.rightHorizontal"
+                       [minSize]="3">
+            <ng-template [ngIf]="ofModuleLocal">
+                <ng-template [ngIf]="ofModuleLocal.idSettingsGUI != 1">
+                    <div class="position-relative tab-content-container">
+                        <div class="position-relative" [ngStyle]="tabContainerStyle">
+                            <xn-vertical-tab-content [tabSummaryModels]="headerData"
+                                                     [setting]="tabSetting"
+                                                     [newTabConfig]="newTabConfig">
+                            </xn-vertical-tab-content>
+                            <div *ngIf="editLayout" class="edit-layout-setting">
+                                <div class="edit-layout-setting-stage"></div>
+                            </div>
+                        </div>
+
+                        <app-xn-ai-main *ngIf="tabSetting"
+                                        #additionalInformationMain
+                                        [data]="tabSetting.AdditionalInfo"
+                                        [config]="config"
+                                        [configWidth]="configWidth"></app-xn-ai-main>
+                    </div>
+                </ng-template>
+                <ng-template [ngIf]="ofModuleLocal.idSettingsGUI == 1">
+                    <as-split #subRightHorizontalSplit
+                              direction="horizontal"
+                              [gutterSize]="5"
+                              (dragEnd)="dragEnd($event)"
+                              [ngStyle]="tabContainerStyle">
+                        <as-split-area [size]="splitterConfig.subRightLeftHorizontal"
+                                       [minSize]="3"
+                                       id="capture-form-section">
+                            <div class="position-relative">
+                                <xn-vertical-tab-content [tabSummaryModels]="headerData"
+                                                         [setting]="tabSetting"
+                                                         [newTabConfig]="newTabConfig">
+                                </xn-vertical-tab-content>
+                            </div>
+                        </as-split-area>
+                        <as-split-area [size]="splitterConfig.subRightRightHorizontal"
+                                       [minSize]="3"
+                                       id="capture-document-section">
+                            <widget-container [pageId]="'04ea72c0-2687-4138-b876-3173d7bd3820'"
+                                              [tabID]="'DocumentViewer'"></widget-container>
+                        </as-split-area>
+                    </as-split>
+                    <app-xn-ai-main *ngIf="tabSetting"
+                                    #additionalInformationMain
+                                    [data]="tabSetting.AdditionalInfo"
+                                    [config]="config"
+                                    [configWidth]="configWidth"></app-xn-ai-main>
+
+
+                </ng-template>
+            </ng-template>
+        </as-split-area>
+    </as-split>
+
+    <!--Golden Layout-->
+    <div *ngIf="editLayout" class="edit-layout-setting">
+        <div class="edit-layout-setting-stage"></div>
+    </div>
+</div>

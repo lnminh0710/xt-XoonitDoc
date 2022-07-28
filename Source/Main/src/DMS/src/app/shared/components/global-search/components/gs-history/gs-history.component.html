@@ -1,0 +1,58 @@
+<div class="gs-history">
+    <div class="gs-history__action">
+        <div
+            class="gs-history__action-delete icon-transform"
+            container="body"
+            (click)="deleteAll()"
+            #popDelete="bs-tooltip"
+            container="body"
+            data-placement="top"
+            tooltip="Delete all"
+        ></div>
+    </div>
+    <div class="gs-history__breadcrumb">
+        <div
+            class="gs-history__breadcrumb-item"
+            *ngFor="let item of currentTab.histories; let i = index"
+            [ngClass]="{ active: item.active }"
+            (click)="textClicked(item)"
+            (mouseenter)="onMouseEnterText(item, $event)"
+            (mouseleave)="onMouseLeaveText(item, $event)"
+        >
+            <div class="gs-history__breadcrumb-tooltip">
+                <div
+                    class="gs-history__breadcrumb-tooltip-title"
+                    [ngStyle]="{ 'min-width': numberWidth + 'px' }"
+                    *ngIf="item.showTooltip"
+                >
+                    <b *ngIf="item?.num != undefined">({{ item.num }})</b>
+                    {{ item.text }}
+                </div>
+            </div>
+            <div class="gs-history__breadcrumb-item-tail" *ngIf="i != 0" [ngClass]="{ active: item.active }"></div>
+            <div
+                class="gs-history__breadcrumb-item-body"
+                [ngClass]="{ active: item.active }"
+                [ngStyle]="{
+                    'max-width': math.min(breadcrumbWidth / currentTab.histories.length - 18.5, 70) + 'px'
+                }"
+            >
+                <div *ngIf="item?.text.length > 10" class="gs-history__breadcrumb-item-body-two-row">
+                    <div>
+                        {{ item.text.substr(0, 10) }}
+                    </div>
+                    <div class="gs-history__breadcrumb-item-body-two-row-sc">
+                        {{ item.text.substr(10, item.text.length) }}
+                    </div>
+                </div>
+                <div *ngIf="item?.text.length <= 10">{{ item.text }}</div>
+            </div>
+            <div class="gs-history__breadcrumb-item-head" [ngClass]="{ active: item.active }"></div>
+            <div
+                *ngIf="item.showNumber"
+                (click)="deleteItem(item)"
+                class="gs-history__breadcrumb-delete icon-transform"
+            ></div>
+        </div>
+    </div>
+</div>

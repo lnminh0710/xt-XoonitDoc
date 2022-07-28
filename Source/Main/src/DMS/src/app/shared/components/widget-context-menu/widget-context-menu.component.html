@@ -1,0 +1,197 @@
+<context-menu #basicMenu>
+    <ng-template
+        *ngFor="let action of contextMenuActions"
+        contextMenuItem
+        let-item
+        [visible]="action.visible"
+        [enabled]="action.enabled"
+        [divider]="action.divider"
+        (execute)="action.click()"
+    >
+        <div class="d-flex">
+            <ng-container *ngIf="action.template">
+                <ng-container *ngTemplateOutlet="action.template; context: action.contextTemplate"> </ng-container>
+            </ng-container>
+            <ng-container *ngIf="!action.template">
+                <div class="icon menu-item {{ action.name }}"></div>
+                <div class="title">
+                    {{ action.name }}
+                </div>
+            </ng-container>
+        </div>
+    </ng-template>
+
+    <ng-template *ngIf="!isSelectingText && !textField" contextMenuItem (execute)="reloadData()">
+        <div class="d-flex">
+            <div class="icon menu-item rotate-left-icon">
+                <!--<i class="fa fa-refresh"></i>-->
+            </div>
+            <div class="title">Reload data</div>
+        </div>
+    </ng-template>
+
+    <ng-template *ngIf="!isSelectingText && !textField" contextMenuItem [subMenu]="subMenuFulscreen">
+        <div class="d-flex">
+            <div class="icon menu-item fullscreen-icon">
+                <!--<i class="fa fa-window-maximize"
+                   [ngClass]="{ 'fa-window-maximize': !isMaximized, 'fa-window-restore': isMaximized }"></i>-->
+            </div>
+            <div class="title">Full screen</div>
+        </div>
+    </ng-template>
+
+    <context-menu *ngIf="!isSelectingText && !textField" #subMenuFulscreen>
+        <ng-template contextMenuItem (execute)="openInsideFullScreen()">
+            <div class="d-flex">
+                <div class="icon">
+                    <!--<i class="fa fa-window-maximize"
+                       [ngClass]="{ 'fa-window-maximize': !isMaximized, 'fa-window-restore': isMaximized }"></i>-->
+                </div>
+                <div class="title">Inside</div>
+            </div>
+        </ng-template>
+        <!--<ng-template contextMenuItem (execute)="openSeparateWindow()">
+            <div class="d-flex">
+                <div class="icon">
+                    <i class="fa fa-refresh"></i>
+                </div>
+                <div class="title">
+                    Separate
+                </div>
+            </div>
+        </ng-template>-->
+    </context-menu>
+
+    <ng-template *ngIf="!isSelectingText && !textField" contextMenuItem [subMenu]="subMenuToolbar">
+        <div class="d-flex">
+            <div class="icon menu-item tlbar-icon">
+                <!--<i class="fa fa-cog"></i>-->
+            </div>
+            <div class="title">Toolbar</div>
+        </div>
+    </ng-template>
+
+    <ng-template *ngIf="isSelectingText" contextMenuItem (execute)="copy()">
+        <div class="d-flex">
+            <div class="icon menu-item copy-icon"></div>
+            <div class="title">Copy</div>
+        </div>
+    </ng-template>
+
+    <ng-template *ngIf="textField" [class.disabled]="" contextMenuItem (execute)="paste()">
+        <div class="d-flex">
+            <div class="icon menu-item paste-icon"></div>
+            <div class="title">Paste</div>
+        </div>
+    </ng-template>
+
+    <context-menu #subMenuToolbar>
+        <ng-template contextMenuItem (execute)="print()">
+            <div class="d-flex">
+                <div class="icon menu-item print-icon"></div>
+                <div class="title">Print</div>
+            </div>
+        </ng-template>
+        <!--<ng-template contextMenuItem [subMenu]="subMenuDirection">
+            <div class="d-flex">
+                <div class="icon">
+                    <i class="fa fa-refresh"></i>
+                </div>
+                <div class="title">
+                    Enter Direction
+                </div>
+            </div>
+        </ng-template>-->
+        <!--<context-menu #subMenuDirection>
+            <ng-template contextMenuItem (execute)="enterNextRow()">
+                <div class="d-flex">
+                    <div class="icon">
+                        <i class="fa fa-refresh"></i>
+                    </div>
+                    <div class="title">
+                        Go to next row
+                    </div>
+                </div>
+            </ng-template>
+            <ng-template contextMenuItem (execute)="enterNextColumn()">
+                <div class="d-flex">
+                    <div class="icon">
+                        <i class="fa fa-refresh"></i>
+                    </div>
+                    <div class="title">
+                        Go to next column
+                    </div>
+                </div>
+            </ng-template>
+        </context-menu>-->
+    </context-menu>
+
+    <ng-template contextMenuItem [subMenu]="subMenuSetting" *ngIf="displayFields?.length">
+        <div class="d-flex">
+            <div class="icon menu-item setting-icon">
+                <!--<i class="fa fa-cogs"></i>-->
+            </div>
+            <div class="title">Setting</div>
+        </div>
+    </ng-template>
+
+    <context-menu #subMenuSetting [class.d-none]="!displayFields?.length">
+        <ng-template contextMenuItem [subMenu]="subMenuDisplayField">
+            <div class="d-flex">
+                <div class="icon">
+                    <!--<i class="fa fa-refresh"></i>-->
+                </div>
+                <div class="title">Display Field</div>
+            </div>
+        </ng-template>
+        <context-menu #subMenuDisplayField>
+            <ng-template contextMenuItem [visible]="displayFields?.length">
+                <div class="d-flex" *ngIf="displayFields?.length">
+                    <div class="icon">
+                        <mat-checkbox
+                            color="primary"
+                            (click)="$event.stopPropagation()"
+                            [(ngModel)]="allChecked"
+                            (change)="allCheckChanged($event)"
+                        >
+                        </mat-checkbox>
+                    </div>
+                    <div class="title">All Field</div>
+                </div>
+            </ng-template>
+            <ng-template contextMenuItem divider="true"></ng-template>
+
+            <ng-template
+                *ngFor="let field of displayFields"
+                [visible]="displayFields?.length"
+                contextMenuItem
+                (execute)="enterNextRow()"
+            >
+                <div class="d-flex">
+                    <div class="icon">
+                        <mat-checkbox
+                            color="primary"
+                            [(ngModel)]="field.selected"
+                            (click)="$event.stopPropagation()"
+                            (change)="fieldCheckChanged($event)"
+                        >
+                            <span (click)="$event.stopPropagation()">{{ field.fieldDisplayName }}</span>
+                        </mat-checkbox>
+                    </div>
+                    <div class="title">
+                        <!--{{field.fieldDisplayName}}-->
+                    </div>
+                </div>
+            </ng-template>
+        </context-menu>
+    </context-menu>
+
+    <ng-template *ngIf="!isSelectingText && !textField" contextMenuItem (execute)="saveSetting()">
+        <div class="d-flex save-setting" [ngClass]="{ 'has-changed': settingChanged }">
+            <div class="icon menu-item save-icon">
+                <!--<i class="icon-save fa fa-floppy-o"></i>-->
+            </div>
+            <div class="title">Save Setting</div>
+        </div>
+    </ng-template>
+</context-menu>

@@ -1,0 +1,160 @@
+﻿@import 'src/sass_files/color.scss';
+
+:host-context(.widdget-template) .widget-template-tab {
+    right: 0;
+    margin-right: 0;
+    transition: right 300ms ease-out;
+}
+
+.small-line {
+    height: 4px;
+    width: 52px;
+    position: absolute;
+    top: 0;
+    left: -2px;
+    z-index: 100;
+    background-color: $view-mode;
+}
+
+.widget-template-tab {
+    height: calc(100% - 53px);
+    width: 50px;
+    position: absolute !important;
+    z-index: 1011;
+    top: 53px;
+    right: -270px;
+    margin-right: -520px;
+    padding: 0px 0 15px 0;
+    transition: right 200ms linear, margin-right 200ms ease-out;
+    background: #ffd279;
+    font-size: 15px;
+    font-weight: 400;
+    color: black;
+    border: none;
+    border-left: 2px solid #ccc;
+}
+
+.widget-template-tab .widget-template-item {
+    width: 95%;
+    font-size: 15px;
+    border: 2px solid #3c8dbc;
+    color: #3c8dbc;
+    padding: 8px;
+    margin-bottom: 10px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.widget-template-tab .widget-categories ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.widget-template-tab .widget-categories ul li {
+    padding: 5px;
+    cursor: pointer;
+    height: 38px;
+    margin-top: 10px;
+}
+
+.widget-template-tab .widget-categories ul li .widget-cat-item {
+    border: 2px solid #3c8dbc;
+    text-align: center;
+    color: #3c8dbc;
+    position: relative;
+}
+
+.widget-template-tab .widget-categories ul li .widget-cat-item:hover,
+.widget-template-tab .widget-categories ul li .widget-cat-item:active {
+    background-color: #cde6f4;
+}
+
+.widget-template-tab .widget-categories ul li .widget-cat-item.has-widget::before,
+.widget-template-tab .widget-categories ul li .widget-cat-item.has-widget::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    border-color: transparent;
+    border-style: solid;
+}
+
+.widget-template-tab .widget-categories ul li .widget-cat-item.has-widget::after {
+    border-radius: 0;
+    border-width: 3px;
+    border-left-color: #3c8dbc;
+    border-bottom-color: #3c8dbc;
+}
+
+.widget-template-tab .widget-categories ul li .widget-cat-item.cat-selected {
+    background-color: #ffb400;
+}
+
+.widget-template-tab .widget-categories ul li .widget-cat-item h3 {
+    margin: 4px;
+}
+
+.widget-loading {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: lightgray;
+    opacity: 0.6;
+    z-index: 9999;
+
+    .fa {
+        position: absolute;
+        top: 45%;
+        left: 45%;
+    }
+}
+
+.mat-button {
+    float: left;
+    border-radius: 0;
+    padding: 0;
+    min-width: 0;
+}
+
+.btn-group {
+    .mat-button {
+        font-size: 19px;
+        width: 50%;
+        height: 30px;
+        line-height: 30px;
+    }
+}
+
+.widget-cat-item {
+    font-size: 19px;
+    width: 38px;
+    height: 38px;
+    line-height: 30px;
+    background: none;
+    margin-bottom: 10px;
+
+    span {
+        font-size: 26px;
+    }
+}
+
+.widget-item {
+    height: 42px;
+    padding: 0 10px;
+}
+
+.draggable-item {
+    width: 100%;
+    line-height: 42px;
+    text-align: left;
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.margin-top-4px {
+    margin-top: 4px;
+}

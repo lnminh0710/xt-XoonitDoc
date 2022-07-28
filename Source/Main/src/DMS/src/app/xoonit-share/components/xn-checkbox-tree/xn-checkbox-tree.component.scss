@@ -1,0 +1,39 @@
+@import 'src/sass_files/color.scss';
+
+:host {
+    height: 100%;
+    overflow: auto;
+}
+::ng-deep {
+    mat-checkbox {
+        position: relative;
+    }
+    .mat-checkbox-indeterminate.mat-accent .mat-checkbox-background,
+    .mat-checkbox-checked.mat-accent .mat-checkbox-background {
+        background-color: $blue-science;
+    }
+    .mat-form-field {
+        margin-right: 4px;
+    }
+    .mat-icon {
+        vertical-align: middle;
+        margin-bottom: 7px;
+    }
+    .mat-checkbox-layout:focus-within {
+        .mat-checkbox-frame {
+            border: 2px solid $blue-science !important;
+        }
+    }
+}
+
+.btn-more {
+    position: absolute;
+    right: -25px;
+    top: 3px;
+    cursor: pointer;
+    font-size: 14px;
+    background-color: white;
+    padding: 0px 3px;
+    border-radius: 3px;
+    border: 1px solid whitesmoke;
+}

@@ -1,0 +1,38 @@
+<div class="control form-group" *ngIf="dataSource">
+    <div class="btn-group ngx-dropdown-control" dropdown #dropdown="bs-dropdown">
+        <span class="form-control dropdown-toggle{{formControlClassStyle}}" dropdownToggle>
+            <ng-container *ngIf="selectedItem; else defaultSeletion">
+                <span class="selected-value d-inline-block"
+                    [title]="selectedItem[displayFieldMember]">{{ selectedItem[displayFieldMember] }}</span>
+            </ng-container>
+            <ng-template #defaultSeletion>
+                <span class="selected-value d-inline-block"
+                    [title]="displayNameDefaultOption">{{ displayNameDefaultOption }}</span>
+            </ng-template>
+            <div class="input-group-append d-inline icon-dropdown-wrapper">
+                <span><i class="fa fa-chevron-down"></i></span>
+            </div>
+        </span>
+        <input #input type="text" style="display:none">
+        <ul id="dropdown-triggers-manual" *dropdownMenu class="dropdown-menu" role="menu"
+            aria-labelledby="button-triggers-manual">
+            <li role="menuitem">
+                <div class="dropdown-item">
+                    <div class="custom-control">
+                        <label class="item-label" (click)="selectData(null)">
+                            {{displayNameDefaultOption}}
+                        </label>
+                    </div>
+                </div>
+            </li>
+            <li role="menuitem" *ngFor="let item of dataSource; let i = index">
+                <div class="dropdown-item">
+                    <div class="custom-control">
+                        <label class="item-label" [class.active]="selectedItem === item"
+                            (click)="selectData(item)">{{ item[displayFieldMember] }}</label>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>

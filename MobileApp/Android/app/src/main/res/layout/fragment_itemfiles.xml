@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black_1">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="8dp"
+        android:id="@+id/layout_toolbar_import"
+        android:background="@color/blue_dark_1">
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/transparent"/>
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/button_folder_importfile"
+            android:layout_weight="0.5"
+            android:paddingTop="8dp"
+            android:paddingBottom="6dp"
+            android:background="@color/transparent"
+            android:src="@drawable/ic_iconspace_folders"/>
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/button_upload_import_file"
+            android:layout_weight="1"
+            android:paddingTop="8dp"
+            android:paddingBottom="6dp"
+            android:background="@color/transparent"
+            android:src="@drawable/ic_iconspace_upload"/>
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/button_delete_import_file"
+            android:layout_weight="0.5"
+            android:paddingTop="8dp"
+            android:paddingBottom="6dp"
+            android:background="@color/transparent"
+            android:src="@drawable/ic_iconspace_delete"/>
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/transparent"/>
+    </LinearLayout>
+    <GridView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/gridview_itemfiles_eachfolder"
+        android:layout_below="@id/layout_toolbar_import"
+        android:numColumns="3"
+        android:background="@color/black_1"
+        android:paddingRight="8dp"
+        android:paddingLeft="8dp"
+        android:scrollbars="none"
+        android:verticalSpacing="8dp"
+        android:horizontalSpacing="8dp"
+        android:stretchMode="columnWidth"
+        android:gravity="center_horizontal"/>
+
+</RelativeLayout>

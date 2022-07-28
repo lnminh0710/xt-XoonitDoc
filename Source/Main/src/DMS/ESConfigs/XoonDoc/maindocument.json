@@ -1,0 +1,34 @@
+{
+    "properties": {
+        "createDate": {
+            "type": "keyword"
+        },
+        "updateDate": {
+            "type": "keyword"
+        },
+        "localFileName": {
+            "type": "keyword"
+        },
+        "rootName": {
+            "type": "keyword"
+        },
+        "mediaName": {
+            "type": "keyword"
+        },
+        "clientId": {
+            "type": "keyword"
+        },
+        "searchKeyWords": {
+            "type": "keyword"
+        },
+        "groupName": {
+            "type": "keyword"
+        },
+        "cloudMediaPath": {
+            "type": "keyword"
+        },
+        "fullText_RemovedHtml": {
+            "type": "keyword"
+        }
+    }
+}

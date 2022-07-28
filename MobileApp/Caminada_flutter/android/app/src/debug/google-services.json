@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "286624882504",
+    "firebase_url": "https://caminadadebug.firebaseio.com",
+    "project_id": "caminadadebug",
+    "storage_bucket": "caminadadebug.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:286624882504:android:2c65ca883068f251201d7d",
+        "android_client_info": {
+          "package_name": "com.caminada.camera.debug"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "286624882504-iqgumk558cunrmj6dedsobl0hjcbrdvj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDBdeYDwj6fc27hmAjdTo-3YsM6g6wc0GE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "286624882504-iqgumk558cunrmj6dedsobl0hjcbrdvj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

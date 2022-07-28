@@ -1,0 +1,81 @@
+<p-dialog
+    header=""
+    [(visible)]="showDialog"
+    modal="true"
+    positionTop="150"
+    responsive="true"
+    appendTo="body"
+    [resizable]="false"
+    [draggable]="true"
+    [width]="1000"
+    [height]="700"
+    [contentStyle]="{ 'padding-bottom': 0, 'padding-top': 0 }"
+>
+    <p-header>
+        <div class="modal-header--information">
+            <span class="header-text">Schedule Setting</span>
+            <div
+                class="toolbar-icon icon-transform close-dialog-icon"
+                #popHand="bs-tooltip"
+                container="body"
+                data-placement="bottom"
+                [tooltip]="'Close'"
+                aria-label="Close"
+                (click)="closeWindowDialog()"
+            ></div>
+        </div>
+    </p-header>
+    <div class="col-xs-12 no-padding height-pc-100">
+        <div class="col-xs-12 no-padding">
+            <label class="control-label col-xs-12 no-padding text-left"> Choose schedule type: </label>
+            <div class="col-md-12">
+                <mat-radio-group name="schedule-type-radio" [(ngModel)]="scheduleType">
+                    <mat-radio-button
+                        *ngFor="let radio of scheduleTypes"
+                        color="primary"
+                        name="schedule-type-radio"
+                        value="{{ radio.value }}"
+                        class="margin-left--sd"
+                    >
+                        {{ radio.title }}
+                    </mat-radio-button>
+                </mat-radio-group>
+            </div>
+        </div>
+        <div class="col-xs-12 no-padding margin-top--sd schedule-setting-form">
+            <schedule-setting-form
+                #scheduleSettingForm
+                [scheduleType]="scheduleType"
+                [scheduleTypePrimary]="scheduleTypePrimary"
+                [globalDateFormat]="globalDateFormat"
+                [inputData]="scheduleSettingData"
+                (outputDataAction)="outputDataHandler($event)"
+            >
+            </schedule-setting-form>
+        </div>
+    </div>
+    <p-footer>
+        <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+            <button
+                label="Cancel"
+                pbutton=""
+                type="button"
+                mat-raised-button
+                class="mat-btn-red"
+                (click)="closeWindowDialog()"
+            >
+                <span class="ui-button-text ui-c">Close</span>
+            </button>
+            <button
+                label="Save"
+                pbutton=""
+                mat-raised-button
+                type="button"
+                class="mat-btn-blue"
+                (click)="saveSetting()"
+            >
+                <span class="ui-button-text ui-c">Save</span>
+            </button>
+        </div>
+    </p-footer>
+</p-dialog>

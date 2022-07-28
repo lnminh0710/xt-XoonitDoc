@@ -1,0 +1,16 @@
+export enum DatabaseControlType {
+    COMBOBOX = 'combobox',
+    NVARCHAR = 'nvarchar',
+    VARCHAR = 'varchar',
+    DATE_TIME = 'datetime',
+    DATE_TIME_PICKER = 'datetimepicker',
+    DECIMAL = 'decimal',
+    BIG_INT = 'bigint',
+    INT = 'int',
+    MONEY = 'money',
+    BIT = 'bit',
+    CHECKBOX = 'checkbox',
+    AUTOCOMPLETE = 'autocomplete',
+    HTML_INPUT = 'html',
+    SELECT_SEARCH = 'comboboxfilter',
+}

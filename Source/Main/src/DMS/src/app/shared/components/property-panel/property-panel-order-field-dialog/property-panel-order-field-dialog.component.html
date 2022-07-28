@@ -1,0 +1,61 @@
+﻿<p-dialog
+    header=""
+    [styleClass]="'xn-p-dialog-resizable'"
+    [(visible)]="showDialog"
+    modal="true"
+    width="400"
+    height="700"
+    responsive="true"
+    appendTo="body"
+    [resizable]="true"
+    [draggable]="true"
+    [contentStyle]="{ 'padding-bottom': 0, 'padding-top': 0 }"
+>
+    <p-header>
+        <div class="modal-header--information">
+            <span class="header-text">Set order of Display Fields</span>
+            <div class="toolbar-icon close-dialog-icon" (click)="close()"></div>
+        </div>
+    </p-header>
+    <div class="row property-panel__order-text">
+        <div class="col-xs-12 no-padding wt-rs__apply-for margin-bottom--sd">
+            <span class="wt-rs__apply-for__text">Order by for: </span>
+            <mat-radio-group [(ngModel)]="applyFor">
+                <mat-radio-button color="primary" class="wt-rs__apply-for__radio" value="1"> Default </mat-radio-button>
+                <mat-radio-button color="primary" class="wt-rs__apply-for__radio" value="2">
+                    Only this widget
+                </mat-radio-button>
+            </mat-radio-group>
+        </div>
+        <div class="drag-and-drop-header bg-gray">
+            <div class="drag-and-drop__icon-header">&nbsp;</div>
+            <div class="drag-and-drop__text-header">Column name</div>
+            <div class="drag-and-drop__number-header">Order No.</div>
+        </div>
+        <property-panel-order-field-display-item
+            *ngIf="applyFor == 1"
+            [data]="displayFieldsForAll"
+            (isDirty)="isDirtyAll = true"
+        >
+        </property-panel-order-field-display-item>
+
+        <property-panel-order-field-display-item
+            *ngIf="applyFor == 2"
+            [data]="displayFieldsForOnly"
+            (isDirty)="isDirtyOnly = true"
+        >
+        </property-panel-order-field-display-item>
+    </div>
+
+    <p-footer>
+        <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+            <button label="Cancel" pbutton="" type="button" mat-raised-button (click)="close()">
+                <span class="ui-button-text ui-c">Cancel</span>
+            </button>
+            <button label="Save" pbutton="" type="button" mat-raised-button class="mat-btn-blue" (click)="apply()">
+                <span class="ui-button-text ui-c">Apply</span>
+            </button>
+        </div>
+        <div class="widget-info__resize_bottom xn-icon__resize icon-black"></div>
+    </p-footer>
+</p-dialog>

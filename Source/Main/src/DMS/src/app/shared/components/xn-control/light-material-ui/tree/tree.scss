@@ -1,0 +1,55 @@
+$mat-node-height: 35px;
+
+.mat-tree {
+    display: block;
+}
+
+.mat-tree-node {
+    display: flex;
+    align-items: center;
+    min-height: $mat-node-height;
+    flex: 1;
+    word-wrap: break-word;
+}
+
+.mat-nested-tree-node {
+    border-bottom-width: 0;
+}
+
+button[mat-icon-button] {
+    color: inherit;
+    background: transparent;
+}
+button[mat-icon-button] {
+    box-sizing: border-box;
+    position: relative;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    cursor: pointer;
+    outline: none;
+    border: none;
+    -webkit-tap-highlight-color: transparent;
+    display: inline-block;
+    white-space: nowrap;
+    text-decoration: none;
+    vertical-align: baseline;
+    text-align: center;
+    margin: 0;
+    min-width: 64px;
+    line-height: 36px;
+    padding: 0 16px;
+    border-radius: 4px;
+    overflow: visible;
+}
+
+button[mat-icon-button] {
+    padding: 0;
+    min-width: 0;
+    width: 25px;
+    height: 25px;
+    flex-shrink: 0;
+    line-height: 25px;
+    border-radius: 50%;
+}

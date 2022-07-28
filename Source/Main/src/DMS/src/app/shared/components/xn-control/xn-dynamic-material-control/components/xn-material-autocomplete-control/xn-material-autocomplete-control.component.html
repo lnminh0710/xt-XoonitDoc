@@ -1,0 +1,65 @@
+<div class="form-control-wrapper" [ngStyle]="config?.style" [formGroup]="formGroup" enterNextFocus>
+    <mat-form-field
+        [ngClass]="{ 'mat-field-invalid-disabled': !!formGroup.controls[config.formControlName].errors }"
+        class="w-100"
+        attr.control-key="{{ config.formControlName }}"
+                    (mouseenter)="onMouseEnter(formGroup.controls[config.formControlName])"
+                    (mouseleave)="onMouseLeave(formGroup.controls[config.formControlName])"
+                    (dblclick)="onDblClick(formGroup.controls[config.formControlName])">
+        <mat-label>
+            <label-translation [keyword]="config.label"></label-translation>
+        </mat-label>
+
+        <input matInput
+               formControlName="title"
+               [matAutocomplete]="autoCompleteRef"
+               #autocompleteInput
+               [formControlName]="config.formControlName"
+               [attr.maxLength]="config.maxLength"
+               [attr.pattern]="config.setting?.Validators?.Pattern?.Regex"
+               (keypress)="keyPress($event)"
+               (focus)="onFocus(formGroup.controls[config.formControlName])"
+               (blur)="onBlur(formGroup.controls[config.formControlName])"
+               (keydown)="onKeydown.emit($event)"
+               (keyup)="onKeyup.emit($event)" />
+        <mat-autocomplete autoActiveFirstOption
+                          #autoCompleteRef="matAutocomplete"
+                          [displayWith]="displayFn.bind(this)"
+                          (optionSelected)="selectOption($event)">
+            <mat-option *ngFor="let option of filterOptions | async" [value]="option">
+                <span [innerHTML]="option.HighlightOption" *ngIf="highlightSearchText"></span>
+                <span *ngIf="!highlightSearchText">{{ option[displayMember] }}</span>
+            </mat-option>
+        </mat-autocomplete>
+        <button mat-button
+                *ngIf="config.showBtnClearValue"
+                matSuffix
+                mat-icon-button
+                aria-label="Clear"
+                tabIndex="-1"
+                (mousedown)="clearCtrlValue(formGroup.controls[config.formControlName])">
+            <mat-icon [ngStyle]="ngStyleMatIcon">close</mat-icon>
+        </button>
+
+        <!--<mat-error *ngIf="formGroup.controls[config.formControlName].errors?.required">
+            {{ config.label }} <label-translation [keyword]="'COMMON_LABEL__is_required'"></label-translation>
+        </mat-error>
+        <mat-error *ngIf="formGroup.controls[config.formControlName].errors?.maxLength">
+            This field is required max length as
+            {{ formGroup.controls[config.formControlName].errors?.maxLength.requiredLength }}
+        </mat-error>
+        <mat-error *ngIf="formGroup.controls[config.formControlName].errors?.pattern">
+            {{ config.setting?.Validators?.Pattern.Message }}
+        </mat-error>-->
+    </mat-form-field>
+    <mat-error class='translateY' *ngIf="formGroup.controls[config.formControlName].errors?.required">
+        {{ config.label }} <label-translation [keyword]="'COMMON_LABEL__is_required'"></label-translation>
+    </mat-error>
+    <mat-error class='translateY' *ngIf="formGroup.controls[config.formControlName].errors?.maxLength">
+        This field is required max length as
+        {{ formGroup.controls[config.formControlName].errors?.maxLength.requiredLength }}
+    </mat-error>
+    <mat-error class='translateY' *ngIf="formGroup.controls[config.formControlName].errors?.pattern">
+        {{ config.setting?.Validators?.Pattern.Message }}
+    </mat-error>
+</div>

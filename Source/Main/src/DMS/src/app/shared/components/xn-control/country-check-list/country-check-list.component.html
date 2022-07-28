@@ -1,0 +1,132 @@
+<div *ngIf="isRendered && editMode"
+     [ngClass]="{'showed-sub-list': isShowedSubList}"
+     class="country-check-list edit-mode clearfix">
+    <div class="main-list col-xs-12 no-padding"
+         *ngIf="mainList && mainList.length"
+         [perfectScrollbar]="perfectScrollbarConfig">
+        <div class="flag-container">
+            <div *ngFor="let colItem of mainList"
+                 class="colum-item">
+                <div *ngIf="!_isRadioButtonMode">
+                  <div *ngFor="let rowItem of colItem"
+                       class="row-item no-padding">
+                      <mat-checkbox color="primary"
+                                    *ngIf="!_isRadioButtonMode"
+                                    value="{{rowItem.idValue}}"
+                                    [attr.data-is-main-item]="true"
+                                    [(ngModel)]="rowItem.isActive"
+                                    (change)="rowItem.isDirty = true; itemChanged($event)">
+                          <img *ngIf="rowItem.isoCode"
+                               src="public/assets/img/blank.gif"
+                               class="flag  flag-{{rowItem.isoCode.toLowerCase()}}"
+                               alt="{{rowItem.textValue}}" />
+                          {{rowItem.textValue}}
+                      </mat-checkbox>
+                  </div>
+                </div>
+                <div *ngIf="_isRadioButtonMode">
+                  <mat-radio-group name="radio-country-check-list">
+                    <div *ngFor="let rowItem of colItem"
+                         class="row-item no-padding">
+                        <mat-radio-button color="primary"
+                                          *ngIf="_isRadioButtonMode"
+                                          value="{{rowItem.idValue}}"
+                                          [attr.data-is-main-item]="true"
+                                          [checked]="rowItem.isActive && doesCountryHaveOneCheckedValue"
+                                          (change)="rowItem.isDirty = true; radioItemChanged(rowItem.idValue)">
+                            <img *ngIf="rowItem.isoCode"
+                                 src="public/assets/img/blank.gif"
+                                 class="flag  flag-{{rowItem.isoCode.toLowerCase()}}"
+                                 alt="{{rowItem.textValue}}" />
+                            {{rowItem.textValue}}
+                        </mat-radio-button>
+                    </div>
+                  </mat-radio-group>
+                </div>
+            </div>
+        </div>
+        <img src="public/assets/img/blank.gif"
+             (load)="resizeContainer($event)"
+             style="width:1px;height:1px;" />
+    </div>
+    <div class="col-xs-12  text-center control-container"
+         align="center"
+         *ngIf="mainList && mainList.length && subList && subList.length">
+        <i *ngIf="!isShowedSubList"
+           (click)="showSubList(true)"
+           class="fa  fa-chevron-circle-down"
+           aria-hidden="true"></i>
+        <i *ngIf="isShowedSubList"
+           (click)="showSubList(false)"
+           class="fa  fa-chevron-circle-up"
+           aria-hidden="true"></i>
+    </div>
+    <div class="sub-list  col-xs-12 no-padding"
+         *ngIf="subList && subList.length"
+         [perfectScrollbar]="perfectScrollbarConfig">
+        <div class="flag-container  sub-list-container">
+            <div *ngFor="let colItem of subList" class="colum-item">
+                <div *ngIf="!_isRadioButtonMode">
+                  <div *ngFor="let rowItem of colItem"
+                       class="row-item no-padding">
+                      <!--checkbox-->
+                      <mat-checkbox color="primary"
+                                    *ngIf="!_isRadioButtonMode"
+                                    value="{{rowItem.idValue}}"
+                                    [attr.data-is-main-item]="false"
+                                    [(ngModel)]="rowItem.isActive"
+                                    (change)="rowItem.isDirty = true; itemChanged($event)">
+                          <img *ngIf="rowItem.isoCode"
+                               src="public/assets/img/blank.gif"
+                               class="flag  flag-{{rowItem.isoCode.toLowerCase()}}"
+                               alt="{{rowItem.textValue}}" />
+                          {{rowItem.textValue}}
+                      </mat-checkbox>
+                  </div>
+                </div>
+                <div *ngIf="_isRadioButtonMode">
+                  <div *ngFor="let rowItem of colItem"
+                       class="row-item no-padding">
+                      <mat-radio-button color="primary"
+                                        *ngIf="_isRadioButtonMode"
+                                        value="{{rowItem.idValue}}"
+                                        [attr.data-is-main-item]="false"
+                                        [checked]="rowItem.isActive && doesCountryHaveOneCheckedValue"
+                                        (change)="rowItem.isDirty = true; radioItemChanged(rowItem.idValue)">
+                          <img *ngIf="rowItem.isoCode"
+                               src="public/assets/img/blank.gif"
+                               class="flag  flag-{{rowItem.isoCode.toLowerCase()}}"
+                               alt="{{rowItem.textValue}}" />
+                          {{rowItem.textValue}}
+                      </mat-radio-button>
+                  </div>
+                </div>
+            </div>
+        </div>
+        <img src="public/assets/img/blank.gif"
+             (load)="resizeContainer($event)"
+             style="width:1px;height:1px;" />
+    </div>
+</div>
+
+<div *ngIf="isRendered && !editMode"
+     class="country-check-list view-mode">
+    <div class="main-list col-xs-12"
+         [perfectScrollbar]="perfectScrollbarConfig">
+        <div class="flag-container">
+            <div *ngFor="let colItem of viewModeMainList"
+                 class="colum-item"
+                 [ngStyle]="{'width': (defaulWidthColumn) + 'px'}">
+                <div *ngFor="let rowItem of colItem"
+                     class="row-item no-padding">
+                    <i id="view{{rowItem.idValue}}"
+                       class="fa fa-circle active"></i>
+                    <img *ngIf="rowItem.isoCode"
+                         src="public/assets/img/blank.gif"
+                         class="flag  flag-{{rowItem.isoCode.toLowerCase()}}" alt="{{rowItem.textValue}}" />
+                    {{rowItem.textValue}}
+                </div>
+            </div>            
+        </div>
+    </div>
+</div>

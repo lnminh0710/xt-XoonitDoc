@@ -1,0 +1,13 @@
+<div class="t-v"
+  [perfectScrollbar]="{suppressScrollX: false, suppressScrollY: false}">
+    <div *ngIf="(!data || !data.length)" class="t-v-e">
+        Empty data
+    </div>
+    <wj-tree-view #wjTreeView [itemsSource]="data"
+              [displayMemberPath]="'header'"
+              [childItemsPath]="'items'"
+              [showCheckboxes]="true"
+              [isReadOnly]="true"
+              (checkedItemsChanged)="onCheckedItemsChanged($event)">
+    </wj-tree-view>
+</div>

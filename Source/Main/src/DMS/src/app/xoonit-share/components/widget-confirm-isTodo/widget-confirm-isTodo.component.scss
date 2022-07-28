@@ -1,0 +1,24 @@
+@import 'src/sass_files/color.scss';
+.confirm-todo {
+    padding: 20px;
+    p {
+        margin-bottom: 5px;
+    }
+    .text,
+    .txt-main {
+        font-family: 'rbt_Bold';
+        font-size: 14px;
+    }
+    .txt-main {
+        &.txt-approval {
+            color: $green8;
+        }
+        &.txt-approval-processing {
+            color: $blue-cobalt1;
+        }
+    }
+    .button-wrapper {
+        margin-top: 10px;
+        text-align: center;
+    }
+}

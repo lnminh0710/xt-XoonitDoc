@@ -1,0 +1,19 @@
+{
+    "properties": {
+        "createdDate": {
+            "type": "keyword"
+        },
+        "updatedDate": {
+            "type": "keyword"
+        },
+        "documentName": {
+            "type": "keyword"
+        },
+        "scannedFilename": {
+            "type": "keyword"
+        },
+        "fullText_RemovedHtml": {
+            "type": "keyword"
+        }
+    }
+}

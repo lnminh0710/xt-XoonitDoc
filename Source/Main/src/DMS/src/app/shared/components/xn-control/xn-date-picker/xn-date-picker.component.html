@@ -1,0 +1,30 @@
+<div class="xn-date-picker">
+    <input #inputControl
+           ngx-mydatepicker
+           id="{{id}}"
+           type="text"
+           [textMask]="{mask: maskInput}"
+           class="xn-date-picker-input  {{customClass}}"
+           placeholder="{{placeholder}}"
+           autocomplete="off"
+           #datePicker="ngx-mydatepicker"
+           [options]="datePickerOptions"
+           [disabled]="isDisabled"
+           [haveFirstIcon]="!isInGrid"
+           (keydown)="onKeyDown($event)"
+           (keyup)="onKeyUp($event)"
+           (focus)="onFocus()"
+           (blur)="onLostFocus()"
+           (change)="onValueChange($event.target.value)"
+           (dateChanged)="onValueChange($event)"
+           (calendarToggle)="calendarToggle($event)"
+           (setFocusWhenChooseDate)="setFocusWhenChooseDateHandle()" />
+    <span *ngIf="showDropDownButton"
+          class="xn-date-picker-icon">
+        <button type="button" class="xn-date-picker-icon-btn"
+                (click)="openCalendar($event)">
+            <i class="xn-date-picker-icon-child  wj-glyph-down">
+            </i>
+        </button>
+    </span>
+</div>

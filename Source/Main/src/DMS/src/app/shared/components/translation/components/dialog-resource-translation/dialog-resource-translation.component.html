@@ -1,0 +1,69 @@
+<ng-template #hotkeyPopup let-close="close">
+    <div class="popup-content mini-scrollbar">
+        <div class="hotkey-form">
+            <resource-translation-form #resourceTranslationFormComponent
+                                       [keyword]="keyword"
+                                       [defaultValue]="defaultValue"
+                                       (outputDataAction)="outputDataHandler($event)">
+            </resource-translation-form>
+        </div>
+    </div>
+    <div class="popup-action">
+        <div class="popup-action__button" (click)="cancel()"><label-translation [keyword]="'Cancel'"></label-translation></div>
+        <div class="popup-action__button primary" [class.disabled]="!isDirty" (click)="save()"><label-translation [keyword]="'Save'"></label-translation></div>
+    </div>
+</ng-template>
+
+
+
+<!--<p-dialog #pDialogEmailTemplate
+          header=""
+          width="600"
+          height="500"
+          [styleClass]="'translation-dialog'"
+          [(visible)]="showDialog"
+          [resizable]="true"
+          [draggable]="true"
+          modal="modal"
+          width="500"
+          responsive="false"
+          appendTo="body"
+          [closable]="false">
+    <p-header>
+        <div class="modal-header--information">
+            <span class="fa  fa-language  header-icon  pull-left"></span>
+            <span class="header-text  pull-left"><label-translation [allowUpdateLanguage]="false" [keyword]="'Dialog_resource_translation__Translation'"></label-translation></span>
+            <button type="button"
+                    mat-raised-button
+                    class="mat-btn-close-popup"
+                    (click)="cancel()">
+                <span class="fa fa-fw fa-close"></span>
+            </button>
+        </div>
+    </p-header>
+    <div class="col-xs-12 no-padding  height-pc-100">
+        <resource-translation-form #resourceTranslationFormComponent
+                                   [keyword]="keyword"
+                                   [defaultValue]="defaultValue"
+                                   (outputDataAction)="outputDataHandler($event)">
+        </resource-translation-form>
+    </div>
+    <p-footer>
+        <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+            <button type="button"
+                    mat-raised-button
+                    class="btn-cancel pull-right"
+                    (click)="cancel()">
+                <span class="bt-t"><label-translation [allowUpdateLanguage]="false" [keyword]="'Dialog_resource_translation__Cancel'"></label-translation></span>
+            </button>
+            <button type="button"
+                    mat-raised-button
+                    [disabled]="!isDirty"
+                    class="mat-btn-orange pull-right"
+                    (click)="save()">
+                <span class="bt-t"><label-translation [allowUpdateLanguage]="false" [keyword]="'Dialog_resource_translation__Save'"></label-translation></span>
+            </button>
+        </div>
+    </p-footer>
+</p-dialog>-->
+

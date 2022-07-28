@@ -1,0 +1,116 @@
+<div class="widget-header w-100 d-flex flex-row flex-nowrap">
+    <ng-container *ngIf="componentRef && componentRef.instance">
+        <div class="actions-list left w-100 d-flex flex-row flex-nowrap">
+            <button
+                mat-icon-button
+                class="btn-action icon-transform"
+                *ngIf="componentRef.instance.toolbar?.addDynamicField"
+                (click)="addDynamicField($event)"
+                #popAdd="bs-tooltip"
+                container="body"
+                data-placement="bottom"
+                [tooltip]="tooltipAddDynamicFieldButton"
+                [attr.control-key]="'my-dm-form__add-button'"
+            >
+                <mat-icon [svgIcon]="svgIconAddDynamicField"></mat-icon>
+            </button>
+            <button
+                mat-icon-button
+                class="btn-action icon-transform color-blue"
+                (click)="expandWidget($event)"
+                #popUpload="bs-tooltip"
+                container="body"
+                data-placement="bottom"
+                [tooltip]="isFullScreen ? 'Minimize' : 'Full screen'"
+                [attr.control-key]="'my-dm-form__fullscreen-minimize'"
+            >
+                <mat-icon
+                    [svgIcon]="isFullScreen ? IconNamesEnum.FULL_SCREEN_MINIMIZE : IconNamesEnum.FULL_SCREEN"
+                ></mat-icon>
+            </button>
+        </div>
+        <div class="actions-list right w-100 d-flex flex-row flex-nowrap">
+            <div>
+                <button
+                    mat-icon-button
+                    class="btn-action icon-transform"
+                    (click)="componentRef.instance.applyQRCode()"
+                    *ngIf="componentRef.instance.toolbar.scanQR"
+                    #popUpload="bs-tooltip"
+                    container="body"
+                    data-placement="bottom"
+                    [tooltip]="tooltipQRCodeButton"
+                    [attr.control-key]="'my-dm-form__scanQR-button'"
+                >
+                    <mat-icon aria-hidden="false" [svgIcon]="svgIconQr"></mat-icon>
+                </button>
+            </div>
+            <ng-container *ngIf="administrationSelectors.extractedDataFromOcr$ | async as ocr">
+                <div>
+                    <button
+                        mat-icon-button
+                        class="btn-action icon-transform"
+                        *ngIf="componentRef.instance.toolbar.scanOCR"
+                        (click)="componentRef.instance.applyOcr(ocr)"
+                        #popUpload="bs-tooltip"
+                        container="body"
+                        data-placement="bottom"
+                        [tooltip]="tooltipAutoFillButton"
+                        [attr.control-key]="'my-dm-form__scanOCR-button'"
+                    >
+                        <mat-icon aria-hidden="false" [svgIcon]="svgIconAI"></mat-icon>
+                    </button>
+                </div>
+            </ng-container>
+            <div>
+                <button
+                    mat-icon-button
+                    class="btn-action icon-transform"
+                    *ngIf="_isShowRollbackButton && componentRef.instance.toolbar.resetForm"
+                    (click)="resetDataForm($event)"
+                    #popUpload="bs-tooltip"
+                    container="body"
+                    data-placement="bottom"
+                    [tooltip]="tooltipRollbackDataButton"
+                    [attr.control-key]="'my-dm-form__reset-form-button'"
+                >
+                    <mat-icon aria-hidden="false" [svgIcon]="svgIconReset"></mat-icon>
+                </button>
+            </div>
+            <div>
+                <button
+                    mat-icon-button
+                    class="btn-action icon-transform"
+                    *ngIf="componentRef.instance.toolbar.clearForm"
+                    (click)="clearDataForm($event)"
+                    #popUpload="bs-tooltip"
+                    container="body"
+                    data-placement="bottom"
+                    [tooltip]="tooltipCleanFormButton"
+                    [attr.control-key]="'my-dm-form__clear-form-button'"
+                >
+                    <mat-icon [svgIcon]="svgIconClear"></mat-icon>
+                </button>
+            </div>
+        </div>
+    </ng-container>
+</div>
+<div class="widget-mydm-form-container w-100">
+    <ng-container #formContainer></ng-container>
+</div>
+
+<ng-template #tooltipAddDynamicFieldButton>
+    <label-translation [keyword]="'WIDGET_MY_DM_FORM__AddDynamicField'"></label-translation>
+</ng-template>
+<ng-template #tooltipQRCodeButton>
+    <label-translation [keyword]="'WIDGET_MY_DM_FORM__QRCode'"></label-translation>
+</ng-template>
+<ng-template #tooltipAutoFillButton>
+    <label-translation [keyword]="'WIDGET_MY_DM_FORM__AutoFill'"></label-translation>
+</ng-template>
+<ng-template #tooltipRollbackDataButton>
+    <label-translation [keyword]="'WIDGET_MY_DM_FORM__RollbackData'"></label-translation>
+</ng-template>
+<ng-template #tooltipCleanFormButton>
+    <label-translation [keyword]="'WIDGET_MY_DM_FORM__CleanForm'"></label-translation>
+</ng-template>

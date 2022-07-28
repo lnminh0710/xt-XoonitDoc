@@ -1,0 +1,126 @@
+<p-dialog header="" width="300" height="220" [(visible)]="showDialog" modal="true" responsive="true" appendTo="body">
+    <p-header>
+        <div class="modal-header--information">
+            <span class="header-text">Add template name</span>
+            <div
+                class="toolbar-icon icon-transform close-dialog-icon"
+                #popHand="bs-tooltip"
+                container="body"
+                data-placement="bottom"
+                [tooltip]="'Close'"
+                aria-label="Close"
+                (click)="onCancel()"
+            ></div>
+        </div>
+    </p-header>
+    <div *ngIf="showDialog" class="row">
+        <div class="margin-top--md selection-input-customize">
+            <div class="group">
+                <input type="text" required [(ngModel)]="templateName" (change)="templateNameChanged()" />
+                <span class="text-highlight"></span>
+                <span class="bar"></span>
+                <label>Template name</label>
+            </div>
+            <div *ngIf="showRequired" class="alert alert-danger">{{ requiredMessage }}</div>
+        </div>
+    </div>
+
+    <p-footer>
+        <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+            <button
+                label="Cancel"
+                pbutton=""
+                type="button"
+                mat-raised-button
+                class="mat-raised-button ui-widget ui-state-default ui-corner-all ui-button-text-only"
+                (click)="onCancel()"
+            >
+                <span class="ui-button-text ui-c">Cancel</span>
+            </button>
+            <button
+                label="Ok"
+                pbutton=""
+                type="button"
+                mat-raised-button
+                class="mat-btn-blue ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"
+                (click)="onCreateClicked()"
+            >
+                <span class="ui-button-text ui-c">Ok</span>
+            </button>
+        </div>
+    </p-footer>
+</p-dialog>
+
+<p-dialog
+    header=""
+    width="300"
+    height="220"
+    [(visible)]="showUpdateDialog"
+    modal="true"
+    responsive="true"
+    appendTo="body"
+>
+    <p-header>
+        <div class="modal-header--information">
+            <span class="header-text">Select a profile</span>
+            <div
+                class="toolbar-icon icon-transform close-dialog-icon"
+                #popHand="bs-tooltip"
+                container="body"
+                data-placement="bottom"
+                [tooltip]="'Close'"
+                aria-label="Close"
+                (click)="onCancel()"
+            ></div>
+        </div>
+    </p-header>
+    <div *ngIf="showUpdateDialog" class="row">
+        <div class="col-xs-12">
+            <label for="txt-composition-quantity" class="label-title col-xs-12 no-padding required"
+                >Profile name:</label
+            >
+            <div class="col-xs-12 no-padding form-group">
+                <wj-combo-box
+                    #selectProfile
+                    class="custom-wj-input-control xn-select"
+                    *ngIf="profileDatasource && profileDatasource.length >= 0"
+                    [itemsSource]="profileDatasource"
+                    [displayMemberPath]="'textValue'"
+                    [selectedValuePath]="'idValue'"
+                    [isEditable]="true"
+                    [isRequired]="false"
+                    (selectedIndexChanged)="changeProfile()"
+                    placeholder="Please select"
+                >
+                </wj-combo-box>
+                <control-messages icon="globe"></control-messages>
+            </div>
+            <div *ngIf="showRequired" class="alert alert-danger">{{ requiredMessage }}</div>
+        </div>
+    </div>
+
+    <p-footer>
+        <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+            <button
+                label="Cancel"
+                pbutton=""
+                type="button"
+                mat-raised-button
+                class="mat-raised-button ui-widget ui-state-default ui-corner-all ui-button-text-only"
+                (click)="onCancel()"
+            >
+                <span class="ui-button-text ui-c">Cancel</span>
+            </button>
+            <button
+                label="Ok"
+                pbutton=""
+                type="button"
+                mat-raised-button
+                class="mat-btn-blue ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"
+                (click)="onUpdateProfileClicked()"
+            >
+                <span class="ui-button-text ui-c">Ok</span>
+            </button>
+        </div>
+    </p-footer>
+</p-dialog>

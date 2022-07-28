@@ -1,0 +1,103 @@
+.mydm-summary-wrapper {
+    width: 100%;
+    height: 100%;
+    font-size: 14px;
+    line-height: 19px;
+    padding-top: 5px;
+    padding-left: 32px;
+
+    & .dot-line {
+        display: inline-block;
+        width: 3%;
+        position: relative;
+
+        & .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            position: absolute;
+            top: -9px;
+            
+    
+            &::before {
+                content: '';
+                box-sizing: border-box;
+                position: relative;
+                left: 2.5px;
+                bottom: 18px;
+            }
+    
+            &::after {
+                content: '';
+                box-sizing: border-box;
+                position: relative;
+                top: 6px;
+                left: 2.5px;
+            }
+        }
+    }
+
+    & .total-expense.node > .dot-line > .dot::after {
+        left: 0.5px !important;
+    }
+
+    & .tree-node.root > .node > .dot-line > .dot,
+    & .tree-node.root > .node > .dot-line > .dot {
+        &::before,
+        &::after {
+            content: none !important;
+        }
+    }
+
+    & .tree-node > .node:first-child > .dot-line > .dot {
+        &::before {
+            content: none !important;
+        }
+    }
+
+    & .tree-node > .node:last-child > .dot-line > .dot {
+        &::after {
+            content: none !important;
+        }
+    }
+
+    
+
+    & .node-content-wrapper {
+        height: 41px;
+        width: 95%;
+        display: inline-flex;
+        flex-flow: row;
+        justify-content: space-between;
+
+        & label {
+            font-weight: normal;
+            margin-bottom: auto;
+            margin-top: auto;
+            flex-grow: 1;
+    
+            &::after {
+                content: ': ';
+            }
+        }
+
+        & span {
+            max-height: 16px;
+            margin-bottom: auto;
+            margin-top: auto;
+            padding: 0 6px;
+            border-radius: 10px;
+            font-size: 12px;
+        }
+    }
+
+    & .tree-node.child {
+        padding-left: 20px;
+    }
+
+    & .total-doc,
+    .total-size {
+        margin-top: 4px;
+        margin-bottom: 4px;
+    }
+}

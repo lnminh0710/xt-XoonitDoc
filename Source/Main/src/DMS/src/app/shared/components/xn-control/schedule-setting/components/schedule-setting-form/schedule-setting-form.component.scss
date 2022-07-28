@@ -1,0 +1,47 @@
+.control-label {
+	line-height: 32px;
+    text-align: right;
+    font-weight: 600;
+}
+.week-day-items-wrapper {
+	height: calc(100% - 300px);
+}
+.week-day-items {
+	height: calc(100% - 45px);
+	border-radius: 4px;
+}
+.e-y,
+.e-o {
+	textarea {
+		height: 170px;
+	}
+}
+.e-d {
+	textarea {
+		height: 215px
+	}
+}
+.e-m,
+.e-w {
+	textarea {
+		height: 55px;
+	}
+}
+.wj-input-time {
+	width: 100%;
+	border-radius: 30px;
+}
+
+.p-o,
+.p-y,
+.p-d {
+	textarea {
+		height: 100px;
+	}
+}
+.p-w,
+.p-m {
+	textarea {
+		height: 55px;
+	}
+}

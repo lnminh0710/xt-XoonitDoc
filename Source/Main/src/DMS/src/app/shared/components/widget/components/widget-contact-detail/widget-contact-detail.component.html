@@ -1,0 +1,65 @@
+<div class="contact-detail">
+    <div *ngIf="processing.isLoading" class="xn-loading">
+        <i class="fa fa-spinner fa-spin fa-2x"></i>
+    </div>
+    <div class="row widget-header display-flex">
+        <div class="col-md-6" style="padding-left: 0">
+            <mat-icon
+                class="icon-transform color-blue"
+                style="cursor: pointer"
+                #popFullscreen="bs-tooltip"
+                container="body"
+                data-placement="bottom"
+                [tooltip]="isFullScreen ? 'Minimize' : 'Full screen'"
+                [svgIcon]="isFullScreen ? IconNamesEnum.FULL_SCREEN_MINIMIZE : IconNamesEnum.FULL_SCREEN"
+                (click)="expandWidget()"
+                [attr.control-key]="'contact-detail__fullscreen-minimize'"
+            ></mat-icon>
+        </div>
+        <div
+            class="col-md-6 text-right button-box flex-middle"
+            [class.disabled-div]="processing.notAllowSave"
+            style="padding-right: 0"
+        >
+            <img
+                class="icon-transform"
+                style="margin: -14px 8px 0 8px; height: 24px; width: 24px"
+                src="public/imgs/save-contact-detail.svg"
+                (click)="saveContactDetail()"
+                #popSave="bs-tooltip"
+                container="body"
+                data-placement="bottom"
+                tooltip="Save"
+            />
+            <mat-icon
+                class="icon-transform"
+                style="margin-right: 5px; cursor: pointer; margin: 0 8px"
+                #popRefresh="bs-tooltip"
+                container="body"
+                data-placement="bottom"
+                [tooltip]="'Refresh'"
+                [svgIcon]="IconNamesEnum.WIDGET_MYDM_FORM_Reset"
+                (click)="reload()"
+                [attr.control-key]="'contact-detail__refresh'"
+            ></mat-icon>
+        </div>
+    </div>
+    <div *ngIf="formContact" class="widget-content" [formGroup]="formContact">
+        <ng-container *ngFor="let controlConfig of controls">
+            <!-- <ng-container *ngIf="controlConfig.setting?.DisplayField?.GroupHeader === '1'">
+                <h4 class="form-group-title" [class.hidden]="controlConfig.setting?.DisplayField?.Hidden === '1'"
+                    [ngStyle]="controlConfig?.style">
+                    {{controlConfig.value}}</h4>
+            </ng-container> -->
+            <ng-container *ngIf="controlConfig.setting?.DisplayField?.GroupHeader === '0'">
+                <xn-dynamic-material-control
+                    [config]="controlConfig"
+                    [formControlName]="controlConfig.formControlName"
+                    [formGroup]="formContact"
+                    [class.hidden]="controlConfig.setting?.DisplayField?.Hidden === '1'"
+                >
+                </xn-dynamic-material-control>
+            </ng-container>
+        </ng-container>
+    </div>
+</div>

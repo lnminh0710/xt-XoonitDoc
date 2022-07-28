@@ -1,0 +1,160 @@
+<ngx-charts-bar-vertical
+    *ngIf="_chartType === proChartType.VerticalBarChart"
+    class="chart-container"
+    [view]="_view"
+    [scheme]="_colorType"
+    [results]="_single"
+    [animations]="animations"
+    [gradient]="_gradient"
+    [xAxis]="showXAxis"
+    [yAxis]="showYAxis"
+    [showGridLines]="_showGirdLines"
+    [legend]="_showLegend"
+    [legendTitle]="_legendTitle"
+    [tooltipDisabled]="_disableTooltip"
+    [showXAxisLabel]="_showXAxisLabel"
+    [showYAxisLabel]="_showYAxisLabel"
+    [xAxisLabel]="_xAxisLabel"
+    [barPadding]="_paddingBetweenBars"
+    [yAxisLabel]="_yAxisLabel">
+</ngx-charts-bar-vertical>
+
+<ngx-charts-bar-horizontal
+    *ngIf="_chartType === proChartType.HorizontalBarChart"
+    class="chart-container"
+    [view]="_view"
+    [scheme]="_colorType"
+    [results]="_single"
+    [animations]="animations"
+    [gradient]="_gradient"
+    [xAxis]="showXAxis"
+    [yAxis]="showYAxis"
+    [legend]="_showLegend"
+    [legendTitle]="_legendTitle"
+    [tooltipDisabled]="_disableTooltip"
+    [showXAxisLabel]="_showXAxisLabel"
+    [showYAxisLabel]="_showYAxisLabel"
+    [xAxisLabel]="_xAxisLabel"
+    [barPadding]="_paddingBetweenBars"
+    [yAxisLabel]="_yAxisLabel">
+</ngx-charts-bar-horizontal>
+
+<ngx-charts-bar-vertical-2d
+    *ngIf="_chartType === proChartType.GroupedVerticalBarChart"
+    class="chart-container"
+    [view]="_view"
+    [scheme]="_colorType"
+    [results]="_multi"
+    [animations]="animations"
+    [gradient]="_gradient"
+    [xAxis]="showXAxis"
+    [yAxis]="showYAxis"
+    [legend]="_showLegend"
+    [legendTitle]="_legendTitle"
+    [tooltipDisabled]="_disableTooltip"
+    [showXAxisLabel]="_showXAxisLabel"
+    [showYAxisLabel]="_showYAxisLabel"
+    [xAxisLabel]="_xAxisLabel"
+    [barPadding]="_paddingBetweenBars"
+    [yAxisLabel]="_yAxisLabel">
+</ngx-charts-bar-vertical-2d>
+
+<ngx-charts-bar-horizontal-2d
+    *ngIf="_chartType === proChartType.GroupedHorizontalBarChart"
+    class="chart-container"
+    [view]="_view"
+    [scheme]="_colorType"
+    [results]="_multi"
+    [animations]="animations"
+    [gradient]="_gradient"
+    [xAxis]="showXAxis"
+    [yAxis]="showYAxis"
+    [legend]="_showLegend"
+    [tooltipDisabled]="_disableTooltip"
+    [legendTitle]="_legendTitle"
+    [showXAxisLabel]="_showXAxisLabel"
+    [showYAxisLabel]="_showYAxisLabel"
+    [xAxisLabel]="_xAxisLabel"
+    [barPadding]="_paddingBetweenBars"
+    [yAxisLabel]="_yAxisLabel">
+</ngx-charts-bar-horizontal-2d>
+
+<ngx-charts-bar-vertical-stacked
+    *ngIf="_chartType === proChartType.StackedVerticalBarChart"
+    class="chart-container"
+    [view]="_view"
+    [scheme]="_colorType"
+    [results]="_multi"
+    [animations]="animations"
+    [gradient]="_gradient"
+    [xAxis]="showXAxis"
+    [yAxis]="showYAxis"
+    [legend]="_showLegend"
+    [legendTitle]="_legendTitle"
+    [tooltipDisabled]="_disableTooltip"
+    [showXAxisLabel]="_showXAxisLabel"
+    [showYAxisLabel]="_showYAxisLabel"
+    [barPadding]="_paddingBetweenBars"
+    [xAxisLabel]="_xAxisLabel"
+    [yAxisLabel]="_yAxisLabel">
+</ngx-charts-bar-vertical-stacked>
+
+<ngx-charts-bar-horizontal-stacked
+    *ngIf="_chartType === proChartType.StackedHorizontalBarChart"
+    class="chart-container"
+    [view]="_view"
+    [scheme]="_colorType"
+    [results]="_multi"
+    [animations]="animations"
+    [gradient]="_gradient"
+    [xAxis]="showXAxis"
+    [yAxis]="showYAxis"
+    [tooltipDisabled]="_disableTooltip"
+    [legend]="_showLegend"
+    [legendTitle]="_legendTitle"
+    [showXAxisLabel]="_showXAxisLabel"
+    [showYAxisLabel]="_showYAxisLabel"
+    [barPadding]="_paddingBetweenBars"
+    [xAxisLabel]="_xAxisLabel"
+    [yAxisLabel]="_yAxisLabel">
+</ngx-charts-bar-horizontal-stacked>
+
+<ngx-charts-bar-vertical-normalized
+    *ngIf="_chartType === proChartType.NormalizedVerticalBarChart"
+    class="chart-container"
+    [view]="_view"
+    [scheme]="_colorType"
+    [results]="_multi"
+    [animations]="animations"
+    [gradient]="_gradient"
+    [xAxis]="showXAxis"
+    [yAxis]="showYAxis"
+    [legend]="_showLegend"
+    [legendTitle]="_legendTitle"
+    [showXAxisLabel]="_showXAxisLabel"
+    [showYAxisLabel]="_showYAxisLabel"
+    [tooltipDisabled]="_disableTooltip"
+    [barPadding]="_paddingBetweenBars"
+    [xAxisLabel]="_xAxisLabel"
+    [yAxisLabel]="_yAxisLabel">
+</ngx-charts-bar-vertical-normalized>
+
+<ngx-charts-bar-horizontal-normalized
+    *ngIf="_chartType === proChartType.NormalizedHorizontalBarChart"
+    class="chart-container"
+    [view]="_view"
+    [scheme]="_colorType"
+    [results]="_multi"
+    [animations]="animations"
+    [gradient]="_gradient"
+    [xAxis]="showXAxis"
+    [yAxis]="showYAxis"
+    [tooltipDisabled]="_disableTooltip"
+    [legend]="_showLegend"
+    [legendTitle]="_legendTitle"
+    [showXAxisLabel]="_showXAxisLabel"
+    [showYAxisLabel]="_showYAxisLabel"
+    [barPadding]="_paddingBetweenBars"
+    [xAxisLabel]="_xAxisLabel"
+    [yAxisLabel]="_yAxisLabel">
+</ngx-charts-bar-horizontal-normalized>

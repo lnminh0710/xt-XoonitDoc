@@ -1,0 +1,36 @@
+<div class="user-management-popup">
+        <div class="popup-input">
+            <mat-form-field appearance="standard" class="popup-input__form">
+                <mat-label>{{ nameInput }}</mat-label>
+                <input  matInput 
+                        type="text"
+                        [formControl]="inputControl"
+                        (input)="onChangeValue($event.target.value)"
+                        />
+            </mat-form-field>
+            <div class="text-danger error" *ngIf="valueInvalid">
+                <label-translation [keyword]="'USER_MANAGEMENT__Error_Duplicated'"></label-translation>
+            </div>
+        </div>
+        <div class="popup-action">
+            <div class="cancel-button">
+                <div class="popup-action__button" 
+                    (click)="closeFunc()"
+                    [attr.control-key]="'user-management__cancel-button-popup'">
+                <label-translation [keyword]="'USER_MANAGEMENT__Button_Cancel'"></label-translation>
+                </div>
+            </div>
+
+            <div class="save-button">
+                <div class="popup-action__button primary" 
+                [class.disable]="valueInvalid || inputControl.value === ''" 
+                (click)="createUpdateUser()"
+                [attr.control-key]="'user-management__add-button-popup'">
+                <label-translation *ngIf="optionShowPopup === optionPopup.EDIT.type; else addBtn" [keyword]="'USER_MANAGEMENT__Button_Save'"></label-translation>
+            </div>
+            </div>
+            <ng-template #addBtn>
+                <label-translation [keyword]="'USER_MANAGEMENT__Button_Add'"></label-translation>
+            </ng-template>
+        </div>
+</div>

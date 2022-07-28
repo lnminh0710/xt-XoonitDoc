@@ -1,0 +1,22 @@
+<!--<div class="text-center">
+    <mat-checkbox color="primary"
+                  [(ngModel)]="value"
+                  (change)="onCheckboxChange($event)">
+    </mat-checkbox>
+</div>-->
+<div class="text-center w-100" *ngIf="isDisplay && value != -1">
+    <ng-container [ngSwitch]="componentParent?.isEditting && !componentParent?.disabledAll">
+        <ng-container *ngSwitchCase="true">
+            <mat-checkbox
+                color="primary"
+                [(ngModel)]="value"
+                [disabled]="isDisabled"
+                (change)="onCheckboxChange($event)"
+            >
+            </mat-checkbox>
+        </ng-container>
+        <ng-container *ngSwitchDefault>
+            <i class="fa fa-check" [ngClass]="{'active' : value, 'in-active' :  !value }"></i>
+        </ng-container>
+    </ng-container>
+</div>

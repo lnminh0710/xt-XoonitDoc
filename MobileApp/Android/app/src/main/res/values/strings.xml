@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+    <string name="capture_button_alt">Capture</string>
+    <string name="switch_camera_button_alt">Switch camera</string>
+    <string name="gallery_button_alt">Gallery</string>
+    <string name="back_button_alt">Back</string>
+    <string name="share_button_alt">Share</string>
+    <string name="share_hint">Share using</string>
+    <string name="capture_mode_camera">Camera</string>
+    <string name="capture_mode_hdr">HDR</string>
+    <string name="capture_mode_night">Night</string>
+    <string name="delete_button_alt">Delete</string>
+    <string name="delete_dialog">Delete current photo?</string>
+    <string name="delete_title">Confirm</string>
+    <!--ScanActivity-->
+    <string name="camera_activity_permission_denied_toast">Please go to app settings and grant camera permission</string>
+    <string name="finding_rect">Use darker background</string>
+    <string name="move_away">Move away</string>
+    <string name="move_closer">Move closer</string>
+    <string name="adjust_angle">Adjust angle</string>
+    <string name="hold_still">Hold still</string>
+    <string name="capturing">Capturing image</string>
+    <!--Doctype-->
+    <!--    <string name="type_select_doc" translatable="false">Select Document Type: </string>-->
+    <string name="type_invoice" translatable="false">Invoice</string>
+    <string name="type_others" translatable="false">Other</string>
+    <string name="type_contact" translatable="false">Contract</string>
+    <string name="type_unknown" translatable="false">Unkhown</string>
+
+    <string name="type_select_doc" translatable="false">Select Document Type: </string>
+    <string name="type_creditor" translatable="false">Kreditoren</string>
+    <string name="type_receivable_accounts" translatable="false">Debitoren</string>
+    <string name="type_bank_siege" translatable="false">Bankbelege</string>
+    <string name="type_taxes" translatable="false">Steuern</string>
+    <string name="type_expense_receipts" translatable="false">Spesenbelege</string>
+    <string name="type_various" translatable="false">Diverses</string>
+
+    <!--Speed to text-->
+    <string name="language_code">en_US</string>
+    <string name="speech_prompt">Say something…</string>
+    <string name="speech_not_supported">Sorry! Your device doesn\'t support speech input</string>
+    <!--Menu setting-->
+    <string name="mnu_about">About</string>
+    <string name="mnu_setting">Settings</string>
+    <string name="setting_hint">Hidden Hint</string>
+    <!--Capture mode-->
+    <string name="mode_single">Single Mode</string>
+    <string name="mode_multiple">Multiple Mode</string>
+    <!--Preview-->
+    <string name="note_title">Notes</string>
+    <string name="note_ok_button">OK</string>
+    <string name="note_cancel_button">Cancel</string>
+    <string name="edit">Edit</string>
+    <string name="select">All</string>
+    <string name="delete">Delete</string>
+    <string name="groupby">Group By</string>
+    <string name="image_selected">Image</string>
+    <string name="single_selected">Single</string>
+    <string name="batch_selected">Batch</string>
+    <string name="add_voice">Add Voice</string>
+    <string name="add_note">Add Note</string>
+    <string name="selected">Selected</string>
+    <string name="All">All Photos</string>
+    <string name="Batch">Batch</string>
+    <string name="Details">Details</string>
+    <string name="crop_image">Crop Image</string>
+    <string name="xoontec">XOONTEC Vietnam</string>
+    <string name="mess_dialog">Enter something</string>
+    <string name="list_view">List View</string>
+    <string name="sortby">Sort By </string>
+    <string name="navigation_drawer_open">Drawer Open</string>
+    <string name="navigation_drawer_close">Drawer Closed</string>
+    <string name="folder">Folder</string>
+    <string name="setting_general">General Setting</string>
+    <string name="update_premium">Update Premium</string>
+    <string name="TitleFolder"><font color="#031829">Folder</font></string>
+    <string name="TitleSetting"><font color="#031829">Setting</font></string>
+    <string name="log_out">Log Out</string>
+    <string name="msg_empty_internet">Opps, No internet connection.\nPlease check your network and try again.</string>
+    <string name="msg_login_failed">Login failed.</string>
+    <string name="msg_can_not_get_document_tree">Can not get Document tree.</string>
+    <string name="uploading_image">Uploading image...</string>
+    <string name="upload_count">%1$d/%2$d</string>
+    <string name="group_2_different_docuement_type_error">You cannot group 2 different document type</string>
+    <string name="capture">Capture</string>
+    <string name="folder_name_format">%1$s (%2$d)</string>
+    <string name="password">Password</string>
+    <string name="login">LOGIN</string>
+    <string name="remember">Remember</string>
+    <string name="forgot_password_">Forgot password?</string>
+    <string name="don_t_have_account">Don’t have account?</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="login_name">Login Name</string>
+    <string name="forgot_password">Forgot Password</string>
+    <string name="please_enter_your_email_address_you_will_receive_a_link_to_create_a_new_password_via_email">Please enter your email address. You will receive a link to create a new password via email.</string>
+    <string name="your_email">Your Email</string>
+    <string name="send">send</string>
+    <string name="close">Close</string>
+    <string name="cancel">Cancel</string>
+    <string name="ok">OK</string>
+    <string name="create_new_account">Create new account</string>
+    <string name="use_your_worl_email_to_create_new_account_it_s_free">Use your worl email to create new account... it\'s free.</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="email_address">Email Address</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="next">next</string>
+    <string name="have_an_account">Have an account?</string>
+    <string name="sign_in">Sign In</string>
+    <string name="use_8_or_more_characters_with_a_mix_letters_numbers_and_symbols">Use 8 or more characters with a mix letters,
+        numbers and symbols</string>
+    <string name="next_step">Next Step</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="your_birthday">Your Birthday</string>
+    <string name="by_creating_an_account_your_aggree_to_our">By creating an account your aggree to our</string>
+    <string name="term_and_conditions">Term and Conditions</string>
+    <string name="congratulations">Congratulations!</string>
+    <string name="you_are_now_a_member_of_xoonit">You are now a member of Xoonit</string>
+    <string name="document">Document</string>
+    <string name="name">Name</string>
+    <string name="date_modified">Date Modified</string>
+    <string name="modified_date">Modified Date</string>
+    <string name="time_modified">Time Modified</string>
+    <string name="extension">Extension</string>
+    <string name="of_number">of 2</string>
+    <string name="mydm">MyDm</string>
+    <string name="contact">Contact</string>
+    <string name="imports">Import</string>
+    <string name="export">Export</string>
+    <string name="cloud">Cloud</string>
+    <string name="user_guide">User Guide</string>
+    <string name="history">History</string>
+    <string name="scan">Scan</string>
+    <string name="todo">TODO</string>
+    <string name="document_pages" >Document Pages: </string>
+    <string name="search">Search</string>
+    <string name="structure_tree">STRUCTURE TREE</string>
+    <string name="tree">TREE</string>
+    <string name="favorite">FAVORITE</string>
+    <string name="accept">Accept</string>
+    <string name="file_name">File Name</string>
+    <string name="total_image">Total Image</string>
+    <string name="scanned_date">Scanned Date</string>
+    <string name="scan_time">Scan Time</string>
+    <string name="devices">Devices</string>
+    <string name="doc_type">Doc Type</string>
+    <string name="address">Address</string>
+    <string name="home">Home</string>
+    <string name="company_name">Company Name</string>
+    <string name="attachment">attachment</string>
+    <string name="type">Type</string>
+    <string name="page_number">Page Number : </string>
+    <string name="_1">1</string>
+    <string name="upload">Upload</string>
+    <string name="photos">Photos</string>
+    <string name="maximum_file">99+</string>
+
+    <string-array name="arrayPathFolder">
+        <item name="Pictures">Pictures</item>
+        <item name="Download">Download</item>
+        <item name="DCIM">DCIM</item>
+    </string-array>
+</resources>

@@ -1,0 +1,19 @@
+<ng-container [ngSwitch]="cellStartedEdit">
+    <ng-container *ngSwitchCase="true">
+        <wj-combo-box #cellCombo
+                      class="full-width no-border"
+                      [(text)]="key"
+                      [itemsSource]="options"
+                      [displayMemberPath]="'label'"
+                      [selectedValuePath]="'value'"
+                      [(selectedValue)]="key"
+                      [isRequired]="false"
+                      placeholder="Please select"
+                      (gotFocus)="cellCombo.isDroppedDown = true"
+                      (selectedIndexChanged)="onPriorityChangeValue(cellCombo)">
+        </wj-combo-box>
+    </ng-container>
+    <ng-container *ngSwitchDefault>
+        <span class="cell-ellipsis">{{key}}</span>
+    </ng-container>
+</ng-container>

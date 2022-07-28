@@ -1,0 +1,65 @@
+<div class="scan-struc-tree">
+    <div class="scan-struc-tree__header">
+        <xn-document-tree-header></xn-document-tree-header>
+    </div>
+    <div class="tree-folder" *ngIf="docTreeList.length > 0">
+        <xn-document-tree [dataTree]="docTreeList" #xnDocumentTree [shouldGetDocumentQuantity]="false"
+            [modeTree]="TreeFolderModeEnum.SELECTABLE_FOLDER" (onClickOnNode)="onClickOnNode($event)"
+            (onDblClickOnNode)="onDblClickOnNode($event)">
+            <ng-template #rightClickMenuOnNode let-node="node" let-treeComponent="treeComponent">
+                <div class="context-menu-item cursor-pointer">
+                    <div class="d-flex flex-row">
+                        <mat-slide-toggle color="primary" [ngModel]="node.data.visible"
+                            (ngModelChange)="toggleVisibleFolder({ event: $event, node: node })">
+                            {{ node.data.visible ? 'Active Folder' : 'Inactive Folder' }}
+                        </mat-slide-toggle>
+                    </div>
+                </div>
+                <div class="context-menu-item cursor-pointer" (click)="addSubfolder({ event: $event, node: node })">
+                    <div class="d-flex flex-row">
+                        <mat-icon [svgIcon]="IconNamesEnum.APP_ADD_FILE" inline="true"></mat-icon>
+                        <div>Create Subfolder</div>
+                    </div>
+                </div>
+                <!-- <div class="context-menu-item">
+                <div class="d-flex flex-row">
+                    <mat-icon [svgIcon]="IconNamesEnum.APP_EXPORT_FILE" inline="true"></mat-icon>
+                    <div>Export folder</div>
+                </div>
+            </div> -->
+                <div class="context-menu-item cursor-pointer" (click)="renameFolder({ event: $event, node: node })"
+                    *ngIf="!node.data.isReadOnly">
+                    <div class="d-flex flex-row">
+                        <mat-icon [svgIcon]="IconNamesEnum.APP_WRITE_FILE" inline="true"></mat-icon>
+                        <div>Rename folder</div>
+                    </div>
+                </div>
+                <div class="context-menu-item cursor-pointer" (click)="deleteFolder({ event: $event, node: node })"
+                    *ngIf="!node.data.isReadOnly">
+                    <div class="d-flex flex-row">
+                        <mat-icon [svgIcon]="IconNamesEnum.APP_BIN_TRASH" inline="true"></mat-icon>
+                        <div>Delete folder</div>
+                    </div>
+                </div>
+                <div class="context-menu-item cursor-pointer"
+                    (click)="newFolder({ event: $event, treeComponent: treeComponent })">
+                    <div class="d-flex flex-row">
+                        <mat-icon [svgIcon]="IconNamesEnum.APP_USER_MAN_ADD" inline="true"></mat-icon>
+                        <div>New root folder</div>
+                    </div>
+                </div>
+            </ng-template>
+
+            <ng-template #rightClickMenuOnTree let-treeComponent="treeComponent"
+                let-closeContextMenuFunc="closeContextMenuFunc">
+                <div class="context-menu-item cursor-pointer"
+                    (click)="newFolder({ event: $event, treeComponent: treeComponent })">
+                    <div class="d-flex flex-row">
+                        <mat-icon [svgIcon]="IconNamesEnum.APP_USER_MAN_ADD" inline="true"></mat-icon>
+                        <div>New folder</div>
+                    </div>
+                </div>
+            </ng-template>
+        </xn-document-tree>
+    </div>
+</div>

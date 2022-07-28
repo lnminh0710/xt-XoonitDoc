@@ -1,0 +1,6 @@
+<div id="{{page.PageId || ''}}" class="ai-content" *ngIf="page">
+    <div class="col-xs-12  height-pc-100  no-padding">
+        <widget-container [pageId]="page.PageId"
+                          [tabID]="tabID"></widget-container>
+    </div>
+</div>

@@ -1,0 +1,11 @@
+<div class="form-control-wrapper" [ngStyle]="config?.style" [ngClass]="config?.class" [formGroup]="formGroup" enterNextFocus>
+    <mat-radio-group aria-labelledby="radio-group-label" color="primary" class="{{config.formControlName}} radio-group d-flex"
+        [class.flex-column]="config.displayVertical" [class.flex-row]="!config.displayVertical"
+        [formControlName]="config.formControlName" #matRadioGroupRef>
+        <mat-radio-button class="radio-button" *ngFor="let radio of config.radioOptions" [value]="radio[valueMember]" #matRadioButtonRef>
+            <div class="mat-radio-label-wrapper">
+                {{radio[displayMember]}}
+            </div>
+        </mat-radio-button>
+    </mat-radio-group>
+</div>

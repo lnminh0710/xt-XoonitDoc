@@ -1,0 +1,38 @@
+<div class="col-xs-12  no-padding  margin-top--sd">
+    <div class="input-group  width-pc-100">
+        <app-xn-input-debounce delayTimer="600"
+                               placeholder="Search"
+                               [value]="searchText"
+                               [hasIndicator]="true"
+                               [hasSearchButton]="true"
+                               [isLoading]="isSearching"
+                               (onValueChanged)="searchClicked($event)"
+                               (onSearchButtonClicked)="searchClicked($event)"
+                               cssClass="form-control input-sm">
+        </app-xn-input-debounce>
+    </div>
+</div>
+<div class="col-xs-12  no-padding  margin-top--sd  nav-grid">
+    <wj-flex-grid #flex
+    			  [itemsSource]="dataSource"
+    			  [headersVisibility]="'None'"
+    			  (updatedLayout)="updatedLayoutHandler($event)"
+    			  class="height-pc-100">
+        <wj-flex-grid-column [header]=""
+                             [width]="'*'"
+                             [isReadOnly]="true">
+            <ng-template wjFlexGridCellTemplate
+                         [cellType]="'Cell'"
+                         let-cell="cell">
+                <div class="nav-grid-item  pull-left">
+					<div class="nav-grid-item-title">
+                        <span class="date">{{cell.item['data'].createDateDisplay}}</span> {{cell.item['data'].title}}
+					</div>
+					<i class="nav-grid-item-content">
+						{{cell.item['data'].content}}
+					</i>
+				</div>
+            </ng-template>
+        </wj-flex-grid-column>
+    </wj-flex-grid>
+</div>

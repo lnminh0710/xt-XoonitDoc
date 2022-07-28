@@ -1,0 +1,28 @@
+.group-panel-drag-item-wrapper {
+    min-height: 50px;
+    height: auto;
+    border-width: 1px;
+    border-color:black;
+    border-style: dashed;
+}
+
+.group-panel-content {
+    --row-space-between: 2px;
+
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+
+    > row-drag-item:not(:first-child):not(:last-child) {
+        margin-bottom: var(--row-space-between);
+        margin-top: var(--row-space-between);
+    }
+
+    > row-drag-item:first-child {
+        margin-bottom: var(--row-space-between);
+    }
+
+    > row-drag-item:last-child {
+        margin-top: var(--row-space-between);
+    }
+}

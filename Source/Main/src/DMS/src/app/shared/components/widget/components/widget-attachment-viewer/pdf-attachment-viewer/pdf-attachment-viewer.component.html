@@ -1,0 +1,66 @@
+<div class="pdf-viewer-container">
+    <!-- <div class="page d-flex justify-content-end align-items-center">
+        <button
+            mat-icon-button
+            class="btn-action icon-transform"
+            [class.disabled]="currentPage <= 1"
+            (click)="currentPage = currentPage - 1"
+        >
+            <mat-icon aria-hidden="false" [svgIcon]="svgPrev"></mat-icon>
+        </button>
+        <span>{{currentPage + '/' + totalPage}}</span>
+        <button 
+            mat-icon-button
+            class="btn-action icon-transform next-icon"
+            [class.disabled]="currentPage >= totalPage"
+            (click)="currentPage = currentPage + 1" 
+        >
+            <mat-icon aria-hidden="false" [svgIcon]="svgPrev"></mat-icon>
+        </button>
+    </div> -->
+    <div class="search-bar" *ngIf="openSearchBar">
+        <div class="search-box">
+            <i class="fal fa-search"></i>
+            <input
+                autofocus="true"
+                type="text"
+                #inputSearchBar
+                placeholder="Search"
+                [ngModel]="searchPdfValue"
+                (ngModelChange)="changeSearchPdf($event)"
+            />
+            <div
+                class="toolbar-icon icon-transform delete-mini-icon--red"
+                *ngIf="!!searchPdfValue"
+                (click)="changeSearchPdf('')"
+            ></div>
+        </div>
+        <div class="result" *ngIf="searchPdfValue && !!totalFound">
+            {{ currentFound }} of {{ totalFound || 0 }} results
+        </div>
+        <div class="result" *ngIf="searchPdfValue && !totalFound">Not found</div>
+        <div class="toolbar-icon with-fa icon-transform" (click)="findPrevious()">
+            <i class="fal fa-chevron-left"></i>
+        </div>
+        <div class="toolbar-icon with-fa icon-transform" (click)="findNext()">
+            <i class="fal fa-chevron-right"></i>
+        </div>
+    </div>
+    <div class="pdf">
+        <pdf-viewer
+            #pdf
+            [src]="src"
+            [original-size]="false"
+            [render-text]="true"
+            [show-all]="true"
+            [rotation]="rotate"
+            [zoom]="zoom"
+            [zoom-scale]="'page-fit'"
+            style="display: block; height: 100%"
+            (page-rendered)="pageRendered()"
+            [autoresize]="true"
+            (after-load-complete)="afterLoadComplete($event)"
+            (error)="setLoading(false)"
+        ></pdf-viewer>
+    </div>
+</div>

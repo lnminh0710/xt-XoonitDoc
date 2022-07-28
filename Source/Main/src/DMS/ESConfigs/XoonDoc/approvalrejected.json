@@ -1,0 +1,51 @@
+{
+    "properties": {
+        "createDate": {
+            "type": "keyword"
+        },
+        "updateDate": {
+            "type": "keyword"
+        },
+
+        "idCloudConnection": {
+            "type": "keyword"
+        },
+        "isSync": {
+            "type": "keyword"
+        },
+
+        "localFileName": {
+            "type": "keyword"
+        },
+        "groupName": {
+            "type": "keyword"
+        },
+        "clientId": {
+            "type": "keyword"
+        },
+        "mediaName": {
+            "type": "keyword"
+        },
+        "rootName": {
+            "type": "keyword"
+        },
+        "cloudMediaPath": {
+            "type": "keyword"
+        },
+
+        "searchKeyWords": {
+            "type": "keyword"
+        },
+        "notes": {
+            "type": "keyword"
+        },
+
+        "fullText_RemovedHtml": {
+            "type": "text"
+        },
+        "reasonRejected": {
+            "type": "keyword"
+        }
+
+    }
+}

@@ -1,0 +1,53 @@
+@import '../../styles/common.scss';
+@keyframes lds-dual-ring {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+$colorSpinner: #5351fb;
+
+.scanning-action {
+  @extend %containerCenter;
+  height: 100%;
+  width: 100%;
+  &__button {
+    margin-right: 24px;
+    cursor: pointer;
+    height: 40px;
+    width: 40px;
+    transition: transform 0.2s;
+    &:hover {
+      transform: scale(1.2);
+    }
+    &.save-scanning {
+      background: url('../../styles/icons/save-scanning.png') center no-repeat;
+    }
+    &.group-image {
+      background: url('../../styles/icons/group.png') center no-repeat;
+    }
+    &.delete {
+      background: url('../../styles/icons/delete.png') center no-repeat;
+    }
+  }
+}
+
+.lds-dual-ring {
+  display: inline-block;
+  width: 70px;
+  height: 70px;
+}
+.lds-dual-ring:after {
+  content: ' ';
+  display: block;
+  width: 52px;
+  height: 52px;
+  margin: 8px;
+  border-radius: 50%;
+  border: 3px solid #fff;
+  border-color: $colorSpinner transparent $colorSpinner transparent;
+  animation: lds-dual-ring 1s linear infinite;
+}

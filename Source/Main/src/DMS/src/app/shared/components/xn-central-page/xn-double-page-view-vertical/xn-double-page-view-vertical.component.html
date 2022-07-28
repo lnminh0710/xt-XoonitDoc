@@ -1,0 +1,43 @@
+<div [perfectScrollbar]="perfectScrollbarConfig"
+     class="xn__double-page-view__vertical"
+     [ngStyle]="containerStyle">
+    <as-split direction="vertical"
+              (dragStart)="dragStart()"
+              (dragEnd)="dragEnd($event,pageItems)"
+              style="height: 100%" [gutterSize]="5">
+        <as-split-area [size]="item.ContentSize"
+                       [minSize]="3"
+                       class="split-area-content"
+                       *ngFor="let item of pageItems"
+                       [perfectScrollbar]="item.perfectScrollbarConfig"
+                       [attr.data-splitareaid]="item.TabID">
+            <div class="vertical-page_content height-pc-100"                 
+                 *ngIf="item.Page"
+                 id="{{item.Page.PageId || ''}}">
+                <widget-container *ngIf="contentHeight"
+                                  [isActivated]="isActivated"
+                                  [pageId]="item.Page.PageId"
+                                  [tabID]="tabID"
+                                  [isSplitterDragging]="isDragging"
+                                  (onWidgetDeleted)="refreshPerfectScrollbar($event)"></widget-container>
+            </div>
+
+            <div class="vertical-page_content height-pc-100"
+                 *ngIf="!item.Page && (item.Split || item.SimpleTabs)">
+                <app-xn-tab-page-view [data]="item"
+                                      [isActivated]="isActivated"
+                                      [isOrderDataEntry]="isOrderDataEntry"
+                                      [tabID]="tabID"
+                                      [isSplitterDragging]="isDragging"
+                                      *ngIf="item.Split"></app-xn-tab-page-view>
+
+                <xn-tab-content-simple-tabs [data]="item"
+                                            [isActivated]="isActivated"
+                                            [tabID]="tabID"
+                                            [isSplitterDragging]="isDragging"
+                                            *ngIf="item.SimpleTabs"></xn-tab-content-simple-tabs>
+            </div>
+
+        </as-split-area>
+    </as-split>
+</div>

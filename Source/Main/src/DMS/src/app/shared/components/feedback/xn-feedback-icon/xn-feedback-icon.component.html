@@ -1,0 +1,13 @@
+<a
+    mat-button
+    [tooltip]="Feedback"
+    data-placement="bottom"
+    id="xn-feedback-top-icon"
+    (click)="feedbackClicked()"
+>
+    <i class="fa" [ngClass]="{'fa-spinner fa-spin': isFeedbackLoading, 'fa-envelope': !isFeedbackLoading}"></i>
+</a>
+
+<ng-template #Feedback>
+    <label-translation [keyword]="'Feedback'"></label-translation>
+</ng-template>

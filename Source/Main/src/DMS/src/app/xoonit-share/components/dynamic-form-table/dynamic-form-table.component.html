@@ -1,0 +1,17 @@
+<div class="grid-list">
+    <div class="grid-item" id="{{gridData.id}}">
+        <h4 class="grid-title" *ngIf="showTitle">
+            {{gridData.title}}
+            <i class="icon icon-add fa fa-plus-circle" (click)="addNewRow(gridComp)" *ngIf="showAddButton"></i>
+        </h4>
+        <div class="grid-data"
+             [ngStyle]="{'height': height + 'px'}">
+            <xn-ag-grid #gridComp
+                        [dataSource]="gridData?.data"
+                        [readOnly]="false"
+                        [fitWidthColumn]="true"
+                        [enterMovesDown]="enterDirection">
+            </xn-ag-grid>
+        </div>
+    </div>
+</div>

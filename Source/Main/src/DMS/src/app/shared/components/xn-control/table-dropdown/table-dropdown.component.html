@@ -1,0 +1,62 @@
+<!-- <ng-template #table>
+    <div
+        class="custom-dropdown-table table-container xoonit-grid {{cssClass}}"
+        [class.reverse]="isReverseY"
+        [class.d-none]="forceHiddenDropdown || hideDropdown"
+        [style.width.px]="width"
+        [style.max-height.px]="maxHeight"
+        [style.top.px]="isReverseY ? (topPos - top) - (rowHeight * numberOfRows < maxHeight ? rowHeight * numberOfRows : maxHeight) : topPos + top"
+        [style.left.px]="isReverseX ? (leftPos - x) - (width) : leftPos + x"
+        (clickOutside)="clickOutside()"
+    >
+    <xn-ag-grid
+        [style.display]="'block'"
+        [style.max-height.px]="maxHeight"
+        [style.overflow]="onReadyGrid ? 'visible' : 'auto'"
+        [headerHeight]="0"
+        [id]="guid"
+        [domLayout]="'autoHeight'"
+        [dataSource]="dataSource"
+        [globalProperties]="globalProperties"
+        [hightlightKeywords]="hightlightKeywords"
+        [rowHeight]="rowHeight"
+        [allowSelectAll]="false"
+        [selectedRow]="rowSelected"
+        (gridOnReady)="gridOnReady($event)"
+        (rowClick)="selectRow($event)"
+        (cellClick)="choose($event)"
+        #agGrid
+    ></xn-ag-grid>
+    </div>
+</ng-template> -->
+<ng-template #table>
+    <div
+        class="custom-dropdown-table table-container xoonit-grid {{cssClass}}"
+        [class.reverse]="isReverseY"
+        [class.d-none]="forceHiddenDropdown || hideDropdown"
+        [style.width.px]="width"
+        [style.height.px]="forceHeight ? forceHeight : rowHeight * numberOfRows"
+        [style.max-height.px]="maxHeight"
+        [style.top.px]="isReverseY ? (topPos - top) - (rowHeight * numberOfRows < maxHeight ? rowHeight * numberOfRows : maxHeight) : topPos + top"
+        [style.left.px]="isReverseX ? (leftPos - x) - (width) : leftPos + x"
+        (clickOutside)="clickOutside()"
+    >
+    <xn-ag-grid
+        [headerHeight]="0"
+        [id]="guid"
+        [dataSource]="dataSource"
+        [globalProperties]="globalProperties"
+        [hightlightKeywords]="hightlightKeywords"
+        [rowHeight]="rowHeight"
+        [allowSelectAll]="false"
+        [selectedRow]="rowSelected"
+        (gridOnReady)="gridOnReady($event)"
+        (rowClick)="selectRow($event)"
+        (cellClick)="choose($event)"
+        #agGrid
+    ></xn-ag-grid>
+    </div>
+</ng-template>
+
+
+

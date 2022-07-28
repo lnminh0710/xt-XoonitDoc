@@ -1,0 +1,261 @@
+.toolbar-icon {
+    height: 28px;
+    width: 28px;
+    cursor: pointer;
+    transition: transform 0.1s;
+    &.disabled {
+        cursor: unset;
+        pointer-events: none;
+        filter: grayscale(100%);
+        opacity: 0.5;
+    }
+    &.with-fa {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    &.center-toolbar {
+        width: 100%;
+    }
+    &.upload-icon {
+        background: url('src/public/imgs/icons/upload.png') center no-repeat;
+    }
+    &.upload-file-icon {
+        background: url('src/public/imgs/icons/upload-icon.png') center no-repeat;
+    }
+    &.share-icon {
+        background: url('src/public/imgs/icons/share.svg') center no-repeat;
+    }
+    &.download-icon {
+        background: url('src/public/imgs/icons/download.svg') center no-repeat;
+    }
+    &.envelope-icon {
+        background: url('src/public/imgs/icons/envelope.svg') center no-repeat;
+    }
+    &.print-icon {
+        background: url('src/public/imgs/icons/printer.svg') center no-repeat;
+    }
+    &.view-actual-size-icon {
+        background: url('src/public/imgs/icons/scale.svg') center no-repeat;
+    }
+    &.rotate-left-icon {
+        background: url('src/public/imgs/icons/rotate-left.svg') center no-repeat;
+    }
+    &.rotate-right-icon {
+        background: url('src/public/imgs/icons/rotate-right.svg') center no-repeat;
+    }
+    &.zoom-in-icon {
+        background: url('src/public/imgs/icons/zoom-in.svg') center no-repeat;
+    }
+    &.zoom-out-icon {
+        background: url('src/public/imgs/icons/zoom-out.svg') center no-repeat;
+    }
+    &.ungroup-icon {
+        background: url('src/public/imgs/icons/ungroup.png') center no-repeat;
+    }
+    &.list-page-icon {
+        background: url('src/public/imgs/icons/submenu.svg') center no-repeat;
+    }
+    &.keyword-icon {
+        background: url('src/public/imgs/icons/keyword.svg') center no-repeat;
+    }
+    &.todo-icon {
+        background: url('src/public/imgs/icons/todo.svg') center no-repeat;
+    }
+    &.cancel-icon {
+        background: url('src/public/imgs/icons/cancel.png') center no-repeat;
+    }
+    &.save-icon {
+        background: url('src/public/imgs/icons/save.png') center no-repeat;
+    }
+    &.hand-icon {
+        background: url('src/public/imgs/icons/move.svg') center no-repeat;
+    }
+    &.draw-icon {
+        background: url('src/public/imgs/icons/draw.svg') center no-repeat;
+    }
+    &.prev-page-icon {
+        background: url('src/public/imgs/icons/prev-arrow.png') center no-repeat;
+    }
+    &.next-page-icon {
+        background: url('src/public/imgs/icons/next-arrow.svg') center no-repeat;
+    }
+    &.ocr-manually {
+        background: url('src/public/imgs/icons/OCR-manually.svg') center no-repeat;
+    }
+    &.delete-icon {
+        background: url('src/public/imgs/icons/delete.svg') center no-repeat;
+    }
+    &.delete-red-icon {
+        background: url('src/public/imgs/light-icons/delete-red.svg') center no-repeat;
+    }
+    &.multi-page-icon {
+        background: url('src/public/imgs/icons/multi-page.svg') center no-repeat;
+    }
+    &.single-page-icon {
+        background: url('src/public/imgs/icons/single-page.svg') center no-repeat;
+    }
+    &.preview-page-icon {
+        background: url('src/public/imgs/icons/preview-page.svg') center no-repeat;
+    }
+    &.scan-icon {
+        background: url('src/public/imgs/icons/printer-add.svg') center no-repeat;
+    }
+    &.paper-airplanes-icon {
+        background: url('src/public/imgs/icons/paper-airplanes.svg') center no-repeat;
+    }
+    &.info-blue-icon {
+        background: url('src/public/imgs/icons/info-blue.svg') center no-repeat;
+    }
+
+    &.close-circle-icon {
+        background: url('src/public/imgs/icons/close-circle.svg') center no-repeat;
+    }
+
+    &.refresh-icon {
+        background: url('src/public/imgs/icons/refresh.png') center no-repeat;
+        background-size: 30px;
+    }
+
+    &.close-dialog-icon {
+        background: url('src/public/imgs/icons/close-dialog.svg') center no-repeat;
+        background-size: 14px;
+    }
+
+    &.warning-icon {
+        background: url('src/public/imgs/icons/warning.svg') center no-repeat;
+    }
+
+    &.scanner-icon {
+        background: url('src/public/imgs/icons/scanner.svg') center no-repeat;
+    }
+    &.cloud-connection-icon {
+        background: url('src/public/imgs/icons/cloud.svg') center no-repeat;
+        background-size: 14px;
+    }
+    &.pin-icon {
+        background: url('src/public/imgs/pin.svg') center no-repeat;
+    }
+    &.unpin-icon {
+        background: url('src/public/imgs/pin.svg') center no-repeat;
+        -webkit-transform: rotate(45deg);
+        -moz-transform: rotate(45deg);
+        -ms-transform: rotate(45deg);
+    }
+    &.chevron-down-circle {
+        background: url('src/public/imgs/chevron-down-circle.svg') center no-repeat;
+    }
+    &.chevron-up-circle {
+        background: url('src/public/imgs/chevron-down-circle.svg') center no-repeat;
+        transform: rotate(180deg);
+        &:hover {
+            transform: rotate(180deg) scale(1.2) !important;
+        }
+    }
+
+    &.clean-icon {
+        background: url('src/public/imgs/broom.svg') center no-repeat;
+    }
+
+    &.delete-mini-icon--red {
+        background: url('src/public/imgs/light-icons/delete-mini.svg') center no-repeat;
+        border-radius: 50%;
+    }
+    &.ai-icon {
+        background: url('src/public/imgs/icon-ai.svg') center no-repeat;
+    }
+    &.qr-code-icon {
+        background: url('src/public/imgs/icon-qr.svg') center no-repeat;
+    }
+    &.full-screen-icon {
+        background: url('src/public/imgs/icons/fullscreen.svg') center no-repeat;
+    }
+    &.minimize-icon {
+        background: url('src/public/imgs/icons/fullscreen_minimize.svg') center no-repeat;
+    }
+    &.key-icon {
+        background: url('src/public/imgs/icons/key.svg') center no-repeat;
+        width: 22px;
+        margin: 0px 6px;
+    }
+}
+
+.image-icon {
+    height: 28px;
+    width: 28px;
+    &.cloud-connected-icon {
+        border-radius: 50%;
+        height: 100%;
+        width: 100%;
+        background: url('src/public/imgs/icons/cloud-connected.svg') center no-repeat;
+    }
+    &.cloud-lost-connect-icon {
+        border-radius: 50%;
+        background: url('src/public/imgs/icons/cloud-lost-connect.svg') center no-repeat;
+        height: 100%;
+        width: 100%;
+    }
+    &.cloud-not-config-icon {
+        background: url('src/public/imgs/icons/cloud-not-config.svg') center no-repeat;
+    }
+    &.cloud-connecting-icon {
+        background: url('src/public/imgs/icons/cloud-connecting.svg') center no-repeat;
+    }
+    &.cloud-spinner-icon {
+        background: url('src/public/imgs/icons/cloud-spinner.svg') center no-repeat;
+    }
+    &.button-spinner-icon {
+        background: url('src/public/imgs/icons/button-spinner.svg') center no-repeat;
+    }
+    &.error-icon {
+        background: url('src/public/imgs/icons/error.svg') center no-repeat;
+        background-size: 28px;
+    }
+    &.todo-text-icon {
+        background: url('src/public/imgs/icons/todo-text.svg') center no-repeat;
+    }
+    &.warning-icon {
+        background: url('src/public/imgs/icons/warning.svg') center no-repeat;
+    }
+    &.arrow-to-right-blue-icon {
+        background: url('src/public/imgs/icons/arrow-to-right-blue.svg') center no-repeat;
+    }
+    &.scan-progress-icon {
+        background: url('src/public/imgs/icons/scan-progress.svg') center no-repeat;
+        width: 200px;
+        height: 100px;
+    }
+
+    &.scan-download-icon {
+        background: url('src/public/imgs/icons/scan-download.svg') center no-repeat;
+    }
+
+    &.scan-install-icon {
+        background: url('src/public/imgs/icons/scan-install.svg') center no-repeat;
+    }
+
+    &.scan-check-icon {
+        background: url('src/public/imgs/icons/check.svg') center no-repeat;
+        border-radius: 50%;
+    }
+
+    &.upload-animate-icon {
+        background: url('src/public/imgs/icons/upload-animate.svg') center no-repeat;
+        border-radius: 50%;
+        background-size: 50px;
+        width: 50px;
+        height: 50px;
+    }
+
+    &.check-circle-icon {
+        background: url('src/public/imgs/icon-check-circle.svg') center no-repeat;
+    }
+
+    &.fail-circle-icon {
+        background: url('src/public/imgs/icons/fail-circle.svg') center no-repeat;
+    }
+
+    &.user-empty-icon {
+        background: url('src/public/imgs/icons/user-gray.svg') center no-repeat;
+    }
+}

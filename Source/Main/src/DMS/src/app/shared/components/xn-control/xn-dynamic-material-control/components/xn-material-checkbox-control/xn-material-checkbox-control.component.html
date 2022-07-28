@@ -1,0 +1,8 @@
+<div class="form-control-wrapper"
+     [ngStyle]="config?.style"
+     [formGroup]="formGroup" enterNextFocus>
+    <mat-checkbox attr.control-key="{{config.formControlName}}" color="primary" [formControlName]="config.formControlName">
+        <label-translation [keyword]="config.label"></label-translation>
+    </mat-checkbox>
+    <i class="icon {{config?.icon}}" [attr.icon-control]="config.formControlName" *ngIf="config.icon" (click)="onIconClick()"></i>
+</div>

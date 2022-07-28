@@ -1,0 +1,91 @@
+@import '../../../../../../sass_files/color.scss';
+
+.custom-box-header + ::ng-deep .box-detail-container {
+    height: 100%;
+}
+
+.dms-actions-wrapper {
+    height: 100%;
+    max-width: 100%;
+    width: 100vw;
+    position: relative;
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: 5px;
+
+    & .box {
+        cursor: pointer;
+        margin-right: 0.7rem;
+        background-color: #fff;
+        box-shadow: 0 0 6px #c1c1c1;
+        width: 45px;
+        height: 45px;
+        border-radius: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        &:hover {
+            .fa-save {
+                color: #00875a;
+            }
+            .fa-trash {
+                color: #de350b;
+            }
+        }
+
+        &:active {
+            transform: scale(0.8);
+        }
+        &.disabled {
+            opacity: 0.5;
+            pointer-events: none;
+        }
+    }
+
+    & .btn-icon {
+        width: 28px;
+        height: auto;
+        background: transparent;
+
+        &[disabled] {
+            cursor: not-allowed;
+        }
+        &.toggle-captured-form-btn {
+            filter: grayscale(1);
+            ::ng-deep {
+                .mat-icon.mat-icon-inline {
+                    height: auto;
+                    line-height: 0;
+                }
+            }
+        }
+    }
+
+    .child-wrapper {
+        padding: 10px;
+        border-radius: 8px;
+        &.left {
+            margin-right: 20px;
+        }
+        &.open {
+            .toggle-captured-form-btn {
+                filter: none;
+            }
+        }
+    }
+
+    .fal {
+        font-size: 22px;
+    }
+}
+
+::ng-deep {
+    .skin-light {
+        .child-wrapper {
+            &.open {
+                // background-color: $yellow5;
+            }
+        }
+    }
+}

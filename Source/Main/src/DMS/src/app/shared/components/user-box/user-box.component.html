@@ -1,0 +1,51 @@
+<ng-container *ngIf="currentUser">
+    <!-- Menu Toggle Button -->
+    <a mat-button dropdownToggle id="user-dropdown" class="dropdown-toggle login-icon-sm">
+        <!-- The user image in the navbar-->
+        <div class="avatar-container">
+            <div class="nickname-text hidden-xs" title="{{ currentUser.fullName }}">{{ currentUser.getName() }}</div>
+            <img [src]="profileImageUrl" class="user-image" [alt]="currentUser.getName()" />
+        </div>
+    </a>
+
+    <div *ngIf="isLoading" class="xn-loading">
+        <i class="fa fa-spinner fa-spin fa-2x"></i>
+    </div>
+
+    <div class="container dropdown-menu" *dropdownMenu role="menu" aria-labelledby="user-dropdown">
+        <div class="user-rectangle-shape">
+            <div class="user-rectangle-shape-wrapper">
+                <div class="avatar">
+                    <xn-user-avatar [profileImageUrl]="profileImageUrl"></xn-user-avatar>
+                </div>
+
+                <div *ngIf="currentUser" class="user-info-wrapper">
+                    <div class="role-text">
+                        <span>{{ currentUser.getRoleName() }}</span>
+                    </div>
+                    <div class="nickname-text" title="{{ currentUser.getName() }}">{{ currentUser.getName() }}</div>
+                    <div class="logintime-text">Login Time: {{ currentUser.lastLoginDate | date: 'dd/MM/yyyy' }}</div>
+                    <div class="id-login-text">IdLogin: {{ currentUser.id }}</div>
+                    <hr class="hr-splitter" />
+                    <a class="amd-link" (click)="openUserProfileDialog()">Change Profile</a>
+                </div>
+            </div>
+            <hr class="hr-splitter" />
+            <div class="logout-button">
+                <div class="version-supplier">
+                    <div class="version" [innerHTML]="versionSupplier.version"></div>
+                    <div class="supplier" [innerHTML]="versionSupplier.supplier"></div>
+                </div>
+                <div class="logout">
+                    <button type="button" mat-raised-button class="mat-btn-red new-size" (click)="logout()">
+                        Log Out
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div *ngIf="isLoading" class="xn-loading">
+            <i class="fa fa-spinner fa-spin fa-2x"></i>
+        </div>
+    </div>
+</ng-container>

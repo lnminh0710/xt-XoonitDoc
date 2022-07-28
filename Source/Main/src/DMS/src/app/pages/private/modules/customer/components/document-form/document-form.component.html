@@ -1,0 +1,71 @@
+<div class="document-form-container" [formFocus]="null"
+     [focusHandleStart]="focusHandleStart">
+
+    <div class="header__document_type">
+        <div class="header_left">
+            <mat-checkbox color="invoice"
+                          [disabled]="invoiceDisabled"
+                          [(ngModel)]="invoiceChecked"
+                          (change)="docStatusChange($event)">
+                Invoice
+            </mat-checkbox>
+            <mat-checkbox color="order"
+                          [disabled]="orderDisabled"
+                          [(ngModel)]="orderChecked"
+                          (change)="docStatusChange($event)">
+                Order
+            </mat-checkbox>
+            <mat-checkbox color="offer"
+                          [disabled]="offerDisabled"
+                          [(ngModel)]="offerChecked"
+                          (change)="docStatusChange($event)">
+                Offer
+            </mat-checkbox>
+        </div>
+        <div class="header_right">
+            <ng-container *ngIf="enableSearhCustomer">
+                <div class="input-group cursor-pointer"
+                     (click)="customerShowSearchDialog()">
+                    <input type="text" class="form-control" readonly aria-label="Customer Nr" [value]="'Customer Nr: ' + (customerNr || '') " >
+                    <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                </div>
+            </ng-container>
+            <ng-container *ngIf="!enableSearhCustomer">
+                Customer Nr: {{customerNr}}
+            </ng-container>
+        </div>
+    </div>
+    <div class="general-information">
+        <label> General Information </label>
+        <div class="general-form">
+            <dynamic-form 
+                          [data]="generalDataSource"
+                          (onFormChanged)="formChanged($event)"></dynamic-form>
+        </div>
+    </div>
+    <div class="processing-information">
+        <label> Processing Information </label>
+        <order-detail-summary [filterMode]="filterMode"
+                              [groupFieldFilter]="groupFieldFilter"
+                              [invoiceChecked]="invoiceChecked"
+                              [orderChecked]="orderChecked"
+                              [offerChecked]="offerChecked"
+                              [invoiceDisabled]="invoiceDisabled"
+                              [orderDisabled]="orderDisabled"
+                              [offerDisabled]="offerDisabled"
+                              [showCustomerInfo]="false"
+                              [data]="processingDatasource"
+                              (onEditField)="editField($event)"
+                              (onRenderCompleted)="renderCompleted($event)">
+        </order-detail-summary>
+    </div>
+</div>
+
+<module-search-dialog-customer #searchCustomerDialogModule
+                               [headerTitle]="MODULE_DIALOG.CUSTOMER.title"
+                               [searchIndex]="MODULE_DIALOG.CUSTOMER.searchIndex"
+                               [module]="MODULE_DIALOG.CUSTOMER.module"
+                               [keyword]="customerNr"
+                               (onItemSelect)="customerItemSelect($event)"
+                               (onDialogClose)="customerCloseSearchDialog($event)">
+</module-search-dialog-customer>

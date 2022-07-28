@@ -1,0 +1,24 @@
+.document-form-container {
+    padding: 10px;
+
+    .header__document_type {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: #f5f5f5;
+        padding-left: 5px;
+
+        mat-checkbox {
+            padding-right: 12px;
+        }
+    }
+
+    .general-information, .processing-information {
+        /*padding-top: 15px;*/
+    }
+
+    .edit-control {
+        padding-right: 15px;
+        width: 200px;
+    }
+}

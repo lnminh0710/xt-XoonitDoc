@@ -1,0 +1,74 @@
+<div class="dispatcher-step1  xn-padding--sd"
+    [ngClass]="{'xn-disabled': !isRenderCompleted}"
+    [perfectScrollbar]="{suppressScrollX: true, suppressScrollY: false}">
+    <div class="dispatcher-step1-command">
+        <button type="button"
+                mat-raised-button
+                class="mat-btn-blue xn-margin"
+                id="btn-continue-set-quantity"
+                (click)="onDispatchClick()">
+            Dispatch
+        </button>
+    </div>
+    <div class="dispatcher-step1-pool">
+        <div class="dispatcher-step1-grid">
+            <div class="dispatcher-step1-grid-header">
+                <div>Pools</div>
+                <div>
+                    N. of entries: {{poolRightData.data.length}}
+                </div>
+            </div>
+            <div class="dispatcher-step1-grid-flex">
+                <div class="dispatcher-step1-grid-left">
+                    <xn-ag-grid #poolLeftGrid
+                                *ngIf="poolLeftData && poolLeftData.columns && poolLeftData.columns.length"
+                                [id]="poolLeftGridId"
+                                [dataSource]="poolLeftData"
+                                [globalProperties]="globalProperties"
+                                [isShowedEditButtons]="false"
+                                [fitWidthColumn]="true"
+                                [autoSelectFirstRow]="true"
+                                (rowClick)="poolLeftGridRowClick($event)">
+                    </xn-ag-grid>
+                </div>
+                <div class="dispatcher-step1-grid-right">
+                    <xn-ag-grid #poolRightGrid
+                                *ngIf="poolRightData && poolRightData.columns && poolRightData.columns.length"
+                                [id]="poolRightGridId"
+                                [dataSource]="poolRightData"
+                                [readOnly]="false"
+                                [globalProperties]="globalProperties"
+                                [isEditting]="true"
+                                [autoSelectFirstRow]="true"
+                                [fitWidthColumn]="true"
+                                (rowClick)="onPoolRightGridRowClick($event)"
+                                (cellEditingStopped)="onPoolRightGridRowEditEnded($event)">
+                    </xn-ag-grid>
+                </div>
+            </div>
+        </div>
+        <div class="dispatcher-step1-checkboxes">
+            <div class="dispatcher-form__step1__right">
+                <div class="xn__form-header  col-xs-12  table-border  table-border-bg">
+                    <p class="pull-left xn__form-header-title">Data entry center</p>
+                </div>
+                <div class="dispatcher-form__step1__right-body  col-xs-12"
+                     [perfectScrollbar]="perfectScrollbarConfig">
+                    <div class="df__step1__right-item  col-xs-12"
+                         *ngFor="let item of dataEntryCenters">
+                        <mat-radio-group name="dp-st1-radio"
+                                         [(ngModel)]="dataEntryCenter">
+                            <mat-radio-button class="xn-padding-left-5"
+                                              color="primary"
+                                              name="dp-st1-radio"
+                                              value="{{item.idValue}}"
+                                              (change)="dataEntryCenterClicked(item)">
+                                {{item.textValue}}
+                            </mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

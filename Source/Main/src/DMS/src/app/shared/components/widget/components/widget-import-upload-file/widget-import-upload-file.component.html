@@ -1,0 +1,275 @@
+<div class="widget-header">
+    <label-translation [keyword]="'WIDGET_IMPORT_UPLOAD_FILE__Content'"></label-translation>
+</div>
+<div class="widget-import-upload-file-container">
+    <!-- <div class="upload-files-title">
+        IMPORT / UPLOAD FILE
+    </div> -->
+    <div class="drop-files" [ngClass]="{ 'has-file': filesMap.size }">
+        <form [formGroup]="formGroup" class="box" enctype="multipart/form-data" novalidate #form>
+            <div class="box__input">
+                <input
+                    class="box__file"
+                    type="file"
+                    name="files"
+                    [attr.accept]="acceptFileTypes"
+                    id="files"
+                    formControlName="files"
+                    data-multiple-caption="{count} files selected"
+                    multiple
+                    (change)="onFileChange($event)"
+                />
+                <label for="file" (click)="openFilesDialog($event)">
+                    <div class="box__dragndrop box__dragndrop_center">
+                        <span>
+                            <label-translation [keyword]="'WIDGET_IMPORT_UPLOAD_FILE__Drop_File'"></label-translation>
+                        </span>
+                    </div>
+                    <div class="box__dragndrop box__dragndrop_center">
+                        <span>
+                            <label-translation [keyword]="'WIDGET_IMPORT_UPLOAD_FILE__Or'"></label-translation>
+                        </span>
+                    </div>
+                    <div class="icon-btn-attachment">
+                        <mat-icon
+                            class="icon-attachment icon-transform"
+                            [svgIcon]="svgAttachment"
+                            aria-hidden="false"
+                            inline="true"
+                        ></mat-icon>
+                        <button mat-flat-button class="btn choose-file" color="primary">
+                            <label-translation
+                                [keyword]="'WIDGET_IMPORT_UPLOAD_FILE___Choose_File'"
+                            ></label-translation>
+                        </button></div
+                ></label>
+                <!-- <button class="box__button" type="submit">Upload</button> -->
+            </div>
+        </form>
+    </div>
+
+    <div class="action-buttons-wrapper d-flex flex-row justify-content-between" *ngIf="filesMap.size">
+        <div>
+            <mat-slide-toggle
+                class="mat-slide-toggle-customize size--small"
+                [checked]="isSendToCapture"
+                [disabled]="selectedFolder?.idDocumentType === DocumentTypeEnum.INVOICE_APPROVAL"
+                (change)="isSendToCaptureChanged($event)"
+                (click)="isSendToCaptureClicked($event)"
+                (keypress)="isSendToCaptureKeyPressed($event)"
+                color="primary"
+            >
+                <span class="mat-slide-toggle-customize__title">
+                    <label-translation [keyword]="'WIDGET_IMPORT_UPLOAD_FILE__Send_To_Capture'"></label-translation>
+                </span>
+            </mat-slide-toggle>
+        </div>
+
+        <div class="actions-files-list d-flex justify-content-end" [class.hidden]="!filesMap.size">
+            <div class="item-inline-flex upload-all cursor-pointer">
+                <button mat-flat-button class="btn" color="primary" (click)="startUploadingAll()" #btnUploadAll>
+                    <label-translation [keyword]="'WIDGET_IMPORT_UPLOAD_FILE__Upload_All'"></label-translation>
+                </button>
+            </div>
+            <div class="item-inline-flex remove-all cursor-pointer">
+                <button mat-stroked-button color="warn" class="btn" (click)="removeAll()">
+                    <label-translation [keyword]="'WIDGET_IMPORT_UPLOAD_FILE__Remove_All'"></label-translation>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="upload-files-wrapper" *ngIf="filesMap.size">
+        <div class="upload-files-title item">
+            <div class="item-inline-flex item-checkbox check-all text-center">
+                <mat-checkbox color="primary" #ckboxAll></mat-checkbox>
+            </div>
+            <div class="item-inline-flex item-name">
+                <label-translation [keyword]="'WIDGET_IMPORT_UPLOAD_FILE__Name'"></label-translation>
+            </div>
+            <div class="item-inline-flex item-path">
+                <label-translation [keyword]="'WIDGET_IMPORT_UPLOAD_FILE__Path'"></label-translation>
+            </div>
+            <div class="item-inline-flex item-size">
+                <label-translation [keyword]="'WIDGET_IMPORT_UPLOAD_FILE__Size'"></label-translation>
+            </div>
+            <div class="item-inline-flex item-progress">
+                <label-translation [keyword]="'WIDGET_IMPORT_UPLOAD_FILE__Progress'"></label-translation>
+            </div>
+            <div class="item-inline-flex actions-list">
+                <label-translation [keyword]="'WIDGET_IMPORT_UPLOAD_FILE__Active'"></label-translation>
+            </div>
+        </div>
+        <div class="upload-files-list">
+            <div class="files-list-container" [perfectScrollbar]="{ suppressScrollX: true, suppressScrollY: false }">
+                <div
+                    *ngFor="let fileUploadProgress of getMapFiles(); let i = index"
+                    class="item"
+                    [ngClass]="{ even: i % 2 }"
+                >
+                    <div class="item-inline-flex item-checkbox check-single text-center">
+                        <mat-checkbox
+                            color="primary"
+                            [checked]="fileUploadProgress.checked"
+                            (change)="onCheckedFile($event, fileUploadProgress)"
+                        ></mat-checkbox>
+                    </div>
+                    <div class="item-inline-flex item-name" title="{{ fileUploadProgress.file.name }}">
+                        {{ fileUploadProgress.file.name }}
+                    </div>
+                    <div class="item-inline-flex item-path" title="{{ fileUploadProgress.documentPath }}">
+                        {{ fileUploadProgress.documentPath }}
+                    </div>
+                    <div class="item-inline-flex item-size">
+                        <div class="content-size">{{ formatByte(fileUploadProgress.file.size) }}</div>
+                    </div>
+                    <div class="item-inline-flex item-progress">
+                        <ng-container
+                            *ngTemplateOutlet="
+                                fileUploadStatusTemplate;
+                                context: { fileUploadProgress: fileUploadProgress }
+                            "
+                        ></ng-container>
+                    </div>
+                    <div class="item-inline-flex actions-list flex-end">
+                        <button
+                            mat-icon-button
+                            *ngIf="showButtonRetryToUpload(fileUploadProgress)"
+                            class="item-action icon cursor-pointer item-retry"
+                            (click)="retryToUpload(fileUploadProgress)"
+                            #popHand="bs-tooltip"
+                            container="body"
+                            data-placement="right"
+                            [tooltip]="retryTmp"
+                        >
+                            <ng-template #retryTmp>
+                                <label-translation
+                                    [keyword]="'WIDGET_IMPORT_UPLOAD_FILE__Tooltip_Retry'"
+                                ></label-translation>
+                            </ng-template>
+                            <mat-icon [svgIcon]="svgRefresh" aria-hidden="false" inline="true"></mat-icon>
+                        </button>
+                        <button
+                            mat-icon-button
+                            class="item-action icon cursor-pointer item-visibility"
+                            (click)="fileViewer = fileUploadProgress.file; isShowDialog = true"
+                            #popHand="bs-tooltip"
+                            container="body"
+                            data-placement="right"
+                            [tooltip]="viewTmp"
+                        >
+                            <ng-template #viewTmp>
+                                <label-translation
+                                    [keyword]="'WIDGET_IMPORT_UPLOAD_FILE__Tooltip_View'"
+                                ></label-translation>
+                            </ng-template>
+                            <mat-icon [svgIcon]="svgVisibility" aria-hidden="false" inline="true"></mat-icon>
+                        </button>
+                        <div
+                            class="toolbar-icon delete-red-icon"
+                            (click)="removeItem(fileUploadProgress)"
+                            #popHand="bs-tooltip"
+                            container="body"
+                            data-placement="right"
+                            [tooltip]="removeTmp"
+                        ></div>
+                        <ng-template #removeTmp>
+                            <label-translation
+                                [keyword]="'WIDGET_IMPORT_UPLOAD_FILE__Tooltip_Remove'"
+                            ></label-translation>
+                        </ng-template>
+                        <!-- <button
+                            mat-icon-button
+                            class="item-action icon cursor-pointer item-remove"
+                            (click)="removeItem(fileUploadProgress)"
+                        >
+                            <mat-icon
+                                style="font-size: 28px"
+                                [svgIcon]="svgRemove"
+                                aria-hidden="false"
+                                inline="true"
+                                #popHand="bs-tooltip" container="body"
+                                data-placement="right"
+                                tooltip="Remove"
+                            ></mat-icon>
+                        </button> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- <div class="import-upload-file-es-table mydm-es-search">
+        <gs-result
+        #gsResult
+        [keyword]="keyword"
+        [searchWithStarPattern]="'Both_*X*'"
+        [gridId]="'207dbca8-f61a-432d-825a-0e95557cd458'"
+        [searchIndex]="moduleFromRoute.searchIndexKey"
+        [isWithStar] ="true"
+        [module]="moduleFromRoute"
+        [dontAllowSearchWhenInit]="true"
+        (onRowClicked)="rowClicked($event)"
+        (onRowDoubleClicked)="rowDoubleClicked($event)"
+        (onSearchCompleted)="onSearchCompleted($event)"></gs-result>
+    </div> -->
+</div>
+
+<ng-template #fileUploadStatusTemplate let-fileUploadProgress="fileUploadProgress">
+    <ng-container [ngSwitch]="fileUploadProgress.status">
+        <div *ngSwitchCase="FILE_UPLOAD_STATUS_ENUM.UPLOADED" class="done">
+            <div class="icon d-inline-block" style="vertical-align: sub; margin-right: 7px">
+                <mat-icon [svgIcon]="svgChecked" aria-hidden="false" inline="true"></mat-icon>
+            </div>
+            <label-translation [allowUpdateLanguage]="false" [keyword]="'COMMON_LABEL__Done'"></label-translation>
+        </div>
+        <div *ngSwitchCase="FILE_UPLOAD_STATUS_ENUM.UPLOADING" class="uploading-progress-bar">
+            <div class="progress-state" [style.width.%]="fileUploadProgress.progressPercent"></div>
+        </div>
+        <div *ngSwitchCase="FILE_UPLOAD_STATUS_ENUM.FAILED" class="failed">
+            <ng-container *ngTemplateOutlet="iconFailedTemplate"></ng-container>
+            <label-translation [allowUpdateLanguage]="false" [keyword]="'COMMON_LABEL__Failed'"></label-translation>
+        </div>
+        <div *ngSwitchCase="FILE_UPLOAD_STATUS_ENUM.INVALID" class="invalid">
+            <ng-container *ngTemplateOutlet="iconFailedTemplate"></ng-container>
+            <label-translation [allowUpdateLanguage]="false" [keyword]="'COMMON_LABEL__Invalid'"></label-translation>
+        </div>
+        <div *ngSwitchCase="FILE_UPLOAD_STATUS_ENUM.CANCELLED" class="cancelled">
+            <ng-container *ngTemplateOutlet="iconFailedTemplate"></ng-container>
+            <label-translation [allowUpdateLanguage]="false" [keyword]="'COMMON_LABEL__Cancelled'"></label-translation>
+        </div>
+        <div *ngSwitchCase="FILE_UPLOAD_STATUS_ENUM.OUT_OF_SESSION" class="out-of-session">
+            <ng-container *ngTemplateOutlet="iconFailedTemplate"></ng-container>
+            <label-translation
+                [allowUpdateLanguage]="false"
+                [keyword]="'COMMON_LABEL__Out_of_session'"
+            ></label-translation>
+        </div>
+    </ng-container>
+</ng-template>
+<ng-template #iconFailedTemplate>
+    <div class="icon d-inline-block" style="vertical-align: sub; margin-right: 7px">
+        <mat-icon [svgIcon]="svgInvalid" aria-hidden="false" inline="true"></mat-icon>
+    </div>
+</ng-template>
+
+<file-viewer-dialog
+    [isShowDialog]="isShowDialog"
+    (onClose)="isShowDialog = false; fileViewer = null"
+    [file]="fileViewer"
+>
+</file-viewer-dialog>
+
+<ng-template #fileUploadInformation let-uploaded="uploaded" let-failed="failed">
+    <div class="file-upload-information">
+        <p style="color: rgba(26, 179, 43)" *ngIf="uploaded > 0">
+            &#8226; {{ uploaded }}
+            <label-translation
+                [keyword]="'WIDGET_IMPORT_UPLOAD_FILE__DOCUMENTS_HAVE_BEEN_UPLOADED_TO_SERVER'"
+            ></label-translation>
+        </p>
+        <p style="color: #a40000" *ngIf="failed > 0">
+            &#8226; {{ failed }}
+            <label-translation [keyword]="'WIDGET_IMPORT_UPLOAD_FILE__DOCUMENTS_FAILED'"></label-translation>
+        </p>
+    </div>
+</ng-template>

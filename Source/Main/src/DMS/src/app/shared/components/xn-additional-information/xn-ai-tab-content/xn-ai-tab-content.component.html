@@ -1,0 +1,8 @@
+<div *ngIf="isRenderTabContent"
+     class="xn-ai__tab-content  col-xs-12  no-padding"
+     [perfectScrollbar]="perfectScrollbarConfig"
+     [ngStyle]="aiTabContentStyle">
+    <app-xn-ai-page [data]="tabz.Page"
+                    [tabID]="tabID">
+    </app-xn-ai-page>
+</div>

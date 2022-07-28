@@ -1,0 +1,9 @@
+.module-container {
+    width: 100vw;
+    height: calc(100vh - 53px);
+
+    .module-management {
+        position: relative;
+        height: calc(100vh - var(--app-header-height));
+    }
+}

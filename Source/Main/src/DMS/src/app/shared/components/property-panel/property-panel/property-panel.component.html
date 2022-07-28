@@ -1,0 +1,36 @@
+﻿<div class="property-panel"
+     *ngIf="isExpand"
+     [@enterAnimation]="isExpand"
+     [ngStyle]="propertyPanelStyle"
+     mwlResizable
+     [enableGhostResize]="true"
+     (resizeEnd)="onResizeEnd($event)"
+     [resizeEdges]="{bottom: false, right: false, top: false, left: true}">
+    <div [ngClass]="[isExpand ? 'property-panel-expand' : 'property-panel-collapse']"
+         *ngIf="parentData">
+        <div class="property-panel-content  no-padding">
+            <div class="property-panel-header  padding-left">
+                <span class="padding-left--sm">Properties</span>
+                <button mat-raised-button
+                        class="pull-right  mat-btn-small--icon--tool-bar  btn-hover-red"
+                        (click)="closePanel()">
+                    <i class="fa fa-times  font-size-16px"></i>
+                </button>
+                <button mat-raised-button
+                        class="pull-right  mat-btn-small--icon--tool-bar"
+                        (click)="savePanel()">
+                    <i class="fa fa-floppy-o  font-size-16px"></i>
+                </button>
+            </div>
+            <perfect-scrollbar [ngStyle]="propertyPanelBodyStyle">
+                <div><strong class="padding-left--sm">{{parentData.title}}</strong></div>
+                <div>
+                    <app-property-panel-grid [datasource]="properties"
+                                             [usingModule]="ofModule"
+                                             (onPropertiesChange)="propertiesChange($event)"
+                                             (onPropertiesApply)="propertiesApply($event)"></app-property-panel-grid>
+                </div>
+            </perfect-scrollbar>
+        </div>
+    </div>
+</div>

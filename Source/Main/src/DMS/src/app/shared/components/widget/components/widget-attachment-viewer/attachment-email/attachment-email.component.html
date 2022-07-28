@@ -1,0 +1,92 @@
+<p-dialog
+    header=""
+    [(visible)]="isShowDialog"
+    [styleClass]="dialogClass"
+    appendTo="body"
+    modal="true"
+    [draggable]="true"
+    [resizable]="true"
+    responsive="true"
+    [height]="dialogHeight"
+    [width]="dialogWidth"
+    (onHide)="close()"
+>
+    <p-header>
+        <div class="ui-dialog-flat__header email-configuration-dialog__header">
+            <span class="email-configuration-dialog__title">
+                <label-translation [keyword]="'EMAIL_CONFIGURATION__Title'"></label-translation>
+            </span>
+            <div class="email-configuration-dialog__control" (click)="onChangeSize()">
+                <div
+                    [ngClass]="{
+                        'email-configuration-dialog__control-maximize': !isMaximizable,
+                        'email-configuration-dialog__control-minimize': isMaximizable
+                    }"
+                ></div>
+            </div>
+            <div class="toolbar-icon icon-transform close-dialog-icon" aria-label="Close" (click)="close()"></div>
+        </div>
+    </p-header>
+    <div class="email-configuration">
+        <div class="email-configuration__recipients">
+            <div class="email-configuration__recipients-chip" *ngFor="let item of emailTo">
+                <div class="email-configuration__recipients-chip-title">
+                    <label-translation [keyword]="item"></label-translation>
+                </div>
+                <div class="email-configuration__recipients-chip-remove" (click)="remove(item)"></div>
+            </div>
+            <input
+                autofocus="true"
+                class="email-configuration__recipients-input"
+                [placeholder]="placeholder.recipients"
+                (change)="emailToInput = $event.target.value"
+                (keyup.enter)="add()"
+                (focusout)="add()"
+                [value]="emailToInput"
+            />
+        </div>
+        <span class="email-configuration__recipients-error"
+            ><label-translation [keyword]="emailErrorText"></label-translation
+        ></span>
+        <div class="email-configuration__subject">
+            <input
+                class="email-configuration__subject-input"
+                [placeholder]="placeholder.subject"
+                (change)="onChangeEmailSubject($event)"
+                [value]="emailSubject"
+            />
+        </div>
+        <div class="email-configuration__content" [ngClass]="{ 'no-attachment': pages.length == 0 }">
+            <textarea
+                name="emailContent"
+                cols="30"
+                rows="10"
+                class="email-configuration__content-input"
+                (change)="onChangeEmailContent($event)"
+                >{{ emailContent }}</textarea
+            >
+        </div>
+        <div *ngIf="pages.length > 0" class="email-configuration__attachment">
+            <div *ngFor="let page of pages; let i = index" class="email-configuration__attachment-item">
+                <!-- <img class="image-slider__item-image" [imageSpinner]="imageSrc" [alt]="image.ScannedPath" /> -->
+                <img
+                    class="email-configuration__attachment-image"
+                    [alt]="page.ScannedPath"
+                    [height]="280"
+                    [imageSpinner]="src"
+                    [width]="180"
+                />
+            </div>
+        </div>
+        <div class="email-configuration__footer">
+            <div
+                class="email-configuration__button-send-mail"
+                [ngClass]="{ disabled: !emailTo.length || isLoading }"
+                (click)="sendMail()"
+            >
+                <label-translation *ngIf="!isLoading" [keyword]="'EMAIL_CONFIGURATION__SendButton'"></label-translation>
+                <div *ngIf="isLoading" class="email-configuration__sending-email"></div>
+            </div>
+        </div>
+    </div>
+</p-dialog>

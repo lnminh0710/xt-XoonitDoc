@@ -1,0 +1,47 @@
+.btn-save-template {
+    margin-left: 15px;
+}
+
+.btn-preview {
+    margin-left: 40px;
+}
+
+.template-button {
+    padding: 0 0;
+    text-align: center;
+
+    button {
+        width: 32%;
+    }
+}
+
+.email-setting__button {
+    button {
+        width: 120px;
+    }
+}
+
+.xn-form-container {
+    height: 100%;
+
+    form {
+        height: 100%;
+    }
+
+    .form-group__text-editor {
+        height: calc(100% - 75px);
+    }
+}
+
+.ui-dialog-buttonpane {
+    padding: 0 0 !important;
+    border: none !important;
+
+    button {
+        width: 100px;
+    }
+}
+
+.height-pc-100-sub-px-40 {
+    height: calc(100% - 40px);
+}

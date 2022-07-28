@@ -1,0 +1,50 @@
+main {
+    justify-content: center;
+    height: 100%;
+
+    .chart-col {
+        width: 75%;
+        height: 100vh;
+        top: 0;
+        right: 0;
+        left: 25%;
+        bottom: 0;
+
+        .chart-content {
+            position: absolute;
+            top: 50px;
+            left: 50px;
+            right: 50px;
+            bottom: 50px;
+
+            .chart-container {
+                z-index: 1;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+            }
+        }
+
+    }
+
+}
+
+.chart-table {
+    table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+    }
+
+    tr:nth-child(even) {
+        background-color: #dddddd;
+    }
+}
+
+

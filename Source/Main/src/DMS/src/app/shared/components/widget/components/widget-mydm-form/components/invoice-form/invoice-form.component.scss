@@ -1,0 +1,27 @@
+@import 'src/sass_files/color.scss';
+
+.invoice-form-container {
+    .form-group {
+        display: flex;
+        align-items: center;
+    }
+    .form-group-title {
+        color: $blue-4;
+        flex: 1;
+        font-size: 16px;
+    }
+    ::ng-deep {
+        .mat-form-field {
+            input {
+                font-size: 16px;
+            }
+        }
+        .form-control-wrapper {
+            float: left;
+            width: 100%;
+            mat-error {
+                transform: translateY(-15px);
+            }
+        }
+    }
+}

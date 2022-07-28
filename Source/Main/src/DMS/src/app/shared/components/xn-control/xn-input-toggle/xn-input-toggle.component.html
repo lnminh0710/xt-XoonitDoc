@@ -1,0 +1,38 @@
+<ng-template [ngIf]="collapsed">
+    <div class="collapse-content w-75">
+        <h1 (dblclick)="canEdit && toggleEdit()">{{ formControl.value }}</h1>
+        <button
+            mat-button
+            *ngIf="canEdit"
+            matSuffix
+            mat-icon-button="far fa-pen"
+            aria-label="Clear"
+            tabIndex="-1"
+            (click)="toggleEdit()"
+        >
+            <mat-icon [ngStyle]="ngStyleMatIcon">close</mat-icon>
+        </button>
+    </div>
+</ng-template>
+<ng-template [ngIf]="!collapsed">
+    <mat-form-field class="w-75" appearance="fill">
+        <input type="{{ type }}" matInput placeholder="{{ title }}" [formControl]="formControl" name="{{ name }}" />
+        <span matSuffix class="icon-clear" *ngIf="formControl && formControl.value" (click)="formControl.setValue('')"
+            ><i class="far fa-times"></i
+        ></span>
+        <mat-error *ngIf="formControl.hasError('required')">
+            {{ 'Required' | translate }}
+        </mat-error>
+        <button
+            mat-button
+            *ngIf="showAccept"
+            matSuffix
+            mat-icon-button="far fa-pen"
+            aria-label="Clear"
+            tabIndex="-1"
+            (click)="formControl.valid && onClick()"
+        >
+            <mat-icon [ngStyle]="ngStyleMatIcon">close</mat-icon>
+        </button>
+    </mat-form-field>
+</ng-template>

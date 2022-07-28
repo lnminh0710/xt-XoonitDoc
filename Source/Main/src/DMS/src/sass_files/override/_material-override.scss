@@ -1,0 +1,94 @@
+@import 'src/app/shared/components/xn-control/light-material-ui/core/theming/all-theme';
+@include mat-core();
+
+$xoonit-blue: (
+    50: #d0ebff,
+    600: #0091ff,
+    contrast: (
+        50: black,
+        600: white,
+    ),
+);
+
+$xoonit-green: (
+    50: #d1f7da,
+    600: #1ab32b,
+    contrast: (
+        50: black,
+        600: white,
+    ),
+);
+
+$material-theme-v1-primary: mat-palette($mat-blue, 800);
+$material-theme-v1-accent: mat-palette($mat-orange, 500, A100, A400);
+$material-theme-v1-warn: mat-palette($mat-red, A700);
+$material-theme-v1: mat-light-theme($material-theme-v1-primary, $material-theme-v1-accent, $material-theme-v1-warn);
+
+@include mat-autocomplete-theme($material-theme-v1);
+@include mat-badge-theme($material-theme-v1);
+@include mat-bottom-sheet-theme($material-theme-v1);
+@include mat-button-theme($material-theme-v1);
+@include mat-button-toggle-theme($material-theme-v1);
+@include mat-card-theme($material-theme-v1);
+@include mat-checkbox-theme($material-theme-v1);
+@include mat-chips-theme($material-theme-v1);
+@include mat-table-theme($material-theme-v1);
+@include mat-datepicker-theme($material-theme-v1);
+@include mat-dialog-theme($material-theme-v1);
+@include mat-divider-theme($material-theme-v1);
+@include mat-expansion-panel-theme($material-theme-v1);
+@include mat-form-field-theme($material-theme-v1);
+@include mat-grid-list-theme($material-theme-v1);
+@include mat-icon-theme($material-theme-v1);
+@include mat-input-theme($material-theme-v1);
+@include mat-list-theme($material-theme-v1);
+@include mat-menu-theme($material-theme-v1);
+@include mat-paginator-theme($material-theme-v1);
+@include mat-progress-bar-theme($material-theme-v1);
+@include mat-progress-spinner-theme($material-theme-v1);
+@include mat-radio-theme(
+    mat-light-theme(mat-palette($mat-blue, 800), mat-palette($xoonit-green, 600), mat-palette($mat-red, A700))
+);
+@include mat-select-theme($material-theme-v1);
+@include mat-sidenav-theme($material-theme-v1);
+@include mat-slide-toggle-theme(mat-light-theme(mat-palette($xoonit-green, 600), mat-palette($xoonit-blue, 600)));
+@include mat-slider-theme($material-theme-v1);
+@include mat-stepper-theme($material-theme-v1);
+@include mat-sort-theme($material-theme-v1);
+@include mat-tabs-theme($material-theme-v1);
+@include mat-toolbar-theme($material-theme-v1);
+@include mat-tooltip-theme($material-theme-v1);
+@include mat-tree-theme($material-theme-v1);
+@include mat-snack-bar-theme($material-theme-v1);
+
+// .material-theme-v2 {
+//     $material-theme-v2-primary: mat-palette($mat-light-blue);
+//     $material-theme-v2-accent: mat-palette($mat-yellow, 400);
+//     $material-theme-v2: mat-light-theme(
+//         $material-theme-v2-primary,
+//         $material-theme-v2-accent,
+//         $mat-red
+//     );
+
+//     @include angular-material-theme($material-theme-v2);
+// }
+
+.mat-slide-toggle-bar {
+    width: 47.14px !important;
+    height: 25.61px !important;
+    border-radius: 28px !important;
+}
+
+.mat-slide-toggle-thumb {
+    height: 20.8px !important;
+    width: 20.43px !important;
+}
+
+.mat-slide-toggle-thumb-container {
+    top: 2px !important;
+    left: 2px !important;
+}
+
+.mat-slide-toggle.mat-checked .mat-slide-toggle-thumb-container {
+    transform: translate3d(23px, 0, 0) !important;
+}

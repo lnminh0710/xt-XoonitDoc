@@ -1,0 +1,101 @@
+@import '../../styles/common.scss';
+@import 'src/sass_files/color.scss';
+
+.cloud-configuration__item {
+    @extend %displayCenter;
+    height: 140px;
+    width: 100%;
+    border-radius: 4px;
+    justify-content: flex-start;
+    margin-bottom: 16px;
+    position: relative;
+
+    &-image {
+        @extend %displayCenter;
+        width: 120px;
+        height: 100%;
+        margin-right: 20px;
+        .cloud-icon {
+            height: 70px;
+            width: 70px;
+
+            &.one-drive {
+                background: url('../../styles/icons/one-drive.png') center no-repeat;
+            }
+            &.google-drive {
+                background: url('../../styles/icons/gg-drive.png') center no-repeat;
+            }
+            &.icloud {
+                background: url('../../styles/icons/icloud.png') center no-repeat;
+            }
+            &.my-cloud {
+                background: url('../../styles/icons/my-cloud.png') center no-repeat;
+            }
+            &.dropbox {
+                background: url('../../styles/icons/dropbox.png') center no-repeat;
+            }
+            &.sftp-ftp {
+                background: url('../../styles/icons/sftp-ftp.svg') center no-repeat;
+            }
+
+            &.no-image {
+                background-color: gray;
+                border-radius: 50%;
+            }
+        }
+    }
+
+    &-text {
+        flex: 1;
+    }
+
+    &-main-text {
+        height: 19px;
+        width: 100%;
+        font-family: 'rbt_Bold';
+        font-size: 16px;
+        line-height: 19px;
+
+        margin-bottom: 8px;
+        text-transform: uppercase;
+    }
+
+    &-secondary-text {
+        height: 19px;
+        width: 100%;
+        font-family: 'rbt_Regular';
+        font-size: 14px;
+        line-height: 19px;
+    }
+    &-action {
+        @extend %displayCenter;
+        width: 150px;
+        height: 100%;
+    }
+    &-menu-icon {
+        cursor: pointer;
+
+        margin-left: 10px;
+        height: 28px;
+        width: 28px;
+        background: url('../../styles/icons/menu.png') center no-repeat;
+        filter: brightness(0);
+        &.disabled {
+            cursor: unset;
+            opacity: 0.3;
+            pointer-events: none;
+        }
+    }
+
+    &-email {
+        position: absolute;
+        right: 40px;
+        bottom: 16px;
+        opacity: 0.5;
+        color: $blue-4;
+        font-family: 'rbt_Regular';
+        font-size: 16px;
+        letter-spacing: 0.15px;
+        line-height: 21px;
+    }
+}

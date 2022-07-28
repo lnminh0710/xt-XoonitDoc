@@ -1,0 +1,135 @@
+@import '../../styles/common.scss';
+
+$heightDetail: 45px;
+.image-slider {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    &__detail,
+    &__secondary-detail {
+        @extend %containerCenter;
+        height: $heightDetail;
+        border-radius: 10px 10px 0 0;
+
+        font-size: 14px;
+        font-weight: 500;
+        letter-spacing: 1px;
+        line-height: 19px;
+        padding: 0 10px;
+        &-title {
+            font-size: 16px;
+            flex: 1;
+            margin: 0 5px;
+            font-family: 'rbt_Medium';
+        }
+    }
+
+    &__detail {
+        &-checkbox {
+            cursor: pointer;
+
+            height: 16px;
+            width: 16px;
+            margin-right: 10px;
+            &.checked {
+                background: url('src/public/imgs/dark-icons/check.png') center no-repeat;
+            }
+            &.unchecked {
+                box-sizing: border-box;
+                border: 2px solid #dfe1e5;
+                border-radius: 2px;
+                background-color: #fafbfc;
+            }
+            &.disabled {
+                pointer-events: none;
+                filter: grayscale(100%);
+                cursor: unset;
+                opacity: 0.5;
+            }
+        }
+    }
+
+    &__content {
+        height: calc(100% - #{$heightDetail} * 3);
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+}
+
+.toolbar-icon {
+    &.delete-icon {
+        margin-left: 10px;
+    }
+}
+
+.confirm-dialog {
+    &__header {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0 20px;
+        &-title {
+            text-align: center;
+            color: #031829;
+
+            font-size: 18px;
+            font-weight: bold;
+            letter-spacing: 0.17px;
+            line-height: 23px;
+            text-align: center;
+        }
+    }
+    &__close-button {
+        cursor: pointer;
+    }
+    &__content {
+        flex: 1;
+        text-align: center;
+        font-size: large;
+        margin-bottom: 20px;
+    }
+
+    &__action {
+        @extend %containerCenter;
+        height: 32px;
+        &-cancel,
+        &-delete {
+            @extend %containerCenter;
+            cursor: pointer;
+            font-size: 14px;
+            height: 32px;
+            width: 100px;
+            border-radius: 3px;
+        }
+
+        &-cancel {
+            margin-right: 20px;
+            color: #101b4f;
+            background-color: #d7dce5;
+        }
+        &-delete {
+            background-color: #a40000;
+            color: #fff;
+        }
+    }
+}
+:host ::ng-deep {
+    .mat-checkbox {
+        flex: 1;
+    }
+
+    .mat-checkbox-layout {
+        margin-bottom: 0 !important;
+    }
+
+    .mat-checkbox-label {
+        height: 19px;
+        width: 88px;
+        color: #101b4f;
+        font-family: 'SF Pro Display';
+        font-size: 16px;
+        font-weight: 500;
+        letter-spacing: 0;
+        line-height: 19px;
+    }
+}

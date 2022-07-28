@@ -1,0 +1,68 @@
+:host ::ng-deep {
+    .transparent-gutter {
+        background-color: transparent !important;
+        border-bottom: none !important;
+    }
+
+    .min-width-7vw {
+        min-width: 7vw !important;
+    }
+}
+
+.tab-content-container {
+    padding-top: 5px;
+}
+
+.title-widget-info {
+    float: left;
+    width: 100%;
+    margin-top: -25px;
+    text-align: center;
+    font-weight: bold;
+    line-height: 1.8;
+    position: relative;
+    z-index: 1;
+}
+
+.hidden-section-on-modal {
+    display: none !important;
+}
+
+:host ::ng-deep {
+    // #capture-form-section {
+    //     height: calc(100vh - 44px) !important;
+    // }
+
+    // #capture-document-section {
+    //     height: calc(100vh - 53px) !important;
+    // }
+
+    // #capture-common-section {
+    //     height: 20vh !important;
+    // }
+}
+
+.wrapper-popup {
+    padding: 24px;
+
+    .popup-content {
+        font-size: 16px;
+        margin-bottom: 20px;
+    }
+
+    .popup-footer {
+        justify-content: space-around;
+
+        button {
+            line-height: 32px;
+            height: 32px;
+            width: 90px;
+        }
+
+        .right-buttons {
+            button {
+                margin-right: 6px;
+            }
+        }
+    }
+}

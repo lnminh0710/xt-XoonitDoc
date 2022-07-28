@@ -1,0 +1,8 @@
+<wj-input-number #input
+                 class="full-width ag-number"
+                 (lostFocus)="lostFocus($event)"
+                 [(value)]="value"
+                 [isRequired]="false"
+                 [format]="globalNumberFormat"
+                 (valueChanged)="valueChange()">
+</wj-input-number>

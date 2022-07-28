@@ -1,0 +1,40 @@
+<div class="order-processing-container">
+
+    <div class="col-xs-5 header-icon-container">
+        <div class="header-icon">
+        </div>
+        <div class="font-size-11px overdue doc-title">
+            <span>Email</span>
+        </div>
+        <div class="font-size-11px shipped doc-title">
+            <span> Contracts </span>
+        </div>
+        <div class="font-size-11px in-progress doc-title">
+            <span> Complaints/Objections </span>
+        </div>
+        <div class="font-size-11px total doc-title">
+            <span> General Corresopondene </span>
+        </div>
+    </div>
+
+    <div class="col-xs-2 text-center header-icon-container" *ngFor="let item of documentProcessingList; let i = index">
+        <div class="header-icon">
+            <i *ngIf="item.icon" class="fa {{item.icon}}"></i>
+            <label *ngIf="item.title" class="{{item.type}}">
+                {{item.title}}
+            </label>
+        </div>
+        <div class="square-box text-center font-size-11px overdue">
+            <span [title]="item.documentProcessingDetail.email">{{item.documentProcessingDetail.email}}</span>
+        </div>
+        <div class="square-box text-center font-size-11px shipped">
+            <span [title]="item.documentProcessingDetail.complaints">{{item.documentProcessingDetail.complaints}}</span>
+        </div>
+        <div class="square-box text-center font-size-11px in-progress">
+            <span [title]="item.documentProcessingDetail.contracts">{{item.documentProcessingDetail.contracts}}</span>
+        </div>
+        <div class="square-box text-center font-size-11px total">
+            <span [title]="item.documentProcessingDetail.generalCorresopondence">{{item.documentProcessingDetail.generalCorresopondence}}</span>
+        </div>
+    </div>
+</div>

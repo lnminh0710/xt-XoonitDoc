@@ -1,0 +1,282 @@
+@import '../../styles/common.scss';
+@import 'src/sass_files/color.scss';
+
+@keyframes bar-animation {
+    0% {
+        background-position: 0 0;
+    }
+    100% {
+        background-position: 50px 50px;
+    }
+}
+
+.cloud-share-folder {
+    &__header {
+        @extend %displayCenter;
+        padding: 0 30px;
+        height: 57px;
+        width: 100%;
+        border-radius: 4px 4px 0 0;
+        background: $white;
+    }
+    &__title {
+        @extend %fontRobotoMedium;
+        color: $blue-4;
+        flex: 1;
+        height: 21px;
+        width: 127px;
+        text-align: center;
+        font-weight: 600;
+        letter-spacing: 1px;
+        font-weight: bold;
+    }
+
+    &__close-button {
+        cursor: pointer;
+        background: url('../../styles/icons/close.png') center no-repeat;
+        height: 28px;
+        width: 28px;
+    }
+
+    &__body {
+        height: 100%;
+        width: 100%;
+    }
+
+    &__text {
+        @extend %fontRobotoMedium;
+
+        height: 42px;
+        color: $blue-4;
+
+        letter-spacing: 0;
+        text-align: center;
+        margin-bottom: 10px;
+        a {
+            color: #1378c5;
+        }
+    }
+    &__email {
+        @extend %displayCenter;
+        @extend %fontRobotoMedium;
+
+        width: 100%;
+        height: 24px;
+
+        color: $blue-4;
+        letter-spacing: 0.15px;
+        line-height: 24px;
+        margin-bottom: 20px;
+        &-title {
+            width: 116px;
+            margin-right: 90px;
+        }
+        &-value {
+            flex: 1;
+        }
+    }
+    $rowHeight: 40px;
+    $buttonWidth: 200px;
+    &__row {
+        @extend %displayCenter;
+        justify-content: flex-start;
+        width: 100%;
+        height: $rowHeight;
+        &.last {
+            margin-top: 25px;
+            margin-bottom: 40px;
+        }
+    }
+    &__input {
+        // border-bottom: 1px solid #697788;
+        flex: 1;
+        height: $rowHeight;
+        max-width: calc(100% - #{$buttonWidth} - 24px);
+        margin-right: 24px;
+    }
+
+    &__button-open-drive {
+        @extend %displayCenter;
+        @extend %fontRobotoMedium;
+
+        cursor: pointer;
+        font-size: 16px;
+        height: $rowHeight;
+        width: $buttonWidth;
+        border-radius: 4px;
+        background-color: #5d8096;
+        color: $white;
+    }
+
+    &__outline-input {
+        @extend %displayCenter;
+        width: 100%;
+        padding: 0 10px;
+
+        height: 44px;
+        border: 1px solid #5d8096;
+        border-radius: 10px;
+        input {
+            @extend %fontRobotoMedium;
+
+            background-color: transparent;
+            border: unset;
+            width: 100%;
+        }
+    }
+
+    &__action {
+        @extend %displayCenter;
+        height: 32px;
+        margin-top: 24px;
+    }
+    &__help {
+        @extend %displayCenter;
+        justify-content: flex-start;
+        flex: 1;
+        &-icon {
+            background: url('../../styles/icons/info.png') center no-repeat;
+            width: 20px;
+            height: 20px;
+            margin-right: 12px;
+        }
+        &-link {
+            @extend %fontRobotoMedium;
+            letter-spacing: 0;
+            text-align: center;
+
+            cursor: pointer;
+
+            color: #0091ff;
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+    }
+    &__button-done,
+    &__button-test,
+    &__connection {
+        @extend %displayCenter;
+        cursor: pointer;
+
+        font-size: 14px;
+        height: 32px;
+        width: 115px;
+        border-radius: 3px;
+        background-color: $blue-cobalt1;
+        color: $white;
+        margin-left: 10px;
+        &.disabled {
+            background-color: $grey-3;
+            cursor: unset;
+        }
+    }
+    &__connection {
+        justify-content: flex-start;
+        background-color: $white;
+        cursor: default;
+        &-progress {
+            border-radius: 3px;
+            @extend %displayCenter;
+
+            height: 100%;
+
+            background: -webkit-linear-gradient(
+                135deg,
+                $blue-cobalt1 25%,
+                $blue-cobalt2 25%,
+                $blue-cobalt2 50%,
+                $blue-cobalt1 50%,
+                $blue-cobalt1 75%,
+                $blue-cobalt2 75%
+            );
+            background-size: 30px 30px;
+            animation: bar-animation 3s linear infinite;
+        }
+    }
+
+    &__button-test {
+        background-color: #f5f6f8;
+        color: $blue-4;
+    }
+
+    &__connection-error {
+        font-size: 14px;
+        color: #ff0000;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        i.fa {
+            margin-right: 8px;
+        }
+    }
+
+    &__connection-success {
+        font-size: 14px;
+        color: $green-success;
+        i.fa {
+            margin-right: 10px;
+        }
+    }
+
+    // &__connection {
+    //     height: 30px;
+    //     width: 100%;
+    //     background-color: #f5f6f8;
+
+    //     &-progress {
+    //         @extend %fontRobotoMedium;
+    //         @extend %displayCenter;
+
+    //         height: 100%;
+
+    //         background: -webkit-linear-gradient(
+    //             135deg,
+    //             #009999 25%,
+    //             $blue-cobalt2 25%,
+    //             $blue-cobalt2 50%,
+    //             #009999 50%,
+    //             #009999 75%,
+    //             $blue-cobalt2 75%
+    //         );
+    //         background-size: 30px 30px;
+    //         animation: bar-animation 3s linear infinite;
+    //     }
+
+    //     &-success {
+    //         font-size: 20px;
+    //         color: $green-success;
+    //         i.fa {
+    //             margin-right: 10px;
+    //         }
+    //     }
+    //     &-error {
+    //         font-size: 20px;
+    //         color: #ff0000;
+    //         i.fa {
+    //             margin-right: 10px;
+    //         }
+    //     }
+    // }
+}
+
+::ng-deep .dms-custom-control {
+    .ng-star-inserted {
+        color: #697788;
+        &.mat-form-field-empty {
+            font-size: 16px;
+            top: 1em;
+        }
+    }
+
+    .mat-form-field-underline {
+        background-color: #697788;
+    }
+}
+
+:host ::ng-deep {
+    .ui-dialog-flat {
+        border-radius: 8px !important;
+    }
+}

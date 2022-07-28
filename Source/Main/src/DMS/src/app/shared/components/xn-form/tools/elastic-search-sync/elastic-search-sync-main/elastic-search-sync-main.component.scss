@@ -1,0 +1,22 @@
+$c-h: 60px;
+$e-s-h: 40px;
+$s: 10px;
+.m {
+	height: 100%;
+	padding-top: $s;
+	padding-bottom: $s;
+}
+.e-s-t {
+    height: calc(100% - #{$e-s-h});
+    margin-top: $s;
+}
+.e-s-g {
+    height: calc(100% - #{$e-s-h});
+    margin-top: $s;
+}
+.t{
+	height: calc(100% - #{$c-h});
+}
+.b{
+	height: $c-h;
+}

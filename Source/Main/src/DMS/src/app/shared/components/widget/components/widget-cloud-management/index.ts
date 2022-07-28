@@ -1,0 +1,1 @@
+export { WidgetCloudManagementComponent } from './widget-cloud-management.component';

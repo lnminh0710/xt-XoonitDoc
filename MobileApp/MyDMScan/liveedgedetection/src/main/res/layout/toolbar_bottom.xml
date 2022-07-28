@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="56dp"
+    android:background="#FFFFFF"
+    android:layout_gravity="bottom"
+    android:elevation="4dp"
+    android:theme="@style/MyPopupMenu"
+    app:popupTheme="@style/MyPopupMenu">
+
+<GridLayout
+    android:id="@+id/layoutfun"
+    android:layout_width="match_parent"
+    android:layout_height="56dp"
+    android:layout_gravity="bottom"
+    android:alignmentMode="alignMargins"
+    android:background="#FFFFFF"
+    android:columnCount="5"
+    android:gravity="bottom"
+    android:orientation="horizontal"
+    android:rowCount="1">
+
+    <ImageButton
+        android:id="@+id/btnDocType"
+        android:layout_height="match_parent"
+        android:layout_row="0"
+        android:layout_rowSpan="1"
+        android:layout_column="0"
+        android:layout_columnSpan="1"
+        android:layout_columnWeight="1"
+        android:background="@android:color/transparent"
+        android:onClick="selectDocType"
+        android:src="@drawable/ic_insert_drive_file_black_24dp" />
+
+    <RelativeLayout
+        android:layout_width="14dp"
+        android:layout_height="match_parent"
+        android:layout_row="0"
+        android:layout_rowSpan="1"
+        android:layout_column="1"
+        android:layout_columnSpan="1"
+        android:layout_columnWeight="1"
+        android:background="@android:color/transparent">
+
+        <ImageButton
+            android:id="@+id/btnDocList"
+            android:layout_width="34dp"
+            android:layout_height="34dp"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/ic_format_list_bulleted_black_24dp"
+            android:onClick="listDoc" />
+
+        <TextView
+            android:id="@+id/badgeList"
+            android:layout_width="45dp"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/btnDocList"
+            android:layout_alignTop="@+id/btnDocList"
+            android:layout_marginTop="0dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/badge_circle"
+            android:textAlignment="center"
+            android:gravity="center"
+            android:textColor="#FFF"
+            android:textSize="12sp" />
+    </RelativeLayout>
+    <ImageButton
+        android:id="@+id/btnCamera"
+        android:layout_height="match_parent"
+        android:layout_row="0"
+        android:layout_rowSpan="1"
+        android:layout_column="2"
+        android:layout_columnSpan="1"
+        android:layout_columnWeight="1"
+        android:onClick="takePhoto"
+        android:background="@android:color/transparent"
+        android:src="@drawable/xt_camera" />
+
+
+    <ImageButton
+        android:id="@+id/btnModeSingle"
+        android:layout_height="match_parent"
+        android:layout_row="0"
+        android:layout_rowSpan="1"
+        android:layout_column="3"
+        android:layout_columnSpan="1"
+        android:layout_columnWeight="1"
+        android:onClick="chooseSingleMode"
+        android:background="@android:color/transparent"
+        android:src="@drawable/ic_scan_mode_single_selected" />
+
+    <ImageButton
+        android:id="@+id/btnModeMulti"
+        android:layout_height="match_parent"
+        android:layout_row="0"
+        android:layout_rowSpan="1"
+        android:layout_column="4"
+        android:layout_columnSpan="1"
+        android:layout_columnWeight="1"
+        android:background="@android:color/transparent"
+        android:onClick="chooseMultipleMode"
+        android:src="@drawable/ic_scan_mode_multi_enabled" />
+
+</GridLayout>
+
+</android.support.v7.widget.Toolbar>

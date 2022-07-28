@@ -1,0 +1,30 @@
+<ng-container *ngIf="!!slides.length">
+    <div class="image-preview">
+        <attachment-toolbar
+            #toolbar
+            [isHidePrintIcon]="true"
+            [isHideLeftIcon]="true"
+            (onZoomOut)="zoomOut($event)"
+            (onZoomIn)="zoomIn($event)"
+            (onRotate)="rotate($event)"
+            (onViewActualSize)="viewActualSize()"
+            (fullscreen)="expandWidget($event)"
+        ></attachment-toolbar>
+        <div class="image-container">
+            <div class="icon-button" (click)="goToImage(-1)"><i class="fa fa-chevron-left"></i></div>
+            <image-attachment-viewer #image [src]="slides[indexSelected]"></image-attachment-viewer>
+            <div class="icon-button" (click)="goToImage(1)"><i class="fa fa-chevron-right"></i></div>
+        </div>
+    </div>
+    <ngx-slick-carousel class="carousel mt-3" #slickModal="slick-carousel" [config]="slideConfig">
+        <div
+            ngxSlickItem
+            *ngFor="let slide of slides; let i = index"
+            class="slide"
+            [ngClass]="{ selected: indexSelected == i }"
+            (click)="indexSelected = i"
+        >
+            <img src="{{ slide }}" alt="" width="100%" />
+        </div>
+    </ngx-slick-carousel>
+</ng-container>

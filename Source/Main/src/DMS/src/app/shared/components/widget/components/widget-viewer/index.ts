@@ -1,0 +1,9 @@
+export { WidgetViewerComponent } from './widget-viewer.component';
+export { TextViewerComponent } from './components/text-viewer/text-viewer.component';
+export { SpreadsheetViewerComponent } from './components/spreadsheet-viewer/spreadsheet-viewer.component';
+export { WidgetPdfViewerComponent } from './components/pdf-viewer/pdf-viewer.component';
+export { VideoViewerComponent } from './components/video-viewer/video-viewer.component';
+export { AudioViewerComponent } from './components/audio-viewer/audio-viewer.component';
+export { RarViewerComponent } from './components/compressed-file-viewer/rar-viewer/rar-viewer.component';
+export { ZipViewerComponent } from './components/compressed-file-viewer/zip-viewer/zip-viewer.component';
+export { ImageViewerComponent } from './components/image-viewer/image-viewer.component';

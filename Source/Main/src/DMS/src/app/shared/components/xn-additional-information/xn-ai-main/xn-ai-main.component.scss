@@ -1,0 +1,189 @@
+@import 'src/sass_files/variables.scss';
+
+.additional-information {
+    border-left: none;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    &.expand {
+        top: 58px;
+        bottom: 0;
+        border-radius: 0;
+        border-top-left-radius: 12px;
+        border-top-right-radius: 12px;
+    }
+
+    .additional-information__header {
+        display: block;
+        cursor: pointer;
+        line-height: 45px;
+        cursor: pointer;
+        min-height: 45px;
+        padding: 0;
+        text-align: left;
+        border-radius: 0;
+        border-top-left-radius: 12px;
+        border-top-right-radius: 12px;
+    }
+
+    .addtional-information-content {
+        height: 100%;
+    }
+
+    .pin-btn,
+    .toolbar-icon {
+        position: absolute;
+        right: 0;
+        top: 7px;
+        width: 30px;
+        min-width: 30px;
+        height: 30px;
+        padding: 0;
+        color: $white;
+
+        i {
+            top: -3px;
+        }
+
+        &.pinned i {
+            color: $yellow1;
+            transform: rotate(-45deg);
+        }
+    }
+
+    .additional-information-collapse {
+        cursor: pointer;
+        height: 250px;
+        width: 30px;
+        border-top-left-radius: 100px;
+        border-bottom-left-radius: 100px;
+        opacity: 0.6;
+        transition: all 300ms;
+        top: calc(50% - 125px);
+        position: fixed;
+        right: -22px;
+        z-index: 1;
+
+        &:hover {
+            opacity: 1;
+            right: 0;
+        }
+
+        &.design-widget {
+            right: 28px;
+
+            &:hover {
+                right: 50px;
+            }
+        }
+
+        .addtional-information-content {
+            display: none !important;
+            position: relative;
+        }
+
+        .additional-information-vertical__icon {
+            display: block !important;
+            padding-left: $spacing-size-sd;
+            font-size: $h4-size;
+
+            .additional-information-toggle {
+                -webkit-transform: rotate(90deg);
+                -moz-transform: rotate(90deg);
+                -ms-transform: rotate(90deg);
+                padding-left: $spacing-size-sm;
+                position: absolute;
+                left: 12px;
+                color: $white;
+            }
+        }
+
+        .additional-information-vertical__text {
+            height: 100% !important;
+            padding-top: $spacing-size-lg;
+            font-size: $h4-size;
+            text-align: end;
+            display: block;
+            color: $white;
+        }
+
+        .edditing__notice-icon {
+            margin-top: 20px;
+            background-color: $edit-orange-color;
+            border-radius: 50%;
+            text-align: center;
+            margin-left: 1px;
+            margin-right: 1px;
+
+            a {
+                font-size: 18px;
+            }
+        }
+    }
+
+    .additional-information-expand {
+        height: 100%;
+
+        .addtional-information-content {
+            display: block !important;
+
+            .additional-information-toggle {
+                margin-right: $spacing-size-sd;
+                -webkit-transform: rotate(-90deg);
+                -moz-transform: rotate(-90deg);
+                -ms-transform: rotate(-90deg);
+                float: left;
+                width: 8px;
+                margin-top: 15px;
+                color: $white;
+            }
+
+            .additional-information-title-text {
+                float: left;
+                width: calc(100% - 20px);
+                height: 30px;
+                text-overflow: ellipsis;
+                overflow: hidden;
+                white-space: nowrap;
+                font-family: 'rbt_Medium';
+                font-size: 16px;
+            }
+        }
+
+        .ai-vertical__text {
+            display: none !important;
+        }
+    }
+
+    .resize-handler {
+        height: 100%;
+        width: 10px;
+        background-color: transparent;
+        cursor: e-resize;
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+    }
+}
+
+:host ::ng-deep {
+    .ai-vertical__text {
+        height: 100%;
+        border-top-left-radius: 25px;
+        border-bottom-left-radius: 25px;
+
+        span.vertical-text {
+            position: absolute;
+            left: 0;
+            top: 20px;
+        }
+
+        i.additional-information-toggle {
+            position: absolute;
+        }
+    }
+}

@@ -1,0 +1,16 @@
+<div *ngIf="idRepDocumentType && documentTypeList && documentTypeList.length" class="dms-list-widget scroll-bar-custom">
+    <div class="dms-widget">
+        <div class="row display-flex">
+            <div class="col-xs-4 flex-middle font-large">DOCUMENT TYPE</div>
+            <div class="col-xs-8">
+                <mat-form-field class="dms-custom-control">
+                    <mat-select [(ngModel)]="idRepDocumentType">
+                        <mat-option *ngFor="let item of documentTypeList" [value]="item.idValue">
+                            {{ item.textValue }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+</div>

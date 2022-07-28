@@ -1,0 +1,92 @@
+<p-dialog header="" [(visible)]="isShowDialog" [styleClass]="dialogClass" appendTo="body" modal="true"
+    [draggable]="true" [resizable]="true" [width]="titleCloud === 'MyCloud' ? '581' : '800'" responsive="false"
+    [closeOnEscape]="false">
+    <p-header>
+        <div class="ui-dialog-flat__header cloud-connect-dialog__header">
+            <div class="image-icon warning-icon"></div>
+            <span *ngIf="titleCloud !== 'MyCloud'" class="cloud-connect-dialog__title">
+                <b>{{ titleCloud }}</b>
+            </span>
+            <span *ngIf="titleCloud === 'MyCloud'" class="cloud-connect-dialog__title">
+                <label-translation [keyword]="'CLOUD_CONNECT_DIALOG__ShareWith'"></label-translation> <b>{{ titleCloud }}</b>
+            </span>
+            <div class="toolbar-icon icon-transform close-dialog-icon" #popHand="bs-tooltip" container="body"
+                data-placement="bottom" [tooltip]="tooltipCloseButton" aria-label="Close" (click)="close()"
+                [ngClass]="{ disabled: isLoading }"></div>
+        </div>
+    </p-header>
+
+    <div class="cloud-connect-dialog__body">
+        <div class="cloud-connect-dialog__email" *ngIf="UserEmail">
+            <div class="cloud-connect-dialog__email-value">{{ UserEmail }}</div>
+            <div class="cloud-connect-dialog__email-edit">
+                <div class="toolbar-icon icon-transform draw-icon" (click)="connectCloud()"
+                    [ngClass]="{ disabled: isEditing || isLoading }"></div>
+            </div>
+        </div>
+        <div class="cloud-connect-dialog__outline-input" [ngClass]="{ error: SharedFolderError }">
+            <input [disabled]="!isEditing && !!UserEmail" placeholder="Folder name" [ngModel]="SharedFolder"
+                (ngModelChange)="onChangeShareFolder($event)" />
+            <div class="cloud-connect-dialog__outline-input-action" *ngIf="!isLoading && !isEditing && UserEmail">
+                <div class="toolbar-icon icon-transform draw-icon"
+                    [ngClass]="{ disabled: isConnectCloudEmail || isLoading }"
+                    (click)="showControlEditFolderName()"></div>
+            </div>
+            <div class="cloud-connect-dialog__outline-input-action" *ngIf="isEditing && UserEmail">
+                <div class="toolbar-icon icon-transform cancel-icon" (click)="cancelEditShareFolder()"></div>
+            </div>
+            <div class="cloud-connect-dialog__outline-input-action" *ngIf="isEditing && UserEmail">
+                <div class="toolbar-icon icon-transform save-icon"
+                    [ngClass]="{ disabled: SharedFolder === originalSharedFolder || !SharedFolder }"
+                    (click)="renameFolder()"></div>
+            </div>
+        </div>
+        <div class="cloud-connect-dialog__error" *ngIf="!SharedFolder"><label-translation [keyword]="'CLOUD_CONNECT_DIALOG__FolderEmpty'"></label-translation></div>
+        <div class="cloud-connect-dialog__error"><label-translation [keyword]="SharedFolderError"></label-translation></div>
+        <div class="cloud-connect-dialog__action">
+            <div class="cloud-connect-dialog__help">
+                <div class="image-icon arrow-to-right-blue-icon"></div>
+                <a class="cloud-connect-dialog__help-link" [href]="linkCloud" target="_blank">
+                    <label-translation [keyword]="'CLOUD_CONNECT_DIALOG__GoTo'"></label-translation> {{ titleCloud }}
+                </a>
+            </div>
+            <div class="cloud-connect-dialog__button-test" (click)="close()"><label-translation [keyword]="'CLOUD_CONNECT_DIALOG__Cancel'"></label-translation></div>
+            <div class="cloud-connect-dialog__button-done" (click)="connectCloud()" *ngIf="!isLoading && !UserEmail"
+                [ngClass]="{ disabled: !SharedFolder }">
+                <span *ngIf="testResponse !== 'success'"> <label-translation [keyword]="'CLOUD_CONNECT_DIALOG__Connect'"></label-translation> </span>
+                <div class="cloud-connect-dialog__connection-success" *ngIf="testResponse === 'success'">
+                    <i class="fa fa-check-circle"></i>
+                    <label-translation [keyword]="'CLOUD_SHARE_FOLDER__Success'"></label-translation>
+                </div>
+            </div>
+            <div class="cloud-connect-dialog__button-done"
+                [ngClass]="{ disabled: isEditing || isLoading || isConnectCloudEmail }" (click)="testConnection()"
+                *ngIf="!isLoading && UserEmail">
+                <span *ngIf="testResponse !== 'success'"> <label-translation [keyword]="'CLOUD_SHARE_FOLDER__TestConnection'"></label-translation> </span>
+                <div class="cloud-connect-dialog__connection-success" *ngIf="testResponse === 'success'">
+                    <i class="fa fa-check-circle"></i>
+                    <label-translation [keyword]="'CLOUD_SHARE_FOLDER__Success'"></label-translation>
+                </div>
+            </div>
+            <div class="cloud-connect-dialog__progress" *ngIf="isLoading">
+                <img src="public/assets/img/loading-spinner.gif" />
+            </div>
+            <div [class.disabled]="!canSave" class="cloud-connect-dialog__button-done"
+                (click)="saveCloudConnection()">
+                <span *ngIf="!isSaveSuccess"><label-translation [keyword]="'CLOUD_SHARE_FOLDER__Save'"></label-translation> </span>
+                <div class="cloud-connect-dialog__connection-success" *ngIf="isSaveSuccess && canSave">
+                    <i class="fa fa-check-circle"></i>
+                    <label-translation [keyword]="'CLOUD_SHARE_FOLDER__Success'"></label-translation>
+                </div>
+            </div>
+        </div>
+        <div class="cloud-connect-dialog__connection-error" *ngIf="testResponse === 'error'">
+            <i class="fa fa-exclamation-triangle"></i>
+            <label-translation [keyword]="testError"></label-translation>
+        </div>
+    </div>
+</p-dialog>
+
+<ng-template #tooltipCloseButton>
+    <label-translation [keyword]="'CLOUD_SHARE_FOLDER__Close'"></label-translation>
+</ng-template>

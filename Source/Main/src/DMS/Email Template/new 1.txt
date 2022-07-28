@@ -1,0 +1,25 @@
+* 9906: Capture: Update Invoice session 
+			Spent hours: 3
+			Remaining hours: 0 
+* 9886: The email content on mobile phone display is not good 
+			Spent hours: 2
+			Remaining hours: 1
+* 9921: Show only one tree root of Doctype that was assigned to a document
+			Spent hours: 1
+			Remaining hours: 2
+			
+			
+			
+			
+			
+			
+* 9921: Show only one tree root of Doctype that was assigned to a document
+			Remaining hours: 2
+			Expected Remaining: 0
+* 9933: Change behavior of mouse click on Tree
+			Remaining hours: 3
+			Expected Remaining: 0
+			Remaining hours: 0 
+* 9886: The email content on mobile phone display is not good 
+			Remaining hours: 1
+			Expected Remaining: 0

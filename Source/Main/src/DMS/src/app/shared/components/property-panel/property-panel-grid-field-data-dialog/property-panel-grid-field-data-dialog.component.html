@@ -1,0 +1,81 @@
+<p-dialog
+    header=""
+    [(visible)]="showDialog"
+    modal="true"
+    width="300"
+    positionTop="150"
+    responsive="true"
+    appendTo="body"
+    [resizable]="false"
+    [draggable]="true"
+    [contentStyle]="{ 'padding-bottom': 0, 'padding-top': 0 }"
+>
+    <p-header>
+        <div class="modal-header--information">
+            <span class="header-text">Format Fields</span>
+            <!-- <div class="toolbar-icon close-dialog-icon" (click)="close()"></div> -->
+            <div class="toolbar-icon close-dialog-icon" (click)="close()"></div>
+        </div>
+    </p-header>
+    <div class="row">
+        <ng-template #popTemplate>
+            <app-property-panel-grid
+                [datasource]="properties"
+                [isRoot]="false"
+                (onPropertiesChange)="propertiesChange($event)"
+            >
+            </app-property-panel-grid>
+        </ng-template>
+
+        <div [perfectScrollbar]="perfectScrollbarConfig" class="col-xs-12 no-padding grid-content">
+            <table class="table table-striped no-margin-bottom full-width">
+                <thead>
+                    <tr>
+                        <th class="col-xs-12 text-left bg-gray xn-padding--sm" colspan="2">Field Name</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <ng-template let-item ngFor [ngForOf]="displayFields" let-idx="index" [ngForTrackBy]="itemsTrackBy">
+                        <tr *ngIf="item.setting && item.setting.display">
+                            <td
+                                class="text-left xn-padding--sm"
+                                [ngClass]="{ parent: item.isParent, child: item.group }"
+                            >
+                                {{ item.columnName }}
+                            </td>
+                            <td>
+                                <button
+                                    *ngIf="!item.ignoredActionButton"
+                                    class="mat-btn-non-fix no-border pull-right"
+                                    mat-raised-button
+                                    type="button"
+                                    (click)="showPopover(item, pop)"
+                                    triggers=""
+                                    [popover]="popTemplate"
+                                    popoverTitle="Format Style"
+                                    placement="right"
+                                    [outsideClick]="true"
+                                    #pop="bs-popover"
+                                    container="body"
+                                >
+                                    &hellip;
+                                </button>
+                            </td>
+                        </tr>
+                    </ng-template>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <p-footer>
+        <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+            <button label="Cancel" pbutton="" type="button" mat-raised-button (click)="close()">
+                <span class="ui-button-text ui-c">Cancel</span>
+            </button>
+            <button label="Save" pbutton="" mat-raised-button type="button" class="mat-btn-blue" (click)="apply()">
+                <span class="ui-button-text ui-c">Apply</span>
+            </button>
+        </div>
+    </p-footer>
+</p-dialog>

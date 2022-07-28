@@ -1,0 +1,127 @@
+@import '../../styles/common.scss';
+
+.container--center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.fullscreen {
+    top: 55px;
+    left: 0;
+}
+// #image-file-viewer-dialog__canvas.hide-canvas::parent {
+// }
+.hide-canvas {
+    display: none !important;
+}
+.file-viewer-dialog {
+    height: 100%;
+    width: 100%;
+    // box-shadow: 0px 1px 3px #0000001f;
+    padding: 14px;
+
+    &__close-button {
+        cursor: pointer;
+        height: 28px;
+        width: 28px;
+        position: absolute;
+        z-index: 999999;
+        top: 0;
+        right: 0;
+    }
+
+    &__content {
+        width: 100%;
+        height: calc(100% - 100px);
+        position: relative;
+        box-shadow: 0 2px 10px 0 rgba(132, 132, 132, 0.5);
+        background-color: #fff;
+        &-loading {
+            @extend %displayCenter;
+            height: 100%;
+            width: 100%;
+            img {
+                height: 50px;
+                width: 50px;
+            }
+        }
+    }
+
+    &__pdf {
+        height: 100%;
+        &.scrollbar {
+            overflow: auto;
+            overflow-y: overlay !important;
+            overflow-x: overlay !important;
+            &:focus {
+                outline: none;
+            }
+        }
+    }
+
+    &__text {
+        background-color: #fff;
+        padding: 10px;
+        height: 100%;
+        overflow: auto;
+    }
+
+    &__toolbar {
+        @extend %displayCenter;
+        height: 100px;
+        &-container {
+            @extend %displayCenter;
+
+            height: 48px;
+            width: 404px;
+            border-radius: 10px;
+            background-color: #ffffff;
+            box-shadow: 0 15px 30px 0 rgba(16, 27, 79, 0.15);
+        }
+        &-line {
+            height: 30px;
+            width: 2px;
+            border-radius: 1px;
+            background-color: #dcdfe9;
+        }
+        &-paging {
+            @extend %displayCenter;
+
+            flex: 1;
+            color: #14479b;
+
+            font-size: 14px;
+            text-align: center;
+            user-select: none;
+            &-icon {
+                width: 11px;
+                height: 11px;
+                margin: 0 5px;
+                &.prev-icon {
+                    cursor: pointer;
+                    background: url('../../styles/icons/prev-page-blue.png') center no-repeat;
+                }
+                &.prev-icon-disabled {
+                    background: url('../../styles/icons/prev-page-gray.png') center no-repeat;
+                }
+                &.next-icon {
+                    cursor: pointer;
+
+                    background: url('../../styles/icons/next-page-blue.png') center no-repeat;
+                }
+                &.next-icon-disabled {
+                    background: url('../../styles/icons/next-page-gray.png') center no-repeat;
+                }
+            }
+        }
+        &-icon-button {
+            @extend %displayCenter;
+
+            width: 15%;
+            .toolbar-icon {
+                cursor: pointer;
+            }
+        }
+    }
+}

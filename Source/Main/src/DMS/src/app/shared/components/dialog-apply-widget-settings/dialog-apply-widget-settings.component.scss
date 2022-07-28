@@ -1,0 +1,23 @@
+.dialog-body {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.flex-1 {
+    flex: 1;
+}
+
+.loading {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    font-size: 30px;
+    background: rgba(0,0,0,0.2);
+    color: black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

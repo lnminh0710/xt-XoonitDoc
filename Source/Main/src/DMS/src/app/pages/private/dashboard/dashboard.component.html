@@ -1,0 +1,32 @@
+<xn-tab-button [ngClass]="{'design-mode': isDesignMode}"></xn-tab-button>
+
+<div *ngIf="ofModuleLocal">
+    <!--<parked-item-list *ngIf="ofModuleLocal.idSettingsGUI != menuModuleId.base"
+                      [module]="ofModuleLocal"></parked-item-list>-->
+
+    <div class="dashboard-container">
+        <ng-template [ngIf]="tabList && tabList.length">
+            <xn-tab *ngIf="ofModuleLocal.idSettingsGUI != menuModuleId.orderDataEntry"
+                    class="xn-tab--general"
+                    [headerData]="tabList"
+                    [tabSetting]="tabSetting"
+                    [subTabSetting]="subTabSetting"
+                    [newTabConfig]="newTabConfig"
+                    [selectedEntity]="selectedEntity"></xn-tab>
+        </ng-template>
+
+        <ng-template [ngIf]="(!tabList || !tabList.length) && ofModuleLocal.idSettingsGUI != menuModuleId.orderDataEntry && (ofModuleLocal.idSettingsGUI < menuModuleId.broker || ofModuleLocal.idSettingsGUI == menuModuleId.orderProcessing || ofModuleLocal.idSettingsGUI == menuModuleId.documentManagement)">
+            <module-welcome [activeModule]="ofModuleLocal"
+                            [canSearch]="ofModuleLocal.idSettingsGUI < menuModuleId.orderDataEntry || ofModuleLocal.idSettingsGUI == menuModuleId.orderProcessing || ofModuleLocal.idSettingsGUI == menuModuleId.documentManagement"
+                            [showParkedItem]="ofModuleLocal.idSettingsGUI != menuModuleId.backoffice && (ofModuleLocal.idSettingsGUI < menuModuleId.orderDataEntry || ofModuleLocal.idSettingsGUI == menuModuleId.orderProcessing || ofModuleLocal.idSettingsGUI == menuModuleId.documentManagement)"
+                            [subModules]="(subModulesState | async)"></module-welcome>
+        </ng-template>
+    </div>
+
+    <xn-context-menu></xn-context-menu>
+
+    <!--<send-email-dialog #sendEmailDialog
+                       *ngIf="ofModuleLocal && ofModuleLocal.idSettingsGUI == 43 && showSendEmailDialog"
+                       (onClose)="onCloseSendEmailDialog()"></send-email-dialog>-->
+
+</div>

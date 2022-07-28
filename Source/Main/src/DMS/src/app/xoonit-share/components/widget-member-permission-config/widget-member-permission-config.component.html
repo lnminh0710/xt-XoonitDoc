@@ -1,0 +1,26 @@
+<div class="member-permission-wrapper">
+    <div class="data-wrapper w-100 xoonit-grid" *ngIf="dataSource?.columns?.length">
+        <xn-ag-grid
+            #xnAgGrid
+            [id]="'97761aeb-3c01-496b-b005-b92dec3f7d6b'"
+            [globalProperties]="globalProperties"
+            [dataSource]="dataSource"
+            [readOnly]="false"
+            [isEditting]="true"
+            [treeData]="true"
+            [groupDefaultExpanded]="null"
+            [autoGroupColumnDef]="autoGroupColumnDef"
+            [getDataPath]="getDataPath"
+            [autoSelectCurrentRowAfterChangingData]="false"
+        >
+        </xn-ag-grid>
+    </div>
+    <div class="bottom-wrapper">
+        <button type="button" class="btn-cmd btn-cmd-default" (click)="closeDialog()">
+            <label-translation [keyword]="'Cancel'"></label-translation>
+        </button>
+        <button type="button" class="btn-cmd btn-cmd-primary" (click)="save()" [disabled]="">
+            <label-translation [keyword]="'Save'"></label-translation>
+        </button>
+    </div>
+</div>

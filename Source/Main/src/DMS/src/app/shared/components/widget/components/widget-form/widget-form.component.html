@@ -1,0 +1,104 @@
+<form
+  [ngClass]="{
+    'edit-form-mode': editFormMode,
+    'edit-field-mode': editFieldMode,
+    'edit-language-mode': editLanguageMode
+  }"
+  *ngIf="form"
+>
+  <div class="form-horizontal form-widget-content" [ngClass]="{ columns: widgetFormType == 1 }">
+    <div *ngFor="let control of groupContentList; trackBy: trackControl">
+      <div *ngIf="control.groupTitle" class="group-title">
+        {{ control.groupTitle }}
+      </div>
+      <div
+        [ngClass]="{ hidden: control.isHidden, 'overflow-visible': control.controlType == 'checkbox' }"
+        class="col-sm-12 no-padding container-inline"
+      >
+        <div
+          class="form-group no-padding container-inline-label"
+          [ngStyle]="{ width: minLabelWidth + 'px', 'min-width': minLabelWidth + 'px' }"
+        >
+          <div
+            class="item-inline-label"
+            [ngClass]="{
+              readonly: control.readOnly,
+              'important-black-label': isDesignWidgetMode,
+              'blinking-update-item-bg': control.hasJustUpdated
+            }"
+            [ngStyle]="{
+              'text-align': control.labelAlign || labelTextAlign,
+              'line-height': inlineLabelStyle['line-height'],
+              overflow: 'hidden'
+            }"
+          >
+            <label
+              class="control-label label-field"
+              [xnDraggable]="{
+                zone: 'widget',
+                data: {
+                  fieldColumn: control.key,
+                  fieldText: control.label,
+                  fieldValue: control.value,
+                  srcWidgetDetail: dataSource,
+                  mode: 'translate'
+                }
+              }"
+              [ngStyle]="
+                importantFormStyle.fields && importantFormStyle.fields[control.key]
+                  ? importantFormStyle.labelStyle
+                  : fieldStyle && fieldStyle[control.key]
+                  ? fieldStyle[control.key].labelStyle
+                  : formStyle.labelStyle
+              "
+            >
+              {{ control.label }}
+            </label>
+          </div>
+        </div>
+        <div class="form-group no-padding container-inline-content">
+          <div
+            class="item-inline-content no-padding-left"
+            [ngClass]="{
+              readonly: control.readOnly,
+              'important-black-label': isDesignWidgetMode,
+              'overflow-visible': control.controlType == 'checkbox'
+            }"
+            [ngStyle]="{ 'text-align': control.align || dataTextAlign, 'line-height': inlineLabelStyle['line-height'] }"
+          >
+            <inline-edit
+              [editing]="editFormMode"
+              [form]="form"
+              [control]="control"
+              [inputControlWidth]="controlWidth"
+              formControlName="{{ control.key }}"
+              [isDateOfBirth]="control.key && control.key.toLowerCase().indexOf('birth') > -1"
+              [dataStyle]="
+                importantFormStyle.fields && importantFormStyle.fields[control.key]
+                  ? importantFormStyle.dataStyle
+                  : dataStyle && dataStyle[control.key]
+                  ? dataStyle[control.key].dataStyle
+                  : formStyle.dataStyle
+              "
+              [isDialogMode]="isDialogMode"
+              [globalProperties]="globalProperties"
+              [errorShow]="errorShow"
+              (onEditField)="onEditField($event)"
+              (onCancelEditField)="onCancelEditField($event)"
+              (onEnterKeyPress)="onEnterKeyPress($event)"
+              (onUpdateValue)="onUpdateValue($event)"
+              (focusField)="focusField($event)"
+            >
+            </inline-edit>
+          </div>
+        </div>
+      </div>
+      <div
+        *ngIf="!control.isHidden && widgetFormType == 1"
+        [attr.data-id]="control.key"
+        [ngClass]="{ 'xn-show': listVirtualElementNames.includes(control.key) }"
+        class="col-sm-12 no-padding container-inline virtual-container xn-hidden"
+      ></div>
+    </div>
+  </div>
+</form>

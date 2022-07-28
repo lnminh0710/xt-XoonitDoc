@@ -1,0 +1,83 @@
+@import 'src/sass_files/color.scss';
+.space {
+    flex: 1;
+}
+.block-u-dialog {
+    &__header {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0 20px;
+        &-title {
+            text-align: center;
+            color: #031829;
+
+            font-size: 18px;
+            font-weight: bold;
+            letter-spacing: 0.17px;
+            line-height: 23px;
+            text-align: center;
+        }
+    }
+    &__content {
+        margin-top: 16px;
+        &-info {
+            font-family: 'rbt_Regular';
+            font-size: 16px;
+            display: flex;
+            text-align: center;
+            &-countdown {
+                font-weight: bold;
+                margin-left: 5px;
+            }
+        }
+        &-action {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        &-chrome {
+            background: url('~src/public/imgs/chrome-logo.svg') center no-repeat;
+            width: 64px;
+            height: 64px;
+            margin-right: 10px;
+        }
+        &-edge {
+            background: url('~src/public/imgs/edge-chromium.png') center no-repeat;
+            width: 64px;
+            height: 64px;
+            background-size: 140px;
+        }
+    }
+    &__action {
+        margin-top: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        padding-right: 10px;
+        &-button-retry,
+        &-button-cloud,
+        &-button-hide {
+            width: 120px;
+            height: 32px;
+            background-color: #0049b0;
+            color: $white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+            cursor: pointer;
+            .button-spinner-icon {
+                width: 100%;
+            }
+        }
+        &-button-hide {
+            color: #42526e;
+            background-color: rgba(9, 30, 66, 0.08);
+        }
+        &-button-cloud {
+            background-color: #56637a;
+            margin-right: 5px;
+        }
+    }
+}

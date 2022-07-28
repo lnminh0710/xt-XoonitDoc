@@ -1,0 +1,68 @@
+<div class="icon-list-container">
+    <div class="icon-list-header widget-header">
+        <span class="header-label"><label-translation [keyword]="headerTitle"></label-translation></span>
+        <div class="d-flex align-items-center">
+            <button mat-icon-button class="button" [attr.control-key]="widgetId + '-icon-list-form-btn_add'">
+                <i
+                    [tooltip]="Add"
+                    container="body"
+                    class="icon icon-transform fa fa-plus-circle"
+                    (click)="addItem()"
+                ></i>
+            </button>
+        </div>
+    </div>
+    <div class="icon-list-main mini-scrollbar">
+        <ng-container *ngFor="let item of list">
+            <div class="item-row" [class.selecting]="selectedItem?.id === item.id" (click)="rowClickItem(item)">
+                <div class="content">
+                    <div class="icon" *ngIf="item.htmlIcon || item.fontawesomeIconName || iconTemplateForAll">
+                        <ng-container *ngIf="iconTemplateForAll; else ItemIcon">
+                            <ng-container *ngTemplateOutlet="iconTemplateForAll"></ng-container>
+                        </ng-container>
+                        <ng-template #ItemIcon>
+                            <div
+                                *ngIf="item.htmlIcon; else fontawesomeIcon"
+                                [innerHtml]="item.htmlIcon | sanitizeHtml"
+                            ></div>
+                            <ng-template #fontawesomeIcon>
+                                <i [class]="item.fontawesomeIconName"></i>
+                            </ng-template>
+                        </ng-template>
+                    </div>
+                    <div class="name">
+                        {{ item.name }}
+                    </div>
+                </div>
+                <div class="action">
+                    <div
+                        *ngIf="item.editable && !hideAllEditButton && !ROLE_IDS_DISABLE_EDIT_CONSTANT.includes(item.id)"
+                        class="toolbar-icon draw-icon icon-transform"
+                        [tooltip]="Edit"
+                        container="body"
+                        data-placement="top"
+                        (click)="editItem($event, item)"
+                    ></div>
+                    <div
+                        *ngIf="item.deletable && !hideAllDeleteButton"
+                        class="toolbar-icon delete-red-icon icon-transform"
+                        [tooltip]="Delete"
+                        container="body"
+                        data-placement="top"
+                        (click)="deleteItem($event, item)"
+                    ></div>
+                </div>
+            </div>
+        </ng-container>
+    </div>
+</div>
+
+<ng-template #Add>
+    <label-translation [keyword]="'Add'"></label-translation>
+</ng-template>
+<ng-template #Edit>
+    <label-translation [keyword]="'Edit'"></label-translation>
+</ng-template>
+<ng-template #Delete>
+    <label-translation [keyword]="'Delete'"></label-translation>
+</ng-template>

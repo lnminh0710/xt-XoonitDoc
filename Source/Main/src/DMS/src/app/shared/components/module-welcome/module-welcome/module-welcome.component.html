@@ -1,0 +1,73 @@
+<div class="module-welcome">
+    <div class="center-box text-center">
+        <h1>
+            <i class="fa {{activeModule.iconName}}" aria-hidden="true"></i>
+            {{activeModule.moduleName | uppercase}}
+        </h1>
+
+        <div class="search-box"
+             *ngIf="canSearch">
+            <input type="text"
+                   #searchInputElm
+                   class="form-control"
+                   placeholder="Search {{activeModule.moduleName}}"
+                   (focus)="focusSearchBox()"
+                   (focusout)="focusOutSearchBox()"
+                   (keyup.out-zone)="keypress($event)"
+                   (keyup.enter)="searchText && search($event)"
+                   autocomplete="off">
+            <div class="search-box_icon">
+                <a #clearSearchElm
+                   class="hidden cursor-pointer"
+                   (click.out-zone)="clearSearchText()">
+                    <i class="fa fa-times-circle clear-text" aria-hidden="true"></i>
+                </a>
+                <button mat-icon-button color="primary" *ngIf="!isFocus && !searchText">
+                    <i class="fa fa-search" aria-hidden="true"></i>
+                </button>
+                <button mat-mini-fab color="primary" *ngIf="isFocus || searchText " (click)="search($event)">
+                    <i class="fa fa-search" aria-hidden="true"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="card-group"
+             *ngIf="showParkedItem && moduleParkedItemAccessRight && moduleParkedItemAccessRight.read">
+            <div class="card"
+                 (click)="createNew()"
+                 *ngIf="tabAccessRight && tabAccessRight.new && activeModule && activeModule.idSettingsGUI != 1">
+                <h1><i class="fa fa-plus" aria-hidden="true"></i></h1>
+                <span>Add {{activeModule.moduleName}}</span>
+            </div>
+            <ng-template ngFor let-item [ngForOf]="(parkedItemsState | async)" let-idx="index">
+                <module-welcome-item *ngIf="idx < 7"
+                                     [data]="{'item': item, 'fieldConfig': (fieldConfigState | async)}"
+                                     [subModules]="subModules"
+                                     [activeModule]="activeModule"
+                                     [globalProperties]="(globalPropertiesState | async)"
+                                     (onSelect)="selectParkedItem($event)"></module-welcome-item>
+            </ng-template>
+        </div>
+        <div class="card-group"
+             *ngIf="!showParkedItem">
+            <ng-template ngFor let-subModule [ngForOf]="subModules">
+                <module-welcome-sub-module *ngIf="subModule.idSettingsGUI != 27 && subModule.accessRight && subModule.accessRight.read"
+                                           [data]="subModule"
+                                           (onSelect)="selectSubModule($event)"></module-welcome-sub-module>
+
+                <ng-template [ngIf]="subModule.idSettingsGUI == 27 && subModule.accessRight && subModule.accessRight.read">
+                    <module-welcome-sub-module *ngFor="let moreSubModule of subModule.children"
+                                               [data]="moreSubModule"
+                                               (onSelect)="selectSubModule($event)"></module-welcome-sub-module>
+                </ng-template>
+            </ng-template>
+            <!--<div class="card"
+                 (click)="downloadScanningTool()"
+                 *ngIf="activeModule && activeModule.idSettingsGUI == 9">
+                <h2><i class="fa fa-download" aria-hidden="true"></i></h2>
+                <h4>Download Scanning Tool</h4>
+                <p>Version: {{scanningTool ? scanningTool.version : ''}}</p>
+            </div>-->
+        </div>
+    </div>
+</div>

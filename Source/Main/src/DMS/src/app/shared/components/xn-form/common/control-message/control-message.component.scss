@@ -1,0 +1,21 @@
+.hot-key_suggestion label {
+    font-size: 14px;
+    color: #fff;
+    display: flex;
+    justify-content:center;
+}
+
+.hot-key_suggestion {
+    width: 20px;
+    background-color: rgba(0, 0, 0, 0.5);
+    position: absolute;
+    z-index: 2;
+    border-radius: 15px;
+    margin-top: -23px;
+    margin-left: 3px;
+    height: 20px;
+}
+
+:host-context(wijmo-grid) .hot-key_suggestion {
+   margin-top: -0px;
+}

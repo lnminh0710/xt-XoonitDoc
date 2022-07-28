@@ -1,0 +1,25 @@
+<div class="file-un-support">
+    <img class="fus-image">
+    <div class="file-name">
+        {{name}}
+    </div>
+    <div class="fus-text">
+        <span class="fus-text-title">Oops!</span>
+        <span class="fus-text-body">This file is not supported!</span>
+    </div>
+    <div *ngIf="!loading.download; else spinner" class="download-button" (click)="download()">
+        <button 
+            mat-icon-button
+            data-placement="bottom"
+        >
+            <mat-icon aria-hidden="false" [svgIcon]="svgDownload"></mat-icon>
+        </button>
+        <span>
+            Download
+        </span>
+    </div>
+</div>
+
+<ng-template #spinner>
+    <img class="spinner" src="public/assets/img/loading-spinner.gif"/>
+</ng-template>

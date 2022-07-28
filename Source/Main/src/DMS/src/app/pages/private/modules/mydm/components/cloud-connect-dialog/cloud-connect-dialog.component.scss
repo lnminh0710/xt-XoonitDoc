@@ -1,0 +1,224 @@
+@import '../../styles/common.scss';
+@import 'src/sass_files/color.scss';
+
+@keyframes bar-animation {
+    0% {
+        background-position: 0 0;
+    }
+    100% {
+        background-position: 50px 50px;
+    }
+}
+
+.cloud-connect-dialog {
+    &__header {
+        @extend %displayCenter;
+        padding: 0 30px;
+        height: 57px;
+        width: 100%;
+        border-radius: 4px 4px 0 0;
+        background: $white;
+    }
+    &__title {
+        @extend %fontRobotoMedium;
+        color: $blue-4;
+        flex: 1;
+        height: 21px;
+        width: 127px;
+        text-align: center;
+        font-weight: 600;
+        letter-spacing: 1px;
+        font-weight: bold;
+        b {
+            color: $blue-navy;
+            font-family: 'rbt_Medium';
+        }
+    }
+
+    &__close-button {
+        cursor: pointer;
+        background: url('../../styles/icons/close.png') center no-repeat;
+        height: 28px;
+        width: 28px;
+    }
+
+    &__body {
+        margin: 0 8px;
+    }
+
+    &__email {
+        @extend %displayCenter;
+
+        width: 100%;
+        height: 24px;
+        margin-bottom: 11px;
+        &-value {
+            @extend %fontRobotoMedium;
+
+            flex: 1;
+            color: $blue-4;
+            letter-spacing: 0.15px;
+        }
+        &-edit {
+            width: 40px;
+        }
+    }
+
+    &__outline-input {
+        @extend %displayCenter;
+        width: 100%;
+        padding-right: 10px;
+
+        height: 44px;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        input {
+            @extend %fontRobotoMedium;
+
+            background-color: transparent;
+            border: unset;
+            width: 100%;
+            height: 21px;
+            color: #030d3c;
+            letter-spacing: 0.15px;
+        }
+        &.error {
+            border-bottom: 1px solid #ff0000;
+        }
+        &-action {
+            margin-left: 5px;
+        }
+        &-progress {
+            img {
+                width: 24px;
+            }
+        }
+    }
+
+    &__error {
+        color: #ff0000;
+        margin: 5px 10px;
+    }
+
+    &__action {
+        @extend %displayCenter;
+        height: 32px;
+        margin-top: 18px;
+    }
+    &__help {
+        @extend %displayCenter;
+        justify-content: flex-start;
+        flex: 1;
+        &-icon {
+            background: url('../../styles/icons/info.png') center no-repeat;
+            width: 20px;
+            height: 20px;
+            margin-right: 12px;
+        }
+        &-link {
+            @extend %fontRobotoMedium;
+            letter-spacing: 0;
+            text-align: center;
+
+            cursor: pointer;
+
+            color: #0091ff;
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+    }
+    // &__connection,
+    &__button-done,
+    &__button-test,
+    &__progress {
+        @extend %displayCenter;
+        cursor: pointer;
+
+        font-size: 14px;
+        height: 32px;
+        width: 115px;
+        border-radius: 3px;
+        background-color: $blue-cobalt1;
+        color: $white;
+        margin-left: 10px;
+        &.disabled {
+            background-color: $grey-3;
+            cursor: unset;
+            pointer-events: none;
+        }
+    }
+    // &__connection {
+    //     justify-content: flex-start;
+    //     background-color: $white;
+    //     cursor: default;
+    //     &-progress {
+    //         border-radius: 3px;
+    //         @extend %displayCenter;
+
+    //         height: 100%;
+
+    //         background: -webkit-linear-gradient(
+    //             135deg,
+    //             $blue-cobalt1 25%,
+    //             $blue-cobalt2 25%,
+    //             $blue-cobalt2 50%,
+    //             $blue-cobalt1 50%,
+    //             $blue-cobalt1 75%,
+    //             $blue-cobalt2 75%
+    //         );
+    //         background-size: 30px 30px;
+    //         animation: bar-animation 3s linear infinite;
+    //     }
+    // }
+
+    &__progress {
+        img {
+            width: 24px;
+        }
+    }
+
+    &__button-test {
+        background-color: #f5f6f8;
+        color: $blue-4;
+    }
+
+    &__connection-error {
+        font-size: 14px;
+        color: #ff0000;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        i.fa {
+            margin-right: 8px;
+        }
+    }
+
+    &__connection-success {
+        font-size: 14px;
+        color: $green-success;
+        i.fa {
+            margin-right: 10px;
+        }
+    }
+}
+
+::ng-deep .dms-custom-control {
+    .ng-star-inserted {
+        color: #697788;
+        &.mat-form-field-empty {
+            font-size: 16px;
+            top: 1em;
+        }
+    }
+
+    .mat-form-field-underline {
+        background-color: #697788;
+    }
+}
+
+:host ::ng-deep {
+    .ui-dialog-flat {
+        border-radius: 4px !important;
+    }
+}

@@ -1,0 +1,114 @@
+{
+	"item": [
+		{
+			"Id": 1,
+			"FileName": "SCAN23045",
+			"TotalImage": 10,
+			"DocType": "Invoice",
+			"Devices": "Mobile",
+			"ScanTime": "13:24:19",
+			"ScannedDate": "12/03/2020",
+			"Cloud": "Xoontec@icloud.com",
+			"SyncStatus": "Done"
+		},
+		{
+			"Id": 2,
+			"FileName": "SCAN23045",
+			"TotalImage": 10,
+			"DocType": "Invoice",
+			"Devices": "Mobile",
+			"ScanTime": "13:24:19",
+			"ScannedDate": "12/03/2020",
+			"Cloud": "Xoontec@icloud.com",
+			"SyncStatus": "Done"
+		},
+		{
+			"Id": 3,
+			"FileName": "SCAN23045",
+			"TotalImage": 10,
+			"DocType": "Invoice",
+			"Devices": "Mobile",
+			"ScanTime": "13:24:19",
+			"ScannedDate": "12/03/2020",
+			"Cloud": "Xoontec@icloud.com",
+			"SyncStatus": "Done"
+		},
+		{
+			"Id": 4,
+			"FileName": "SCAN23045",
+			"TotalImage": 10,
+			"DocType": "Invoice",
+			"Devices": "Mobile",
+			"ScanTime": "13:24:19",
+			"ScannedDate": "12/03/2020",
+			"Cloud": "Xoontec@icloud.com",
+			"SyncStatus": "Done"
+		},
+		{
+			"Id": 5,
+			"FileName": "SCAN23045",
+			"TotalImage": 10,
+			"DocType": "Invoice",
+			"Devices": "Mobile",
+			"ScanTime": "13:24:19",
+			"ScannedDate": "12/03/2020",
+			"Cloud": "Xoontec@icloud.com",
+			"SyncStatus": "Loading"
+		},
+		{
+			"Id": 6,
+			"FileName": "SCAN23045",
+			"TotalImage": 10,
+			"DocType": "Invoice",
+			"Devices": "Mobile",
+			"ScanTime": "13:24:19",
+			"ScannedDate": "12/03/2020",
+			"Cloud": "Xoontec@icloud.com",
+			"SyncStatus": "Error"
+		},
+		{
+			"Id": 7,
+			"FileName": "SCAN23045",
+			"TotalImage": 10,
+			"DocType": "Invoice",
+			"Devices": "Mobile",
+			"ScanTime": "13:24:19",
+			"ScannedDate": "12/03/2020",
+			"Cloud": "Xoontec@icloud.com",
+			"SyncStatus": "Done"
+		},
+		{
+			"Id": 8,
+			"FileName": "SCAN23045",
+			"TotalImage": 10,
+			"DocType": "Invoice",
+			"Devices": "Mobile",
+			"ScanTime": "13:24:19",
+			"ScannedDate": "12/03/2020",
+			"Cloud": "Xoontec@icloud.com",
+			"SyncStatus": "Done"
+		},
+		{
+			"Id": 10,
+			"FileName": "SCAN23045",
+			"TotalImage": 10,
+			"DocType": "Invoice",
+			"Devices": "Mobile",
+			"ScanTime": "13:24:19",
+			"ScannedDate": "12/03/2020",
+			"Cloud": "Xoontec@icloud.com",
+			"SyncStatus": "Done"
+		},
+		{
+			"Id": 9,
+			"FileName": "SCAN23045",
+			"TotalImage": 10,
+			"DocType": "Invoice",
+			"Devices": "Mobile",
+			"ScanTime": "13:24:19",
+			"ScannedDate": "12/03/2020",
+			"Cloud": "Xoontec@icloud.com",
+			"SyncStatus": "Done"
+		}
+	]
+}

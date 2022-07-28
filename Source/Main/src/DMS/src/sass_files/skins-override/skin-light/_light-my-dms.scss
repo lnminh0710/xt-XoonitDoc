@@ -1,0 +1,343 @@
+.skin-light {
+    scanning-configuration {
+        .scanning-configuration {
+            &__action {
+                background-color: $onahau;
+
+                &-title {
+                    color: $black8;
+                }
+            }
+            &__printer {
+                background-color: $selago;
+                &-item {
+                    color: $blue-4;
+                    &.selected {
+                        background-color: $link-water;
+                    }
+                }
+            }
+            &__setting {
+                background-color: $white;
+                color: $blue-4;
+                &-title {
+                    color: $blue-4;
+                }
+            }
+
+            &__scan-button {
+                color: $white;
+            }
+        }
+    }
+    .setting-dialog {
+        &__content {
+            background-color: $selago;
+        }
+    }
+    scanning-image-preview {
+        .image-preview__toolbar {
+            background-color: $white;
+            input {
+                border-bottom: 1px solid #0378d1 !important;
+            }
+        }
+
+        .image-preview__page {
+            color: $black8;
+        }
+    }
+
+    scanning-image-list {
+        .image-slider {
+            &__detail {
+                background-color: $onahau;
+            }
+        }
+    }
+
+    .image-slider {
+        background-color: $white;
+
+        &__item-type {
+            background-color: $mystic;
+            color: $blue-4;
+        }
+        &__item {
+            border: 1px solid $link-water;
+        }
+        .image-slider__header-input {
+            box-sizing: border-box;
+            background-color: $white !important;
+            color: $blue-4 !important;
+            border: 1px solid $blue-link-water2 !important;
+        }
+    }
+    app-image-toolbar {
+        .image-toolbar {
+            border-bottom: 1px solid $silver-solitude2;
+            background-color: $onahau;
+        }
+    }
+    .prev-arrow {
+        background: url('src/public/imgs/light-icons/prev-arrow.svg') center no-repeat !important;
+    }
+    .next-arrow {
+        background: url('src/public/imgs/light-icons/next-arrow.svg') center no-repeat !important;
+    }
+    .prev-arrow-disabled {
+        background: url('src/public/imgs/light-icons/prev-arrow-disabled.svg') center no-repeat !important;
+    }
+    .next-arrow-disabled {
+        background: url('src/public/imgs/light-icons/next-arrow-disabled.svg') center no-repeat !important;
+    }
+
+    .keyword-icon {
+        background: url('src/public/imgs/light-icons/keyword.svg') center no-repeat !important;
+    }
+    // .ocr-manually {
+    //     background: url('src/public/imgs/light-icons/cancel.png') center no-repeat !important;
+    // }
+    .cancel-icon {
+        background: url('src/public/imgs/light-icons/cancel.png') center no-repeat !important;
+    }
+
+    .ui-dialog-flat {
+        background-color: $white;
+
+        &.madison {
+            background-color: #0f386a !important;
+        }
+        &__header {
+            background-color: $white;
+            color: $black;
+            border-bottom: 1px solid #beced7;
+        }
+
+        div.ui-dialog-titlebar {
+            background-color: $white;
+        }
+
+        div.ui-dialog-content {
+            color: $black;
+        }
+
+        &.with-footer {
+            .ui-dialog-footer {
+                background-color: $white;
+            }
+        }
+
+        .viewer-dialog {
+            background-color: $white;
+            color: $black;
+            &__header {
+                background-color: $white;
+                color: $black;
+                border-bottom: 1px solid $silver-solitude2;
+            }
+        }
+
+        .confirm-dialog {
+            color: $blue-4;
+
+            &__header {
+                color: $black-pearl1;
+                background-color: $white;
+                border-bottom: 1px solid $silver-solitude2;
+            }
+
+            &__button-save {
+                background-color: $blue-cobalt1;
+            }
+            &__button-no-save {
+                background-color: #a40000;
+            }
+            &__button-cancel {
+                color: #000;
+                background-color: $gray40;
+            }
+        }
+    }
+
+    cloud-configuration {
+        .cloud-configuration {
+            background-color: $white;
+            color: #373737;
+            &__title {
+                color: $black8;
+            }
+            &__item {
+                background-color: $white-liac;
+            }
+        }
+    }
+
+    export-configuration {
+        .export-configuration {
+            &__search-box {
+                background-color: $white3;
+            }
+            &__export-button {
+                background-color: $blue-science;
+                color: $white;
+            }
+            &__table {
+                .ag-root {
+                    border-width: 0 !important;
+                }
+                .ag-header {
+                    background-color: $white;
+                    color: $black;
+                }
+                .ag-header-cell {
+                    line-height: 42px;
+                    border-bottom: 1px solid $black11;
+                    cursor: pointer;
+
+                    color: $black8;
+                    font-family: 'rbt_Regular';
+                    font-size: 14px;
+                    font-weight: bold;
+                    text-align: center;
+
+                    &::after {
+                        border-right: unset !important;
+                    }
+                }
+                .ag-icon-checkbox-checked:empty {
+                    background-image: url('src/public/imgs/dark-icons/check.png');
+                }
+                .ag-grid-body-viewport {
+                    overflow: scroll !important;
+                    background-color: $white;
+                }
+                .ag-overlay-no-rows-center {
+                    color: $black;
+                }
+                &-header {
+                    padding-left: 42px;
+                }
+                &-row {
+                    border: unset !important;
+                    &:hover {
+                        background-color: $white-liac;
+                        height: 58px !important;
+                        box-shadow: 0 10px 10px 0 #e9e9e9;
+                    }
+                }
+                &-cell {
+                    display: flex;
+                    align-items: center;
+                    color: $black;
+                    border: 0px;
+                    border-bottom: 1px solid $gray17;
+
+                    font-family: 'rbt_Regular';
+                    font-size: 14px;
+                    line-height: 19px;
+                    &.ag-cell-focus {
+                        background-color: unset;
+                        border: unset !important;
+                    }
+                    &:first-of-type {
+                        margin-left: 30px;
+                    }
+                }
+                .ag-cell-focus:not(.invalid-cell):not(.positive-qty):not(.negative-qty) {
+                    border: unset !important;
+                }
+            }
+        }
+    }
+
+    .email-configuration {
+        &__recipidents,
+        &__subject,
+        &__content,
+        &__attachment {
+            border-bottom-color: $gray17 !important;
+        }
+        &__recipidents {
+            &-title {
+                color: $black8;
+            }
+        }
+    }
+
+    image-toolbar-secondary {
+        .image-toolbar-secondary {
+            &__document-keyword,
+            &__page-number,
+            &__document-todo {
+                background-color: $white;
+            }
+            &__info {
+                &-title {
+                    color: $blue-4;
+                }
+                &-value {
+                    color: $blue-4;
+                }
+            }
+        }
+    }
+    .email-configuration-dialog {
+        &__header {
+            background-color: $onahau !important;
+        }
+        &__title {
+            color: $blue-4;
+        }
+    }
+    .email-configuration__recipients {
+        &-chip {
+            color: $blue-4;
+            background-color: $onahau;
+            &-remove {
+                background: url('src/public/imgs/icons/remove-chip.png') center no-repeat;
+            }
+        }
+    }
+
+    .confirm-user {
+        &__header {
+            background-color: $onahau;
+        }
+        &__group {
+            border-color: $link-water !important;
+        }
+    }
+    .group-management {
+        border-color: $link-water !important;
+        &__container {
+            &:first-of-type {
+                border-color: $link-water !important;
+            }
+        }
+
+        &__item {
+            &.selected {
+                background-color: $onahau;
+            }
+        }
+    }
+
+    .popup-action {
+        &__button {
+            background-color: rgba(9, 30, 66, 0.08);
+            color: $blue-fiord;
+            &.primary {
+                background-color: $blue-cobalt1;
+                color: $white;
+            }
+            &.danger {
+                background-color: $red12;
+                color: $white;
+            }
+            &.disabled {
+                background-color: $gray-rgba-nobel-a2;
+            }
+        }
+    }
+}

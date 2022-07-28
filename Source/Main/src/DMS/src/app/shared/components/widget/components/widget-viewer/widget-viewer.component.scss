@@ -1,0 +1,14 @@
+/* this css fix an issue https://stackoverflow.com/questions/10867506/dragleave-of-parent-element-fires-when-dragging-over-children-elements */
+// .drop-viewer-content.dragging-on-zone.dnd-drag-enter,
+// .drop-viewer-content.dragging-on-zone.dnd-drag-over,
+// .drop-viewer-content.dragging-on-zone.dnd-drag-enter.dnd-drag-over,
+// .drop-viewer-content.dragging-on-zone {
+//     display:none;
+// }
+.drop-viewer-content {
+    cursor: default;
+}
+
+.pointer-events-none {
+    pointer-events: none ;
+}

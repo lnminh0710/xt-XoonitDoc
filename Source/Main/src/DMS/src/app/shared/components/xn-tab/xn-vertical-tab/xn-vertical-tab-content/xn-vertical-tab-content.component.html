@@ -1,0 +1,51 @@
+<div class="tab-content h-100">
+     <div class="tab-pane" [ngClass]="{'active': mainTabContent.active}" id="{{mainTabContent.TabID}}">
+          <app-xn-tab-page-view [data]="mainTabContent" [isActivated]="mainTabContent.active"
+               [tabID]="mainTabContent.TabID" *ngIf="mainTabContent.loaded"></app-xn-tab-page-view>
+     </div>
+
+     <div class="tab-container" *ngIf="otherTabsContent && otherTabsContent.length">
+          <div class="tabs-switcher">
+               <div class="tabs-list">
+                    <ng-container *ngFor="let tab of otherTabsContent; let i=index">
+                         <div class="tab-icon {{tab.TabID}}" [class.active]="tab.active"
+                              [class.badge-color-red]="tabSummaryModels[i].badgeColor === BADGE_TAB_ENUM.None"
+                              [class.badge-color-yellow]="tabSummaryModels[i].badgeColor === BADGE_TAB_ENUM.Partial"
+                              [class.badge-color-green]="tabSummaryModels[i].badgeColor === BADGE_TAB_ENUM.Completed"
+                              (click)="selectOtherTabsContent(tab.TabID)"></div>
+                    </ng-container>
+               </div>
+               <div class="action-list">
+                    <div class="action-item action-icon btn-ocr" [class.active]="activeBtnOcr" (click)="getOcrText()"
+                         #btnOcr>
+                    </div>
+
+                    <div class="action-item btn-action btn-reset" (click)="resetForm()">
+                         <img src="public/imgs/iconspace_Rotate Copy 2.svg">
+                    </div>
+                    <div class="action-item btn-action btn-clear" (click)="clearForm()">
+                         <img src="public/imgs/broom.svg">
+                    </div>
+                    <ng-container *ngIf="selectedTabHeader && selectedTabHeader.tabSummaryInfor"
+                         [ngSwitch]="selectedTabHeader.tabSummaryInfor.tabID">
+                         <div *ngSwitchCase="'Kontakt'" class="action-item action-icon toggle-contact"
+                              (click)="showHidePersonalContact()" [class.active]="isShowPersonalContact">
+                         </div>
+                         <div *ngSwitchCase="'NotizenTags'" class="action-item action-icon add-note"
+                              (click)="addNewNote()">
+                         </div>
+                    </ng-container>
+               </div>
+          </div>
+
+          <div class="tabs-form-wrapper">
+               <ng-template ngFor let-tabContent [ngForOf]="otherTabsContent">
+                    <div class="tab-pane" [ngClass]="{'active': tabContent.active}" id="{{tabContent.TabID}}">
+                         <app-xn-tab-page-view [data]="tabContent" [isActivated]="tabContent.active"
+                              [tabID]="tabContent.TabID" *ngIf="tabContent.loaded"></app-xn-tab-page-view>
+                    </div>
+               </ng-template>
+          </div>
+     </div>
+
+</div>

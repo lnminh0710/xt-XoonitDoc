@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <GridLayout
+        android:id="@+id/layoutBottomActionMutilple"
+        android:layout_width="fill_parent"
+        android:layout_height="56dp"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom"
+        android:alignmentMode="alignMargins"
+        android:background="#FFFFFF"
+        android:columnCount="6"
+        android:gravity="bottom"
+        android:orientation="horizontal"
+        android:rowCount="1">
+
+        <ImageButton
+            android:id="@+id/btnAddVoiceListMulti"
+            android:layout_height="match_parent"
+            android:layout_row="0"
+            android:layout_rowSpan="1"
+            android:layout_column="0"
+            android:layout_columnSpan="1"
+            android:layout_columnWeight="1"
+            android:background="@android:color/transparent"
+            android:onClick="AddVoiceNotes"
+            android:src="@drawable/voice_open" />
+
+        <ImageButton
+            android:id="@+id/btnAddTextListMulti"
+            android:layout_height="match_parent"
+            android:layout_row="0"
+            android:layout_rowSpan="1"
+            android:layout_column="1"
+            android:layout_columnSpan="1"
+            android:layout_columnWeight="1"
+            android:background="@android:color/transparent"
+            android:onClick="AddTextNotes"
+            android:src="@drawable/text_open" />
+
+        <ImageButton
+            android:id="@+id/btnSwitchModeMulti"
+            android:layout_height="match_parent"
+            android:layout_row="0"
+            android:layout_rowSpan="1"
+            android:layout_column="2"
+            android:layout_columnSpan="1"
+            android:layout_columnWeight="1"
+            android:background="@android:color/transparent"
+            android:onClick="SwitchMode"
+            android:src="@drawable/batch_mode" />
+
+        <ImageButton
+            android:id="@+id/btnDeleteAllMulti"
+            android:layout_height="match_parent"
+            android:layout_row="0"
+            android:layout_rowSpan="1"
+            android:layout_column="3"
+            android:layout_columnSpan="1"
+            android:layout_columnWeight="1"
+            android:background="@android:color/transparent"
+            android:onClick="DeleteAllMulti"
+            android:src="@drawable/can_open" />
+
+        <androidx.appcompat.widget.AppCompatCheckBox
+            android:id="@+id/checkboxAllMultiple"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/checkbox_selector"
+            android:button="@color/white"
+            android:clickable="false"
+            android:visibility="gone" />
+
+        <ImageButton
+            android:id="@+id/btnDoneMultiple"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@android:color/transparent"
+            android:onClick="DoneSave"
+            android:src="@drawable/xt_notcheck"
+            android:visibility="gone" />
+
+    </GridLayout>
+
+</RelativeLayout>

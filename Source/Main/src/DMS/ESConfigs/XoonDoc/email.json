@@ -1,0 +1,42 @@
+{
+    "properties": {
+        "sender": {
+            "type": "keyword",
+            "boost": null
+        },
+        "subject": {
+            "type": "keyword",
+            "boost": null
+        },
+        "recipientsTo": {
+            "type": "keyword",
+            "boost": null
+        },
+        "recipientsCc": {
+            "type": "keyword",
+            "boost": null
+        },
+        "recipientsBcc": {
+            "type": "keyword",
+            "boost": null
+        },
+        "scannedFilename": {
+            "type": "keyword",
+            "boost": null
+        },
+        "sentDate": {
+            "type": "keyword",
+            "boost": null
+        },
+        "createDate": {
+            "type": "keyword",
+            "boost": null
+        },
+        "body_RemovedHtml": {
+            "type": "text"
+        },
+        "attachments": {
+            "type": "text"
+        }
+    }
+}

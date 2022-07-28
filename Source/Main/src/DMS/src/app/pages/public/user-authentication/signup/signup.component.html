@@ -1,0 +1,305 @@
+<div class="authenticate signup row">
+    <div class="col-xs-6 display-flex left-side">
+        <div class="mydm-logo cusor-pointer" (click)="redirectToRootPage()"></div>
+        <div class="flex-middle w-100">
+            <div class="text-center welcome-image">
+                <img src="public/imgs/authenticate/welcome-image.svg" alt="welcome-img" />
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-6 display-flex right-side h-100">
+        <div class="flex-middle w-100">
+            <div class="bar-back" (click)="backToLogin()">
+                <img src="public/imgs/authenticate/standard_action_arrow-left.svg" alt="back icon" />
+                <span>Back</span>
+            </div>
+            <h3 class="signUp-header">
+                <label-translation [keyword]="'SIGNUP__Title'"></label-translation>
+            </h3>
+            <h4 class="mydm-sub-header">
+                <label-translation [keyword]="'SIGNUP__Email_Work'"></label-translation>
+            </h4>
+            <form *ngIf="signUpForm" [formGroup]="signUpForm" autocomplete="off">
+                <div class="row">
+                    <div class="col-xs-6 form-group">
+                        <mat-form-field appearance="outline" class="xoonit-control">
+                            <mat-label>
+                                <label-translation [keyword]="dataFields.FIRST_NAME.displayName"></label-translation>
+                            </mat-label>
+                            <input
+                                matInput
+                                xnEnteBreakDown
+                                [xnControlsData]="controlDataList"
+                                type="text"
+                                [placeholder]="placeholder.firstName"
+                                [attr.name]="dataFields.FIRST_NAME.controlName"
+                                id="{{ dataFields.FIRST_NAME.controlName }}"
+                                [formControlName]="dataFields.FIRST_NAME.controlName"
+                                autocomplete="off"
+                                required
+                            />
+                        </mat-form-field>
+                        <xn-error-message
+                            [condition]="xnErrorMessageHelper.isRequired(signUpForm, dataFields.FIRST_NAME.controlName)"
+                            [fieldName]="dataFields.FIRST_NAME.displayName"
+                            [typeErr]="ERR_MES_TYPE_ENUM.REQUIRED"
+                        >
+                        </xn-error-message>
+                    </div>
+                    <div class="col-xs-6 form-group">
+                        <mat-form-field appearance="outline" class="xoonit-control">
+                            <mat-label>
+                                <label-translation [keyword]="dataFields.LAST_NAME.displayName"></label-translation>
+                            </mat-label>
+                            <input
+                                matInput
+                                xnEnteBreakDown
+                                [xnControlsData]="controlDataList"
+                                type="text"
+                                [placeholder]="placeholder.lastName"
+                                [attr.name]="dataFields.LAST_NAME.controlName"
+                                id="{{ dataFields.LAST_NAME.controlName }}"
+                                [formControlName]="dataFields.LAST_NAME.controlName"
+                                autocomplete="off"
+                                required
+                            />
+                        </mat-form-field>
+                        <xn-error-message
+                            [condition]="xnErrorMessageHelper.isRequired(signUpForm, dataFields.LAST_NAME.controlName)"
+                            [fieldName]="dataFields.LAST_NAME.displayName"
+                            [typeErr]="ERR_MES_TYPE_ENUM.REQUIRED"
+                        >
+                        </xn-error-message>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-12 form-group">
+                        <mat-form-field appearance="outline" class="xoonit-control">
+                            <mat-label>
+                                <label-translation [keyword]="dataFields.EMAIL.displayName"></label-translation>
+                            </mat-label>
+                            <input
+                                matInput
+                                xnEnteBreakDown
+                                [xnControlsData]="controlDataList"
+                                type="text"
+                                [placeholder]="placeholder.email"
+                                [attr.name]="dataFields.EMAIL.controlName"
+                                id="{{ dataFields.EMAIL.controlName }}"
+                                [formControlName]="dataFields.EMAIL.controlName"
+                                required
+                                autocomplete="off"
+                            />
+                        </mat-form-field>
+                        <xn-error-message
+                            [condition]="xnErrorMessageHelper.isRequired(signUpForm, dataFields.EMAIL.controlName)"
+                            [fieldName]="dataFields.EMAIL.displayName"
+                            [typeErr]="ERR_MES_TYPE_ENUM.REQUIRED"
+                        >
+                        </xn-error-message>
+                        <xn-error-message
+                            [condition]="
+                                xnErrorMessageHelper.isInvalidPattern(signUpForm, dataFields.EMAIL.controlName)
+                            "
+                            [typeErr]="ERR_MES_TYPE_ENUM.PATTERN_EMAIL"
+                        ></xn-error-message>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-xs-12">
+                        <mat-form-field appearance="outline" class="xoonit-control">
+                            <mat-label>
+                                <label-translation [keyword]="dataFields.LANGUAGE.displayName"></label-translation>
+                            </mat-label>
+                            <mat-select
+                                xnEnteBreakDown
+                                [xnControlsData]="controlDataList"
+                                [formControlName]="dataFields.LANGUAGE.controlName"
+                                [attr.name]="dataFields.LANGUAGE.controlName"
+                                required
+                            >
+                                <mat-option *ngFor="let language of languagesList" [value]="language.IdRepLanguage">
+                                    {{ language.DefaultValue }}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <xn-error-message
+                            [condition]="xnErrorMessageHelper.isRequired(signUpForm, dataFields.LANGUAGE.controlName)"
+                            [fieldName]="dataFields.LANGUAGE.displayName"
+                            [typeErr]="ERR_MES_TYPE_ENUM.REQUIRED"
+                        >
+                        </xn-error-message>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="row display-flex">
+                            <div class="col-xs-1 flex-middle">
+                                <int-phone-prefix
+                                    formControlName="prefixPhoneNumber"
+                                    name="prefixPhoneNumber"
+                                    autoPlaceholder="false"
+                                    (click)="touchedListPrefixPhone()"
+                                >
+                                </int-phone-prefix>
+                                <i class="fa fa-caret-down icon-phone-prefix" aria-hidden="true"></i>
+                            </div>
+                            <div class="col-xs-11 form-group">
+                                <div class="phone-prefix" *ngIf="hasPrefixPhoneNumber">
+                                    {{ signUpForm?.controls[this.dataFields.PREFIX_PHONE_NUMBER.controlName].value }}
+                                </div>
+                                <mat-form-field
+                                    appearance="outline"
+                                    class="xoonit-control"
+                                    [ngClass]="{ 'has-prefix': hasPrefixPhoneNumber }"
+                                >
+                                    <mat-label>
+                                        <label-translation [keyword]="dataFields.PHONE_NUMBER.displayName"></label-translation>
+                                    </mat-label>
+                                    <input
+                                        matInput
+                                        xnEnteBreakDown
+                                        [xnControlsData]="controlDataList"
+                                        type="text"
+                                        [placeholder]="placeholder.phoneNumber"
+                                        [attr.name]="dataFields.PHONE_NUMBER.controlName"
+                                        id="{{ dataFields.PHONE_NUMBER.controlName }}"
+                                        [formControlName]="dataFields.PHONE_NUMBER.controlName"
+                                        autocomplete="off"
+                                        (keypress)="numberOnly($event)"
+                                    />
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="row display-flex">
+                            <div class="col-xs-4 flex-bot">
+                                <mat-form-field appearance="outline" class="xoonit-control">
+                                    <mat-label>
+                                        <label-translation [keyword]="dataFields.MONTH_OF_BIRTH.displayName"></label-translation>
+                                    </mat-label>
+                                    <mat-select
+                                        xnEnteBreakDown
+                                        [xnControlsData]="controlDataList"
+                                        [formControlName]="dataFields.MONTH_OF_BIRTH.controlName"
+                                        [attr.name]="dataFields.MONTH_OF_BIRTH.controlName"
+                                    >
+                                        <mat-option *ngFor="let month of monthList" [value]="month.key">
+                                            {{ month.value }}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-xs-4 flex-bot">
+                                <mat-form-field appearance="outline" class="xoonit-control">
+                                    <mat-label>
+                                        <label-translation [keyword]="dataFields.DAY_OF_BIRTH.displayName"></label-translation>
+                                    </mat-label>
+                                    <mat-select
+                                        xnEnteBreakDown
+                                        [xnControlsData]="controlDataList"
+                                        [formControlName]="dataFields.DAY_OF_BIRTH.controlName"
+                                        [attr.name]="dataFields.DAY_OF_BIRTH.controlName"
+                                    >
+                                        <mat-option *ngFor="let day of dayList" [value]="day">
+                                            {{ day }}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-xs-4 flex-bot">
+                                <mat-form-field appearance="outline" class="xoonit-control">
+                                    <mat-label>
+                                        <label-translation [keyword]="dataFields.YEAR_OF_BIRTH.displayName"></label-translation>
+                                    </mat-label>
+                                    <mat-select
+                                        xnEnteBreakDown
+                                        [xnControlsData]="controlDataList"
+                                        [formControlName]="dataFields.YEAR_OF_BIRTH.controlName"
+                                        [attr.name]="dataFields.YEAR_OF_BIRTH.controlName"
+                                    >
+                                        <mat-option *ngFor="let year of yearList" [value]="year">
+                                            {{ year }}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group txt-note">
+                    <label-translation [keyword]="'SIGNUP__Your_Birthday'"></label-translation>
+                </div>
+
+                <div class="privacty-terms">
+                    <p>
+                        <label-translation [keyword]="'SIGNUP__Privacy_Terms'"></label-translation>
+                    </p>
+                    <ul>
+                        <li>
+                            <label-translation [keyword]="'SIGNUP__Save_Info'"></label-translation>
+                        </li>
+                        <li>
+                            <p>
+                                <label-translation [keyword]="'SIGNUP__Show_Ads'"></label-translation>
+                            </p>
+                            <p>
+                                <label-translation [keyword]="'SIGNUP__Setting'"></label-translation>
+                            </p>
+                        </li>
+                    </ul>
+                </div>
+                <div class="form-group">
+                    <mat-checkbox name="remember" color="primary" formControlName="confirmTermCondition" required>
+                        <label-translation [keyword]="dataFields.CONFIRM_CONDITION.displayName"></label-translation>
+                    </mat-checkbox>
+                    <xn-error-message
+                        [condition]="
+                            xnErrorMessageHelper.isRequired(signUpForm, dataFields.CONFIRM_CONDITION.controlName)
+                        "
+                        [fieldName]="dataFields.CONFIRM_CONDITION.displayName"
+                        [typeErr]="ERR_MES_TYPE_ENUM.REQUIRED"
+                    >
+                    </xn-error-message>
+                </div>
+                <div class="form-group">
+                    <button
+                        type="submit"
+                        class="btn btn-primary btn-submit"
+                        [disabled]="!signUpForm.valid"
+                        (click)="onSubmit()"
+                    >
+                        <label-translation [keyword]="'SIGNUP__Btn'"></label-translation>
+                    </button>
+                </div>
+                <div>
+                    <xn-error-message
+                        [condition]="errHandleMes.isError"
+                        [errMes]="errHandleMes.message"
+                        [typeErr]="ERR_MES_TYPE_ENUM.CUSTOM_MESSAGE"
+                    >
+                    </xn-error-message>
+                </div>
+                <div>
+                    <span class="txt-note">
+                        <label-translation [keyword]="'SIGNUP__Have_Account'"></label-translation>
+                    </span>
+                    <a (click)="backToLogin()" class="text-signin-up">
+                        <label-translation [keyword]="'SIGNUP__Sign_In'"></label-translation>
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="isLoading" class="xn-loading">
+    <i class="fa fa-spinner fa-spin fa-2x"></i>
+</div>

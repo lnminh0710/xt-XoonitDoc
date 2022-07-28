@@ -1,0 +1,10 @@
+<div class="invoice-supplier">
+    <div class="widget-header approval d-flex align-items-center justify-content-betwwen">
+        <div class="title"><label-translation [keyword]="'WIDGET_INVOICE_INFO__Title'"></label-translation></div>
+    </div>
+    <div class="invoice-supplier__content mini-scrollbar">
+        <widget-dynamic-form #supplierForm [idMainDocument]="idMainDocument" [object]="formObjectName"
+            [methodName]="formMethodName" (dataChanged)="dataChanged($event)" (formInitialized)="dynamicFormInitialized($event)">
+        </widget-dynamic-form>
+    </div>
+</div>

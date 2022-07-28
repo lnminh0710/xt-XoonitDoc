@@ -1,0 +1,8 @@
+:host {
+    .text-render {
+        position: relative;
+        height: calc(100% - 40px);
+        white-space: pre-wrap;
+        padding: 15px;
+    }
+}

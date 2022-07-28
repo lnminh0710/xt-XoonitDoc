@@ -1,0 +1,40 @@
+<table class="clauses">
+    <tbody>
+        <tr class="header">
+            <td class="add-remove"></td>
+            <td class="logical">
+                <label-translation [keyword]="'Advance_Search__And_Or'"></label-translation>
+            </td>
+            <td class="field">
+                <label-translation [keyword]="'Advance_Search__Field'"></label-translation>
+            </td>
+            <td class="operator">
+                <label-translation [keyword]="'Advance_Search__Operator'"></label-translation>
+            </td>
+            <td class="value">
+                <label-translation [keyword]="'Advance_Search__Value'"></label-translation>
+            </td>
+        </tr>
+        <ng-container *ngFor="let builder of builderList; let idx = index">
+            <tr advance-search-condition
+                [fields]="fields"
+                [index]="idx"
+                [formData]="builder"
+                (onAdd)="add(idx)"
+                (onRemove)="remove(idx)"
+                (onDirtyAction)="onDirtyHandler()"
+                (onFieldChangeAction)="onFieldChangeHandler()"
+                class="clause clause-row"></tr>
+        </ng-container>
+        <tr class="add-clause clause-row">
+            <td class="add-remove" colspan="5">
+                <div class="add-new-clause-container" (click)="addLast()">
+                    <i class="fa fa-plus plus"></i>
+                    <span class="add-row-link">
+                        <label-translation [keyword]="'Advance_Search__Add_new_clause'"></label-translation>
+                    </span>
+                </div>
+            </td>
+        </tr>
+    </tbody>
+</table>

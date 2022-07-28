@@ -1,0 +1,30 @@
+<mat-card class="card"
+        [class.active]="isActive"
+        [class.show-only-icon-badge]="showIconOnly">
+    <div class="card-title flex-container flex-row">
+        <div class="tab-icon"
+            [class.contact]="data.tabSummaryInfor.tabID === 'Kontakt'"
+            [class.bank]="data.tabSummaryInfor.tabID === 'Bank'"
+            [class.invoice]="data.tabSummaryInfor.tabID === 'Rechnungsinformationen'"
+            [class.notes]="data.tabSummaryInfor.tabID === 'NotizenTags'"
+            [class.contract]="data.tabSummaryInfor.tabID === 'Contract'"
+        >
+            <span class="badge"
+                [class.all-completed]="accomplishedColor === ACCOMPLISHED_COLOR_ENUMERATION.ALL"
+                [class.partial-completed]="accomplishedColor === ACCOMPLISHED_COLOR_ENUMERATION.PARTIAL"
+                [class.none-completed]="accomplishedColor === ACCOMPLISHED_COLOR_ENUMERATION.NONE">{{data.completedFields}}</span>
+        </div>
+        <div class="tab-title">
+            <p>{{data.tabSummaryInfor.tabName}}</p>
+        </div>
+    </div>
+    <div class="card-body" perfectScrollbar>
+        <div *ngFor="let field of data.fields; trackBy: trackByFn"
+            class="body-wrapper flex-container flex-row"
+            [tooltip]="field.columnName"
+            placement="right"
+            container="body">
+            <div class="value-field">{{field.textValue}}</div>
+        </div>
+    </div>
+</mat-card>

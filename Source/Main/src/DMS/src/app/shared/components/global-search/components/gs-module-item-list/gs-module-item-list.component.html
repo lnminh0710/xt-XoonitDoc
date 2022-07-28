@@ -1,0 +1,9 @@
+<div class="col-xs-12  col-sm-12  col-md-12  col-lg-12  xn-padding--ex">
+    <app-gs-module-item
+        *ngFor="let item of globalSearchModuleModels; trackBy: itemsTrackBy"
+        [moduleItemConfig]="item"
+        (onItemClick)="globalItemClicked($event)"
+        (onItemDoubleClick)="globalItemDoubleClicked($event)"
+    >
+    </app-gs-module-item>
+</div>

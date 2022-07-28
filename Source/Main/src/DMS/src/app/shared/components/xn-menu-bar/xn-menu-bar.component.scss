@@ -1,0 +1,286 @@
+@import 'src/sass_files/variables.scss';
+
+/*
+:host ::ng-deep {
+
+    .menu-hide {
+        display: none;
+    }
+
+    ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        font-size: 13px;
+        text-align: left;
+        line-height: normal;
+    }
+
+    ul li {
+        position: relative;
+    }
+    /* sub navigation */
+/*
+    ul {
+        background-color: white;
+        position: absolute;
+        left: 0;
+        width: 230px;
+        border: 1px solid #d3d3d3;
+        box-shadow: 0 2px 4px -1px rgba(0,0,0,.2), 0 4px 5px 0 rgba(0,0,0,.14), 0 1px 10px 0 rgba(0,0,0,.12);
+        border-radius: 4px;
+    }
+
+    ul.right {
+        right: 0;
+        left: auto;
+    }
+
+    li {
+        position: relative;
+        margin: 0;
+        display: block;
+    }
+
+    li ul {
+        position: absolute;
+        top: 0;
+        left: 230px;
+        margin: 0;
+    }    
+    /* style all links */
+/*
+    a {
+        line-height: 40px;
+        padding: 0 12px;
+        margin: 0 12px;
+    }
+
+    a {
+        color: #000;
+        text-decoration: none;
+        display: block;
+    }
+    /* icon header */
+/*
+    li > a > .header-icon {
+        padding: 5px;
+    }
+
+    li:hover, li:focus, li:active {
+        background-color: #f5f5f5;
+    }
+
+    a:hover, a:focus, a:active {
+        text-decoration: none;
+        color: #000;
+    }
+    /* style sub level links */
+/*
+    li a {
+        margin: 0 10px;
+        padding: 0;
+    }
+
+    li:last-child a {
+        border-bottom: none;
+    }
+    /* hide sub menu links */
+/*
+    ul.sub-menu {
+        display: none;
+    }
+
+    a > .fa-angle-right {
+        position: absolute;
+        top: 50%;
+        right: 10px;
+        margin-top: -8px;
+    }
+
+    .form-control {
+        width: calc(100% - 2px);
+        margin-top: 1px;
+        margin-left: 1px;
+    }
+}
+
+:host-context(.open) > ul.sub-menu {
+    display: block;
+}
+
+:host-context(.open) li ul.sub-menu {
+    display: none;
+}
+
+:host ::ng-deep .fa-check {
+    font-size: 13px !important;
+}
+
+.menu-bar-id-setting:after {
+    margin-top: -10.5px !important;
+}
+
+.checkbox {
+    margin: 0 -10px 0 0;
+}
+
+input#menu-bar-id-setting {
+    margin-top: 14px !important;
+    width: 15px;
+    height: 16px;
+}
+
+.right-inner-addon {
+    position: relative;
+}
+
+.right-inner-addon input {
+    padding-right: 30px;
+    border-radius: 4px;
+}
+
+.right-inner-addon button {
+    position: absolute;
+    right: 0;
+
+    &.custom-icon-button {
+        width: 33px;
+        height: 33px;
+        line-height: 33px;
+    }
+}
+.mat-btn-menu {
+    text-align: left;
+    height: 40px;
+    line-height: 40px;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin: 0 !important;
+}
+.menu-bar__text {
+    margin-left: 10px;
+    line-height: 35px;
+}
+.fa-angle-right {
+    line-height: 40px;
+}
+*/
+
+:host {
+    border-radius: 10px !important;
+
+    &::before {
+        content: '';
+        position: absolute;
+        height: 20px;
+        width: 20px;
+        background-color: inherit;
+        right: 18px;
+        top: -10px;
+        -webkit-transform: rotate(45deg);
+        -moz-transform: rotate(45deg);
+        -o-transform: rotate(45deg);
+        transform: rotate(45deg);
+    }
+}
+.menu-bar-wrapper {
+    width: 328px;
+    padding: 15px 0;
+    display: flex;
+    flex-flow: row wrap;
+
+    & .menu {
+        display: flex;
+        flex-direction: column;
+        flex-grow: 0;
+        flex-shrink: 0;
+        flex-basis: 33.3333%;
+        align-items: center;
+        transform: scale(0.95);
+        transition: transform 0.1s linear;
+        cursor: pointer;
+        margin: 5px 0px;
+
+        & .icon-menu {
+            height: 60px;
+            width: 60px;
+            background-size: 60px;
+            background-repeat: no-repeat;
+
+            &.processing-menu {
+                background-image: url('~/public/imgs/processing-menu.png');
+            }
+
+            &.contact-menu {
+                background-image: url('~/public/imgs/contact-menu.svg');
+            }
+            &.scan-menu {
+                background-image: url('~/public/imgs/scan-menu.png');
+            }
+            &.mydm-menu {
+                background-image: url('~/public/imgs/mydm-menu.png');
+            }
+            &.user-guide-menu {
+                background-image: url('~/public/imgs/user-guide-menu.png');
+            }
+            &.cloud-menu {
+                background-image: url('~/public/imgs/cloud-menu.png');
+            }
+            &.import-menu {
+                background-image: url('~/public/imgs/import-menu.png');
+            }
+            &.export-menu {
+                background-image: url('~/public/imgs/export-menu.png');
+            }
+            &.system-menu {
+                background-image: url('~/public/imgs/system-menu.png');
+            }
+            &.tools-menu {
+                background-image: url('~/public/imgs/tools-menu.png');
+            }
+            &.history-menu {
+                background-image: url('~/public/imgs/iconspace_Timer.svg');
+            }
+            &.user-management-menu {
+                background-image: url('~/public/imgs/user-menu.png');
+            }
+            &.preisschild-menu {
+                background-image: url('~/public/imgs/pricetag.png');
+            }
+            &.invoiceApproval-menu {
+                background-image: url('~/public/imgs/invoice-approval-menu.svg');
+            }
+            &.IAProcessing-menu {
+                background-image: url('~/public/imgs/ia-processing-menu.svg');
+            }
+        }
+
+        & .title {
+            font-size: 14px;
+            height: 19px;
+            line-height: 19px;
+            margin: auto;
+            margin-top: 8px;
+            text-align: center;
+        }
+        &:active,
+        &:hover {
+            // transform: scale(0.8);
+            // filter: contrast(0.7);
+            & .title {
+                font-family: 'rbt_Bold';
+                color: $blue-4;
+            }
+        }
+        &.disabled {
+            cursor: unset;
+            .icon-menu {
+                filter: grayscale(100);
+            }
+            &:hover {
+                transform: unset;
+            }
+        }
+    }
+}

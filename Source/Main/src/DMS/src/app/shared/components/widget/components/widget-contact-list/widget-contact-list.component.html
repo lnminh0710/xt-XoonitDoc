@@ -1,0 +1,35 @@
+<div class="contact-list-wrapper">
+    <div class="gs-result-wrapper mydm-es-search"> 
+        <div class="row search-box">
+            <div class="col-xs-7 header-title">
+                {{title}}
+            </div>
+            <div class="col-xs-5 header-search">
+                <app-xn-input-debounce delayTimer="600"
+                                       placeholder="Search contact"
+                                       [value]="keyword"
+                                       cssClass="gs__search-text-input"
+                                       id="txt-global-search-article"
+                                       [hasSearchButton]="false"
+                                       [isSearchBoxControl]="true"
+                                       [isLoading]="isSearching"
+                                       [hasIndicator]="true"
+                                       (onValueChanged)="search($event)"
+                                       (onSearchButtonClicked)="search($event)">
+                </app-xn-input-debounce>
+            </div>
+        </div>
+        <gs-result
+            #gsResult
+            [keyword]="keyword"
+            [searchWithStarPattern]="'Both_*X*'"
+            [gridId]="'04f713be-dc86-4906-91ca-2d855f216c0b'"
+            [searchIndex]="moduleFromRoute.searchIndexKey"
+            [isWithStar] ="true"
+            [module]="moduleFromRoute"
+            [dontAllowSearchWhenInit]="true"
+            (onRowClicked)="rowClicked($event)"
+            (onRowDoubleClicked)="rowDoubleClicked($event)"
+            (onSearchCompleted)="onSearchCompleted($event)"></gs-result>
+    </div>
+</div>

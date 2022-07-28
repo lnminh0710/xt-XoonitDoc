@@ -1,0 +1,13 @@
+<main *ngIf="!isBlockClient">
+    <div resourceTranslation>
+        <app-header>Loading header...</app-header>
+        <file-process-popup *ngIf="currentUser?.id"> </file-process-popup>
+        <router-outlet></router-outlet>
+        <gs-main *ngIf="currentUser?.id">Loading global search...</gs-main>
+    </div>
+    <div id="page-loading">
+        <img id="background-img" src="public/assets/img/sky-bg.jpg" />
+        <img id="loading-img" src="public/assets/img/page-loading.gif" />
+    </div>
+</main>
+<block-ui-dialog [isBlockClient]="isBlockClient" [blockUIStatus]="blockUIStatus"></block-ui-dialog>

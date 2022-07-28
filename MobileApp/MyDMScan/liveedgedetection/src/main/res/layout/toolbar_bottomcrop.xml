@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="56dp"
+    android:background="#FFFFFF"
+    android:layout_gravity="bottom"
+    android:elevation="4dp"
+    android:theme="@style/MyPopupMenu"
+    app:popupTheme="@style/MyPopupMenu">
+
+    <GridLayout
+        android:id="@+id/layout"
+        android:layout_width="fill_parent"
+        android:layout_height="56dp"
+        android:layout_gravity="bottom"
+        android:alignmentMode="alignMargins"
+
+        android:background="#FFFFFF"
+        android:columnCount="4"
+        android:gravity="bottom"
+        android:orientation="horizontal"
+        android:rowCount="1">
+
+        <ImageButton
+
+            android:id="@+id/btnDocList"
+            android:layout_height="match_parent"
+            android:layout_row="0"
+            android:layout_rowSpan="1"
+            android:layout_column="0"
+            android:layout_columnSpan="1"
+            android:layout_columnWeight="1"
+            android:onClick="cropReject"
+            android:background="@android:color/transparent"
+            android:src="@drawable/xt_not" />
+
+
+        <ImageButton
+            android:id="@+id/btnAddPage"
+            android:layout_height="match_parent"
+            android:layout_row="0"
+            android:layout_rowSpan="1"
+            android:layout_column="1"
+            android:layout_columnSpan="1"
+            android:layout_columnWeight="1"
+            android:onClick="addPage"
+            android:background="@android:color/transparent"
+            android:src="@drawable/xt_addimage" />
+
+
+        <ImageButton
+            android:id="@+id/btnAddDoc"
+            android:layout_height="match_parent"
+            android:layout_row="0"
+            android:layout_rowSpan="1"
+            android:layout_column="2"
+            android:layout_columnSpan="1"
+            android:layout_columnWeight="1"
+            android:onClick="addDoc"
+            android:background="@android:color/transparent"
+            android:src="@drawable/xt_check" />
+
+
+    </GridLayout>
+</android.support.v7.widget.Toolbar>

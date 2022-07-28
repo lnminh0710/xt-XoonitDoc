@@ -1,0 +1,15 @@
+@import '../../styles/common.scss';
+
+.form-management-dialog {
+  &__line {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  &__title {
+    width: 30%;
+  }
+  &__field-name {
+    width: 70%;
+  }
+}

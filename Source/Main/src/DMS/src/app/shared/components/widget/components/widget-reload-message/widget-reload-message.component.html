@@ -1,0 +1,21 @@
+<div class="m"
+    *ngIf="isBlockUI"></div>
+<div class="c"
+    [ngClass]="{'c-o': isBlur}">
+	<div class="h">Notification</div>
+	<div class="t">
+        <span>This widget content is changed by:</span><br/>
+        <strong>{{userJustSaved.DisplayName}}</strong>
+    </div>
+	<div class="t" *ngIf="isShowReloadButton">Do you want to reload this widget?</div>
+	<div class="b">
+		<button class="pull-right  margin-left--sd" mat-raised-button
+                (click)="cancelClicked()">
+                {{isShowReloadButton ? 'Cancel' : 'Close'}}
+        </button>
+        <button *ngIf="isShowReloadButton" class="pull-right  mat-btn-orange" mat-raised-button
+                (click)="reloadClicked()">
+                Reload
+        </button>
+	</div>
+</div>

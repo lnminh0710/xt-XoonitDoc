@@ -1,0 +1,22 @@
+<div *ngIf="(!!menuData && !!menuData.length)" [ngStyle]="locationCss" class="container">
+    <ul class="sub-menu" [ngStyle]="showMenuCss" id="xn-menu-context">
+        <li *ngFor="let menuLink of menuData" class="menu-list"
+            (mouseover)="hoverOnLink($event)"
+            [ngClass]="{disabled: menuLink.disabled}"
+            [xn-dropdown]="menuLink.children">
+            <ng-template [ngIf]="!menuLink.isSeparator">
+                <a (click)="menuItemClicked(menuLink.callback)" class="tree-view-item">
+                    <i class="header-icon fa {{menuLink.iconName}}" aria-hidden="true"></i>
+                    <span>{{ menuLink.title }}</span>
+                    <span *ngIf="!!menuLink.hotkey" class="pull-right">{{ menuLink.hotkey }}</span>
+                    <i [ngClass]="{'fa fa-angle-right pull-right': menuLink.children && menuLink.children.length > 0 }"></i>
+                </a>
+                <xn-context-menu [childrenData]="menuLink.children"
+                                 *ngIf="menuLink.children && menuLink.children.length > 0">
+                </xn-context-menu>
+            </ng-template>
+            <div *ngIf="menuLink.isSeparator"
+                 class="menu-separator"></div>
+        </li>
+    </ul>
+</div>

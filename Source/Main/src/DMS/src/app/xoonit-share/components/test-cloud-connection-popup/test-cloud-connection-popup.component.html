@@ -1,0 +1,38 @@
+<div class="test-cloud-connection-container">
+    <div class="cloud-connection-dialog__content">
+        <div class="cloud-connection-dialog__content-info">
+            Connection will retry in
+            <div class="cloud-connection-dialog__content-info-countdown">
+                {{ countdown }}
+            </div>
+            s...
+        </div>
+    </div>
+    <div class="cloud-connection-dialog__action">
+        <div class="cloud-connection-dialog__action-button-hide" (click)="isHidePopup = true">Hide</div>
+        <div class="space"></div>
+        <div
+            class="cloud-connection-dialog__action-button-cloud"
+            [ngClass]="{ hidden: cloudStatus === cloudConnectionStatus.apiLostConnect }"
+            (click)="gotoCloudConfig()"
+        >
+            Go to Cloud config
+        </div>
+
+        <div class="cloud-connection-dialog__action-button-retry" *ngIf="isCallAPI">
+            <div class="image-icon button-spinner-icon"></div>
+        </div>
+        <div class="cloud-connection-dialog__action-button-retry" (click)="testCloudConnection()" *ngIf="!isCallAPI">
+            Retry
+        </div>
+    </div>
+
+    <div class="cloud-connection__backdrop" *ngIf="isSignedIn && isLockUI && isHidePopup" (click)="isHidePopup = false">
+        <div class="cloud-connection__backdrop-status">
+            Connecting
+            <div class="image-icon button-spinner-icon"></div>
+        </div>
+    </div>
+    <div class="image-icon button-spinner-icon hidden"></div>
+    <div class="image-icon warning-icon hidden"></div>
+</div>

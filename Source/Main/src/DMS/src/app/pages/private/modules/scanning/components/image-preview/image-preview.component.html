@@ -1,0 +1,89 @@
+<div class="image-preview">
+    <image-info
+        *ngIf="viewAllPage"
+        [selectedIndex]="pageIndex"
+        [pageList]="pages"
+        [isBase64]="true"
+        (dropImageThumbnail)="onDropImageThumbnails($event)"
+        (selectItem)="selectPage($event)"
+        (removePage)="onRemovePage($event)"
+        (orderPage)="onOrderPage($event)"
+    ></image-info>
+    <div class="image-preview__loading" *ngIf="isLoading">
+        <img src="public/assets/img/loading-spinner.gif" />
+    </div>
+    <image-empty-state *ngIf="!imageSrc && !isLoading" title="No image available"></image-empty-state>
+    <image-viewer-canvas
+        *ngIf="!!imageSrc"
+        [imageSrc]="imageSrc"
+        [widgetId]="widgetId"
+        [idData]="idData"
+        [width]="width"
+        [height]="height"
+        [isBase64]="true"
+        [isRotation]="isRotation"
+        [isShowRotateMode]="true"
+        [IdDocumentContainerScans]="IdDocumentContainerScans"
+        [viewAllPage]="viewAllPage"
+        [toolbarConfig]="toolbarConfig"
+        [isSelectDocType]="true"
+        (toggleViewImageInfo)="toggleViewImageInfo($event)"
+        (toggleRotationMode)="toggleRotationMode($event)"
+        (unGroup)="unGroup()"
+    >
+        <div
+            class="toolbar-icon icon-transform print-icon"
+            #popUpload="bs-tooltip"
+            container="body"
+            data-placement="bottom"
+            [tooltip]="tooltipPrint"
+            (click)="print()"
+        ></div>
+        <div
+            class="toolbar-icon icon-transform scanner-icon"
+            #popUpload="bs-tooltip"
+            container="body"
+            data-placement="bottom"
+            [tooltip]="tooltipScanMore"
+            (click)="scanMore()"
+        ></div>
+        <mat-slide-toggle
+            color="primary"
+            [checked]="isSendToCapture"
+            [disabled]="selectedFolder?.idDocumentType === DocumentTypeEnum.INVOICE_APPROVAL"
+            (change)="onChangeIsSendToCapture()"
+        >
+            <span> <label-translation keyword="SCAN__Send_To_Capture"></label-translation> </span>
+        </mat-slide-toggle>
+        <div class="space"></div>
+    </image-viewer-canvas>
+    <div class="image-preview__toolbar" *ngIf="imageSrc && !isRotation && !viewAllPage && pages.length > 0">
+        <div class="image-preview__document-note">
+            <input type="text" (change)="changeImageNote($event.target.value)" [value]="imageNote" placeholder="Note" />
+        </div>
+        <div class="image-preview__page" *ngIf="totalPage > 1">
+            <div
+                class="image-preview__page-icon"
+                [ngClass]="{ 'prev-arrow': pageIndex > 0, 'prev-arrow-disabled': pageIndex <= 0 }"
+                (click)="changePageNumber(-1)"
+            ></div>
+            {{ pageIndex + 1 }} / {{ totalPage }}
+            <div
+                class="image-preview__page-icon"
+                [ngClass]="{
+                    'next-arrow': pageIndex < totalPage - 1,
+                    'next-arrow-disabled': pageIndex >= totalPage - 1
+                }"
+                (click)="changePageNumber(1)"
+            ></div>
+        </div>
+    </div>
+</div>
+
+<ng-template #tooltipPrint>
+    <label-translation keyword="TOOLTIP_SCAN__Print"></label-translation>
+</ng-template>
+
+<ng-template #tooltipScanMore>
+    <label-translation keyword="TOOLTIP_SCAN__Scan_More"></label-translation>
+</ng-template>

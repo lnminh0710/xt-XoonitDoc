@@ -1,0 +1,84 @@
+<image-empty-state *ngIf="totalPage == 0" [title]="readonly ? '' : 'Please choose one document'"></image-empty-state>
+<div class="document-image__progress" *ngIf="totalPage == -1">
+    <img src="public/assets/img/loading-spinner.gif" />
+</div>
+<div class="document-image" mouseWheel (mouseWheel)="onMouseWheel($event)">
+    <image-info
+        *ngIf="viewAllPage"
+        [selectedIndex]="pageNumber - 1"
+        [pageList]="pageList"
+        [isLoading]="isLoadImageDropping"
+        (dropImageThumbnail)="onDropImageThumbnails($event)"
+        (selectItem)="selectPage($event)"
+        (removePage)="onRemovePage($event)"
+        (orderPage)="onOrderPage($event)"
+    ></image-info>
+    <!-- *ngIf="!viewOnly" -->
+    <image-ocr
+        *ngIf="!rotationMode && !readonly"
+        [imageSrc]="imageSrc"
+        [width]="width"
+        [height]="height"
+        [widgetId]="widgetId"
+        [idData]="imageInfo?.IdDocumentContainerOcr"
+        [JsonQRCode]="imageInfo?.JsonQRCode"
+        [IdDocumentContainerScans]="imageInfo?.IdDocumentContainerScans"
+        [IdDocument]="documentProps?.IdMainDocument"
+        [OCRJson]="imageInfo?.OCRJson"
+        [totalPage]="totalPage"
+        [currentPage]="pageNumber"
+        [viewAllPage]="viewAllPage"
+        [words]="words"
+        [documentProps]="documentProps"
+        [fieldFocus]="fieldFocus"
+        [isShowTodo]="isShowTodo"
+        [toolbarConfig]="isInvoiceApproval ? toolbarOCRConfig : {}"
+        [isSelectDocType]="isSelectDocType"
+        (deleteRect)="onDeleteRect($event)"
+        (captureData)="onCapture($event)"
+        (toggleViewImageInfo)="toggleViewImageInfo($event)"
+        (toggleRotationMode)="toggleRotationMode($event)"
+        (openDialogEmail)="isShowSendMail = true"
+        (toggleKeyword)="isShowKeyword = !isShowKeyword"
+        (toggleTodo)="onToggleIsTodo()"
+        (runOCR)="runOCR()"
+        (fullscreen)="expandWidget($event)"
+    ></image-ocr>
+    <image-viewer-canvas
+        *ngIf="rotationMode || readonly"
+        [imageSrc]="imageSrc"
+        [isRotation]="!readonly"
+        [width]="0"
+        [height]="0"
+        [widgetId]="widgetId"
+        [idData]="imageInfo?.IdDocumentContainerOcr"
+        [IdDocumentContainerScans]="imageInfo?.IdDocumentContainerScans"
+        [toolbarConfig]="!readonly ? {} : toolbarConfig"
+        [isSelectDocType]="readonly ? true : isSelectDocType"
+        [viewAllPage]="viewAllPage"
+        isBase64="true"
+        (toggleViewImageInfo)="toggleViewImageInfo($event)"
+        (toggleRotationMode)="toggleRotationMode($event)"
+        (openDialogEmail)="isShowSendMail = true"
+    >
+    </image-viewer-canvas>
+    <image-toolbar-secondary
+        [isShow]="totalPage > 0 && !rotationMode && !viewAllPage"
+        [isDisabled]="!imageSrc"
+        [isShowKeyword]="isShowKeyword && !readonly"
+        [isShowTodo]="isShowTodo && !readonly"
+        [readonly]="readonly || !isSelectDocType"
+        [currentPage]="pageNumber"
+        [documentName]="imageInfo?.OriginalFileName"
+        [totalPage]="totalPage"
+        [isDetailPage]="isDetailPage"
+        (onChangePageNumber)="changePageNumber($event)"
+    ></image-toolbar-secondary>
+</div>
+
+<email-configuration
+    *ngIf="isShowSendMail"
+    (onClose)="isShowSendMail = false"
+    [pages]="pageList"
+    [IdDocumentContainerScans]="imageInfo?.IdDocumentContainerScans"
+></email-configuration>

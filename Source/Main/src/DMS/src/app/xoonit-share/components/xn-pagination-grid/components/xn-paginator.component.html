@@ -1,0 +1,55 @@
+<div class="pagination-group-container">
+    <div class="pagination-group page-size-group">
+        <div class="pagination-item page-size-label"><label-translation [keyword]="'XN_PAGINATOR_PageSize'"></label-translation></div>
+        <div class="pagination-item page-size form-group">
+            <input
+                type="text"
+                class="form-control text-center{{ formControlClassStyle }}"
+                [(value)]="pageSize"
+                (keydown.enter)="changePageSize($event)"
+                (focusout)="changePageSize($event)"
+            />
+        </div>
+    </div>
+    <div class="pagination-group page-group">
+        <div class="pagination-item page-label"><label-translation [keyword]="'XN_PAGINATOR_Page'"></label-translation></div>
+        <div class="pagination-item page-number form-group mr-7">
+            <input
+                type="text"
+                class="form-control text-center{{ formControlClassStyle }}"
+                [(value)]="page"
+                (keydown.enter)="changePage($event)"
+                (focusout)="changePage($event)"
+            />
+        </div>
+        <div class="pagination-item total-pages"><label-translation [keyword]="'XN_PAGINATOR_Of'"></label-translation>&nbsp;{{ totalPages }}</div>
+        <div class="pagination-item navigation-page">
+            <div class="btn-group">
+                <button
+                    class="btn btn-default{{ btnNavigationClassStyle }}"
+                    role="button"
+                    (click)="goToPreviousPage(page)"
+                    [disabled]="canPreviousPage(page) === false"
+                    #popPrev="bs-tooltip"
+                    container="body"
+                    data-placement="bottom"
+                    tooltip="Previous page"
+                >
+                    <i class="fa fa-chevron-left icon-transform"></i>
+                </button>
+                <button
+                    class="btn btn-default{{ btnNavigationClassStyle }}"
+                    role="button"
+                    (click)="goToNextPage(page)"
+                    [disabled]="canNextPage(page, totalPages) === false"
+                    #popNext="bs-tooltip"
+                    container="body"
+                    data-placement="bottom"
+                    tooltip="Next page"
+                >
+                    <i class="fa fa-chevron-right icon-transform"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

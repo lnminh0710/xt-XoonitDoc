@@ -1,0 +1,29 @@
+{
+    "properties": {
+        "numberOfImages": { "type": "long" },
+
+        "createDate": {
+            "type": "keyword"
+        },
+        "updateDate": {
+            "type": "keyword"
+        },
+
+        "documentType": {
+            "type": "keyword"
+        },
+        "documentName": {
+            "type": "keyword"
+        },
+        "scannedFilename": {
+            "type": "keyword"
+        },
+        "notes": {
+            "type": "keyword"
+        },
+
+        "fullText_RemovedHtml": {
+            "type": "text"
+        }
+    }
+}

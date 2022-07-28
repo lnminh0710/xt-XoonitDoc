@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/camera_ui_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layoutDirection="ltr">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar_support"
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+        android:background="@color/blue_2"
+        android:elevation="4dp"
+        android:contentInsetStart="0dp"
+        android:contentInsetLeft="0dp"
+        app:contentInsetLeft="0dp"
+        app:contentInsetStart="0dp"
+        android:theme="@style/MyPopupMenu"
+        app:popupTheme="@style/MyPopupMenu">
+
+        <TextView
+            android:id="@+id/docHeader"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:gravity="center"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="17sp"
+
+            android:textStyle="bold" />
+    </androidx.appcompat.widget.Toolbar>
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="144dp"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom"
+        android:background="@color/blue_2"
+        android:contentInsetStart="0dp"
+        android:contentInsetLeft="0dp"
+        app:contentInsetLeft="0dp"
+        app:contentInsetStart="0dp"
+        android:theme="@style/MyPopupMenu"
+        app:popupTheme="@style/MyPopupMenu">
+
+        <GridLayout
+            android:id="@+id/layoutfun"
+            android:layout_width="match_parent"
+            android:layout_height="144dp"
+            android:background="@color/blue_2"
+            android:columnCount="3"
+            android:orientation="horizontal"
+            android:rowCount="1">
+
+            <ImageButton
+                android:id="@+id/flash"
+                android:layout_width="34dp"
+                android:layout_height="34dp"
+                android:layout_row="0"
+                android:layout_column="0"
+                android:layout_columnWeight="1"
+                android:layout_gravity="center"
+                android:background="#FFFFFF"
+                android:clickable="true"
+                android:src="@drawable/ic_flashauto"
+                android:visibility="invisible" />
+
+            <ImageButton
+                android:id="@+id/camera_capture_button"
+                android:layout_width="84dp"
+                android:layout_height="84dp"
+                android:layout_row="0"
+                android:layout_column="1"
+                android:layout_columnWeight="1"
+                android:layout_gravity="center"
+                android:background="@android:color/transparent"
+                android:onClick="takePhoto"
+                android:src="@drawable/ic_photograph" />
+
+            <ImageButton
+                android:id="@+id/photo_view_button"
+                android:layout_width="34dp"
+                android:layout_height="34dp"
+                android:layout_row="0"
+                android:layout_column="2"
+                android:layout_columnWeight="1"
+                android:layout_gravity="center"
+                android:background="@color/blue_2"
+                android:onClick="listDoc"
+                android:src="@drawable/ic_iconspace_gallery"
+                android:visibility="visible" />
+
+        </GridLayout>
+    </androidx.appcompat.widget.Toolbar>
+
+</RelativeLayout>

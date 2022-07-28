@@ -1,0 +1,14 @@
+<wj-combo-box #propCombo
+              wjDropdownHelper
+              class="full-width no-border property-combobox"
+              *ngIf="item.options && (item.options.length >= 0)"
+              [itemsSource]="item.options"
+              [displayMemberPath]="'value'"
+              [selectedValuePath]="'key'"
+              [isDisabled]="item.disabled"
+              [isRequired]="false"
+              [selectedValue]="item.value"
+              [itemFormatter]="itemFormatterFunc"
+              [isContentHtml]="true"
+              (gotFocus)="propCombo.isDroppedDown = true; onPropComboFocused($event)">
+</wj-combo-box>

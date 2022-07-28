@@ -1,0 +1,27 @@
+<div class="col-xs-12  no-padding  height-pc-100"
+     *ngIf="dataSourceTable"
+     [ngClass]="{'has-edit-buttons':isEnableDeleteButton}">
+    <xn-ag-grid [readOnly]="true"
+                *ngIf="dataSourceTable && dataSourceTable.columns && dataSourceTable.columns.length"
+                [id]="gridId"
+                [autoSaveColumnsLayout]="false"
+                [gridStyle]="gridStyle"
+                [dataSource]="dataSourceTable"
+                [allowDelete]="allowEdit"
+                [showTotalRow]="showTotalRow"
+                [rowGrouping]="rowGrouping"
+                [pivoting]="pivoting"
+                [columnFilter]="columnFilter"
+                [fitWidthColumn]="true"
+                [isShowToolPanels]="isShowToolPanels"
+                [columnsLayoutSettings]="columnsLayoutSettings"
+                [parentInstance]="that"
+                [globalProperties]="globalProperties"
+                [sheetName]="sheetName"
+                (onRowMarkedAsDelete)="rowMarkedAsDeleted($event)"
+                (downloadClick)="onDownloadFile($event)"
+                (onDeletedRows)="onDeletedRows($event)"
+                (rowClick)="onRowClickHandler($event)"
+                (changeColumnLayout)="changeColumnLayoutHandler($event)">
+    </xn-ag-grid>
+</div>

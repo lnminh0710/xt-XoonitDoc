@@ -1,0 +1,62 @@
+.search-box {
+    position: relative;
+    width: 250px;
+    margin-left: 5px;
+    float: left;
+
+    .input-search {
+        width: 250px;
+        height: 25px;
+        padding: 8px;
+        margin-top: 4px;
+
+        &:hover, &:focus {
+            border-color: #FB8C00;
+        }
+    }
+
+    .search-icon {
+        position: absolute;
+        right: 5px;
+        top: 10px;
+        color: #999;
+        cursor: pointer;
+    }
+
+
+
+    .add-btn {
+        min-width: 50px;
+    }
+
+
+    .fa-spinner {
+        position: absolute;
+        right: 5px;
+        top: 25%;
+    }
+}
+
+.chk-ontop {
+    float: left;
+    margin-left: 7px;
+    margin-top: 4px;
+    display: inline-block;
+}
+
+.add-btn {
+    float: left;
+    min-width: 50px;
+    margin-left: 7px;
+    margin-top: 5px;
+}
+
+:host .chk-ontop ::ng-deep {
+    .mat-checkbox-inner-container {
+        margin-right: 3px;
+    }
+
+    .mat-checkbox-label {
+        margin-top: 2px;
+    }
+}

@@ -1,0 +1,22 @@
+@import '../../../../../../../sass_files/color.scss';
+
+.sync-status {
+    color: $white;
+    border-radius: 4px;
+    font-size: 14px;
+    position: relative;
+    height: 85%;
+    left: 25%;
+    margin-top: 3px;
+    width: 50%;
+
+    &.done {
+        background-color: $green5;
+    }
+    &.error {
+        background-color: $milano-red;
+    }
+    &.uploading {
+        background-color: $blue-14;
+    }
+}

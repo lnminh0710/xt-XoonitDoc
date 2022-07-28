@@ -1,0 +1,34 @@
+.parent-container {
+    height: 4px;
+    position: absolute;
+    top: 53px;
+    left: 0;
+    z-index: 9;
+
+    a.overlap {
+        height: 4px;
+        position: relative;
+        width: 50%;
+        z-index: 850;
+        float: right;
+    }
+
+    .button-container {
+        position: absolute;
+        z-index: 849;
+        right: 5px;
+        top: 1px;
+
+        &.padding-right-25px {
+            padding-right: 25px;
+        }
+
+        .fa {
+            font-size: 20px;
+        }
+
+        a.fixed-height {
+            height: 33px;
+        }
+    }
+}

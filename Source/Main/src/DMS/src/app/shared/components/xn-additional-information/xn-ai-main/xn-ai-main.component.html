@@ -1,0 +1,63 @@
+<div class="additional-information" [ngStyle]="collapseExpandStyle">
+    <div [ngClass]="[additionalInformationOn ? 'additional-information-expand' : 'additional-information-collapse']">
+        <a mat-button class="ai-vertical__text" (click)="showPanelClick($event)">
+            <div mat-button class="additional-information-vertical__text">
+                <span class="vertical-text">
+                    {{ 'The next documents (' + totalImage + ')' }}
+                </span>
+                <div
+                    *ngIf="editingWidgetStatus"
+                    class="edditing__notice-icon"
+                    aria-hidden="true"
+                    tooltip="Additional Information is editing"
+                    placement="left"
+                    container="body"
+                >
+                    <a class="fa fa-bell-o"></a>
+                </div>
+            </div>
+        </a>
+        <div class="col-xs-12 addtional-information-content no-padding">
+            <a
+                mat-button
+                class="additional-information__header margin-bottom--sm padding-left"
+                (click)="showPanelClick($event)"
+            >
+                <i class="fa fa-sort-desc additional-information-toggle"></i>
+                <div class="additional-information-title-text">
+                    <label-translation [keyword]="'XN_AI_MAIN__TheNextDocuments'"></label-translation> ({{
+                        totalImage
+                    }})
+                    <button
+                        mat-icon-button
+                        class="btn-action icon-transform"
+                        style="top: -3px; float: right"
+                        (click)="reload($event)"
+                        #popRefresh="bs-tooltip"
+                        container="body"
+                        data-placement="bottom"
+                        [tooltip]="'Refresh'"
+                        [attr.control-key]="'document-viewer__refresh'"
+                    >
+                        <mat-icon [svgIcon]="IconNamesEnum.WIDGET_MYDM_FORM_Reset"></mat-icon>
+                    </button>
+                </div>
+            </a>
+            <app-xn-ai-tab
+                class="xn-tab--general"
+                *ngIf="
+                    additionalInformation &&
+                    additionalInformation.SimpleTabs &&
+                    additionalInformation.SimpleTabs.length > 0
+                "
+                [data]="additionalInformation.SimpleTabs"
+            >
+            </app-xn-ai-tab>
+            <app-xn-ai-page
+                *ngIf="additionalInformation && additionalInformation.Page"
+                [data]="additionalInformation.Page"
+            >
+            </app-xn-ai-page>
+        </div>
+    </div>
+</div>

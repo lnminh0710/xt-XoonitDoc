@@ -1,0 +1,447 @@
+@import '../color.scss';
+
+.mat-btn-block {
+    width: 100%;
+}
+
+.btn-group {
+    .mat-raised-button {
+        position: relative;
+        float: left;
+    }
+
+    .mat-raised-button:not(:first-child):not(:last-child) {
+        border-radius: 0;
+        box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 0px 0px rgba(0, 0, 0, 0.14), 0px 0px 0px 0px rgba(0, 0, 0, 0.12);
+    }
+
+    .mat-raised-button:first-child:not(:last-child) {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+    }
+
+    .mat-raised-button:last-child:not(:first-child) {
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+        box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 0px 0px rgba(0, 0, 0, 0.14), 0px 0px 0px 0px rgba(0, 0, 0, 0.12);
+    }
+}
+
+/*Message Modal close button*/
+.mat-btn-close-modal .mat-button-wrapper {
+    margin-left: -2px;
+
+    span {
+        font-size: 22px;
+        font-weight: 900;
+    }
+}
+
+button.mat-btn-non-fix--icon {
+    min-width: 0px;
+    width: 36px;
+    padding: 1px 10px;
+}
+
+button.mat-btn-close-popup.mat-raised-button:hover,
+button.mat-btn-close-modal.mat-raised-button:hover,
+a.mat-btn-close-widget.mat-raised-button:hover {
+    background-color: $btn-red !important;
+    border-color: $btn-red !important;
+    color: $btn-text-white !important;
+}
+
+button.mat-btn-expand-popup.mat-raised-button:hover,
+button.mat-btn-collapse-popup.mat-raised-button:hover {
+    background-color: $form-color-darker-2 !important;
+}
+
+/*Fix height for all button*/
+button.mat-raised-button,
+a.mat-raised-button {
+    height: 30px;
+    line-height: 30px;
+}
+
+button.mat-btn-non-fix,
+a.mat-btn-non-fix {
+    min-width: 0px;
+    height: 20px !important;
+    line-height: 20px !important;
+    padding: 1px 5px;
+}
+
+.mat-tab-close-icon {
+    padding: 0 !important;
+    height: 0px !important;
+    top: -22px;
+    left: 21px;
+
+    i {
+        background: $btn-white;
+    }
+}
+
+.mat-btn-small--icon {
+    min-width: 0px !important;
+}
+
+.mat-btn-small--icon--tool-bar {
+    min-width: 0px !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    padding: 0 10px !important;
+}
+
+.mat-btn-white:not([disabled]) {
+    background-color: $btn-white !important;
+    border-color: $btn-white !important;
+    color: $btn-text-black !important;
+}
+
+.mat-btn-red:not([disabled]) {
+    background-color: $btn-red !important;
+    border-color: $btn-red !important;
+    color: $btn-text-white !important;
+}
+
+.mat-btn-red--icon:not([disabled]) {
+    background-color: $btn-text-white !important;
+    border-color: $btn-text-white !important;
+    color: $btn-red !important;
+}
+
+.mat-btn-blue--icon:not([disabled]) {
+    background-color: $btn-text-white !important;
+    border-color: $btn-text-white !important;
+    color: $btn-blue !important;
+}
+
+.mat-btn-green:not([disabled]) {
+    background-color: $btn-green !important;
+    border-color: $btn-green !important;
+    color: $btn-text-white !important;
+}
+
+.mat-btn-blue:not([disabled]) {
+    background-color: $btn-blue !important;
+    border-color: $btn-blue !important;
+    color: $btn-text-white !important;
+}
+
+.mat-btn-orange:not([disabled]) {
+    background-color: $btn-orange !important;
+    border-color: $btn-orange !important;
+    color: $btn-text-white !important;
+}
+
+.mat-btn-dark-grey:not([disabled]) {
+    background-color: $btn-dark-grey !important;
+    border-color: $btn-dark-grey !important;
+    color: $btn-text-white !important;
+}
+
+.mat-btn-pink:not([disabled]) {
+    background-color: $btn-pink !important;
+    border-color: $btn-pink !important;
+    color: $btn-text-white !important;
+}
+
+.mat-btn-white-red:not([disabled]) {
+    background-color: $btn-text-white !important;
+    border-color: $btn-text-white !important;
+    color: $btn-red !important;
+}
+
+.mat-btn-transparent-red:not([disabled]) {
+    background-color: transparent !important;
+    border-color: transparent !important;
+    color: $btn-red !important;
+    box-shadow: none !important;
+}
+
+.btn-hover-red:hover {
+    background-color: $btn-red !important;
+    border-color: $btn-red !important;
+    color: $btn-text-white !important;
+}
+
+.mat-btn-orange:not([disabled]) {
+    background-color: $btn-orange !important;
+    border-color: $btn-orange !important;
+    color: $btn-text-white !important;
+}
+
+.mat-btn-orange-on:not([disabled]) {
+    background-color: $btn-orange !important;
+    border-color: $btn-orange !important;
+    color: $btn-text-white !important;
+    box-shadow: 0px 3px 1px -2px rgba(251, 140, 0, 0.2), 0px 2px 2px 0px rgba(251, 140, 0, 0.14), 0px 1px 5px 0px rgba(251, 140, 0, 0.12) !important;
+}
+
+.mat-btn-orange-off:not([disabled]) {
+    background-color: $white3 !important;
+    border-color: $btn-orange-off !important;
+    color: $btn-orange-off !important;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.7) !important;
+}
+
+.dialog-btn-primary {
+    color: $white;
+    background-color: $blue-cobalt1;
+}
+
+.dialog-btn-danger {
+    color: $white;
+    background-color: #a40000;
+}
+
+.dialog-btn-secondary {
+    color: #000;
+    background-color: $gray40;
+}
+/* Other button */
+.toast-close-button {
+    top: -25px;
+}
+
+.mat-btn-icon {
+    width: 30px;
+    padding: 0 0 !important;
+    font-size: 16px !important;
+    background: transparent !important;
+    background-color: transparent !important;
+    box-shadow: none !important;
+}
+
+.mat-btn-small {
+    height: 22px !important;
+    width: 22px !important;
+    padding: 0 !important;
+    line-height: 22px !important;
+}
+
+/*Social button*/
+.mat-btn-google {
+    background-color: $red1 !important;
+    color: $btn-text-white !important;
+}
+
+.mat-btn-facebook {
+    background-color: $blue7 !important;
+    color: $btn-text-white !important;
+}
+
+.btn-social > :first-child {
+    font-size: 15px !important;
+}
+
+.btn-social i {
+    width: 23px;
+    font-size: 19px;
+    margin-left: 4px;
+    margin-right: 6px;
+}
+
+.blinking-button {
+    -webkit-animation: glowing 1500ms infinite;
+    -moz-animation: glowing 1500ms infinite;
+    -o-animation: glowing 1500ms infinite;
+    animation: glowing 1500ms infinite;
+}
+
+@-webkit-keyframes glowing {
+    0% {
+        background-color: $btn-green;
+        -webkit-box-shadow: 0 0 3px $btn-green;
+    }
+
+    50% {
+        background-color: $green;
+        -webkit-box-shadow: 0 0 40px $green;
+    }
+
+    100% {
+        background-color: $btn-green;
+        -webkit-box-shadow: 0 0 3px $btn-green;
+    }
+}
+
+@-moz-keyframes glowing {
+    0% {
+        background-color: $btn-green;
+        -webkit-box-shadow: 0 0 3px $btn-green;
+    }
+
+    50% {
+        background-color: $green;
+        -webkit-box-shadow: 0 0 40px $green;
+    }
+
+    100% {
+        background-color: $btn-green;
+        -webkit-box-shadow: 0 0 3px $btn-green;
+    }
+}
+
+@-o-keyframes glowing {
+    0% {
+        background-color: $btn-green;
+        -webkit-box-shadow: 0 0 3px $btn-green;
+    }
+
+    50% {
+        background-color: $green;
+        -webkit-box-shadow: 0 0 40px $green;
+    }
+
+    100% {
+        background-color: $btn-green;
+        -webkit-box-shadow: 0 0 3px $btn-green;
+    }
+}
+
+@keyframes glowing {
+    0% {
+        background-color: $btn-green;
+        -webkit-box-shadow: 0 0 3px $btn-green;
+    }
+
+    50% {
+        background-color: $green;
+        -webkit-box-shadow: 0 0 40px $green;
+    }
+
+    100% {
+        background-color: $btn-green;
+        -webkit-box-shadow: 0 0 3px $btn-green;
+    }
+}
+
+.blinking-update-item-bg {
+    -webkit-animation: glowingbg 2000ms infinite;
+    -moz-animation: glowingbg 2000ms infinite;
+    -o-animation: glowingbg 2000ms infinite;
+    animation: glowingbg 2000ms infinite;
+}
+
+@-webkit-keyframes glowingbg {
+    0% {
+        background-color: $btn-green;
+        color: $white;
+    }
+    100% {
+        background-color: none;
+        color: $black;
+    }
+}
+
+@-moz-keyframes glowingbg {
+    0% {
+        background-color: $btn-green;
+        color: $white;
+    }
+    100% {
+        background-color: none;
+        color: $black;
+    }
+}
+
+@-o-keyframes glowingbg {
+    0% {
+        background-color: $btn-green;
+        color: $white;
+    }
+    100% {
+        background-color: none;
+        color: $black;
+    }
+}
+
+@keyframes glowingbg {
+    0% {
+        background-color: $btn-green;
+        color: $white;
+    }
+    100% {
+        background-color: none;
+        color: $black;
+    }
+}
+
+
+.blinking-new-item {
+    -webkit-animation: glowing 1500ms infinite;
+    -moz-animation: glowing 1500ms infinite;
+    -o-animation: glowing 1500ms infinite;
+    animation: glowing 1500ms infinite;
+    border: 1px solid green;
+}
+
+@-webkit-keyframes glowing {
+    0% {
+        border-color: $btn-green;
+        -webkit-box-shadow: 0 0 3px $btn-green;
+    }
+
+    50% {
+        border-color: $green;
+        -webkit-box-shadow: 0 0 40px $green;
+    }
+
+    100% {
+        border-color: $btn-green;
+        -webkit-box-shadow: 0 0 3px $btn-green;
+    }
+}
+
+@-moz-keyframes glowing {
+    0% {
+        border-color: $btn-green;
+        -webkit-box-shadow: 0 0 3px $btn-green;
+    }
+
+    50% {
+        border-color: $green;
+        -webkit-box-shadow: 0 0 40px $green;
+    }
+
+    100% {
+        border-color: $btn-green;
+        -webkit-box-shadow: 0 0 3px $btn-green;
+    }
+}
+
+@-o-keyframes glowing {
+    0% {
+        border-color: $btn-green;
+        -webkit-box-shadow: 0 0 3px $btn-green;
+    }
+
+    50% {
+        border-color: $green;
+        -webkit-box-shadow: 0 0 40px $green;
+    }
+
+    100% {
+        border-color: $btn-green;
+        -webkit-box-shadow: 0 0 3px $btn-green;
+    }
+}
+
+@keyframes glowing {
+    0% {
+        border-color: $btn-green;
+        -webkit-box-shadow: 0 0 3px $btn-green;
+    }
+
+    50% {
+        border-color: $green;
+        -webkit-box-shadow: 0 0 40px $green;
+    }
+
+    100% {
+        border-color: $btn-green;
+        -webkit-box-shadow: 0 0 3px $btn-green;
+    }
+}

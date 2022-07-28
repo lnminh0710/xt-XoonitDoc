@@ -1,0 +1,57 @@
+<div
+    @transformPopup
+    class="x-popup-container"
+    [ngClass]="{ resize: optionResize }"
+    [ngStyle]="{ width: defaultWidth, height: defaultHeight }"
+>
+    <div class="x-popup d-flex flex-column" [ngClass]="{ 'height-popup': optionResize }">
+        <div *ngIf="optionDrapDrop; else templateNotDrag">
+            <div
+                cdkDrag
+                cdkDragRootElement=".cdk-overlay-pane"
+                cdkDragHandle
+                class="move-popup"
+                (cdkDragEnded)="onDragEnded($event)"
+            >
+                <header-popup></header-popup>
+            </div>
+        </div>
+        <ng-template #templateNotDrag>
+            <header-popup></header-popup>
+        </ng-template>
+        <div class="body" [ngClass]="{ 'height-body': optionResize }">
+            <ng-container *ngComponentOutlet="body"></ng-container>
+        </div>
+        <div
+            *ngIf="footer && footer.buttons"
+            class="footer d-flex flex-row"
+            [class.wrap]="footer.justifyContent === 'wrap'"
+            [class.full]="footer.justifyContent === 'full'"
+        >
+            <ng-container *ngFor="let item of footer.buttons">
+                <ng-container [ngSwitch]="item.buttonType">
+                    <ng-container *ngSwitchCase="'basic'">
+                        <button mat-button [color]="item.color" (click)="item.onClick && item.onClick(data)">
+                            {{ item.text }}
+                        </button>
+                    </ng-container>
+                    <ng-container *ngSwitchCase="'raised'">
+                        <button mat-raised-button [color]="item.color" (click)="item.onClick && item.onClick(data)">
+                            {{ item.text }}
+                        </button>
+                    </ng-container>
+                    <ng-container *ngSwitchCase="'stroked'">
+                        <button mat-stroked-button [color]="item.color" (click)="item.onClick && item.onClick(data)">
+                            {{ item.text }}
+                        </button>
+                    </ng-container>
+                    <ng-container *ngSwitchCase="'flat'">
+                        <button mat-flat-button [color]="item.color" (click)="item.onClick && item.onClick(data)">
+                            {{ item.text }}
+                        </button>
+                    </ng-container>
+                </ng-container>
+            </ng-container>
+        </div>
+    </div>
+</div>

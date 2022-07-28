@@ -1,0 +1,5 @@
+<div class="control-templates-wrapper w-100 h-100" cdkDropList [cdkDropListData]="dragControls">
+    <ng-container *ngFor="let item of dragControls">
+        <div class="item" cdkDrag [cdkDragData]="item" (cdkDragStarted)="dragStarted($event)">{{ item.title }}</div>
+    </ng-container>
+</div>

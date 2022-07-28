@@ -1,0 +1,202 @@
+[
+  {
+    "DocumentName": "rfi_xena_171220_161720.png",
+    "ScannedPath": "\\\\file.xena.local\\MyDMS\\XenaScan\\huynt_xena\\261220-181020.312",
+    "NumberOfImages": 1,
+    "CreateDate": "15.12.2020",
+    "IdDocumentContainerScans": 67,
+    "DocumentType": "Kreditoren"
+  },
+  {
+    "DocumentName": "rfi_xena_281220_215120.png",
+    "ScannedPath": "\\\\file.xena.local\\MyDMS\\XenaScan\\huynt_xena\\221120-233920.312",
+    "NumberOfImages": 1,
+    "CreateDate": "18.10.2020",
+    "IdDocumentContainerScans": 50,
+	"DocumentType": "Kreditoren"
+  },
+  {
+    "DocumentName": "rfi_xena_101220_102220.png",
+    "ScannedPath": "\\\\file.xena.local\\MyDMS\\XenaScan\\huynt_xena\\111220-222520.312",
+    "NumberOfImages": 1,
+    "CreateDate": "26.11.2020",
+    "IdDocumentContainerScans": 55,
+    "DocumentType": "Debitoren"
+  },
+  {
+    "DocumentName": "rfi_xena_221020_214720.png",
+    "ScannedPath": "\\\\file.xena.local\\MyDMS\\XenaScan\\huynt_xena\\221120-102120.312",
+    "NumberOfImages": 1,
+    "CreateDate": "15.10.2020",
+    "IdDocumentContainerScans": 87,
+    "DocumentType": "Steuern"
+  },
+  {
+    "DocumentName": "rfi_xena_241020_181620.png",
+    "ScannedPath": "\\\\file.xena.local\\MyDMS\\XenaScan\\huynt_xena\\181020-223020.312",
+    "NumberOfImages": 1,
+    "CreateDate": "18.11.2020",
+    "IdDocumentContainerScans": 46,
+    "DocumentType": "Kreditoren"
+  },
+  {
+    "DocumentName": "rfi_xena_241020_223020.png",
+    "ScannedPath": "\\\\file.xena.local\\MyDMS\\XenaScan\\huynt_xena\\191120-133920.312",
+    "NumberOfImages": 1,
+    "CreateDate": "19.10.2020",
+    "IdDocumentContainerScans": 54,
+    "DocumentType": "Bankbelege"
+  },
+  {
+    "DocumentName": "rfi_xena_211020_244920.png",
+    "ScannedPath": "\\\\file.xena.local\\MyDMS\\XenaScan\\huynt_xena\\171220-213820.312",
+    "NumberOfImages": 1,
+    "CreateDate": "10.12.2020",
+    "IdDocumentContainerScans": 18,
+    "DocumentType": "Debitoren"
+  },
+    {
+    "DocumentName": "rfi_xena_241220_103820.png",
+    "ScannedPath": "\\\\file.xena.local\\MyDMS\\XenaScan\\huynt_xena\\131020-111420.312",
+    "NumberOfImages": 1,
+    "CreateDate": "16.11.2020",
+    "IdDocumentContainerScans": 54,
+    "DocumentType": "Diverss"
+  },
+  {
+    "DocumentName": "rfi_xena_281020_145220.png",
+    "ScannedPath": "\\\\file.xena.local\\MyDMS\\XenaScan\\huynt_xena\\221220-126020.312",
+    "NumberOfImages": 1,
+    "CreateDate": "27.12.2020",
+    "IdDocumentContainerScans": 45,
+    "DocumentType": "Debitoren"
+  },
+  {
+    "DocumentName": "rfi_xena_101120_133220.png",
+    "ScannedPath": "\\\\file.xena.local\\MyDMS\\XenaScan\\huynt_xena\\201120-155820.312",
+    "NumberOfImages": 1,
+    "CreateDate": "24.11.2020",
+    "IdDocumentContainerScans": 47,
+    "DocumentType": "Invoices"
+  },
+    {
+    "DocumentName": "rfi_xena_281020_201020.png",
+    "ScannedPath": "\\\\file.xena.local\\MyDMS\\XenaScan\\huynt_xena\\121120-155120.312",
+    "NumberOfImages": 1,
+    "CreateDate": "12.11.2020",
+    "IdDocumentContainerScans": 49,
+    "DocumentType": "Debitoren"
+  },
+  {
+    "DocumentName": "rfi_xena_111120_154920.png",
+    "ScannedPath": "\\\\file.xena.local\\MyDMS\\XenaScan\\huynt_xena\\301220-122920.312",
+    "NumberOfImages": 1,
+    "CreateDate": "17.12.2020",
+    "IdDocumentContainerScans": 18,
+    "DocumentType": "Diverss"
+  },
+  {
+    "DocumentName": "rfi_xena_221220_102620.png",
+    "ScannedPath": "\\\\file.xena.local\\MyDMS\\XenaScan\\huynt_xena\\211220-183220.312",
+    "NumberOfImages": 1,
+    "CreateDate": "19.12.2020",
+    "IdDocumentContainerScans": 24,
+    "DocumentType": "Spesenbelege"
+  },
+    {
+    "DocumentName": "rfi_xena_231120_115720.png",
+    "ScannedPath": "\\\\file.xena.local\\MyDMS\\XenaScan\\huynt_xena\\211120-211520.312",
+    "NumberOfImages": 1,
+    "CreateDate": "12.12.2020",
+    "IdDocumentContainerScans": 80,
+    "DocumentType": "Kreditoren"
+  },
+  {
+    "DocumentName": "rfi_xena_141220_191920.png",
+    "ScannedPath": "\\\\file.xena.local\\MyDMS\\XenaScan\\huynt_xena\\231220-155720.312",
+    "NumberOfImages": 1,
+    "CreateDate": "26.11.2020",
+    "IdDocumentContainerScans": 18,
+    "DocumentType": "Spesenbelege"
+  },
+  {
+    "DocumentName": "rfi_xena_211220_181220.png",
+    "ScannedPath": "\\\\file.xena.local\\MyDMS\\XenaScan\\huynt_xena\\221020-184120.312",
+    "NumberOfImages": 1,
+    "CreateDate": "29.11.2020",
+    "IdDocumentContainerScans": 63,
+    "DocumentType": "Debitoren"
+  },
+  {
+    "DocumentName": "rfi_xena_161120_174420.png",
+    "ScannedPath": "\\\\file.xena.local\\MyDMS\\XenaScan\\huynt_xena\\191220-123520.312",
+    "NumberOfImages": 1,
+    "CreateDate": "19.10.2020",
+    "IdDocumentContainerScans": 77,
+    "DocumentType": "Invoices"
+  },
+    {
+    "DocumentName": "rfi_xena_181020_164920.png",
+    "ScannedPath": "\\\\file.xena.local\\MyDMS\\XenaScan\\huynt_xena\\141020-104820.312",
+    "NumberOfImages": 1,
+    "CreateDate": "22.10.2020",
+    "IdDocumentContainerScans": 22,
+    "DocumentType": "Kreditoren"
+  },
+  {
+    "DocumentName": "rfi_xena_151120_124120.png",
+    "ScannedPath": "\\\\file.xena.local\\MyDMS\\XenaScan\\huynt_xena\\291220-245020.312",
+    "NumberOfImages": 1,
+    "CreateDate": "24.11.2020",
+    "IdDocumentContainerScans": 66,
+    "DocumentType": "Debitoren"
+  },
+  {
+    "DocumentName": "rfi_xena_251220_193020.png",
+    "ScannedPath": "\\\\file.xena.local\\MyDMS\\XenaScan\\huynt_xena\\191020-133420.312",
+    "NumberOfImages": 1,
+    "CreateDate": "29.10.2020",
+    "IdDocumentContainerScans": 98,
+    "DocumentType": "Spesenbelege"
+  },
+  {
+    "DocumentName": "rfi_xena_161220_195120.png",
+    "ScannedPath": "\\\\file.xena.local\\MyDMS\\XenaScan\\huynt_xena\\171020-115020.312",
+    "NumberOfImages": 1,
+    "CreateDate": "13.11.2020",
+    "IdDocumentContainerScans": 99,
+    "DocumentType": "Kreditoren"
+  },
+    {
+    "DocumentName": "rfi_xena_291220_121920.png",
+    "ScannedPath": "\\\\file.xena.local\\MyDMS\\XenaScan\\huynt_xena\\261220-192620.312",
+    "NumberOfImages": 1,
+    "CreateDate": "27.10.2020",
+    "IdDocumentContainerScans": 71,
+    "DocumentType": "Bankbelege"
+  },
+  {
+    "DocumentName": "rfi_xena_281120_134220.png",
+    "ScannedPath": "\\\\file.xena.local\\MyDMS\\XenaScan\\huynt_xena\\261120-145320.312",
+    "NumberOfImages": 1,
+    "CreateDate": "17.12.2020",
+    "IdDocumentContainerScans": 28,
+    "DocumentType": "Spesenbelege"
+  },
+  {
+    "DocumentName": "rfi_xena_131120_231220.png",
+    "ScannedPath": "\\\\file.xena.local\\MyDMS\\XenaScan\\huynt_xena\\281120-205920.312",
+    "NumberOfImages": 1,
+    "CreateDate": "27.12.2020",
+    "IdDocumentContainerScans": 88,
+    "DocumentType": "Invoices"
+  },
+  {
+    "DocumentName": "rfi_xena_201020_173720.png",
+    "ScannedPath": "\\\\file.xena.local\\MyDMS\\XenaScan\\huynt_xena\\231120-202720.312",
+    "NumberOfImages": 1,
+    "CreateDate": "17.10.2020",
+    "IdDocumentContainerScans": 72,
+    "DocumentType": "Diverss"
+  }
+]

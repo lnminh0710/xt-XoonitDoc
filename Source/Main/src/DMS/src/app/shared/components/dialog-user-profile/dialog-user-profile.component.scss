@@ -1,0 +1,151 @@
+@import '../../../../sass_files/color.scss';
+
+::ng-deep .user-profile {
+    .mat-dialog-container {
+        padding: 0;
+    }
+
+    .dialog-container {
+        position: relative;
+
+        .header {
+            text-align: center;
+            padding: 15px;
+            border-bottom: 1px solid $black10;
+
+            .title {
+                font-family: 'rbt_Medium';
+                font-size: 16px;
+                line-height: 21px;
+                color: $blue-4;
+            }
+
+            .img-close {
+                position: absolute;
+                top: 18px;
+                right: 15px;
+                cursor: pointer;
+            }
+        }
+
+        .body {
+            margin-top: 25px;
+            padding: 15px;
+
+            .user-avatar {
+                text-align: center;
+
+                .large-avatar-default {
+                    height: 120px;
+                    width: 120px;
+                    margin: auto;
+                    position: relative;
+                    border-radius: 50%;
+
+                    .upload-file {
+                        opacity: 0;
+                    }
+                    .remove-avatar {
+                        right: 7px;
+                        height: 17px;
+                    }
+                }
+
+                .avatar-text-wrapper {
+                    position: relative;
+
+                    .avatar-text {
+                        color: $blue-azure-radiance;
+                        font-family: 'rbt_Medium';
+                        font-size: 14px;
+                        line-height: 3;
+                    }
+                    .btn-edit {
+                        position: absolute;
+                        top: 0;
+                        right: 0;
+                        cursor: pointer;
+                    }
+                }
+            }
+
+            .user-info {
+                .item {
+                    border-bottom: 1px solid $blue-link-water2;
+                    padding: 10px 0;
+                    margin-bottom: 0 !important;
+
+                    &:first-child {
+                        border-top: 1px solid $blue-link-water2;
+                    }
+
+                    .lable-text {
+                        font-size: 16px;
+                        color: $blue-4;
+                        padding-left: 0;
+                        font-family: 'rbt_Medium';
+                    }
+                    .form-item {
+                        padding-right: 0;
+                        text-align: right;
+
+                        .form-control {
+                            text-align: right;
+                            font-size: 16px;
+                            color: $blue-4;
+                            border: 0;
+                            border-radius: 0;
+                            box-shadow: none;
+
+                            &[disabled] {
+                                background-color: transparent;
+                            }
+                        }
+                    }
+
+                    ::ng-deep mat-form-field {
+                        width: 100%;
+                        text-align: right;
+                        line-height: 1;
+
+                        &.mat-form-field-appearance-fill {
+                            .mat-form-field-wrapper {
+                                padding-bottom: 0;
+
+                                .mat-form-field-flex {
+                                    background-color: transparent;
+                                    padding: 0;
+
+                                    input {
+                                        font-size: 16px;
+                                        color: $blue-4;
+                                    }
+                                }
+
+                                .mat-form-field-underline {
+                                    width: 0;
+                                }
+                            }
+                        }
+                    }
+                }
+                .link-wrapper {
+                    margin-top: 12px;
+
+                    .amd-link {
+                        font-size: 14px;
+                        color: $blue-azure-radiance;
+                        cursor: pointer;
+                    }
+                }
+                .button-wrapper {
+                    text-align: right;
+
+                    button[disabled] {
+                        opacity: 0.5;
+                    }
+                }
+            }
+        }
+    }
+}

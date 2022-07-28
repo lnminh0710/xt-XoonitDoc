@@ -1,0 +1,32 @@
+<div class="widget-header title w-100 d-flex flex-row flex-nowrap" *ngIf="headerTitle">
+    {{headerTitle}}
+</div>
+<div class="widget-octopus-form-container w-100">
+    <ng-container *ngIf="customTemplateRef">
+        <ng-template *ngTemplateOutlet="customTemplateRef; context: { formGroupDef: formGroupDef }">
+        </ng-template>
+    </ng-container>
+    <ng-container *ngIf="!customTemplateRef">
+        <dynamic-form-group [formGroupDefinition]="formGroupDef">
+            <ng-template #formFieldTemplate let-formDefinition="formDefinition">
+                <dynamic-form-field [formDefinition]="formDefinition"
+                                    (initialized)="didFormFieldViewInitialized($event)"
+                                    (dataChanged)="dataFormChanged($event)"
+                                    (onControlClick)="onClickChanged($event)"
+                                    (onControlIconClick)="onIconClickChanged($event)">
+                </dynamic-form-field>
+            </ng-template>
+            <ng-template #formTableTemplate let-tableDefinition="tableDefinition" let-dataGrids="dataGrids">
+                <dynamic-form-table [formDefinition]="tableDefinition"></dynamic-form-table>
+            </ng-template>
+            <ng-template #groupFormsTemplate let-groupFormsDefinition="groupFormsDefinition">
+                <dynamic-form-field-list [formDefinition]="groupFormsDefinition"
+                                         (initialized)="didFormFieldViewListInitialized($event)"
+                                         (dataChanged)="dataFormChanged($event)"
+                                         (onControlClick)="onClickChanged($event)"
+                                         (onControlIconClick)="onIconClickChanged($event)">
+                </dynamic-form-field-list>
+            </ng-template>
+        </dynamic-form-group>
+    </ng-container>
+</div>

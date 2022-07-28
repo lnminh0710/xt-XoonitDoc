@@ -1,0 +1,9 @@
+﻿<div id="smartwizard" class="sw-main sw-theme-arrows">
+    <ul class="nav nav-tabs step-anchor">
+        <li *ngFor="let item of data"
+            (click)="itemClick(item.id)"
+            [ngClass]="{'active': item.isActive, 'done': item.isSave}">
+            <a class="cursor-pointer">{{item.text}}<br><small>{{item.description}}</small></a>
+        </li>
+    </ul>
+</div>

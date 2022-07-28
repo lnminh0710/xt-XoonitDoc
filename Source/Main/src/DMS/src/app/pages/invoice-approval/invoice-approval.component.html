@@ -1,0 +1,31 @@
+<toaster-container [toasterconfig]="toastrConfig"></toaster-container>
+
+<div class="content-wrapper module-container"
+     hotKeyProcessing
+     [ofModule] ="ofModule">
+    <section class="content">
+        <div *ngIf="isShowSearchPage, else managementTemplate">
+            <widget-search-page [searchPageType]="searchPageContactParam"></widget-search-page>
+        </div>
+        <ng-template #managementTemplate>
+            <div class="module-management w-100" xnFocusError #xnFocus="xnFocusError" aprrovalFormProcessing
+                [xnFocusError]="xnFocus" [idMainDocument]="idMainDocument"
+                [idDocumentContainerScans]="idDocumentContainerScans" [idDocumentTree]="idDocumentTree"
+                [mediaName]="mediaName">
+                <xn-tab class="xn-tab--general"
+                        [headerData]="headerData"
+                        [tabSetting]="tabSetting"></xn-tab>
+            </div>
+        </ng-template>
+    </section>
+</div>
+<xn-message-modal></xn-message-modal>
+
+<app-aside (onToggleWidgetTemplate)="handleToggleWidgetTemplate($event)">Loading control sidebar...</app-aside>
+<property-panel [isExpand]="isExpand" [isGlobal]="isGlobal" [properties]="properties"
+    (onClose)="onPropertyPanelClose($event)" (onSave)="onPropertyPanelSave($event)"
+    (onChange)="onPropertyPanelChange($event)" (onApply)="onPropertyPanelApply($event)"></property-panel>
+
+<div *ngIf="xnLoading.loading" class="xn-loading">
+    <i class="fa fa-spinner fa-spin fa-2x"></i>
+</div>

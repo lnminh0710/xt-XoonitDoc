@@ -1,0 +1,14 @@
+<div class="text-center">
+    <ng-container [ngSwitch]="componentParent.isEditting">
+        <ng-container *ngSwitchCase="true">
+            <mat-checkbox color="primary"
+                          [(ngModel)]="value"
+                          [disabled]="colDef.field == 'UnMerge' && params.data['IsMaster'] == true"
+                          (change)="onCheckboxChange($event)">
+            </mat-checkbox>
+        </ng-container>
+        <ng-container *ngSwitchDefault>
+            <i class="fa fa-check" [ngClass]="{'active' : value, 'in-active' :  !value }"></i>
+        </ng-container>
+    </ng-container>
+</div>

@@ -1,0 +1,25 @@
+:host {
+    display: block;
+    height: 100%;
+    width: 100%;
+    .content-viewer {
+        position: relative;
+        & > div {
+            height: 100%;
+            width: 100%;
+            &.media-viewer {
+                height: calc(100% - 40px);
+            }
+        }
+        .image-viewer {
+            overflow: hidden;
+        }
+    }
+}
+
+.pdf-viewer {
+    height: 100%;
+}
+.office-viewer {
+    height: 100%;
+}

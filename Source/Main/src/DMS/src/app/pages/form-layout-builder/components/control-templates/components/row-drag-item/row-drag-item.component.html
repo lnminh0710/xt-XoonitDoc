@@ -1,0 +1,13 @@
+<div
+    class="row-drag-item-wrapper d-flex flex-row"
+    cdkDropList
+    cdkDropListOrientation="horizontal"
+    [cdkDropListData]="dragItem.children"
+    (cdkDropListDropped)="drop($event)"
+>
+    <div class="row-content d-flex flex-row">
+        <ng-container *ngFor="let item of dragItem.children">
+            <column-drag-item [dragItem]="item" (dropped)="dropColumnDone($event)"></column-drag-item>
+        </ng-container>
+    </div>
+</div>

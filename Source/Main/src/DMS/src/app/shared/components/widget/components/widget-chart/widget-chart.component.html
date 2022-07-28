@@ -1,0 +1,102 @@
+<div class="chart-col">
+    <xena-bar-chart class="chart-content"
+                    [chartType]="_chartType"
+                    [scheme]="_colorType"
+                    [view]="view"
+                    [single]="single"
+                    [multi]="multi"
+                    [gradients]="_gradientsBarChart"
+                    [xAxis]="_showXAxis"
+                    [yAxis]="_showYAxis"
+                    [showGirdLines]="_showGirdLinesBarChart"
+                    [showLegend]="_showLegendBarChart"
+                    [showXAxisLabel]="_showXAxisLabel"
+                    [showYAxisLabel]="_showYAxisLabel"
+                    [disableTooltip]="_disableTooltip"
+                    [legendTitle]="_legendTitleBarChart"
+                    [xAxisLabel]="_xAxisLabel"
+                    [yAxisLabel]="_yAxisLabel"
+                    [paddingBetweenBars]="_paddingBetweenBars"></xena-bar-chart>
+    <xena-other-chart class="chart-content"
+                      [view]="view"
+                      [lineChartData]="multi"
+                      [barChartData]="single"
+                      [chartType]="_chartType"
+                      [scheme]="_colorType"
+                      [gradients]="_gradientsBarChart"
+                      [xAxis]="_showXAxis"
+                      [yAxis]="_showYAxis"
+                      [showGirdLines]="_showGirdLinesBarChart"
+                      [showLegend]="_showLegendBarChart"
+                      [showXAxisLabel]="_showXAxisLabel"
+                      [showYAxisLabel]="_showYAxisLabel"
+                      [disableTooltip]="_disableTooltip"
+                      [legendTitle]="_legendTitleBarChart"
+                      [xAxisLabel]="_xAxisLabel"
+                      [yAxisLabel]="_yAxisLabel"></xena-other-chart>
+    <xena-area-line-chart class="chart-content"
+                          [view]="view"
+                          [chartType]="_chartType"
+                          [scheme]="_colorType"
+                          [multi]="multi"
+                          [showXAxisAreaLineChart]="_showXAxisAreaLineChart"
+                          [showYAxisAreaLineChart]="_showYAxisAreaLineChart"
+                          [showGirdLinesAreaLineChart]="_showGirdLinesAreaLineChart"
+                          [gradientsAreaLineChart]="_gradientsAreaLineChart"
+                          [showLegendAreaLineChart]="_showLegendAreaLineChart"
+                          [disableTooltipAreaLineChart]="_disableTooltipAreaLineChart"
+                          [showXAxisLabelAreaLineChart]="_showXAxisLabelAreaLineChart"
+                          [xAxisLabelAreaLineChart]="_xAxisLabelAreaLineChart"
+                          [showYAxisLabelAreaLineChart]="_showYAxisLabelAreaLineChart"
+                          [yAxisLabelAreaLineChart]="_yAxisLabelAreaLineChart"
+                          [legendTitleAreaLineChart]="_legendTitleAreaLineChart"
+                          [autoScale]="_autoScale"
+                          [timeline]="_timeline"
+                          [lineInterpolation]="_lineInterpolation"></xena-area-line-chart>
+    <div class="chart-content">
+        <ngx-charts-pie-chart class="chart-container"
+                              *ngIf="_chartType === proChartType.PieChart"
+                              [view]="view"
+                              [scheme]="_colorType"
+                              [results]="single"
+                              [animations]="animations"
+                              [legend]="_showLegend"
+                              [legendTitle]="_legendTitle"
+                              [explodeSlices]="_isExplodeSlices"
+                              [tooltipDisabled]="_isTooltip"
+                              [labels]="_isLabel"
+                              [doughnut]="doughnut"
+                              [arcWidth]="arcWidth"
+                              [gradient]="_isGradient">
+        </ngx-charts-pie-chart>
+        <ngx-charts-advanced-pie-chart *ngIf="_chartType === proChartType.AdvancedPieChart"
+                                       class="chart-container"
+                                       [view]="view"
+                                       [scheme]="_colorType"
+                                       [results]="single"
+                                       [animations]="animations"
+                                       [gradient]="_isGradient">
+        </ngx-charts-advanced-pie-chart>
+        <ngx-charts-pie-grid *ngIf="_chartType === proChartType.PieGrid"
+                             class="chart-container"
+                             [view]="view"
+                             [scheme]="_colorType"
+                             [results]="single"
+                             [animations]="animations">
+        </ngx-charts-pie-grid>
+    </div>
+</div>
+<div class="chart-table">
+    <table>
+        <tr>
+            <th *ngFor="let column of columnPrint">
+                {{column}}
+            </th>
+        </tr>
+        <tr *ngFor="let rowData of dataPrint">
+            <td *ngFor="let column of columnPrint">
+                {{rowData[column]}}
+            </td>
+        </tr>
+    </table>
+</div>

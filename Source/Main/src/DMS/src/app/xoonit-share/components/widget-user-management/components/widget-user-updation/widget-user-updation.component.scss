@@ -1,0 +1,19 @@
+form {
+    padding: 25px 25px 0 25px;
+
+    .active-control {
+        margin-top: 19px;
+        margin-bottom: 0 !important;
+        .text-name {
+            font-size: large;
+            margin-top: 5px;
+        }
+    }
+
+    .wrapper-button {
+        .btn-cmd {
+            margin-right: 0;
+            margin-left: 15px;
+        }
+    }
+}

@@ -1,0 +1,114 @@
+<!--<div *ngIf="config"
+     [ngSwitch]="config.moduleTabCombineName"
+     [perfectScrollbar]="perfectScrollbarConfig"
+     [ngStyle]="contentStyle">    
+    <ng-template [ngSwitchCase]="'43-OrderProcessing'">
+        <ng-container [widgetSavingProcess]="widgetSavingProcessConfig"
+                      [ofModule]="ofModule"
+                      [tabID]="tabContent.TabID"
+                      (outputData)="onChanged($event)"
+                      *ngIf="tabContent.EditForm">
+            <ng-container *ngIf="!tabContent.EditForm.SimpleTabs;then default else simpleTab">
+            </ng-container>
+            <ng-template #default>
+                <app-xn-tab-page-view [data]="tabContent.EditForm"
+                                      [isActivated]="true"
+                                      [tabID]="tabContent.TabID">
+                </app-xn-tab-page-view>
+            </ng-template>
+            <ng-template #simpleTab>
+                <xn-tab-content-simple-tabs [data]="tabContent.EditForm"
+                                            [isActivated]="tabContent.active"
+                                            [globalProperties]="globalProperties"
+                                            [tabID]="tabContent.TabID"
+                                            *ngIf="tabContent.loaded && tabContent.EditForm.SimpleTabs"
+                                            (onFormChanged)="onMainTabChanged($event)">
+                </xn-tab-content-simple-tabs>
+            </ng-template>
+        </ng-container>
+    </ng-template>
+    <ng-template [ngSwitchCase]="'1-Contact'">
+        <app-ad-contact-form (outputData)="onChanged($event)"
+                             [globalProperties]="globalProperties">
+        </app-ad-contact-form>
+    </ng-template>
+
+    <ng-template [ngSwitchCase]="'1-CCPRN'">
+        <app-ad-cash-provider-prn-form (outputData)="onChanged($event)"></app-ad-cash-provider-prn-form>
+    </ng-template>
+
+    <ng-template [ngSwitchCase]="'1-ProviderCost'">
+        <app-ad-cash-provider-pc-form (outputData)="onChanged($event)"
+                                      [gridId]="'b6b6fa7a-08a1-4839-8485-cb8c98baa82f'"
+                                      [globalProperties]="globalProperties"></app-ad-cash-provider-pc-form>
+    </ng-template>
+
+    <ng-template [ngSwitchCase]="'1-PaymentAccount'">
+        <app-ad-payment-account-form (outputData)="onChanged($event)"
+                                     [gridId]="'ce15b6e9-30fc-402c-83df-64729b0f567a'"></app-ad-payment-account-form>
+    </ng-template>
+
+    <ng-template [ngSwitchCase]="'2-Contact'">
+        <app-cust-contact-form (outputData)="onChanged($event)"
+                               [globalProperties]="globalProperties"></app-cust-contact-form>
+    </ng-template>
+
+    <ng-template [ngSwitchCase]="'2-BDAddress'">
+        <app-cust-contact-form (outputData)="onChanged($event)"
+                               [globalProperties]="globalProperties"></app-cust-contact-form>
+    </ng-template>
+
+    <ng-template [ngSwitchCase]="'3-ArticleSet'">
+        <app-article-set-composition-form [globalProperties]="globalProperties"
+                                          [compositionGridLeftId]="'25cadb68-d07c-48ea-8e1d-00fe15d3da64'"
+                                          [compositionGridRightId]="'0a0f5ee7-cf44-492f-b746-1d2936e279b7'"
+                                          (outputData)="onChanged($event)"></app-article-set-composition-form>
+    </ng-template>
+
+    <ng-template [ngSwitchCase]="'3-Purchasing'">
+        <app-article-purchasing-form [globalProperties]="globalProperties"
+                                     (outputData)="onChanged($event)"></app-article-purchasing-form>
+    </ng-template>
+
+    <ng-template [ngSwitchCase]="'4-T2'">
+        <media-code-t2-form [globalProperties]="globalProperties"
+                            [gridId]="'b49d8d20-7bb0-4d2c-b69d-7846e33f3947'"
+                            [layoutInfo]="(layoutInfoModel | async)"
+                            (outputData)="onChanged($event)"></media-code-t2-form>
+    </ng-template>
+
+    <ng-template [ngSwitchCase]="'4-T3'">
+        <app-campaign-article-t3-form [campaignGridLeftId]="'234d4120-14a6-4f09-b5e0-27368a7efbe2'"
+                                      [campaignGridRightId]="'950dc6cd-f9b6-45b3-b99b-e60532a0b354'"
+                                      [campaignGridBottomId]="'c156d0ae-5c4e-4d34-bafd-8c50789bafeb'"
+                                      (outputData)="onChanged($event)"></app-campaign-article-t3-form>
+    </ng-template>
+
+    <ng-template [ngSwitchCase]="'4-T6'">
+        <app-campaign-inter-retakes-t6-form [globalProperties]="globalProperties"
+                                            [campaignGridLeftId]="'88660786-c1be-44e7-ac96-8fc53d462615'"
+                                            [campaignGridBottomId]="'7ef6e161-bb7d-4eb5-94d4-af2174b1e525'"
+                                            [campaignGridRightId]="'f17d81e8-9574-425a-bfe4-e0b376699227'"
+                                            (outputData)="onChanged($event)"></app-campaign-inter-retakes-t6-form>
+    </ng-template>
+
+    <ng-template [ngSwitchCase]="'6-RowDetail'">
+        <app-business-cost-form switchForm="row"
+                                [gridId]="'af1adcde-468a-4719-9ce2-6a8d999153b1'"
+                                (outputData)="onChanged($event)"></app-business-cost-form>
+    </ng-template>
+
+    <ng-template [ngSwitchCase]="'38-User'">
+        <um-user-profile-form [globalProperties]="globalProperties"
+                              [gridId]="'b7859025-f9d3-42f6-beb5-2e961ff5a62e'"
+                              (outputData)="onChanged($event)"></um-user-profile-form>
+    </ng-template>
+    <ng-template [ngSwitchCase]="'38-WidgetManagement'">
+        <widget-manage-form (outputData)="onChanged($event)"></widget-manage-form>
+    </ng-template>
+    <ng-template [ngSwitchCase]="'31-Inventory'">
+        <app-inventory [globalProperties]="globalProperties"
+                       [gridId]="'90578d7f-1e7c-4a16-98f5-9631aa2d76ed'"
+                       (outputData)="onChanged($event)"></app-inventory>
+    </ng-template>
+</div>-->

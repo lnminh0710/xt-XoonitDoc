@@ -1,0 +1,21 @@
+<ng-container *ngIf="formGroupDefinition && formGroupDefinition.formDefinitions">
+    <div class="dynamic-form-group-container position-relative h-100 w-100">
+        <ng-container *ngFor="let formDef of formGroupDefinition.formDefinitions; let i=index">
+            <ng-container [ngSwitch]="formDef.type">
+                <ng-container *ngSwitchCase="FORM_DEF_TYPE.FORM_FIELDS">
+                    <ng-template *ngTemplateOutlet="formFieldTemplateRef; context: { formDefinition: formDef, index: i }">
+                    </ng-template>
+                </ng-container>
+                <ng-container *ngSwitchCase="FORM_DEF_TYPE.DATA_TABLE">
+                    <ng-template *ngTemplateOutlet="formTableTemplateRef; context: { tableDefinition: formDef, dataGrids: formDef.dataGrids, index: i }">
+                    </ng-template>
+                </ng-container>
+                <ng-container *ngSwitchCase="FORM_DEF_TYPE.GROUP_FORMS">
+                    <!-- Right now, Group of Forms type just support array of data table. for mix with form fields and data table is not available  -->
+                    <ng-template *ngTemplateOutlet="groupFormsTemplateRef; context: { groupFormsDefinition: formDef, dataGrids: formDef.dataGrids, index: i  }">
+                    </ng-template>
+                </ng-container>
+            </ng-container>
+        </ng-container>
+    </div>
+</ng-container>

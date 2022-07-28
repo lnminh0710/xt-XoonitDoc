@@ -1,0 +1,11 @@
+.image-clip {
+	position: absolute;
+    overflow: hidden;
+    user-select: none;
+    border: 1px solid #bdbdbd;
+    cursor: move;
+}
+#feedback-img-temp {
+	position: absolute;
+    user-select: none;
+}

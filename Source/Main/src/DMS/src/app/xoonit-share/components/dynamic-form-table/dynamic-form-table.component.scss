@@ -1,0 +1,11 @@
+.grid-title {
+    display: flex;
+    justify-content: space-between;
+
+    .icon-add {
+        color: #bf2600;
+        margin-right: 5px;
+        font-size: 22px;
+        cursor: pointer;
+    }
+}

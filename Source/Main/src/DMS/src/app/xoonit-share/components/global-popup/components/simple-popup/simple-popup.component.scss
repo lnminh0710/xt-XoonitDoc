@@ -1,0 +1,85 @@
+@import '../../popup.scss';
+
+:host {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.x-popup-container {
+    &.resize {
+        height: 70vh;
+        width: 70vw;
+        min-width: 20vw;
+        min-height: 20vh;
+        resize: both;
+        overflow: auto;
+        position: fixed;
+        .height-popup {
+            height: 100%;
+
+            .height-body {
+                height: calc(100% - 45px);
+            }
+        }
+    }
+    .x-popup {
+        height: inherit;
+    }
+    & .body {
+        height: inherit;
+        & .content {
+            text-align: center;
+            min-height: 90px;
+            font-size: 16px;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        ::ng-deep {
+            .wrapper-popup {
+                padding: 24px;
+
+                .popup-content {
+                    font-size: 16px;
+                    margin-bottom: 20px;
+                    font-weight: bold;
+                }
+
+                .popup-footer {
+                    justify-content: space-around;
+
+                    button {
+                        border: none;
+                        border-radius: 3px;
+                        padding: 6px 30px;
+                        font-size: 14px;
+                        color: white;
+                    }
+                    .btn-default {
+                        background-color: #ecedf0;
+                        color: black;
+                    }
+
+                    .right-buttons {
+                        button + button {
+                            margin-left: 10px;
+                        }
+                        .btn-gray {
+                            background-color: #56637a;
+                            padding: 6px 35px;
+                        }
+                        .btn-primary {
+                            background-color: #0049b0;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .move-popup {
+        cursor: move;
+    }
+}

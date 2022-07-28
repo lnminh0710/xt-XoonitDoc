@@ -1,0 +1,32 @@
+<div *ngIf="(!!treeViewData && !!treeViewData.length)"
+	class="xn-tree-view"
+	id="{{mainHtmlId}}"
+	[context-menu-directive]="contextMenuData"
+	[waiting]="contextCompletedBuild"
+	[wantToLeftClick]="false">
+	<div class="tree-view__left-main" id="{{leftHtmlId}}">
+		<app-xn-tree-view-left
+			[mainHtmlId]="mainHtmlId"
+			[leftHtmlId]="leftHtmlId"
+			[rightHtmlId]="rightHtmlId"
+			[data]="treeViewData"
+			[mainData]="treeViewData"
+			[rawData]="rawData"
+			[config]="config"
+			(dataChange)="leftSideChange($event)"
+			(itemSelect)="itemSelectHandler($event)"
+			(textChanged)="treeNodeTextChnageHandler()"
+			(unRename)="unRenameHandler()">
+		</app-xn-tree-view-left>
+	</div>
+	<div *ngIf="config && config.editMode"
+		class="tree-view__right-main"
+		id="{{rightHtmlId}}">
+		<app-xn-tree-view-right
+			[data]="treeViewData"
+			[config]="config"
+			(itemSelect)="itemSelectHandler($event)"
+			(dataChange)="rightSideChange($event)">
+		</app-xn-tree-view-right>
+	</div>
+</div>

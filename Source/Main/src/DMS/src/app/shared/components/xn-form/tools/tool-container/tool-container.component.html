@@ -1,0 +1,24 @@
+<div [ngSwitch]="tabId" class="height-100-pc">
+    <!-- TAB 1-->
+    <div *ngSwitchCase="'ScanDispatcher'" class="tool-container__side">
+        <dispatcher-form-combine [poolLeftGridStep1Id]="'72186fc5-77a7-4723-a501-f655676b6e6f'"
+                                 [poolRightGridStep1Id]="'bc636620-de7c-44f0-a411-30be135ee611'"
+                                 [poolLeftGridStep2Id]="'e06cae3d-39fd-49c5-b8e0-09ae7fbc824f'"
+                                 [poolRightGridStep2Id]="'18ec02ff-c78a-4386-8801-70cc665670ef'">
+        </dispatcher-form-combine>
+    </div>
+    <!-- TAB 2-->
+    <div *ngSwitchCase="'ScanAssignment'" class="tool-container__side">
+        <app-scan-assignment></app-scan-assignment>
+    </div>
+    <!-- TAB Default -->
+    <div *ngSwitchDefault class="widget-container">
+        <!-- Widget Default-->
+        <widget-container *ngSwitchDefault
+                          [isActivated]="isActivated"
+                          [pageId]="pageId"
+                          [tabID]="tabID"
+                          (onWidgetDeleted)="widgetDeleted($event)">
+        </widget-container>
+    </div>
+</div>

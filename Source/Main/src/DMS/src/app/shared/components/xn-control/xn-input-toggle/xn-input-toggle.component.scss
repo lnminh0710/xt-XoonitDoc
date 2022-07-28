@@ -1,0 +1,56 @@
+:host {
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.collapse-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--dialog-user-info-name-color);
+  position: relative;
+
+  h1,
+  i {
+    font-size: 1rem;
+    margin: 0;
+    display: inline;
+    cursor: pointer;
+  }
+
+  i {
+    margin-left: 10px;
+  }
+
+  h1 {
+    text-align: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    flex: 1;
+  }
+
+  xoonit-chat-icon-button {
+    position: absolute;
+    right: -60px;
+    top: -10px;
+  }
+}
+
+.icon-clear {
+  cursor: pointer;
+}
+
+:host ::ng-deep {
+  .mat-form-field-appearance-fill {
+    .mat-form-field-flex {
+      border-radius: 4px 4px 0 0;
+      padding: 0 0.75em;
+    }
+  }
+}

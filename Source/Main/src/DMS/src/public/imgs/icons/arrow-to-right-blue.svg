@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="12px" height="12px" viewBox="0 0 12 12" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title></title>
+    <defs>
+        <path d="M6.19466667,0.861 C5.93533333,1.11966667 5.93533333,1.54433333 6.19466667,1.80366667 L9.724,5.333 L0.666666667,5.333 C0.3,5.333 0,5.633 0,5.99966667 C0,6.367 0.3,6.667 0.666666667,6.667 L9.724,6.667 L6.19266667,10.1976667 C5.93333333,10.457 5.93333333,10.881 6.19266667,11.1403333 C6.452,11.4003333 6.87666667,11.4003333 7.13533333,11.1403333 L11.8013333,6.475 C11.8026667,6.47433333 11.804,6.473 11.806,6.47166667 C11.9353333,6.343 12,6.171 12,5.99966667 C12,5.82833333 11.9353333,5.657 11.806,5.52766667 C11.804,5.527 11.802,5.52566667 11.8006667,5.52433333 L7.13733333,0.861 C7.008,0.731666667 6.83666667,0.667 6.666,0.667 C6.49533333,0.667 6.324,0.731666667 6.19466667,0.861 Z" id="path-1"></path>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="L29.3-Sync-success-Copy-2" transform="translate(-504.000000, -586.000000)">
+            <g id="Group-83" transform="translate(478.000000, 351.000000)">
+                <g id="standard/action/arrow-right" transform="translate(26.000000, 235.000000)">
+                    <mask id="mask-2" fill="white">
+                        <use xlink:href="#path-1"></use>
+                    </mask>
+                    <use id="Clip-2" fill="#42526E" xlink:href="#path-1"></use>
+                    <g id="↳-🎨Color" mask="url(#mask-2)" fill="#2684FF">
+                        <g transform="translate(-2.000000, -2.000000)" id="B200">
+                            <rect x="0" y="0" width="16" height="16"></rect>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

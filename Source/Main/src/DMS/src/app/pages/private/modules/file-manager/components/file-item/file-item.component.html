@@ -1,0 +1,44 @@
+<div
+    class="file-manager__item-container"
+    [ngClass]="{ selected: isSelected }"
+    (click)="selectItem($event)"
+    (dblclick)="dblClickItem()"
+>
+    <div class="file-manager__item-icon">
+        <div
+            color="primary"
+            class="file-manager__item-icon-image icon-file-type icon-folder"
+            [ngClass]="{ 'folder-empty-icon': item.isEmpty }"
+            *ngIf="!item.isFile"
+        ></div>
+        <div
+            color="primary"
+            class="file-manager__item-icon-image icon-file-type {{ item.extension }}"
+            *ngIf="item.isFile"
+        ></div>
+    </div>
+    <h2
+        aria-label="item.value"
+        class="file-manager__item-title"
+        style="-webkit-box-orient: vertical"
+        *ngIf="!isEditing"
+        #pop="bs-tooltip"
+        container="body"
+        [tooltip]="item.value"
+    >
+        {{ item.value }}
+    </h2>
+    <textarea
+        #inlineEditValue
+        class="file-manager__item-title-editing"
+        *ngIf="isEditing"
+        #popError="bs-tooltip"
+        container="body"
+        [tooltip]="err"
+        autofocus="true"
+        container="body"
+        tooltipClass="tooltip-error"
+        triggers="focus mousemove"
+        >{{ item.value }}</textarea
+    >
+</div>

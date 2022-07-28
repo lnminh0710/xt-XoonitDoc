@@ -1,0 +1,43 @@
+<div class="panel panel-info skin-light">
+    <div class="panel-body xoonit-grid">
+        <xn-ag-grid
+            [pageIndex]="pageIndex"
+            [pageSize]="pageSize"
+            [id]="gridId"
+            [serverPaging]="true"
+            [hightlightKeywords]="keyword"
+            [suppressContextMenu]="false"
+            [dataSource]="dataResult"
+            [allowDrag]="allowDrag.value"
+            [customDragContent]="customDragContent"
+            [parentInstance]="that"
+            [globalProperties]="globalProperties"
+            [autoSelectCurrentRowAfterChangingData]="tab.title === moduleList.AttachmentGlobalSearch.moduleName"
+            [rowSelection]="tab.title === 'Preisschild' ? 'multiple' : 'single'"
+            [suppressRowClickSelection]="tab.title !== 'Preisschild'"
+            [sheetName]="'Global Search'"
+            [rowHeight]="38"
+            [headerHeight]="40"
+            (rowClick)="onResultSelect($event)"
+            (rowDoubleClicked)="onRowDoubleClick($event)"
+            [paginationFromPopup]="paginationFromPopup"
+            (pageChanged)="onPageChanged($event)"
+            (pageNumberChanged)="onPageNumberChanged($event)"
+            (mousedown)="gridMouseDown($event)"
+            (mouseup)="gridMouseUp($event)"
+            (keydown)="gridKeyDown($event)"
+        >
+        </xn-ag-grid>
+    </div>
+    <div class="result-heading">
+        <label class="result-summary" *ngIf="globalNumberFormat == 'N'">
+            <label-translation [keyword]="'Gs_Result__N_of_entries'"></label-translation>:
+            {{ numberOfEntries | number: 0 }} <label-translation [keyword]="'Gs_Result__of'"></label-translation>
+            {{ totalResults | number: 0 }}
+        </label>
+        <label class="result-summary" *ngIf="globalNumberFormat != 'N'">
+            <label-translation [keyword]="'Gs_Result__N_of_entries'"></label-translation>: {{ numberOfEntries }}
+            <label-translation [keyword]="'Gs_Result__of'"></label-translation> {{ totalResults }}
+        </label>
+    </div>
+</div>

@@ -1,0 +1,168 @@
+<!-- Main Header -->
+<feedback-combine #feedbackCombine></feedback-combine>
+<header class="main-header" *ngIf="isSignedIn">
+    <!-- Header Navbar -->
+
+    <nav class="navbar navbar-static-top h-100 w-100" role="navigation">
+        <!-- Navbar Right Menu -->
+        <div class="navbar-custom-menu h-100 w-100">
+            <ul class="nav navbar-nav h-100 w-100 d-flex flex-wrap justify-content-center">
+                <li class="logo-wrapper">
+                    <div class="module logo">
+                        <span class="float-left">
+                            <div (click)="backToHome()" class="xoonit-logo"></div>
+                            <div *ngIf="isProUser" class="pro-icon"></div>
+                        </span>
+                        <span class="float-left menu-name-wrapper" *ngIf="activeModule && activeModule.moduleName">
+                            <div class="line-splitter"></div>
+                            <span class="menu-name">{{ activeModule.moduleName }}</span>
+                        </span>
+                        <span *ngIf="
+                                activeSubModule &&
+                                activeSubModule.moduleName &&
+                                activeModule &&
+                                activeModule.moduleName != activeSubModule.moduleName
+                            " class="margin-left--md">
+                            <i class="fa fa-caret-right"></i>
+                            <span class="margin-left--md">{{ activeSubModule.moduleName }}</span>
+                        </span>
+                        <span *ngIf="companyName" class="margin-left--md company-name-wrapper">
+                            <span class="margin-left--md company-name">{{ companyName }}</span>
+                        </span>
+                    </div>
+                </li>
+                <li class="hidden-xs hidden-sm flex-grow-1 d-flex justify-content-center search-box-wrapper">
+                    <div class="search-box position-relative">
+                        <mat-form-field floatLabel="never" appearance="none" class="w-100 pl-4"
+                        (mouseover)="isHover = true" (mouseleave)="isHover = false">
+                            <mat-icon aria-hidden="false" matPrefix>search</mat-icon>
+                            <input matInput id="txt-header-global-search" #searchInputElm placeholder="Global Search"
+                                (focus)="focusSearchBox()" (blur)="focusOutSearchBox()"
+                                (keyup.out-zone)="keypress($event)" (keyup.enter)="searchText && search($event)" />
+                            <button *ngIf="searchInputElm.value && (isFocus || isHover)" 
+                                    mat-icon-button 
+                                    color="warn" 
+                                    (click.out-zone)="clearSearchText()"
+                                    matSuffix 
+                                    #clearSearchElm>
+                                <mat-icon aria-hidden="false" color="red">cancel</mat-icon>
+                            </button>
+                        </mat-form-field>
+                    </div>
+                </li>
+
+                <li class="dropdown user user-menu userBox" dropdown [autoClose]="autoCloseDropdown"
+                    (onHidden)="onUserDropdownClosed()" (updateAutoClose)="updateDropdownAutoClose($event)"
+                    #popUser="bs-tooltip" data-placement="bottom" tooltip="User profile"></li>
+                <li class="cloud-connection" (click)="onSelectedModule(moduleList.Cloud)" #popCloud="bs-tooltip"
+                    data-placement="bottom" tooltip="Cloud"
+                    *ngIf="enableCloud">
+                    <div class="image-icon cloud-not-config-icon" [ngClass]="{
+                            hidden:
+                                cloudStatus !== cloudConnectionStatus.notConfig &&
+                                cloudStatus !== cloudConnectionStatus.connecting
+                        }"></div>
+                    <div class="image-icon cloud-connected-icon" [ngClass]="{
+                            hidden: cloudStatus !== cloudConnectionStatus.connected
+                        }"></div>
+                    <div class="image-icon cloud-lost-connect-icon" [ngClass]="{
+                            hidden:
+                                cloudStatus !== cloudConnectionStatus.lostConnect &&
+                                cloudStatus !== cloudConnectionStatus.apiLostConnect
+                        }"></div>
+                </li>
+                <li *ngIf="enableNotificationPopup" class="notificationBox" dropdown [autoClose]="false"
+                    (onSelectedModule)="redirectInvoiceApprovalFromNotification($event)" [notiListener]="notiListener"></li>
+                <li>
+                    <xn-feedback-icon></xn-feedback-icon>
+                </li>   
+                <li *ngIf="mainModules.length > 0" class="main-module" dropdown (onHidden)="onMenuClosed()">
+                    <a mat-button dropdownToggle class="dropdown-toggle" id="main-modules-dropdown"
+                        aria-controls="dropdown-menubar" #popMenu="bs-tooltip" data-placement="bottom" tooltip="Menu">
+                        <span class="xn-icon__menu-hamburger icon-white"></span>
+                    </a>
+                    <xn-menu-bar id="dropdown-menubar" role="menu" aria-labelledby="main-modules-dropdown"
+                        class="dropdown-menu" [modules]="mainModules" [activeModule]="activeModule" [position]="'right'"
+                        [isDisabled]="cloudStatus !== cloudConnectionStatus.connected"
+                        style="top: 58px; box-shadow: 0px 5px 19px 2px rgba(0, 0, 0, 0.25)"
+                        (onSelectedModule)="onSelectedModule($event, true, null, true)"
+                        (onClickNewModule)="onClickNewModule($event)" (onSearchingModule)="onSearchingModule($event)">
+                    </xn-menu-bar>
+                </li>
+                <!-- Control Sidebar Toggle Button -->
+                <li class="hidden-xs" [class.disabled]="!isViewMode" #popSetting="bs-tooltip"
+                    data-placement="bottom" tooltip="Setting">
+                    <a mat-button [ngClass]="[isViewMode ? '' : 'display-none']" data-toggle="control-sidebar"
+                        class="user-setting toggle-sidebar-right cursor-pointer">
+                        <span class="xn-icon__menu_gear toggle-sidebar-right"></span>
+                    </a>
+
+                    <a [ngClass]="[isViewMode ? 'display-none' : '']" class="user-setting cursor-pointer">
+                        <i class="fa fa-cog"></i>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>
+<p-dialog header="" [visible]="allowShowPopupTestConnection && isLockUI && !isHidePopup"
+    [styleClass]="'caminada-flat-dialog'" modal="true" [draggable]="false" [resizable]="false" responsive="false"
+          [closeOnEscape]="false" [width]="430" [height]="160"
+          *ngIf="isSignedIn && enableCloud">
+    <p-header>
+        <div class="caminada-flat-dialog__header cloud-connection-dialog__header">
+            <div class="image-icon warning-icon"></div>
+            <div class="space"></div>
+            <span class="cloud-connection-dialog__header-title"
+                *ngIf="cloudStatus === cloudConnectionStatus.lostConnect">
+                <label-translation [keyword]="'APP_HEADER__LostConnection'"></label-translation>
+            </span>
+            <span class="cloud-connection-dialog__header-title" *ngIf="cloudStatus === cloudConnectionStatus.notConfig">
+                <label-translation [keyword]="'APP_HEADER__NoCloudConfig'"></label-translation>
+            </span>
+            <span class="cloud-connection-dialog__header-title"
+                *ngIf="cloudStatus === cloudConnectionStatus.apiLostConnect">
+                <label-translation [keyword]="'APP_HEADER__NetworkError'"></label-translation>
+            </span>
+            <span class="cloud-connection-dialog__header-title"
+                *ngIf="cloudStatus === cloudConnectionStatus.connecting">
+                <label-translation [keyword]="'APP_HEADER__ConnectingToCloud'"></label-translation>
+            </span>
+            <div class="space"></div>
+        </div>
+    </p-header>
+    <div class="cloud-connection-dialog__content">
+        <div class="cloud-connection-dialog__content-info">
+            <label-translation [keyword]="'APP_HEADER__ConnectionRetryIn'"></label-translation>
+            <div class="cloud-connection-dialog__content-info-countdown">
+                {{ countdown }}
+            </div>
+            s...
+        </div>
+    </div>
+    <div class="cloud-connection-dialog__action">
+        <div class="cloud-connection-dialog__action-button-hide" (click)="isHidePopup = true">
+            <label-translation [keyword]="'APP_HEADER__Hide'"></label-translation>
+        </div>
+        <div class="space"></div>
+        <div class="cloud-connection-dialog__action-button-cloud"
+            [ngClass]="{ hidden: cloudStatus === cloudConnectionStatus.apiLostConnect }" (click)="gotoCloudConfig()">
+            <label-translation [keyword]="'APP_HEADER__GoToCloudConfig'"></label-translation>
+        </div>
+
+        <div class="cloud-connection-dialog__action-button-retry" *ngIf="isCallAPI">
+            <div class="image-icon button-spinner-icon"></div>
+        </div>
+        <div class="cloud-connection-dialog__action-button-retry" (click)="testCloudConnection()" *ngIf="!isCallAPI">
+            <label-translation [keyword]="'APP_HEADER__Retry'"></label-translation>
+        </div>
+    </div>
+</p-dialog>
+<div class="cloud-connection__backdrop" *ngIf="isSignedIn && isLockUI && isHidePopup" (click)="isHidePopup = false">
+    <div class="cloud-connection__backdrop-status">
+        <label-translation [keyword]="'APP_HEADER__Connecting'"></label-translation>
+        <div class="image-icon button-spinner-icon"></div>
+    </div>
+</div>
+<div class="image-icon button-spinner-icon hidden"></div>
+<div class="image-icon warning-icon hidden"></div>

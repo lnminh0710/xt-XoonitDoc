@@ -1,0 +1,73 @@
+@import 'src/sass_files/color.scss';
+
+.dms-list-widget {
+    height: 90%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    width: 100%;
+    border-radius: 12px;
+
+    .dms-widget {
+        color: white;
+        padding: 30px;
+        position: relative;
+
+        .dms-icon {
+            position: absolute;
+            top: 20px;
+            right: 10px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .dms-header {
+            text-transform: uppercase;
+            font-size: large;
+            margin-bottom: 15px;
+        }
+
+        .badge-circle {
+            padding: 4px 6px;
+        }
+
+        ::ng-deep .btn-clear-field {
+            position: absolute;
+            right: 2%;
+            top: 20%;
+            cursor: pointer;
+        }
+
+        ::ng-deep input.mat-input-element {
+            padding-right: 7%;
+        }
+
+        &:first-child {
+            padding-bottom: 0;
+        }
+    }
+
+    .xn-line {
+        text-align: center;
+        margin-top: 15px;
+
+        .swap-icon {
+            cursor: pointer;
+        }
+    }
+
+    .icon-button {
+        cursor: pointer;
+    }
+    .form-group {
+        position: relative;
+        .icon-button-right {
+            position: absolute;
+            top: 24%;
+            right: 2%;
+        }
+    }
+
+    .font-large {
+        font-size: large;
+    }
+}

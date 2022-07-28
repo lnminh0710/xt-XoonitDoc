@@ -1,0 +1,28 @@
+<div class="form-management-detail">
+  <div class="form-management-detail__action">
+    <!-- <div class="form-management-detail__action-button" (click)="!isAssignMode && (isEditMode = !isEditMode)">
+      <i class="fa" [ngClass]="{ 'fa-undo': isEditMode, 'fa-pencil': !isEditMode }"></i>
+    </div> -->
+    <div class="create-icon" (click)="addField()"></div>
+  </div>
+  <div class="form-management-detail__main" [perfectScrollbar]="perfectScrollbarConfig">
+    <form-management-field
+      *ngFor="let module of dataSource"
+      [fields]="module.fields"
+      [isEditMode]="isEditMode"
+      [isCardMode]="isCardMode"
+      [isAssignMode]="isAssignMode"
+      [moduleName]="module.name"
+      [IdRepTableModuleTemplateName]="module.IdRepTableModuleTemplateName"
+      (updateFieldOrder)="updateFieldOrder($event)"
+      (updateFieldValue)="updateFieldValue($event)"
+      (updateModuleName)="updateModuleName($event)"
+    >
+    </form-management-field>
+  </div>
+</div>
+<form-management-create-field
+  [showDialog]="showDialog"
+  [modules]="dataSource"
+  (closeDialog)="closeDialog($event)"
+></form-management-create-field>

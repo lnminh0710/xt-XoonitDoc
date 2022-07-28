@@ -1,0 +1,37 @@
+﻿<span dropdown
+      [isOpen]="status.isopen"
+      (onShown)="toggled(true)"
+      (onHidden)="toggled(false)">
+
+    <a class="dropdown-toggle cursor-pointer"
+       dropdownToggle>
+        <span class="xn-icon__dot_list-horizontal icon-black"></span>
+    </a>
+
+    <div class="dropdown-menu panel"
+         *dropdownMenu
+         aria-labelledby="tab-header-menu">
+        <perfect-scrollbar class="panel-body">
+            <div *ngFor="let item of columnFilterList; let idx = index"
+                 class="col-xs-12  no-padding">
+                <mat-checkbox color="primary"
+                              [(ngModel)]="item.isChecked">
+                    <i class="fa {{item.iconName}}"
+                       aria-hidden="true"
+                       tooltip="{{item.fieldName}}"
+                       placement="top"
+                       container="body"></i>
+                    {{item.fieldName}}
+                </mat-checkbox>
+            </div>
+        </perfect-scrollbar>
+        <div class="panel-footer text-center">
+            <button type="button"
+                    mat-raised-button
+                    class="mat-btn-blue  mat-btn-block"
+                    (click)="apply()">
+                Apply
+            </button>
+        </div>
+    </div>
+</span>

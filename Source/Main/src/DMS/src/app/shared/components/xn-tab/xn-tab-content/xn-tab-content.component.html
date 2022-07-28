@@ -1,0 +1,90 @@
+<div class="xn__tab-content"
+     [ngStyle]="tabContentStyle">
+    <div class="tab-content"
+         [ngClass]="{'border-right': hasSplitter}">
+        <div class="tab-pane"
+             [ngClass]="{'active': mainTabContent.active,'gradient-background' : gradientBackgroundStatus}"
+             id="{{mainTabContent.TabID}}"
+             *ngIf="mainTabContent.accessRight && mainTabContent.accessRight.read">
+            <ng-container [ngSwitch]="mainTabContent.keepContentState">
+                <ng-container *ngSwitchCase="true">
+
+                    <ng-container *ngIf="!newTabConfig;then default else newMainTab">
+                    </ng-container>
+
+                    <ng-template #default>
+                        <app-xn-tab-page-view [data]="mainTabContent"
+                                              [isActivated]="mainTabContent.active"
+                                              [hidden]="!mainTabContent.loaded"
+                                              [tabID]="mainTabContent.TabID"></app-xn-tab-page-view>
+                    </ng-template>
+                    <ng-template #newMainTab>
+                        <app-xn-tab-content-new-main-tab *ngIf="newTabConfig && newTabConfig.normalTab && newTabConfig.normalTab.isMainTab == true && newTabConfig.normalTab.tabID == mainTabContent.TabID"
+                                                         [tabContent]="mainTabContent"
+                                                         [config]="newTabConfig.normalTab"
+                                                         [globalProperties]="globalProperties"
+                                                         (onFormChanged)="onMainTabChanged($event)"></app-xn-tab-content-new-main-tab>
+                    </ng-template>
+
+                </ng-container>
+
+                <ng-container *ngSwitchDefault>
+                    <app-xn-tab-page-view [data]="mainTabContent"
+                                          [isActivated]="mainTabContent.active"
+                                          [tabID]="mainTabContent.TabID"
+                                          *ngIf="mainTabContent.loaded && !newTabConfig && !mainTabContent.SimpleTabs"></app-xn-tab-page-view>
+
+                    <xn-tab-content-simple-tabs [data]="mainTabContent"
+                                                [isActivated]="mainTabContent.active"
+                                                [config]="newTabConfig ? newTabConfig.simpleTab : null"
+                                                [globalProperties]="globalProperties"
+                                                [tabID]="mainTabContent.TabID"
+                                                *ngIf="mainTabContent.loaded
+                                                && !(newTabConfig && newTabConfig.normalTab && newTabConfig.normalTab.isMainTab == true && newTabConfig.normalTab.tabID == mainTabContent.TabID)
+                                                && mainTabContent.SimpleTabs"
+                                                (onFormChanged)="onMainTabChanged($event)"></xn-tab-content-simple-tabs>
+                 
+
+                    <app-xn-tab-content-new-main-tab *ngIf="newTabConfig && newTabConfig.normalTab && newTabConfig.normalTab.isMainTab == true && newTabConfig.normalTab.tabID == mainTabContent.TabID"
+                                                     [tabContent]="mainTabContent"
+                                                     [config]="newTabConfig.normalTab"
+                                                     [globalProperties]="globalProperties"
+                                                     (onFormChanged)="onMainTabChanged($event)"></app-xn-tab-content-new-main-tab>
+                </ng-container>
+            </ng-container>
+
+        </div>
+
+        <!--<ng-template ngFor let-tabContent [ngForOf]="otherTabsContent">
+            <div *ngIf="tabContent.accessRight && tabContent.accessRight.read"
+                 class="tab-pane"
+                 [ngClass]="{'active': tabContent.active, 'gradient-background' : gradientBackgroundStatus}"
+                 id="{{tabContent.TabID}}">
+                <app-xn-tab-page-view [data]="tabContent"
+                                      [isActivated]="tabContent.active"
+                                      [tabID]="tabContent.TabID"
+                                      *ngIf="tabContent.loaded && !newTabConfig && !tabContent.SimpleTabs"></app-xn-tab-page-view>
+
+                <xn-tab-content-simple-tabs [data]="tabContent"
+                                            [isActivated]="tabContent.active"
+                                            [config]="newTabConfig ? newTabConfig.simpleTab : null"
+                                            [globalProperties]="globalProperties"
+                                            [tabID]="tabContent.TabID"
+                                            *ngIf="tabContent.loaded
+                                                && (!newTabConfig || (newTabConfig && !newTabConfig.normalTab))
+                                                && tabContent.SimpleTabs"
+                                            (onFormChanged)="onOtherTabChanged($event)"></xn-tab-content-simple-tabs>
+
+                <app-xn-tab-content-new-other-tab *ngIf="newTabConfig
+                                                      && newTabConfig.normalTab
+                                                      && newTabConfig.normalTab.isMainTab == false
+                                                      && newTabConfig.normalTab.tabID == tabContent.TabID"
+                                                  [tabContent]="tabContent"
+                                                  [config]="newTabConfig.normalTab"
+                                                  [globalProperties]="globalProperties"
+                                                  (onFormChanged)="onOtherTabChanged($event)"></app-xn-tab-content-new-other-tab>
+
+            </div>
+        </ng-template>-->
+    </div>
+</div>

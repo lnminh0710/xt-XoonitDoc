@@ -1,0 +1,93 @@
+<ng-container [formGroup]="form">
+    <td class="add-remove">
+        <i class="fa fa-plus plus" (click)="add()"></i>
+        <i class="fa fa-times remove" (click)="remove()"></i>
+    </td>
+    <td class="logical">
+        <xn-combo-box
+            *ngIf="index > 0"
+            formControlName="condition"
+            [itemsSource]="conditionDatasource"
+            [displayMemberPath]="'value'"
+            [selectedValuePath]="'key'"
+            [isEditable]="true"
+            [isRequired]="false"
+            placeholder="Please select"
+        >
+        </xn-combo-box>
+    </td>
+    <td class="field">
+        <xn-combo-box
+            formControlName="field"
+            [itemsSource]="fieldDatasource"
+            [displayMemberPath]="'value'"
+            [selectedValuePath]="'key'"
+            [isEditable]="true"
+            [isRequired]="false"
+            (selectedIndexChanged)="onFieldChange($event)"
+            placeholder="Please select"
+        >
+        </xn-combo-box>
+    </td>
+    <td class="operator">
+        <xn-combo-box
+            formControlName="operator"
+            [itemsSource]="operatorDatasource"
+            [displayMemberPath]="'value'"
+            [selectedValuePath]="'key'"
+            [isEditable]="true"
+            [isRequired]="false"
+            placeholder="Please select"
+        >
+        </xn-combo-box>
+    </td>
+    <td class="value">
+        <div [ngSwitch]="controlType" style="width: 80%">
+            <input
+                type="text"
+                *ngSwitchCase="'textbox'"
+                id="{{ focusControlId }}"
+                formControlName="value"
+                class="input_value"
+            />
+
+            <input
+                *ngSwitchCase="'numberbox'"
+                formControlName="value"
+                type="text"
+                id="{{ focusControlId }}"
+                xn-numeric
+                [min]="0"
+                [format]="'N'"
+                class="input_value"
+            />
+
+            <xn-combo-box
+                *ngSwitchCase="'dropdown'"
+                formControlName="value"
+                [itemsSource]="dropdownDatasource"
+                [displayMemberPath]="'value'"
+                [selectedValuePath]="'key'"
+                [isEditable]="true"
+                [isRequired]="false"
+                [controlId]="focusControlId"
+                placeholder="Please select"
+            >
+            </xn-combo-box>
+
+            <xn-date-picker
+                *ngSwitchCase="'date'"
+                formControlName="value"
+                [format]="globalDateFormat"
+                class="no-padding-left no-padding-right small-size drop-down"
+                [min]="'1900-01-01'"
+                [id]="focusControlId"
+                [isRequired]="false"
+            >
+            </xn-date-picker>
+
+            <mat-checkbox *ngSwitchCase="'checkbox'" formControlName="value" color="primary" class="inline-checkbox">
+            </mat-checkbox>
+        </div>
+    </td>
+</ng-container>

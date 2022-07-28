@@ -1,0 +1,159 @@
+<div
+    class="image-slider__item"
+    [ngStyle]="{
+        width: width + 'px',
+        height: height + typeHeight + 'px',
+        margin: hideTitle ? '10px' : 'auto',
+        'margin-top': '10px',
+        'margin-bottom': '10px'
+    }"
+    [ngClass]="{ selected: isSelected, small: type == ImageThumbnailType.info }"
+>
+    <div
+        (dblclick)="onDblClickItem()"
+        (click)="onClickItem()"
+        class="image-slider__item-image-container"
+        [ngStyle]="{
+            width: width + 'px',
+            height: height + 'px'
+        }"
+    >
+        <img
+            class="image-slider__item-image"
+            [style.max-width.px]="width - 2"
+            [style.max-height.px]="height - 2"
+            [imageSpinner]="imageSrc"
+            [alt]="image.ScannedPath"
+        />
+    </div>
+    <div
+        *ngIf="type == ImageThumbnailType.slider"
+        class="image-slider__item-type item--display-center"
+        (click)="onClickItem()"
+        (dblclick)="onDblClickItem()"
+    >
+        <div class="image-slider__item-title">
+            {{ index + 1 }}. {{ hideTitle ? '' : image.DocumentType }}
+            <div class="image-slider__item-total-page" *ngIf="!hideTitle">
+                <label-translation [keyword]="'IMAGE_SLIDER__DocumentPages'"></label-translation>:
+                {{ image.NumberOfImages || '1' }}
+            </div>
+        </div>
+        <div *ngIf="type == ImageThumbnailType.slider" class="image-slider__item-action">
+            <div class="item--display-center" (click)="viewImageDetail()">
+                <div
+                    class="image-slider__item-action-icon eye-icon icon-transform"
+                    #popView="bs-tooltip"
+                    container="body"
+                    data-placement="bottom"
+                    [tooltip]="tooltipViewButton"
+                ></div>
+            </div>
+            <div class="item--display-center" (click)="onClickDangerButton()">
+                <div
+                    class="image-slider__item-action-icon trash-icon icon-transform"
+                    #popDelete="bs-tooltip"
+                    container="body"
+                    data-placement="bottom"
+                    [tooltip]="tooltipDeleteButton"
+                ></div>
+            </div>
+        </div>
+    </div>
+    <div
+        *ngIf="type == ImageThumbnailType.info"
+        class="image-slider__item-type item--display-center"
+        (click)="onClickItem()"
+        (dblclick)="onDblClickItem()"
+        [ngStyle]="{ 'background-color': image.Color }"
+    >
+        <div class="image-slider__item-title">{{ index + 1 }}. {{ image?.DoctypeSelected?.name }}</div>
+        <div *ngIf="!isSelected && !image.IsOriginal" class="image-slider__item-action">
+            <div class="image-slider__item-action-icon trash-icon icon-transform" (click)="onClickDangerButton()"></div>
+        </div>
+    </div>
+    <div *ngIf="type == ImageThumbnailType.scanningList" class="image-slider__item-type" (dblclick)="onDblClickItem()">
+        <div
+            class="image-slider__item-doctype item--display-center"
+            (click)="onClickCheckbox()"
+            [ngStyle]="{ 'background-color': image.Color }"
+        >
+            <div class="image-slider__item-checkbox" [ngClass]="{ checked: isChecked, unchecked: !isChecked }"></div>
+            {{ image?.DoctypeSelected?.name }}
+        </div>
+        <div class="image-slider__item-info item--display-center">
+            <div class="image-slider__item-info-total-page item--display-center">
+                <div
+                    class="toolbar-icon"
+                    [ngClass]="{
+                        'single-page-icon': !image || image?.NumberOfImages == 1,
+                        'multi-page-icon': image?.NumberOfImages > 1
+                    }"
+                ></div>
+
+                <label-translation [keyword]="'IMAGE_SLIDER__DocumentPages'"></label-translation>:
+                {{ image.NumberOfImages || '1' }}
+            </div>
+            <div class="image-slider__item-action">
+                <div
+                    class="item--display-center"
+                    (click)="!isConfirmInside ? onClickDangerButton() : (isConfirmDelete = true)"
+                    #popUpload="bs-tooltip"
+                    container="body"
+                    data-placement="bottom"
+                    [tooltip]="tooltipDeleteButton"
+                >
+                    <div class="image-slider__item-action-icon trash-icon icon-transform"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div
+        class="image-slider__item-confirmation item--display-center"
+        [ngClass]="{ 'show-confirm': isConfirmDelete || isLoading }"
+    >
+        <div class="image-slider__item-confirmation-container" *ngIf="isConfirmDelete">
+            <div class="image-slider__item-confirmation-title">
+                <label-translation [keyword]="'WIDGET_DMS_ACTIONS__DeleteThisDocument'"></label-translation>
+            </div>
+            <div class="image-slider__item-confirmation-action item--display-center">
+                <div
+                    class="image-slider__item-confirmation-action-cancel item--display-center"
+                    (click)="isConfirmDelete = false"
+                >
+                    <label-translation [keyword]="'POPUP_action__Cancel'"> </label-translation>
+                </div>
+                <div
+                    class="image-slider__item-confirmation-action-delete item--display-center"
+                    (click)="onClickDangerButton(); isConfirmDelete = false"
+                >
+                    <label-translation [keyword]="'POPUP_action__Yes_Delete'"> </label-translation>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="isLoading">
+            <div
+                class="image-icon upload-animate-icon"
+                [style.width.px]="width / 3"
+                [style.height.px]="width / 3"
+                [style.background-size.px]="width / 3"
+            ></div>
+            <div class="title">Uploading...</div>
+        </div>
+    </div>
+</div>
+<!-- <image-viewer-dialog
+    *ngIf="image && isShowDialog"
+    [isShowDialog]="isShowDialog"
+    [image]="image"
+    [isUnCallAPI]="true"
+    (onClose)="isShowDialog = false"
+></image-viewer-dialog> -->
+
+<ng-template #tooltipViewButton>
+    <label-translation [keyword]="'IMAGE_SLIDER__View'"></label-translation>
+</ng-template>
+<ng-template #tooltipDeleteButton>
+    <label-translation [keyword]="'IMAGE_SLIDER__Delete'"></label-translation>
+</ng-template>

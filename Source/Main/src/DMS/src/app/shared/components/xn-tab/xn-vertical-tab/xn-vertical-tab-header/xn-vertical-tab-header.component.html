@@ -1,0 +1,110 @@
+<div id="tab-container" [ngStyle]="tabContainerStyle">
+    <div class="tab-header m-0 d-flex flex-row justify-content-between" (click)="toggleTabHeader()">
+        <label-translation [keyword]="'Xn_Vertical_Tab_Header__Document_Assign'"></label-translation>
+
+        <span>
+            <button
+                mat-icon-button
+                disableRipple
+                [style.width.px]="20"
+                [style.height.px]="20"
+                [style.line-height.px]="0"
+                (click)="toggleFolderTree($event)"
+            >
+                <mat-icon
+                    [svgIcon]="iconChevronDownCicle"
+                    aria-hidden="false"
+                    inline="true"
+                    [style.transition]="'all .1s'"
+                    [ngStyle]="isCollapsed && { transform: 'rotate(180deg) translate(0px, 5px)' }"
+                ></mat-icon>
+            </button>
+        </span>
+    </div>
+    <!-- <div class="path-folder-panel-wrapper flex-container flex-row">
+        <div class="path-folder flex-container flex-row">
+            <ng-template [ngIf]="pathFolder.length">
+                <ul class="path" [perfectScrollbar]="{ suppressScrollY: true, suppressScrollX: false, useBothWheelAxes: true }">
+                    <li class="folder-name" *ngFor="let path of pathFolder">{{path}}</li>
+                </ul>
+            </ng-template>
+        </div>
+    </div> -->
+    <div class="tree-widget position-relative" [ngStyle]="treeWidgetContainerStyle">
+        <xn-document-tree
+            [dataTree]="documentsFolder"
+            #xnDocumentTree
+            [modeTree]="modeTree"
+            [shouldGetDocumentQuantity]="shouldGetDocumentQuantity"
+            (onClickOnNode)="clickOnNode($event)"
+            (onDblClickOnNode)="dblClickOnNode($event)"
+            (okActionFolder)="okActionFolderName($event)"
+            (cancelActionFolder)="cancelActionFolderName($event)"
+        >
+            <ng-template #rightClickMenuOnNode let-node="node">
+                <div (click)="dblClickOnNode({ event: $event, node: node })">Save document into this folder</div>
+                <div (click)="addSubfolder({ event: $event, node: node })">Add subfolder</div>
+                <div (click)="renameFolder({ event: $event, node: node })" *ngIf="!node.data.isReadOnly">
+                    Rename folder
+                </div>
+                <div (click)="deleteFolder({ event: $event, node: node })" *ngIf="!node.data.isReadOnly">
+                    Delete folder
+                </div>
+            </ng-template>
+
+            <ng-template
+                #rightClickMenuOnTree
+                let-treeComponent="treeComponent"
+                let-closeContextMenuFunc="closeContextMenuFunc"
+            >
+                <div
+                    (click)="
+                        newFolder({
+                            event: $event,
+                            treeComponent: treeComponent,
+                            closeContextMenuFunc: closeContextMenuFunc
+                        })
+                    "
+                >
+                    New folder
+                </div>
+            </ng-template>
+        </xn-document-tree>
+    </div>
+</div>
+
+<p-dialog
+    header=""
+    [(visible)]="isShowConfirmDialog"
+    [styleClass]="'prime-dialog ui-dialog-flat'"
+    appendTo="body"
+    modal="true"
+    width="400"
+    [draggable]="true"
+    [resizable]="true"
+    responsive="true"
+>
+    <p-header>
+        <div class="confirm-dialog__header">
+            <span class="confirm-dialog__title"> Confirm </span>
+            <div
+                class="toolbar-icon icon-transform close-dialog-icon"
+                #popHand="bs-tooltip"
+                container="body"
+                data-placement="bottom"
+                tooltip="Close"
+                aria-label="Close"
+                (click)="isShowConfirmDialog = false; callbackAcceptInDialog = null"
+            ></div>
+        </div>
+    </p-header>
+    <div class="confirm-dialog__content">Do you want to save into this folder?</div>
+    <div class="confirm-dialog__footer">
+        <div class="confirm-dialog__space"></div>
+        <div class="confirm-dialog__button-cancel" (click)="isShowConfirmDialog = false; callbackAcceptInDialog = null">
+            Cancel
+        </div>
+        <div class="confirm-dialog__button-save" (click)="callbackAcceptInDialog()">Save</div>
+        <div class="confirm-dialog__space"></div>
+    </div>
+</p-dialog>

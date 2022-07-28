@@ -1,0 +1,144 @@
+<div class="dialog-container">
+    <div mat-dialog-content>
+        <div class="avatar-container">
+            <div class="avatar"></div>
+        </div>
+        <div class="header">
+            <div class="title">
+                <label-translation [keyword]="'DIALOG_USER_PROFILE__Content'"></label-translation>
+            </div>
+            <img class="img-close icon-transform" src="public/imgs/icon_close.svg" alt="close-icon" (click)="close()" />
+        </div>
+        <div class="body">
+            <div class="user-avatar">
+                <xn-user-avatar [profileImageUrl]="profileImageUrl"></xn-user-avatar>
+                <div class="avatar-text-wrapper">
+                    <span class="avatar-text">
+                        <label-translation [keyword]="'DIALOG_USER_PROFILE__Change_Avatar'"></label-translation>
+                    </span>
+                    <img *ngIf="isView"
+                         class="btn-edit icon-transform"
+                         src="public/imgs/authenticate/iconspace_Pencil.svg"
+                         (click)="onEdit()" />
+                </div>
+            </div>
+            <div class="user-info" *ngIf="userForm">
+                <form [formGroup]="userForm">
+                    <div class="form-group row item display-flex">
+                        <div class="col-md-4 flex-middle lable-text">
+                            <label-translation [keyword]="'DIALOG_USER_PROFILE__First_Name'"></label-translation>
+                            <!-- {{ dataFields.FIRST_NAME.displayName }} -->
+                        </div>
+                        <div class="col-md-8 form-item">
+                            <input xnEnteBreakDown
+                                   [xnControlsData]="controlDataList"
+                                   type="text"
+                                   [placeholder]="dataFields.FIRST_NAME.displayName"
+                                   [attr.name]="dataFields.FIRST_NAME.controlName"
+                                   id="{{ dataFields.FIRST_NAME.controlName }}"
+                                   [formControlName]="dataFields.FIRST_NAME.controlName"
+                                   class="form-control"
+                                   required
+                                   autocomplete="off" />
+                            <xn-error-message [condition]="
+                                    xnErrorMessageHelper.isRequired(userForm, dataFields.FIRST_NAME.controlName)
+                                "
+                                              [fieldName]="dataFields.FIRST_NAME.displayName"
+                                              [typeErr]="ERR_MES_TYPE_ENUM.REQUIRED">
+                            </xn-error-message>
+                        </div>
+                    </div>
+                    <div class="form-group row item display-flex">
+                        <div class="col-md-4 flex-middle lable-text">
+                            <label-translation [keyword]="'DIALOG_USER_PROFILE__Last_Name'"></label-translation>
+                            <!-- {{ dataFields.LAST_NAME.displayName }} -->
+                        </div>
+                        <div class="col-md-8 form-item">
+                            <input xnEnteBreakDown
+                                   [xnControlsData]="controlDataList"
+                                   type="text"
+                                   [placeholder]="dataFields.LAST_NAME.displayName"
+                                   [attr.name]="dataFields.LAST_NAME.controlName"
+                                   id="{{ dataFields.LAST_NAME.controlName }}"
+                                   [formControlName]="dataFields.LAST_NAME.controlName"
+                                   class="form-control"
+                                   required
+                                   autocomplete="off" />
+                            <xn-error-message [condition]="xnErrorMessageHelper.isRequired(userForm, dataFields.LAST_NAME.controlName)"
+                                              [fieldName]="dataFields.LAST_NAME.displayName"
+                                              [typeErr]="ERR_MES_TYPE_ENUM.REQUIRED">
+                            </xn-error-message>
+                        </div>
+                    </div>
+                    <div class="form-group row item display-flex">
+                        <div class="col-md-4 flex-middle lable-text">
+                            <label-translation [keyword]="'DIALOG_USER_PROFILE__Email'"></label-translation>
+                            <!-- {{ dataFields.EMAIL.displayName }} -->
+                        </div>
+                        <div class="col-md-8 form-item">
+                            <input type="text"
+                                   [placeholder]="dataFields.EMAIL.displayName"
+                                   [value]="currentUserEmail"
+                                   class="form-control"
+                                   required
+                                   disabled />
+                        </div>
+                    </div>
+                    <div class="form-group row item display-flex">
+                        <div class="col-md-4 flex-middle lable-text">
+                            <label-translation [keyword]="'DIALOG_USER_PROFILE__Phone_Number'"></label-translation>
+                            <!-- {{ dataFields.PHONE_NUMBER.displayName }} -->
+                        </div>
+                        <div class="col-md-8 form-item">
+                            <input xnEnteBreakDown
+                                   [xnControlsData]="controlDataList"
+                                   type="text"
+                                   [placeholder]="dataFields.PHONE_NUMBER.displayName"
+                                   [attr.name]="dataFields.PHONE_NUMBER.controlName"
+                                   id="{{ dataFields.PHONE_NUMBER.controlName }}"
+                                   [formControlName]="dataFields.PHONE_NUMBER.controlName"
+                                   class="form-control"
+                                   autocomplete="off" />
+                        </div>
+                    </div>
+                    <div class="form-group row item display-flex">
+                        <div class="col-md-4 flex-middle lable-text">
+                            <label-translation [keyword]="'DIALOG_USER_PROFILE__Birthday'"></label-translation>
+                            <!-- {{ dataFields.BIRTHDAY.displayName }} -->
+                        </div>
+                        <div class="col-md-8 form-item">
+                            <mat-form-field appearance="fill">
+                                <input xnEnteBreakDown
+                                       [xnControlsData]="controlDataList"
+                                       [attr.name]="dataFields.BIRTHDAY.controlName"
+                                       id="{{ dataFields.BIRTHDAY.controlName }}"
+                                       matInput
+                                       [matDatepicker]="picker"
+                                       [formControlName]="dataFields.BIRTHDAY.controlName"
+                                       placeholder="dd.mm.yyyy" />
+                                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                <mat-datepicker #picker></mat-datepicker>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="form-group link-wrapper">
+                        <a class="amd-link" (click)="changePassword()">
+                            <label-translation [keyword]="'DIALOG_USER_PROFILE__Change_Password'"></label-translation>
+                        </a>
+                    </div>
+                    <div class="form-group button-wrapper">
+                        <button type="button" class="btn-xoonit default" (click)="close()">
+                            <label-translation [keyword]="'DIALOG_USER_PROFILE__Cancel'"></label-translation>
+                        </button>
+                        <button type="button"
+                                class="btn-xoonit primary"
+                                (click)="submit()"
+                                [disabled]="isView || (!isView && !userForm.valid)">
+                            <label-translation [keyword]="'DIALOG_USER_PROFILE__Save'"></label-translation>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

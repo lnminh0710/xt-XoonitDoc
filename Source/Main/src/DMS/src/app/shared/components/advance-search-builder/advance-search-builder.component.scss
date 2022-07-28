@@ -1,0 +1,55 @@
+.plus, .remove {
+    font-size: 15pt;
+    padding-right: 5px;
+    cursor: pointer;
+}
+
+.plus {
+    color: green;
+}
+
+.remove {
+    color: darkred;
+}
+
+.clauses {
+    border-collapse: collapse;
+    padding: 1px;
+    width: 100%;
+    .add-new-clause-container {
+        cursor: pointer;
+    }
+}
+
+.clauses ::ng-deep {
+    clause-row {
+        height: 25px;
+        vertical-align: top;
+    }
+
+    .add-remove {
+        width: 50px;
+    }
+
+    .logical {
+        width: 10%;
+        max-width: 100px;
+    }
+
+    .field {
+        width: 25%;
+    }
+
+    .operator {
+        width: 18%;
+        max-width: 150px;
+    }
+
+    td {
+        padding: 0 5px 5px 0;
+    }
+
+    wj-combo-box, xn-combo-box {
+        width: 100%;
+    }
+}

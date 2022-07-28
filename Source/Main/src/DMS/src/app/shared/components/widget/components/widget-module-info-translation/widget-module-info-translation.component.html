@@ -1,0 +1,98 @@
+<p-dialog
+    #pDialogTranslation
+    [styleClass]="dialogStyleClass"
+    header=""
+    [(visible)]="showDialog"
+    [resizable]="isResizable"
+    [draggable]="isDraggable"
+    modal="modal"
+    width="900"
+    height="500"
+    responsive="true"
+    appendTo="body"
+    (onShow)="onShow($event)"
+>
+    <p-header>
+        <div class="modal-header--information">
+            <span class="fa fa-language header-icon pull-left"></span>
+            <span class="header-text pull-left">Widget Translation</span>
+            <div
+                class="toolbar-icon icon-transform close-dialog-icon"
+                #popHand="bs-tooltip"
+                container="body"
+                data-placement="bottom"
+                [tooltip]="'Close'"
+                aria-label="Close"
+                (click)="close()"
+            ></div>
+            <button
+                type="button"
+                mat-raised-button
+                class="mat-btn-expand-popup"
+                *ngIf="!isMaximized"
+                (click)="maximize()"
+            >
+                <span class="fa fa-window-maximize"></span>
+            </button>
+            <button
+                type="button"
+                mat-raised-button
+                class="mat-btn-collapse-popup"
+                *ngIf="isMaximized"
+                (click)="restore()"
+            >
+                <span class="fa fa-window-restore"></span>
+            </button>
+        </div>
+    </p-header>
+    <div class="col-xs-12 no-padding common-popup">
+        <widget-translate
+            #translateWidget
+            *ngIf="showDialog"
+            [translateTextGridId]="translateTextGridId"
+            [enableApplyFor]="enableApplyFor"
+            [widgetData]="_data"
+            [data]="translationData"
+            [keyword]="keyword"
+            [isTranslateDataTextOnly]="isTranslateDataTextOnly"
+            (resetWidgetTranslation)="resetWidget($event)"
+            (outputData)="changeData($event)"
+            (saveData)="saveData($event)"
+        >
+        </widget-translate>
+    </div>
+    <p-footer>
+        <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix no-border no-padding">
+            <button
+                *ngIf="!isShowSaveOnlyButton"
+                type="button"
+                mat-raised-button
+                class="mat-btn-blue pull-right new-size"
+                title="Save"
+                (click)="save()"
+            >
+                Save and Next
+            </button>
+            <button
+                *ngIf="isShowSaveOnlyButton"
+                type="button"
+                mat-raised-button
+                class="mat-btn-blue pull-right new-size"
+                title="Save"
+                (click)="save(true)"
+            >
+                Save
+            </button>
+            <button
+                type="button"
+                mat-raised-button
+                class="mat-btn-blue pull-right new-size"
+                title="Save"
+                (click)="save(true, true)"
+            >
+                Save and Close
+            </button>
+        </div>
+        <div class="widget-info__resize_bottom xn-icon__resize icon-black"></div>
+    </p-footer>
+</p-dialog>

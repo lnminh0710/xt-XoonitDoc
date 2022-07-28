@@ -1,0 +1,24 @@
+.e-g {
+	height: 100%;
+}
+.m {
+    width: calc(100% - 15px);
+    height: calc(100% - 40px);
+    position: absolute;
+    z-index: 11;
+    top: 40px;
+}
+.c {
+    background-color: #fff;
+    position: absolute;
+    z-index: 12;
+    top: calc((100% - 150px)/2);
+    left: calc((100% - 260px)/2);
+    width: 260px;
+    padding: 10px;
+    border-radius: 4px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, .5);
+}
+.c-t {
+    text-align: center;
+}

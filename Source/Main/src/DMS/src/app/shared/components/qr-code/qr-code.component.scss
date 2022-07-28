@@ -1,0 +1,22 @@
+@import 'src/sass_files/color.scss';
+
+.button {
+    height: 32px;
+    width: 100px;
+    margin-top: 8px;
+
+    border-radius: 8px;
+    cursor: pointer;
+
+    font-family: 'rbt_Regular';
+    font-size: 16px;
+    letter-spacing: 0;
+    text-align: center;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background-color: $red16;
+    color: $white;
+}

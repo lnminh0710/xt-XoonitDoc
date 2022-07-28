@@ -1,0 +1,112 @@
+<p-dialog
+    header=""
+    [(visible)]="showDialog"
+    modal="true"
+    positionTop="150"
+    responsive="true"
+    appendTo="body"
+    [resizable]="false"
+    [draggable]="false"
+    [width]="400"
+    [height]="500"
+    [contentStyle]="{ 'padding-bottom': 0, 'padding-top': 0 }"
+>
+    <p-header>
+        <div class="modal-header--information">
+            <span class="header-text">Schedule Setting</span>
+            <div class="toolbar-icon close-dialog-icon" (click)="close()"></div>
+        </div>
+    </p-header>
+    <div class="col-xs-12 no-padding height-pc-100 padding-top--md">
+        <div class="col-xs-12 no-padding">
+            <label class="control-label col-xs-3 no-padding-left text-right">Report time</label>
+            <div class="col-xs-9 no-padding-left">
+                <mat-radio-group name="schedule-type-radio" [(ngModel)]="dateType">
+                    <mat-radio-button
+                        color="primary"
+                        name="schedule-type-radio"
+                        value="currently"
+                        class="margin-left--sd"
+                    >
+                        Currently
+                    </mat-radio-button>
+                    <mat-radio-button
+                        color="primary"
+                        name="schedule-type-radio"
+                        value="rangeDate"
+                        class="margin-left--sd"
+                    >
+                        Range date
+                    </mat-radio-button>
+                </mat-radio-group>
+            </div>
+        </div>
+        <div
+            class="col-xs-12 no-padding margin-top--sd schedule-setting-form"
+            [ngClass]="{ submitted: fromGroup && fromGroup['submitted'] }"
+        >
+            <form [formGroup]="fromGroup" class="form-horizontal" id="fromGroup" novalidate>
+                <div class="col-xs-12 no-padding margin-bottom--sm" [hidden]="dateType == 'currently'">
+                    <label class="control-label col-xs-3 no-padding-left">From date</label>
+                    <div class="col-xs-9 no-padding">
+                        <xn-date-picker #stopDateCtr [isRequired]="false" formControlName="fromDate"> </xn-date-picker>
+                        <control-messages [control]="fromGroup.controls['fromDate']" [showIcon]="false">
+                        </control-messages>
+                        <div *ngIf="isFromDateGreaterThanToDate" class="alert alert-danger text-left">
+                            From date must be less than or equal To date
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12 no-padding margin-bottom--sm" [hidden]="dateType == 'currently'">
+                    <label class="control-label col-xs-3 no-padding-left">To date</label>
+                    <div class="col-xs-9 no-padding">
+                        <xn-date-picker #stopDateCtr [isRequired]="false" formControlName="toDate"> </xn-date-picker>
+                        <control-messages [control]="fromGroup.controls['stopDate']" [showIcon]="false">
+                        </control-messages>
+                    </div>
+                </div>
+                <div class="col-xs-12 no-padding">
+                    <label class="control-label col-xs-3 no-padding-left">Email</label>
+                    <div class="col-xs-9 no-padding">
+                        <textarea
+                            #email
+                            class="form-control xn-input"
+                            id="email"
+                            name="email"
+                            formControlName="email"
+                            autocomplete="off"
+                        >
+                        </textarea>
+                        <control-messages [control]="fromGroup.controls['email']" [showIcon]="false">
+                        </control-messages>
+                    </div>
+                </div>
+                <span class="pull-right">* Send multiple email with comma separetor</span>
+                <div class="col-xs-12 no-padding">
+                    <label class="control-label col-xs-3 no-padding-left margin-top--sd">Parameter</label>
+                    <div class="col-xs-9 no-padding">
+                        <textarea
+                            #parameter
+                            class="form-control xn-input"
+                            id="parameter"
+                            name="parameter"
+                            formControlName="parameter"
+                            autocomplete="off"
+                        >
+                        </textarea>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <p-footer>
+        <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+            <button label="Cancel" pbutton="" type="button" mat-raised-button class="mat-btn-red" (click)="close()">
+                <span class="ui-button-text ui-c">Close</span>
+            </button>
+            <button label="Save" pbutton="" mat-raised-button type="button" class="mat-btn-blue" (click)="submit()">
+                <span class="ui-button-text ui-c">Run Statistic</span>
+            </button>
+        </div>
+    </p-footer>
+</p-dialog>

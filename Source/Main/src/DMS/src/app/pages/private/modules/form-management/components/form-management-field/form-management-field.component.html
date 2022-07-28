@@ -1,0 +1,58 @@
+<div class="form-management-field" [ngClass]="{ card: isCardMode }">
+  <div class="form-management-field__action">
+    <input
+      class="form-management-field__title-name"
+      [ngClass]="{ editing: isEditMode }"
+      [disabled]="isAssignMode"
+      [value]="moduleName"
+      *ngIf="isExpand"
+      (change)="changeModule($event)"
+    />
+    <div class="form-management-field__detail" *ngIf="!isExpand">
+      <input
+        class="form-management-field__title-name"
+        [ngClass]="{ editing: isEditMode }"
+        [disabled]="isAssignMode"
+        [value]="moduleName"
+      />
+      <div class="form-management-field__sub-title text--ellipsis">
+        <span class="form-management-field__sub-title-active">
+          {{ totalFieldActive }}
+        </span>
+        /
+        <span class="form-management-field__sub-title-hidden">
+          {{ totalField }}
+        </span>
+        activate fields
+      </div>
+    </div>
+    <div class="form-management-field__expand-button" (click)="isExpand = !isExpand">
+      <i
+        class="fa"
+        [ngClass]="{
+          'fa-angle-down': !isExpand,
+          'fa-angle-up': isExpand
+        }"
+      ></i>
+    </div>
+  </div>
+  <div *ngIf="isExpand" class="form-management-field__container" [dragula]="moduleName" [dragulaModel]="fields">
+    <div class="form-management-field__field" *ngFor="let field of fields">
+      <input
+        class="form-management-field__field-name"
+        [ngClass]="{
+          editing: isEditMode && !isAssignMode,
+          new: field.new
+        }"
+        [autofocus]="field.new"
+        [disabled]="!isEditMode || isAssignMode"
+        [(value)]="field.FieldName"
+        (focusout)="onFocusOut($event, field)"
+      />
+      <div class="form-switch" *ngIf="isEditMode" (click)="clickToggle(field)">
+        <input type="checkbox" class="form-switch__input" [checked]="field.IsActive" />
+        <span class="form-slider round"></span>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,30 @@
+{
+  "Payee": {
+    "QRType":0,
+    "Version": 1,
+    "CodingType": 2,
+	 "FieldName": 3,
+    "ZE-AddressType": 4,
+    "Company": 5,
+    "Street": 6,
+    "StreetNr": 7,
+    "ZIP": 8,
+    "Place": 9,
+    "Country": 10
+  },
+  "Slip": {
+    "InvoiceAmount": 11,
+    "Curreny":12,
+    "EZP-AddressType": 13
+  },
+  "Payer": {
+    "EZP-Name": 14,
+    "Street": 15,
+    "StreetNr": 16,
+    "ZIP": 17,
+    "City": 18,
+    "Country": 19,
+    "RernceType":20,
+    "Refernce": 20
+  }
+}

@@ -1,0 +1,22 @@
+.input-group {
+    width: 100%;
+    
+    .input-group-icon {
+        position: relative;
+        white-space: nowrap;
+        vertical-align: middle;
+        display: table-cell;
+        z-index: 3;
+
+        &.icon-calendar {
+            font-size: 18px;
+
+            & span {
+                &:hover {
+                    cursor: pointer;
+                }
+                margin-left: -25px;
+            }
+        }
+    }
+}

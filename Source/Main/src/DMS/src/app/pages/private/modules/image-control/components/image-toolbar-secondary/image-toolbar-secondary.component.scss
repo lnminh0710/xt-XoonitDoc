@@ -1,0 +1,104 @@
+%inputCss {
+    width: 40%;
+    background-color: transparent;
+    border: unset;
+    border-bottom: 1px solid;
+}
+.space {
+    flex: 1;
+}
+
+.image-toolbar-secondary {
+    width: 100%;
+
+    &__input {
+        @extend %inputCss;
+    }
+    &.show-container {
+        .image-toolbar-secondary__document-keyword,
+        .image-toolbar-secondary__document-todo {
+            top: 90px;
+            height: 45px;
+        }
+    }
+
+    &.disabled {
+        pointer-events: none;
+    }
+
+    &__document-keyword,
+    &__page-number {
+        display: flex;
+        align-items: center;
+        padding: 0 17px;
+        position: absolute;
+        top: 45px;
+        height: 45px;
+        width: 100%;
+        transition: all 0.35s ease-in-out;
+        .keyword-icon {
+            background: url('src/public/imgs/icons/keyword.svg') center no-repeat;
+            height: 28px;
+            width: 28px;
+        }
+        .todo-icon {
+            background: url('src/public/imgs/icons/todo.svg') center no-repeat;
+            height: 28px;
+            width: 28px;
+        }
+    }
+    &__page-number {
+        z-index: 100;
+    }
+
+    &__icon {
+        margin: 0 10px;
+        width: 28px;
+        height: 28px;
+        &.prev-arrow {
+            background: url('src/public/imgs/icons/prev-arrow.png') center no-repeat;
+            cursor: pointer;
+        }
+        &.prev-arrow-disabled {
+            background: url('src/public/imgs/icons/prev-arrow-disabled.svg') center no-repeat;
+        }
+        &.next-arrow {
+            background: url('src/public/imgs/icons/next-arrow.svg') center no-repeat;
+            cursor: pointer;
+        }
+        &.next-arrow-disabled {
+            background: url('src/public/imgs/icons/next-arrow-disabled.png') center no-repeat;
+        }
+    }
+
+    &__info {
+        flex: 1;
+        margin-right: 20px;
+        &.document-path {
+            flex: 0 auto;
+        }
+        &.small {
+            // flex: 1 30%;
+            width: 50%;
+        }
+        &-title {
+            width: 100%;
+            height: 16px;
+
+            font-size: 12px;
+        }
+        &-value:not(input) {
+            width: 100%;
+
+            height: 19px;
+            font-size: 14px;
+            white-space: nowrap;
+            font-weight: bold;
+        }
+        input {
+            @extend %inputCss;
+            max-width: 400px;
+            font-weight: bold;
+        }
+    }
+}

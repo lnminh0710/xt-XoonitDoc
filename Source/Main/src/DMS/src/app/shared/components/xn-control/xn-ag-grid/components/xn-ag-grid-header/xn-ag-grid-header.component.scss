@@ -1,0 +1,88 @@
+.title-container {
+    border-bottom: none;
+    color: #077cbf;
+    font-weight: bold;
+    padding: 1px 8px 1px 8px;
+    background-color: white;
+    display: -ms-flexbox;
+    display: flex;
+    height: 30px;
+    -ms-flex-align: center;
+    align-items: center;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+
+    &.has-border {
+        border: 1px solid #DDDDDD;
+    }
+}
+
+.controls-container {
+    border: 1px solid #DDDDDD;
+    border-bottom: none;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    -ms-flex-align: center;
+    align-items: center;
+    padding: 4px 8px;
+    min-height: 39px;
+
+    .search-box {
+        position: relative;
+        max-width: 180px;
+        margin-right: 8px;
+    }
+
+    .filter-box {
+        max-width: 180px;
+    }
+
+    .search-n-filter-box {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+    }
+}
+
+.btn-del-editable-table, .btn-plus-editable-table, .icon-editable-table, .btn-upload-editable-table {
+    width: 24px;
+    height: 24px;
+    background-color: transparent;
+    padding: 0px;
+    line-height: 24px;
+    margin: 0px;
+    border-width: 0px;
+}
+
+.btn-del-editable-table:hover, .btn-plus-editable-table:hover, .btn-upload-editable-table:hover {
+    background-color: #e3e3e3;
+}
+
+.icon-editable-table:hover {
+    background-color: transparent !important;
+}
+
+.btn-del-editable-table {
+    color: #dd4b39 !important;
+}
+
+.btn-plus-editable-table {
+    color: green !important;
+}
+
+.btn-upload-editable-table {
+    color: #337ab7 !important;
+}
+
+.btn-del-editable-table.disabled {
+    color: #808080 !important;
+    opacity: 1;
+}
+
+.btn-plus-editable-table.disabled, .btn-plus-editable-table.disabled:focus {
+    color: #808080 !important;
+    opacity: 1;
+    background-color: transparent;
+}

@@ -1,0 +1,195 @@
+<as-split direction="horizontal" [gutterSize]="5">
+    <as-split-area [size]="70" [minSize]="3">
+        <div class="">
+            <xn-country-check-list
+                #countryCheckList
+                [data]="countryCheckListData"
+                (outputData)="getDataForCountryCheckList($event)"
+            >
+            </xn-country-check-list>
+        </div>
+    </as-split-area>
+    <as-split-area [size]="30" [minSize]="3" [perfectScrollbar]="{ suppressScrollX: false, suppressScrollY: false }">
+        <div class="c-c-l-e-r">
+            <div class="xn__form-header">
+                <span>Countries group</span>
+            </div>
+            <div class="col-xs-12 c-g" [perfectScrollbar]="{ suppressScrollX: true, suppressScrollY: false }">
+                <div *ngFor="let group of countriesGroup" class="c-g-i">
+                    <div class="c-g-i-c">
+                        <mat-checkbox
+                            *ngIf="!group.editing"
+                            name="groupName"
+                            color="primary"
+                            (change)="countryGroupChecked(group)"
+                            [(ngModel)]="group.checked"
+                        >
+                        </mat-checkbox>
+                    </div>
+                    <span
+                        *ngIf="!group.editing"
+                        class="c-g-i-t"
+                        (click)="groupLableClicked(group)"
+                        (dblclick)="countryGroupDoubleClick(group)"
+                        >{{ group.text }}</span
+                    >
+                    <div class="g-t-e" *ngIf="group.editing">
+                        <input
+                            type="textbox"
+                            class="form-control xn-input"
+                            [(ngModel)]="group.text"
+                            [ngClass]="{ 'input-error': !groupName && submitEditingGroupName }"
+                            id="group-name-editing-{{ group.id }}"
+                            (keyup)="groupNameKeyup($event, group)"
+                        />
+                        <button
+                            mat-raised-button
+                            class="margin-left--sm mat-btn-red pull-right mat-btn-small--icon--tool-bar"
+                            (click)="cancelUpdateGroupName(group)"
+                        >
+                            <i class="fa fa-times font-size-16px"></i>
+                        </button>
+                        <button
+                            mat-raised-button
+                            [disabled]="!group.dirty"
+                            class="mat-btn-green pull-right mat-btn-small--icon--tool-bar"
+                            (click)="updateGroupName(group)"
+                        >
+                            <i class="fa fa-floppy-o font-size-16px"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 c-g-b">
+                <button mat-raised-button [disabled]="disabledAdd" class="mat-btn-green" (click)="addGroup()">
+                    <i class="fa fa-plus"></i>
+                    <span>Create group</span>
+                </button>
+                <button mat-raised-button [disabled]="disabledUpdate" class="mat-btn-orange" (click)="updateGroup()">
+                    <i class="fa fa-pencil"></i>
+                    <span>Update group</span>
+                </button>
+                <button mat-raised-button [disabled]="disabledDelete" class="mat-btn-red" (click)="deleteGroup()">
+                    <i class="fa fa-trash-o"></i>
+                    <span>Delete group</span>
+                </button>
+            </div>
+        </div>
+    </as-split-area>
+</as-split>
+<p-dialog
+    [styleClass]="'c-g-n-d'"
+    header=""
+    [(visible)]="showDialog"
+    modal="modal"
+    width="300"
+    height="180"
+    responsive="true"
+    appendTo="body"
+>
+    <p-header>
+        <div class="modal-header--information">
+            <span class="fa fa-plus header-icon pull-left"></span>
+            <span class="header-text pull-left">Add group name</span>
+            <div class="toolbar-icon close-dialog-icon" (click)="close()"></div>
+        </div>
+    </p-header>
+    <div *ngIf="showDialog" class="col-xs-12 no-padding height-pc-100">
+        <input
+            class="form-control xn-input"
+            [ngClass]="{ 'input-error': !groupName && submitAddGroupName }"
+            id="txt-group-name"
+            (change)="groupNameChanged()"
+            (keyup)="groupNamePopupKeyup($event)"
+            [(ngModel)]="groupName"
+        />
+        <div [hidden]="groupName || !submitAddGroupName" class="alert alert-danger">Required!</div>
+    </div>
+    <p-footer>
+        <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+            <button type="button" mat-raised-button class="pull-right new-size" title="Close" (click)="close()">
+                Cancel
+            </button>
+            <button
+                label="Save"
+                pbutton=""
+                mat-raised-button
+                type="button"
+                class="mat-btn-blue"
+                (click)="createGroupName()"
+            >
+                <span class="ui-button-text ui-c">Save</span>
+            </button>
+        </div>
+    </p-footer>
+</p-dialog>
+
+<p-dialog
+    [styleClass]="'c-g-n-s-d'"
+    header=""
+    [(visible)]="showDialogSelectGroupName"
+    modal="modal"
+    width="300"
+    height="210"
+    responsive="true"
+    appendTo="body"
+>
+    <p-header>
+        <div class="modal-header--information">
+            <span class="fa fa-pencil header-icon pull-left"></span>
+            <span class="header-text pull-left">Select group name</span>
+            <div
+                class="toolbar-icon icon-transform close-dialog-icon"
+                #popHand="bs-tooltip"
+                container="body"
+                data-placement="bottom"
+                [tooltip]="'Close'"
+                aria-label="Close"
+                (click)="closeSelectGroupPopup()"
+            ></div>
+        </div>
+    </p-header>
+    <div class="col-xs-12 no-padding height-pc-100">
+        <label class="control-label"> Select a group </label>
+        <wj-combo-box
+            #groupSelectedControl
+            class="custom-wj-input-control xn-select--no-icon"
+            [ngClass]="{ 'input-error': !groupSelectedControl.selectedValue && submitUpdateCountryGroup }"
+            [itemsSource]="groupsSelected"
+            [displayMemberPath]="'text'"
+            [selectedValuePath]="'id'"
+            [isEditable]="true"
+            [isRequired]="false"
+            (selectedIndexChanged)="onGroupSelectedChanged()"
+            (keyup)="onGroupSelectedKeyup($event)"
+            (gotFocus)="onGroupSelectedGotFocus()"
+        >
+        </wj-combo-box>
+        <div [hidden]="groupSelectedControl.selectedValue || !submitUpdateCountryGroup" class="alert alert-danger">
+            Required!
+        </div>
+    </div>
+    <p-footer>
+        <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+            <button
+                type="button"
+                mat-raised-button
+                class="pull-right new-size"
+                title="Close"
+                (click)="closeSelectGroupPopup()"
+            >
+                Cancel
+            </button>
+            <button
+                label="Save"
+                pbutton=""
+                mat-raised-button
+                type="button"
+                class="mat-btn-blue"
+                (click)="updateCountryGroup()"
+            >
+                <span class="ui-button-text ui-c">Save</span>
+            </button>
+        </div>
+    </p-footer>
+</p-dialog>

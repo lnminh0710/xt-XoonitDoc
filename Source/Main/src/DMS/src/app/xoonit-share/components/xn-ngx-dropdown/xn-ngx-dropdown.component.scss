@@ -1,0 +1,40 @@
+.ngx-dropdown-control {
+    display: block;
+
+    & .selected-value {
+        width: 88%;
+        height: 70%;
+        position: absolute;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        padding-right: 24px;
+    }
+
+    & .icon-dropdown-wrapper {
+        float: right;
+    }
+
+    & .selected-value,
+    & .item-label {
+        font-size: 14px;
+    }
+
+    & ul.dropdown-menu {
+        width: 100%;
+        & li {
+            & .dropdown-item {
+                & .custom-control {
+                    & .item-label {
+                        width: 100%;
+                        padding: 5px 15px;
+
+                        &:hover {
+                            cursor: pointer;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

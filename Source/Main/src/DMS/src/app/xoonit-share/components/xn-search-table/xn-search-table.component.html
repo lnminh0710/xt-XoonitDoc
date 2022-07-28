@@ -1,0 +1,73 @@
+<div class="search-container position-relative d-flex align-items-center justify-content-{{position}}">
+    <div class="search-box position-relative  d-flex align-items-center">
+        <mat-icon
+            *ngIf="!isHiddenSearchBox"
+            class="icon search position-relative"
+            aria-hidden="false"
+            matPrefix
+            [attr.control-key]="'search-button' + id"
+            (click)="toggleSearch(true)"
+            container="body"
+            data-placement="bottom"
+            [tooltip]="tooltipSearch"
+        >search</mat-icon>
+    </div>
+</div>
+
+<ng-template #tableSearchPopup let-close="close">
+    <div class="table-search-dialog">
+        <div class="search-box position-relative  d-flex align-items-center">
+            <div
+                class="add-new-icon"
+            >
+                <i
+                    class="icon icon-transform fa fa-plus-circle add"
+                    container="body"
+                    (click)="addNew()"
+                    [tooltip]="titleAddNew"
+                ></i>
+            </div>
+           <div class="search-container">
+                <mat-icon
+                    class="icon search search-btn"
+                    aria-hidden="false"
+                    matPrefix
+                >search</mat-icon>
+                <mat-icon
+                    class="icon delete delete-search"
+                    aria-hidden="false"
+                    matPrefix
+                    (click)="clear()"
+                >cancel</mat-icon>
+                <app-xn-input-debounce
+                    [delayTimer]="'300'"
+                    [hasSearchButton]="false"
+                    [isLoading]="false"
+                    [value]="hightlightKeywords"
+                    (onValueChanged)="search($event)"
+                    (onSearchButtonClicked)="search($event)"
+                    (keydown)="handleKeydown($event)"
+                    [placeholder]="placeholder"
+                ></app-xn-input-debounce>
+           </div>
+        </div>
+        <div [class.d-none]="!loading" class="loading align-items-center justify-content-center">
+            <div class="spinner"></div>
+        </div>
+        <div class="table-result xoonit-grid" [class.invisible]="loading">
+            <xn-ag-grid
+                #xnAgGridComponent
+                [id]="id"
+                [globalProperties]="globalProperties"
+                [selectedRow]="rowSelected"
+                [dataSource]="dataSource"
+                [hightlightKeywords]="hightlightKeywords"
+                [allowSelectAll]="false"
+                (rowClick)="selectRow($event)"
+                (rowDoubleClicked)="select()"
+                (gridOnReady)="ready()"
+            >
+            </xn-ag-grid>
+        </div>
+    </div>
+</ng-template>

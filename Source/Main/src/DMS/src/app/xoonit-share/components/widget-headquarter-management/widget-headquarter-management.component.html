@@ -1,0 +1,62 @@
+<div class="widget-headquarter-information">
+    <div class="widget-headquarter-information__label">
+        <label-translation [keyword]="'WIDGET_HEADQUARTER__Company'"></label-translation>
+    </div>
+    <div class="w-100 btn-wrapper">
+        <a class="btn btn-save" (click)="showDialogModify()">Add new</a>
+        <app-xn-input-debounce
+            delayTimer="300"
+            [placeholder]="'Search'"
+            [hasIndicator]="true"
+            [hasSearchButton]="false"
+            [isSearchBoxControl]="true"
+            [value]="searchText"
+            (onValueChanged)="search($event)"
+            (onSearchButtonClicked)="search($event)"
+            cssClass="xoonit-gs__search-input"
+            [isLoading]="false"
+            [hasClearText]="true"
+            [hasValidation]="true"
+        ></app-xn-input-debounce>
+        <mat-icon
+            class="icon-transform"
+            style="cursor: pointer"
+            [svgIcon]="IconNamesEnum.WIDGET_MYDM_FORM_Reset"
+            (click)="getListCompany()"
+            #popRefresh="bs-tooltip"
+            container="body"
+            data-placement="bottom"
+            [tooltip]="'Refresh'"
+            [attr.control-key]="'headquater-manage__refresh'"
+        ></mat-icon>
+    </div>
+    <div class="headquarter-list">
+        <div
+            *ngFor="let option of listCompany"
+            class="headquarter-item row"
+            [class.selected]="idSelected === option[COMPANY_ENUM.companyId]"
+            (dblclick)="selectHeadquarter(option)"
+        >
+            <div class="col-xs-9 text">{{ option[COMPANY_ENUM.companyName] }}</div>
+            <div class="col-xs-3 icon-modify">
+                <i class="fal fa-pencil icon-update" (click)="showDialogModify(option[COMPANY_ENUM.companyId])"></i>
+                <i
+                    class="fal fa-trash icon-delete"
+                    (click)="showDialogConfirmDelete(option[COMPANY_ENUM.companyId], option[COMPANY_ENUM.companyName])"
+                ></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #confirmDelete let-close="close">
+    <div class="popup-content">
+        <div class="popup-content__title">
+            <label>Delete Headquarter: {{ nameDelete }}?</label>
+        </div>
+        <div class="popup-action">
+            <div class="popup-action__button ml-4" (click)="close()">Cancel</div>
+            <div class="popup-action__button primary" (click)="handleDelete(close)">Delete</div>
+        </div>
+    </div>
+</ng-template>

@@ -1,0 +1,44 @@
+{
+    "properties": {
+        "createDate": {
+            "type": "keyword"
+        },
+        "updateDate": {
+            "type": "keyword"
+        },
+
+        "lastName": {
+            "type": "keyword"
+        },
+        "firstName": {
+            "type": "keyword"
+        },
+        "cOName": {
+            "type": "keyword"
+        },
+        "pobox": {
+            "type": "keyword"
+        },
+        "personNr": {
+            "type": "keyword"
+        },
+        "street": {
+            "type": "keyword"
+        },
+        "company": {
+            "type": "keyword"
+        },
+        "place": {
+            "type": "keyword"
+        },
+        "personType": {
+            "type": "keyword"
+        },
+        "plz": {
+            "type": "keyword"
+        },
+        "notes": {
+            "type": "keyword"
+        }
+    }
+}

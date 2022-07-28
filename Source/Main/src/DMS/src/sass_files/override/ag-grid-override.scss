@@ -1,0 +1,58 @@
+ag-grid-angular {
+    .ag-header-cell {
+        border-bottom: solid 1px #beb7b7;
+    }
+
+    .editable-col.editing {
+        border-bottom: solid 1px orange;
+    }
+
+    .ag-header,
+    .ag-header-row {
+        border-bottom-style: none !important;
+    }
+    /*.ag-cell {
+        border-right: solid 1px #d9dcde !important;
+    }*/
+    .ag-ltr .ag-cell-focus:not(.invalid-cell):not(.positive-qty):not(.negative-qty) {
+        border: none !important;
+    }
+
+    .in-active-cell {
+        // opacity: 0.6;
+        //pointer-events: all;
+    }
+
+    .edited-cell {
+        background-color: #f9f8b3;
+    }
+
+    .no-entry-data-block {
+        font-size: 30px;
+        color: #c4c1c1;
+        font-weight: 800;
+        white-space: nowrap;
+    }
+
+    .status-header-col {
+        background-color: #f5f7f7;
+        &.drag-col {
+            .ag-row-drag.ag-hidden {
+                display: block !important;
+            }
+        }
+    }
+
+    .ag-ltr .ag-cell-focus {
+        background-color: #d3eeef;
+    }
+
+    .ag-row-group {
+        .ag-cell {
+            border-right: none !important;
+        }
+    }
+    .isSelected-header {
+        min-width: 145px !important;
+    }
+}

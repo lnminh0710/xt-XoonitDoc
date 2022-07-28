@@ -1,0 +1,144 @@
+<div class="widget-explorer">
+    <div class="widget-header">
+        <img
+            class="view-type"
+            [class.active]="currentViewType === VIEW_TYPE_CONSTANT.LIST"
+            src="public/imgs/iconspace_List.svg"
+            alt="view-list"
+            (click)="changeViewMode(VIEW_TYPE_CONSTANT.LIST)"
+        />
+        <img
+            class="view-type"
+            [class.active]="currentViewType === VIEW_TYPE_CONSTANT.GRID"
+            src="public/imgs/iconspace_Grid.svg"
+            alt="view-grid"
+            (click)="changeViewMode(VIEW_TYPE_CONSTANT.GRID)"
+        />
+    </div>
+    <div class="widget-file-explorer-container">
+        <div class="explorer-header display-flex">
+            <div class="col-xs-6 path flex-middle">
+                {{ currentPath }}
+            </div>
+            <div class="col-xs-6 search-box flex-middle">
+                <input
+                    class="search-input"
+                    type="text"
+                    placeholder="Search File"
+                    [(ngModel)]="searchText"
+                    (ngModelChange)="onSearchFile($event)"
+                />
+                <img class="search-icon" src="public/imgs/search.png" alt="search icon" />
+            </div>
+        </div>
+
+        <ng-container [ngSwitch]="isLoading && !files">
+            <ng-container *ngSwitchCase="true" [ngTemplateOutlet]="loadingSpinnerTemplate"></ng-container>
+
+            <ng-container *ngSwitchCase="false" [ngTemplateOutlet]="filesTemplate"></ng-container>
+        </ng-container>
+
+        <ng-container *ngIf="isShowDialog">
+            <p-dialog
+                header=""
+                [(visible)]="isShowDialog"
+                [styleClass]="dialogClass"
+                appendTo="body"
+                modal="true"
+                [draggable]="true"
+                [resizable]="true"
+                responsive="true"
+                [height]="dialogHeight"
+                [width]="dialogWidth"
+                (onHide)="close()"
+            >
+                <p-header>
+                    <div class="modal-header--information">
+                        <span class="header-text">Edit Document</span>
+                        <div
+                            class="toolbar-icon icon-transform close-dialog-icon"
+                            #popHand="bs-tooltip"
+                            container="body"
+                            data-placement="bottom"
+                            [tooltip]="'Close'"
+                            aria-label="Close"
+                            (click)="close()"
+                        ></div>
+                    </div>
+                </p-header>
+                <div class="h-100 w-100">
+                    <as-split #horizontalSplit direction="horizontal" (dragEnd)="dragEnd($event)" [gutterSize]="5">
+                        <as-split-area [size]="splitterConfig.leftHorizontal" [minSize]="3" id="capture-tree-section">
+                            <xn-vertical-tab-header [data]="tabList" [setting]="tabSetting"></xn-vertical-tab-header>
+                        </as-split-area>
+                        <as-split-area [size]="splitterConfig.rightHorizontal" [minSize]="3">
+                            <captured-document-detail
+                                [idDocumentTypeEnumInput]="idDocumentTypeEnum"
+                                [idMainDocumentInput]="idMainDocument"
+                            ></captured-document-detail>
+                        </as-split-area>
+                    </as-split>
+                </div>
+            </p-dialog>
+        </ng-container>
+    </div>
+
+    <ng-template #filesTemplate>
+        <div class="center-wrapper" *ngIf="files && !files.length">
+            <div>This "{{ selectedFolder.name }}" folder is empty</div>
+        </div>
+
+        <div
+            infiniteScroll
+            *ngIf="files && files.length"
+            class="inifinite-scroll-wrapper"
+            (scrolled)="loadFilesMore()"
+            [scrollWindow]="false"
+            [infiniteScrollDistance]="1"
+            [infiniteScrollUpDistance]="2"
+            [infiniteScrollThrottle]="500"
+            [infiniteScrollContainer]="'.scrollbar-container'"
+        >
+            <div class="scrollbar-container" perfectScrollbar [perfectScrollbar]="perfectScrollbarConfig">
+                <div class="files-list" [ngStyle]="{ height: +this.heightPercentFileListSelector + '%' }">
+                    <ng-container [ngSwitch]="currentViewType">
+                        <ng-container *ngSwitchCase="VIEW_TYPE_CONSTANT.GRID">
+                            <ng-container *ngFor="let file of filesDisplay">
+                                <div
+                                    class="file view-grid cursor-pointer"
+                                    [class.selected-file]="selectedFile && selectedFile.id === file.id"
+                                    (click)="onClickFile(file)"
+                                    (dblclick)="onDbclick(file)"
+                                    title="{{ file.mediaName }}"
+                                >
+                                    <div class="file-icon pdf"></div>
+                                    <div class="file-name">{{ file.mediaName }}</div>
+                                </div>
+                            </ng-container>
+                        </ng-container>
+                        <ng-container *ngSwitchCase="VIEW_TYPE_CONSTANT.LIST">
+                            <ng-container *ngFor="let file of filesDisplay">
+                                <div
+                                    class="file view-list cursor-pointer display-flex"
+                                    [class.selected-file]="selectedFile && selectedFile.id === file.id"
+                                    (click)="onClickFile(file)"
+                                    (dblclick)="onDbclick(file)"
+                                    title="{{ file.mediaName }}"
+                                >
+                                    <div class="file-icon pdf"></div>
+                                    <div class="file-name flex-middle">{{ file.mediaName }}</div>
+                                </div>
+                            </ng-container>
+                        </ng-container>
+                    </ng-container>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+
+    <ng-template #loadingSpinnerTemplate>
+        <div class="indicator-center-wrapper">
+            <i class="fa fa-spinner fa-spin" style="font-size: 24px"></i>
+        </div>
+    </ng-template>
+</div>

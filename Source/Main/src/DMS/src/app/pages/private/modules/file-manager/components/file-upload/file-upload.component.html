@@ -1,0 +1,146 @@
+<p-dialog
+    [styleClass]="'upload-file-dialog ui-dialog-flat'"
+    [(visible)]="showDialog"
+    modal="modal"
+    width="900"
+    height="500"
+    responsive="true"
+    appendTo="body"
+    (onAfterHide)="onClose()"
+>
+    <p-header>
+        <div class="upload-file-dialog__header">
+            <span class="upload-file-dialog__header-title">File Upload</span>
+
+            <div class="upload-file-dialog__header-icon toolbar-icon close-dialog-icon" (click)="onClose()"></div>
+        </div>
+    </p-header>
+    <div class="col-xs-12 no-padding height-pc-100">
+        <ng-container *ngTemplateOutlet="fileUploadDetail"></ng-container>
+    </div>
+    <!-- <p-footer>
+    <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+      <div class="pull-right  new-size" title="Close" (click)="onClose()">
+        Close
+      </div>
+    </div>
+  </p-footer> -->
+</p-dialog>
+
+<ng-template #fileUploadDetail>
+    <div
+        [ngClass]="{ 'xn-disabled': singleFile && uploader.queue.length == 1, 'nv-file-over': hasBaseDropZoneOver }"
+        class="col-md-6 no-padding select-file-container"
+        ng2FileDrop
+        ng2FileSelect
+        *ngIf="uploader != null"
+        (click)="openFileExplorerDialog($event)"
+        (fileOver)="fileOverBase($event)"
+        [uploader]="uploader"
+        [acceptExtensionFiles]="acceptExtensionFiles"
+        [allowSelectDuplicateFile]="allowSelectDuplicateFile"
+        [checkFileCorrect]="checkFileCorrect"
+        [maxSizeLimit]="maxSizeLimit"
+        (dontAllowFileSize)="dontAllowFileSize()"
+        (dontAllowFileExtension)="dontAllowFileExtensionHander()"
+        (fileDuplicateAction)="fileDuplicateHandler($event)"
+        (fileDuplicateOnQueueAction)="fileDuplicateOnQueueHandler($event)"
+        (onFileDrop)="onFileDropHandler($event)"
+        (onFileSelected)="onFileDropHandler($event)"
+    >
+        <div class="my-drop-zone">
+            <i class="fa fa-upload my-drop-zone__icon" aria-hidden="true"></i>
+            Drop files here... Or click to select files
+        </div>
+    </div>
+    <input
+        type="file"
+        ng2FileSelect
+        [id]="inputId"
+        [uploader]="uploader"
+        [acceptExtensionFiles]="acceptExtensionFiles"
+        [allowSelectDuplicateFile]="allowSelectDuplicateFile"
+        [checkFileCorrect]="checkFileCorrect"
+        [maxSizeLimit]="maxSizeLimit"
+        (dontAllowFileSize)="dontAllowFileSize()"
+        (dontAllowFileExtension)="dontAllowFileExtensionHander()"
+        (fileDuplicateAction)="fileDuplicateHandler($event)"
+        (fileDuplicateOnQueueAction)="fileDuplicateOnQueueHandler($event)"
+        (onFileSelected)="onFileDropHandler($event)"
+        multiple
+        style="display: none"
+        accept="{{ acceptExtensionFiles }}"
+    />
+    <div class="col-md-6 no-padding-right upload-content-container">
+        <div class="upload-action">
+            <div class="upload-action__info">Queue length: {{ uploader?.queue?.length }}</div>
+            <div
+                type="button"
+                class="upload-action__button"
+                [ngClass]="{ disabled: !uploader.queue || uploader.queue.length == 0 }"
+                (click)="uploader.queue && uploader.queue.length > 0 && uploader.uploadAll()"
+            >
+                <i class="fa fa-upload"></i> {{ actionText }} {{ singleFile ? '' : 'all' }}
+            </div>
+            <div
+                type="button"
+                class="upload-action__button danger-color"
+                [ngClass]="{ disabled: !uploader.isUploading }"
+                (click)="uploader.isUploading && uploader.cancelAll()"
+            >
+                <i class="fa fa-trash"></i> Cancel {{ singleFile ? '' : 'all' }}
+            </div>
+        </div>
+        <div class="upload-content" [perfectScrollbar]="perfectScrollbarConfig">
+            <div *ngFor="let item of uploader.queue" class="upload-content__item">
+                <div class="upload-content__item-image icon-file-type  {{ getExtension(item?.file?.name) }}"></div>
+                <div class="upload-content__item-detail">
+                    <strong class="upload-content__item-name">{{ item?.file?.name }}</strong>
+                    <span>{{ getFileSize(item?.file?.size) }}</span>
+                </div>
+                <div class="upload-content__item-action">
+                    <!-- <div
+            *ngIf="item && !item.isSuccess"
+            type="button"
+            class="upload-content__item-icon"
+            title="{{ actionText }}"
+            (click)="item.upload()"
+          >
+            <span class="glyphicon glyphicon-upload"></span>
+          </div> -->
+                    <div
+                        *ngIf="item && !item.isSuccess"
+                        type="button"
+                        class="upload-content__item-icon"
+                        title="Remove"
+                        (click)="item.remove()"
+                    >
+                        <span class="glyphicon glyphicon-trash danger-color"></span>
+                    </div>
+                    <ng-container *ngIf="statusTemplate; else defaultContent">
+                        <ng-container *ngTemplateOutlet="statusTemplate; context: templateContext[item.id]">
+                        </ng-container>
+                    </ng-container>
+                    <ng-template #defaultContent>
+                        <span *ngIf="item.isSuccess" title="Success"
+                            ><i class="glyphicon glyphicon-ok success"></i
+                        ></span>
+                        <span *ngIf="item.isCancel" title="Cancel"
+                            ><i class="glyphicon glyphicon-ban-circle warning-color"></i
+                        ></span>
+                        <span *ngIf="item.isError" title="Error"
+                            ><i class="glyphicon glyphicon-remove danger-color"></i
+                        ></span>
+                    </ng-template>
+                </div>
+                <div
+                    *ngIf="item.isUploading"
+                    class="upload-content__item-progress"
+                    [ngStyle]="{ width: getProgress(item.progress) + '%' }"
+                >
+                    {{ getProgress(item.progress) }} %
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>

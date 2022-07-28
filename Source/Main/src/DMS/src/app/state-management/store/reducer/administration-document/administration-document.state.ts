@@ -1,0 +1,45 @@
+import { ModuleOverview } from '@app/models';
+import { FieldFormOnFocusModel } from '../../models/administration-document/field-form-on-focus.model.payload';
+import { DocumentsState } from '@app/state-management/store/models/administration-document/state/document-forms.state.model';
+import { DocumentContainerOcrStateModel } from '../../models/administration-document/state/document-container-ocr.state.model';
+import { DocumentTreeModel } from '@app/models/administration-document/document-tree.payload.model';
+import { QueueWorker } from '@app/utilities/queue-worker';
+import { ExtractedDataOcrState } from '../../models/administration-document/state/extracted-data-ocr.state.model';
+import { RefCommunicationModel } from '@app/models/contact-document.model';
+import { CapturedFormModeEnum } from '@app/models/administration-document/document-form/captured-form-mode.enum';
+import { ComboboxRepositoryStateModel } from '@app/state-management/store/models/administration-document/state/combobox-repository.state.model';
+import { DocumentFileInfoModel } from '../../models/administration-document/state/document-file-info.state.model';
+import { DetailedDocumentDataState } from '../../models/administration-document/state/detailed-document-data.state.model';
+import { DocumentContainerScanStateModel } from '../../models/administration-document/state/document-container-scan.state.model';
+import { HeadquarterInfoModel } from '../../../../models/octopus-document.model';
+
+export interface AdministrationDocumentState {
+    comboboxCurrency: ComboboxRepositoryStateModel[];
+    comboboxMeansOfPayment: ComboboxRepositoryStateModel[];
+    modulesOverview: ModuleOverview[];
+    fieldFormOnFocus: FieldFormOnFocusModel;
+    queueDocumentsStateChange: QueueWorker<DocumentsState>;
+    documentFields: any[];
+    documentContainerOcr: DocumentContainerOcrStateModel;
+    documentContainerScan: DocumentContainerScanStateModel;
+    totalImage: number;
+    documentsState: DocumentsState;
+    communicationDefaultControl: any[];
+    comboboxCommunicationTypeType: ComboboxRepositoryStateModel[];
+    refCommunicationsSettingList: RefCommunicationModel[];
+    folder: DocumentTreeModel;
+    listDocumentType: any[];
+    extractedDataFromOcr: ExtractedDataOcrState[];
+    detailedDocumentData: DetailedDocumentDataState[];
+    keyword: string;
+    toDo: string;
+    isTodo: boolean;
+    originalFileName: string;
+    capturedFormMode: CapturedFormModeEnum;
+    docFileInfo: DocumentFileInfoModel;
+    didManipulateCaptureFile: boolean;
+    docTypes: DocumentTreeModel[];
+    headquarterInfo: HeadquarterInfoModel;
+    allAddons: {};
+    invoiceDateProcessing: Date;
+}

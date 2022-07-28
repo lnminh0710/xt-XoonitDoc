@@ -1,0 +1,65 @@
+<div class="order-container" id="{{DocType[documentDetail.docType]}}" [ngClass]="{'not-actived': !documentDetail.isActived}" (contextmenu)="onRightClick()">
+    <span class="header-title">
+        <label class="doc-type__title">{{documentDetail.docName}}</label>
+        <i class="fa {{documentDetail.docIcon}} doc-icon"></i>
+    </span>
+    <div class="detail-left no-padding">
+        <div class="col-xs-12 no-padding" style="display:flex">
+            <ng-container *ngIf="showDownloadFile && documentFiles">
+                <a #btnClickBlur href="javascript:void(0);" class="download-file">
+                    <i class="fa fa-file-pdf-o file-icon"></i>
+                    <label class="download-file__number">
+                        {{documentFiles.length}}
+                    </label>
+                </a>
+                <wj-popup [owner]="btnClickBlur" [showTrigger]="'Click'" [hideTrigger]="'Blur'" class="popover order-detail">
+                    <h3 class="popover-title">
+                        PDF Generated History
+                    </h3>
+                    <div class="popover-container file-detail">
+                        <div class="list-group">
+                            <a href="javascript:void(0);" class="list-group-item" *ngFor="let item of documentFiles">
+                                <div class="info" (click)="downloadFile(item)">
+                                    <div class="flex-display">
+                                        <i class="fa fa-file-pdf-o file-icon"></i>
+                                        <label class="doc-name" title="{{item.id}}"> {{ item.id }}</label>
+                                        <label class="doc-created-by"> {{item.createdBy}} </label>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </wj-popup>
+            </ng-container>
+
+            <label class="doc-number" title="{{docNr}}">{{ docNr }} </label>
+
+        </div>
+        <div class="order-date col-xs-12 no-padding">
+            <div class="col-xs-12 date-info date-create no-padding">
+                <div>Date Create</div>
+                <div class="date wrap"><label>{{createDate}}</label></div>
+            </div>
+            <div class="col-xs-12 date-info date-update no-padding">
+                <div>Last Update</div>
+                <div class="date wrap"><label>{{updateDate}}</label></div>
+            </div>
+        </div>
+        <!--<div class="col-xs-12 no-padding" *ngIf="showDownloadFile">
+            <i class="fa fa-file-pdf-o wrap"></i> May 23 | 8:10 PM
+        </div>-->
+    </div>
+    <div class="col-xs-11 detail-right">
+        <dynamic-form [data]="documentDetail.dataSource"
+                      [readonly]="documentDetail.disable || disabled"
+                      [fieldFilters]="fieldFilters"
+                      (onEditField)="editField($event)">
+        </dynamic-form>
+    </div>
+    <div class="disabled" *ngIf="documentDetail.disable"></div>
+    <div class="button-action" *ngIf="(documentDetail.disable || disabled)">
+        <i class="fa fa-pencil-square-o orange-color" (click)="updateDocument()" *ngIf="!dataModel.isDisableEditButton && documentDetail.isActived && documentDetail.isArchiveOP"></i>
+        <i class="fa fa-print" (click)="printDocument()"></i>
+        <i class="fa fa-envelope-o blue-color no-marg"  (click)="sendMailDocument()"></i>
+    </div>
+</div>

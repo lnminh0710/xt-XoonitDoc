@@ -1,0 +1,54 @@
+.p-w {
+	display: flex;
+	flex-direction: column;
+    height: 100%;
+    padding: 0 10px;
+}
+.t {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    h4 {
+        padding-left: 10px;
+    }
+}
+.p {
+	display: flex;
+	flex-direction: column;
+    height: calc(100% - 81px);
+}
+xn-ag-grid {
+    height: 100%;
+}
+.p-i {
+    cursor: pointer;
+    width: 100%;
+    white-space: normal;
+    padding: 3px 10px;
+}
+.c-m {
+	display: flex;
+	justify-content: flex-end;
+    padding-top: 5px;
+
+	button {
+		margin-left: 10px;
+	}
+}
+.xn-control {
+    height: 26px;
+    padding: 0 5px;
+    width: calc(100% - 35px);
+}
+.s-t {
+    max-height: 25px;
+    padding: 0 5px;
+    min-width: 30px;
+    right: 4px;
+    top: 1px;
+
+    .fa-save {
+        margin-top: -5px;
+    }
+}

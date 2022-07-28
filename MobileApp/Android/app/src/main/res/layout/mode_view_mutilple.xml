@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    android:paddingBottom="@dimen/margin_10">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar_top_multi"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:background="#FFFFFF"
+        android:elevation="4dp"
+        android:theme="@style/MyPopupMenu"
+        app:popupTheme="@style/MyPopupMenu">
+
+        <TextView
+            android:id="@+id/textHeader_multi"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/Batch"
+            android:textColor="#000000"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <include
+        android:id="@+id/menulist_multiple"
+        layout="@layout/list_menu_mutilple"
+        android:layout_width="match_parent"
+        android:layout_height="34dp"
+        android:layout_below="@id/toolbar_top_multi"
+        android:layout_marginTop="5dp" />
+
+    <GridView
+        android:id="@+id/gird_mutilple"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@id/menulist_multiple"
+        android:columnWidth="100dp"
+        android:horizontalSpacing="10dp"
+        android:numColumns="2"
+        android:padding="10dp"
+        android:scrollbars="none"
+        android:stretchMode="columnWidth"
+        android:verticalSpacing="10dp" />
+
+    <ListView
+        android:id="@+id/list_view_multi"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@id/menulist_multiple"
+        android:visibility="gone" />
+
+    <ImageButton
+        android:id="@+id/btnAddDocFromListMulti"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:background="@android:color/transparent"
+        android:onClick="ReloadCamera"
+        android:src="@drawable/camera_single" />
+
+    <ImageButton
+        android:id="@+id/button_sendAllMulti"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="20sp"
+        android:background="@android:color/transparent"
+        android:onClick="SendAll"
+        android:paddingBottom="10sp"
+        android:src="@drawable/upload_cloud" />
+
+</RelativeLayout>

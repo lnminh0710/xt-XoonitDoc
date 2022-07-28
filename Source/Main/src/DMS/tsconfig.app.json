@@ -1,0 +1,17 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "outDir": "../out-tsc/app",
+  },
+  "files": [
+    "src/main.ts",
+    "src/polyfills.ts"
+  ],
+  "exclude": [
+    "src/test.ts",
+    "**/*.spec.ts",
+    "node_modules/node_modules/wijmo/*.js",
+    "node_modules/@types/lodash/index.d.ts",
+    "src/public/assets/lib/wijmo/wijmo-commonjs-min/*.*"
+  ]
+}

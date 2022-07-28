@@ -1,0 +1,58 @@
+<div [ngClass]="{'ui-galleria ui-widget ui-widget-content ui-corner-all':true}"
+     [ngStyle]="style"
+     [class]="styleClass">
+    <ul class="ui-galleria-panel-wrapper"
+        [style.width.px]="panelWidth"
+        [style.height.px]="panelHeight">
+        <li *ngFor="let image of images;let i=index;trackBy: itemsTrackBy;"
+            class="ui-galleria-panel"
+            [ngClass]="{'ui-helper-hidden':i!=activeIndex}">
+            <div class="ui-panel-content">
+                <img class="ui-panel-images"
+                     [ngClass]="{'big-image-active':i==activeIndex}"
+                     id="{{'xn-galleria-image-display' + '-' + i}}"
+                     [imageLoader]="image.bigImageUrl"
+                     [alt]="image.alt || image.title"
+                     [title]="image.title"
+                     [attr.data-zoom-image]="image.fullImageUrl" />
+            </div>
+        </li>
+    </ul>
+    <div [ngClass]="{'ui-galleria-filmstrip-wrapper':true}"
+         *ngIf="showFilmstrip">
+        <ul class="ui-galleria-filmstrip"
+            style="transition:top 1s"
+            [style.top.px]="stripTop">
+            <li #frame
+                *ngFor="let image of images;let i=index;trackBy: itemsTrackBy;"
+                [ngClass]="{'ui-galleria-frame-active':i==activeIndex}"
+                class="ui-galleria-frame"
+                (click)="frameClick(i)"
+                (mouseenter)="frameClick(i,true)"
+                [style.width.px]="frameWidth"
+                [style.height.px]="frameHeight"
+                [style.transition]="'opacity 0.75s ease'">
+                <div class="ui-galleria-frame-content">
+                    <img [imageLoader]="image.thumbnailImageUrl"
+                         [alt]="image.alt || image.title"
+                         [title]="image.title"
+                         class="ui-galleria-frame-image">
+                </div>
+            </li>
+        </ul>
+        <ng-template [ngIf]="images && images.length > 1">
+            <div class="ui-galleria-nav">
+                <div class="nav-up image-navigate-icon icon-up"
+                     (click)="clickNavUp()"
+                     [ngClass]="{'disabled': activeIndex == 0}">
+                    <i class="fa fa-chevron-up"></i>
+                </div>
+                <div class="nav-down image-navigate-icon icon-down"
+                     (click)="clickNavDown()">
+                    <i class="fa fa-chevron-down"></i>
+                </div>
+            </div>
+        </ng-template>
+    </div>
+
+</div>

@@ -1,0 +1,79 @@
+<ng-container>
+    <a mat-button dropdownToggle id="notification-dropdown" class="dropdown-toggle login-icon-sm" #popUser="bs-tooltip"
+        data-placement="bottom" tooltip="Notification" (click)="getNotifications()">
+        <div class="bell-container">
+            <i class="fa fa-bell bell-icon"></i>
+            <span *ngIf="countNoti > 0" class="count-noti">{{countNoti > 99 ? '99+' : countNoti}}</span>
+        </div>
+    </a>
+
+    <div class="panel-group mb-0" [ngClass]="{'d-none': !isShow, 'd-block': isShow}" class="dropdown-menu">
+        <div class="panel-default border-radius-8">
+            <ng-container>
+                <div class="panel-heading background-title" [ngStyle]="{'border-radius': !isExpanded ? '10px' : ''}">
+                    <h4 class="panel-title inline-text">Invoice Approval</h4>
+                    <div class="pull-right" (click)="toggleInvoiceExpand()">
+                        <i class="fa" [ngClass]="{'fa-angle-up': isExpanded, 'fa-angle-down': !isExpanded}"></i>
+                    </div>
+                </div>
+                <div class="panel-collapse mini-scrollbar" [hidden]="!isExpanded">
+                    <div class="panel-body" *ngFor="let item of notificationList; let idx = index">
+                        <div *ngIf="idx > 0" class="line-top"></div>
+                        <div class="date-group {{item.classColorServerity}}">
+                            {{item.serverity}}
+                        </div>
+                        <div class="info-group d-flex" [ngStyle]="{'border-bottom': i === (item.infoGroup.length - 1) ? 0 : ''}"
+                            *ngFor="let info of item.infoGroup; let i = index" (click)="goToApproval(info)">
+                            <div class="pull-left left-content mr-10">
+                                <div class="line-serverity"
+                                [ngClass]="{'urgent-color': info.Serverity == 3,
+                                            'high-priority-color': info.Serverity == 2,
+                                            'medium-priority-color': info.Serverity == 1,
+                                            'standard-priority-color': info.Serverity == 0
+                                            }"
+                                >
+                                </div>
+                                <p class="text-info">{{info.InvoiceDate ? (info.InvoiceDate | date: 'dd.MM.yyyy') + ' - ' : ''}} {{info.InvoiceDate | date: 'HH:mm:ss'}}</p>
+                                <p class="invoice-nr">{{info.Mandant}}</p>
+                            </div>
+                            <div class="right-content text-right">
+                                <p class="text-info">{{info.Supplier}}</p>
+                                <p class="total-content">CHF {{info.TotalAmount | tranformDecimal}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ng-container>
+            <ng-container>
+                <notification-list-view-child #feedbackListComponent
+                    [title]="'Feedback Notification'"
+                    [messageList]="feedbackList"
+                    (toggleShow)="toggleFeedbackList($event)"
+                    (archiveItemAction)="archiveItemHandler('feedback', true)"
+                    (archiveItemOkAction)="archiveItemOkActionHandler($event, 'feedback')"
+                    (archiveItemCancelAction)="archiveItemHandler('feedback', false)"
+                    (showDetailItemAction)="showDetailItemHandler($event, 'feedback')"
+                    (archiveAllItemAction)="archiveAllItemActionHandler()"
+                    (archiveAllItemOkAction)="archiveAllItemOkActionHandler('feedback')"
+                    (archiveAllItemCancelAction)="archiveAllItemCancelActionHandler()"
+                    (showArchiveListAction)="showArchiveListActionHandler('feedback')"
+                ></notification-list-view-child>
+            </ng-container>
+        </div>
+    </div>
+
+    <notification-archive-popup *ngIf="isShowArchivePopup"
+                            [isShow]="isShowArchivePopup"
+                            [showingDetail]="isShowDetailPopup"
+                            [typeArchive]="typeArchive"
+                            (showDetailAction)="showDetailActionHandler($event)"
+                            (closeArchivePopupAction)="closeArchivePopupActionHandler()">
+    </notification-archive-popup>
+    <notification-detail-popup *ngIf="isShowDetailPopup"
+                                [isShow]="isShowDetailPopup"
+                                [data]="detailData"
+                                [isArchived]="isDataArchived"
+                                (closeDetailPopupAction)="closeDetailPopupActionHandler()"
+                                (archiveItemFromPopupAction)="archiveItemFromPopupActionHandler()">
+    </notification-detail-popup>
+</ng-container>

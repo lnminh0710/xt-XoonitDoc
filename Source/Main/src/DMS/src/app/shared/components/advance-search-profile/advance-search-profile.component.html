@@ -1,0 +1,75 @@
+<div class="p-w">
+    <div class="t">
+        <h5><label-translation [keyword]="'Selecting profile'"></label-translation>:</h5>
+        <h4>
+            <strong>{{ selectedProfile.globalName }}</strong>
+        </h4>
+    </div>
+    <div class="p">
+        <xn-ag-grid
+            #profileList
+            *ngIf="profileListData && profileListData.columns && profileListData.columns.length"
+            [id]="'6c7a815b-dce0-4785-b93d-03a1200850fb'"
+            [dataSource]="profileListData"
+            [readOnly]="false"
+            [isEditting]="true"
+            [fitWidthColumn]="true"
+            [autoSelectFirstRow]="false"
+            [preventAutoSelectFirstRow]="true"
+            [autoSelectCurrentRowAfterChangingData]="false"
+            [disableCheckBoxWhenInActive]="true"
+            [dontShowCheckBoxHeader]="true"
+            (rowClick)="profileListRowClick($event)"
+            (cellValueChanged)="cellValueChangedHandler($event)"
+            (cellEditingStarted)="onCellEditingStarted($event)"
+            (cellEditingStopped)="onCellEditingStopped($event)"
+        >
+        </xn-ag-grid>
+    </div>
+    <div class="c-m">
+        <button
+            type="button"
+            mat-flat-button
+            [disabled]="isDisableUpdate"
+            class="mat-btn-orange"
+            tooltip="Save"
+            placement="top"
+            (click)="callSavingProfile()"
+        >
+            <span class="fa fa-save"></span>
+            <span class="bt-t-i-s"><label-translation [keyword]="'Update'"></label-translation></span>
+        </button>
+        <button
+            type="button"
+            mat-flat-button
+            [disabled]="isDisableSaveNewProfile"
+            class="mat-btn-orange"
+            tooltip="Save As"
+            placement="top"
+            (click)="callSavingProfile(true)"
+        >
+            <span class="fa fa-save"></span>
+            <span class="bt-t-i-s"><label-translation [keyword]="'Save new profile'"></label-translation></span>
+        </button>
+        <button
+            type="button"
+            mat-flat-button
+            [disabled]="!selectedProfile || isDisableDelete"
+            class="delete mat-btn-red"
+            aria-label="Delete"
+            tooltip="Delete"
+            placement="top"
+            (click)="onClickDelete()"
+        >
+            <span class="fa fa-trash"></span>
+            <span class="bt-t-i-s"><label-translation [keyword]="'Delete'"></label-translation></span>
+        </button>
+    </div>
+</div>
+<confirm-new-profile
+    #confirmNewProfile
+    [profiles]="profileListData.data"
+    (onCloseAction)="onCloseHandler()"
+    (onSaveAction)="onSaveHandler($event)"
+>
+</confirm-new-profile>

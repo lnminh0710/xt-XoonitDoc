@@ -1,0 +1,298 @@
+.skin-dark {
+    scanning-configuration {
+        .scanning-configuration {
+            background-color: $black-pearl1;
+            &__action {
+                &-title {
+                    color: $blue-pattens;
+                }
+            }
+            &__printer {
+                background-color: $blue-deep;
+
+                &-item {
+                    color: $white;
+                    &.selected {
+                        color: $white;
+                        background-color: $blue-bell;
+                    }
+                }
+            }
+            &__setting {
+                color: $white;
+                background-color: $blue-deep;
+            }
+            &__scan-button {
+                color: $white;
+            }
+        }
+    }
+
+    scanning-image-preview {
+        .image-preview__toolbar {
+            background-color: $black-pearl2;
+        }
+    }
+
+    .ui-dialog-flat {
+        background-color: $black-pearl1;
+        &.madison {
+            background-color: #0f386a !important;
+        }
+        &__header {
+            background-color: $blue-deep !important;
+            color: #fff;
+        }
+
+        div.ui-dialog-titlebar {
+            background-color: $blue-deep;
+        }
+
+        div.ui-dialog-content {
+            color: #fff;
+        }
+
+        &.with-footer {
+            .ui-dialog-footer {
+                background-color: $black-pearl1;
+            }
+        }
+    }
+
+    .confirm-dialog {
+        &__button-save {
+            border: unset;
+            background-color: $color-offer;
+        }
+        &__button-no-save {
+            border: unset;
+            background-color: #ff3657;
+        }
+        &__button-cancel {
+            border: unset;
+            color: $black !important;
+            background-color: $white;
+        }
+    }
+
+    cloud-configuration {
+        .cloud-configuration {
+            background-color: $black-pearl1;
+            color: $white;
+            &__title {
+                color: $blue-pattens;
+            }
+            &__item {
+                background-color: $blue-deep;
+            }
+        }
+    }
+
+    .mat-slide-toggle-customize {
+        &__title {
+            color: $white;
+        }
+        .mat-slide-toggle-thumb-container {
+            top: 3px;
+            left: 3px;
+            transition: all 0.3s linear;
+        }
+        .mat-slide-toggle-bar {
+            transition: all 0.3s linear;
+            background-color: #163f70;
+            height: 32px;
+            width: 60px;
+            border-radius: 28px;
+            .mat-slide-toggle-thumb {
+                background-color: #6088b9;
+                height: 26px;
+                width: 26px;
+                transition: all 0.3s linear;
+            }
+        }
+        //checked
+        &.mat-checked:not(.mat-disabled) .mat-slide-toggle-bar {
+            background-color: rgba(35, 234, 164, 0.2) !important;
+        }
+        &.mat-checked:not(.mat-disabled) .mat-slide-toggle-thumb {
+            background-color: #23eaa4;
+        }
+        &.mat-checked .mat-slide-toggle-thumb-container {
+            transform: translate3d(28px, 0, 0);
+        }
+        &.size--small {
+            .mat-slide-toggle-bar {
+                height: 20px;
+                width: 36px;
+                .mat-slide-toggle-thumb {
+                    height: 14px;
+                    width: 14px;
+                }
+            }
+            &.mat-checked .mat-slide-toggle-thumb-container {
+                transform: translate3d(16px, 0, 0);
+            }
+        }
+    }
+
+    export-configuration {
+        .export-configuration {
+            &__search-box {
+                background-color: $blue-deep;
+            }
+            &__export-button {
+                background-color: $blue-science;
+                color: $white;
+            }
+            &__table {
+                &-header {
+                    padding-left: 42px;
+                }
+                &-row {
+                    background-color: $black-pearl1;
+                    border: unset !important;
+                    &:hover {
+                        background-color: $black-pearl2;
+                        height: 58px !important;
+                        box-shadow: 0 4px 10px 0 $black;
+                    }
+                }
+                &-cell {
+                    display: flex;
+                    align-items: center;
+                    color: $white;
+                    border: 0px;
+                    border-bottom: 1px solid #324658;
+
+                    font-family: 'rbt_Regular';
+                    font-size: 14px;
+                    line-height: 19px;
+                    &.ag-cell-focus {
+                        background-color: unset;
+                        border: unset !important;
+                    }
+                    &:first-of-type {
+                        margin-left: 30px;
+                    }
+                }
+            }
+        }
+        .ag-root {
+            border-width: 0 !important;
+        }
+        .ag-header {
+            background-color: $blue-deep;
+            color: $white;
+            border: unset;
+        }
+        .ag-header-cell {
+            line-height: 42px;
+            border: unset;
+
+            color: #d0e5ff;
+            font-family: 'rbt_Regular';
+            font-size: 14px;
+            font-weight: 500;
+            text-align: center;
+
+            &::after {
+                border-right: unset !important;
+            }
+        }
+        .ag-icon-checkbox-checked:empty {
+            background-image: url('src/public/imgs/dark-icons/check.png');
+        }
+        .ag-grid-body-viewport {
+            overflow: scroll !important;
+            background-color: $black-pearl1;
+        }
+        .ag-overlay-no-rows-center {
+            color: $white;
+        }
+        .ag-cell-focus:not(.invalid-cell):not(.positive-qty):not(.negative-qty) {
+            border: unset !important;
+        }
+
+        .ag-row-even {
+            background-color: $black-pearl1;
+            color: $white;
+            .ag-cell-focus {
+                background-color: $black-pearl1;
+            }
+        }
+        .ag-row-odd {
+            background-color: $black-pearl2;
+            color: $white;
+            .ag-cell-focus {
+                background-color: $black-pearl2;
+            }
+        }
+        .ag-row-selected {
+            background-color: $blue-science !important;
+            .ag-cell-focus {
+                background-color: $blue-science !important;
+            }
+        }
+        .panel-info {
+            background-color: transparent !important;
+        }
+        .ag-layout-normal {
+            background-color: $black-pearl1 !important;
+        }
+
+        .paging-grid {
+            color: $white;
+            input {
+                color: $black;
+            }
+        }
+    }
+
+    .email-configuration {
+        &__recipidents,
+        &__subject,
+        &__content,
+        &__attachment {
+            border-bottom-color: #324658 !important;
+        }
+    }
+
+    .scanning-action {
+        .save-scanning {
+            background: url('src/public/imgs/dark-icons/save.png') center no-repeat !important;
+        }
+        .group-image {
+            background: url('src/public/imgs/dark-icons/group.svg') center no-repeat !important;
+        }
+        .delete {
+            background: url('src/public/imgs/dark-icons/delete.svg') center no-repeat !important;
+        }
+    }
+
+    image-toolbar-secondary {
+        .image-toolbar-secondary {
+            &__document-keyword,
+            &__page-number,
+            &__document-todo {
+                background-color: $black-pearl3;
+                color: $white;
+            }
+            &__info {
+                &-title {
+                    color: $white;
+                }
+                &-value {
+                    color: $white;
+                }
+            }
+        }
+    }
+
+    .image-slider {
+        background-color: $black-pearl1;
+        &__item-type {
+            background-color: $blue-deep;
+            color: $white;
+        }
+    }
+}

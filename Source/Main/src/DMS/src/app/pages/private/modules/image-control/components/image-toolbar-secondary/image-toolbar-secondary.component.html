@@ -1,0 +1,58 @@
+<div
+    class="image-toolbar-secondary"
+    [ngClass]="{ 'show-container': isShowKeyword, disabled: isDisabled }"
+    *ngIf="isShow"
+>
+    <div class="image-toolbar-secondary__document-keyword" *ngIf="isShowKeyword">
+        <div class="keyword-icon" *ngIf="isShowKeyword"></div>
+        <input
+            *ngIf="isShowKeyword"
+            class="image-toolbar-secondary__input"
+            placeholder="Keyword"
+            [ngModel]="documentKeyword"
+            (ngModelChange)="changeKeyword($event)"
+        />
+        <div class="space" *ngIf="isShowKeyword"></div>
+        <!-- <div class="todo-icon" *ngIf="isShowTodo"></div>
+        <input
+            *ngIf="isShowTodo"
+            class="image-toolbar-secondary__input"
+            placeholder="Leave what you should do later"
+            [ngModel]="documentTodos"
+            (ngModelChange)="changeTodo($event)"
+        /> -->
+    </div>
+    <!-- <div class="image-toolbar-secondary__document-todo" *ngIf="isShowTodo"></div> -->
+    <div class="image-toolbar-secondary__page-number show-container">
+        <div class="image-toolbar-secondary__info">
+            <div class="image-toolbar-secondary__info-title"><label-translation [keyword]="'IMAGE_TOOLBAR__DocumentName'"></label-translation>:</div>
+            <input
+                class="image-toolbar-secondary__info-value"
+                [readonly]="readonly"
+                [ngModel]="originalName"
+                (ngModelChange)="changeOriginalName($event)"
+            />
+        </div>
+        <div
+            class="image-toolbar-secondary__info document-path"
+            [ngClass]="{ small: totalPage > 1 }"
+            *ngIf="documentPath"
+        >
+            <div class="image-toolbar-secondary__info-title"><label-translation [keyword]="'IMAGE_TOOLBAR__DocumentPath'"></label-translation>:</div>
+            <div class="image-toolbar-secondary__info-value">{{ documentPath }}</div>
+        </div>
+        <div
+            class="image-toolbar-secondary__icon icon-transform"
+            *ngIf="totalPage > 1"
+            [ngClass]="{ 'prev-arrow': currentPage > 1, 'prev-arrow-disabled': currentPage <= 1 }"
+            (click)="currentPage > 1 && changePageNumber(-1)"
+        ></div>
+        <div *ngIf="totalPage > 1">{{ currentPage }} / {{ totalPage }}</div>
+        <div
+            *ngIf="totalPage > 1"
+            class="image-toolbar-secondary__icon icon-transform"
+            [ngClass]="{ 'next-arrow': currentPage < totalPage, 'next-arrow-disabled': currentPage >= totalPage }"
+            (click)="currentPage < totalPage && changePageNumber(1)"
+        ></div>
+    </div>
+</div>

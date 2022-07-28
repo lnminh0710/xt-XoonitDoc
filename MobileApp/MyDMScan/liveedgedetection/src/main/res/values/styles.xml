@@ -1,0 +1,39 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+        <item name="actionBarStyle">@android:style/Widget.Holo.ActionBar</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:popupMenuStyle">@style/MyPopupMenu</item>
+        <item name="preferenceTheme">@style/PreferenceThemeOverlay</item>
+        <item name="android:windowActionModeOverlay">true</item>
+    </style>
+
+    <style name="TextShadow">
+        <item name="android:shadowColor">@color/colorBlackFortyPercentAlpha</item>
+        <item name="android:shadowDx">2</item>
+        <item name="android:shadowDy">2</item>
+        <item name="android:shadowRadius">5</item>
+    </style>
+
+    <style name="MyPopupMenu" parent="@style/Widget.AppCompat.PopupMenu.Overflow">
+        <item name="android:popupBackground">@android:color/white</item>
+        <item name="android:dropDownHorizontalOffset">10dp</item>
+        <item name="android:dropDownVerticalOffset">5dp</item>
+    </style>
+    <style name="MyDialogStyle2" parent="Theme.MaterialComponents.Dialog.Alert">
+        <item name="textColorAlertDialogListItem">#00FF00</item>
+    </style>
+    <!-- To change Popup Menu Item's text color and text size-->
+
+
+
+
+
+</resources>

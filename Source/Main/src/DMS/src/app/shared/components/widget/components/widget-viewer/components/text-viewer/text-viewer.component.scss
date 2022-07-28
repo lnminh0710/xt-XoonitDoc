@@ -1,0 +1,148 @@
+.text-viewer-container {
+    position: relative;
+
+    & .search-box {
+        position: absolute;
+        height: 35px;
+        top: -20%;
+        right: 5%;
+        width: 50%;
+        background: #ffffff;
+        transition: transform .3s ease-out;
+        
+        &.show {
+            top: 5%;
+            opacity: 1;
+            animation: translateYAnim .3s ease-in;
+        }
+
+        &.hide {
+            animation: translateYAnim .3s ease-in-out;
+            animation-direction: reverse;
+        }
+
+        @keyframes translateYAnim {
+            0% {
+                opacity: 0;
+                transform: translateY(-20%);
+            }
+            25% {
+                opacity: .5;
+                transform: translateY(2%);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(5%)
+            }
+        }
+    
+        & .search-box-container {
+            height: 100%;
+
+            & .search-input-group {
+                flex-grow: 2;
+                margin: auto 0;
+                margin-left: 10px;
+                margin-right: 10px;
+    
+                & input.search-text {
+                    border: none;
+                    background: inherit;
+                    height: 100%;
+                    width: 80%;
+                }
+        
+                & .search-count {
+                    color: black;
+                    display: block;
+                    float: right;
+                }
+            }
+            
+            & .search-border {
+                border-left: 1px solid silver;
+                margin-top: 6px;
+                margin-bottom: 6px;
+                width: 2px;
+            }
+    
+            & .search-btn-wrapper {
+                margin: auto 0;
+                color: silver;
+                flex-grow: 1;
+    
+                & .search-btn-group {
+                    display: flex;
+                    flex-flow: row;
+
+                    & .search-btn {
+                        cursor: pointer;
+                        text-align: center;
+                        width: calc(100% / 3);
+
+                        &.btn-prev > span:after {
+                            left: -6.8px;
+                        }
+
+                        &.btn-next > span:after {
+                            left: -9px;
+                        }
+
+                        &.btn-cancel > span:after {
+                            left: -7px;
+                        }
+
+                        & > span {
+                            transition: all 0.1s ease-in;
+                            position: relative;
+        
+                            &:after {
+                                content: '';
+                                background-color: #dbdbdc;
+                                border-radius: 100%;
+                                transform: scale(0);
+                                position: absolute;
+                                width: 26px;
+                                height: 26px;
+                                top: -5px;
+                            }
+                        }
+        
+                        & > span:not(:active):after {
+                            animation: ripple .3s ease-out;
+                        }
+        
+                        @keyframes ripple {
+                            0% {
+                              transform: scale(0);
+                            }
+                            20% {
+                              transform: scale(1);
+                            }
+                            100% {
+                              opacity: 0;
+                              transform: scale(1);
+                            }
+                        }
+                    }
+                }                
+            }
+        }
+    }
+    
+    &> pre {
+        width: inherit;
+        height: inherit;
+        max-width: inherit;
+        max-height: inherit;
+        padding: 0;
+        border: none;
+        border-radius: 0%;
+
+        mark {
+            padding: 0;
+            background-color: yellow;
+        }
+    }
+}
+

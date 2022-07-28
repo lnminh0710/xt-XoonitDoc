@@ -1,0 +1,30 @@
+<input #input type="text" class="search-box" [(ngModel)]="value" />
+<i class="fa fa-spinner fa-spin" *ngIf="isLoading"></i>
+<i class="fa fa-search search-icon" (click)="openSearch()" *ngIf="!isLoading"></i>
+
+<wj-popup #popup
+          [owner]="input"
+          [showTrigger]="'None'"
+          [hideTrigger]="'None'"
+          (hidden)="popUpHidden()"
+          class="popover article-search">
+    <div class="popover-container file-detail">
+        <xn-ag-grid [dataSource]="dataResult" *ngIf="dataResult"
+                    [autoSelectFirstRow]="true"
+                    [hightlightKeywords]="value"
+                    (rowClick)="onRowClick($event)"
+                    (rowDoubleClicked)="onRowDoubleClickHandler($event)"
+                    (keyDown)="onGridKeyDown($event)">
+        </xn-ag-grid>
+        <div class="close-article">
+            <a mat-raised-button
+               class="mat-btn-red--icon  mat-tab-close-icon  mat-btn-small--icon"
+               (click)="closePopover()">
+                <i class="fa fa-times-circle"></i>
+            </a>
+        </div>
+        <!--<div class="close-article">
+        <i class="fa fa-times-circle" (click)="closePopover($event)"></i>
+    </div>-->
+    </div>    
+</wj-popup>

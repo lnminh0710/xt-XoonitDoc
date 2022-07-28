@@ -1,0 +1,14 @@
+<div [context-menu-directive]="contextMenuData" class="campaign-file-tree-view">
+    <div *ngIf="(!treeViewData || !treeViewData.length)" class="tree-view__empty">
+        Empty data, right click to add an item.
+    </div>
+    <wj-tree-view #tvEdit
+                  [itemsSource]="treeViewData"
+                  [displayMemberPath]="'header'"
+                  [childItemsPath]="'items'"
+                  [imageMemberPath]="'img'"
+                  [isReadOnly]="false"
+                  (selectedItemChange)="selectedItemChange(tvEdit, $event)"
+                  (nodeEditEnded)="nodeEditEnded(tvEdit, $event)">
+    </wj-tree-view>
+</div>

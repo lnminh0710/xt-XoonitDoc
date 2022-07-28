@@ -1,0 +1,71 @@
+$spacing: 5px;
+$command-height: 35px;
+$group-button-height: 35px;
+$file-action-buttom-width: 32px;
+$panel-min-width: 640px;
+$left-width: 340px;
+.upload-template-file {
+	min-width: $panel-min-width;
+	height: 100%;
+	
+	.file-action-button {
+		float: left;
+	}
+	.mat-raised-button {
+		max-width: $file-action-buttom-width;
+		min-width: $file-action-buttom-width;
+		padding: 1px (#{$spacing*2}) 0 (#{$spacing*2});
+	}
+	.xn-uft-left-side,
+	.xn-uft-right-side {
+		height: 100%;
+		padding: 0 10px;
+	}
+	.xn-uft-left-side {
+		min-width: $left-width;
+	}
+	.template-file-name {
+		float: left;
+		width: calc(100% - #{$file-action-buttom-width} - #{$spacing});
+	    white-space: nowrap;
+	    text-overflow: ellipsis;
+	    overflow: hidden;
+	    line-height: $file-action-buttom-width;
+	}
+	.form-control {
+		padding: 5px;
+	}
+	.list-template-of-file-cbo {
+		width: calc(100% - 34px);
+		float: left;
+	}
+	.file-template-menu {
+		width: 34px;
+		height: 34px;
+		float: right;
+	}
+	textarea {
+		height: 100%;
+	}
+	.sql-template {
+		height: calc(100% - 120px);
+	}
+	.xn__form-header {
+		line-height: 30px;
+	}
+	.reload-sql-query-column-name {
+		margin-left: 10px;
+		margin-bottom: 10px;
+	}
+}
+:host ::ng-deep {
+    .file-template-menu-icon {
+        margin-top: 0px;
+        width: 34px;
+        height: 34px;
+        padding-left: 15px;
+    }
+    .xn__dropdown__menu {
+    	left: -135px !important;
+    }
+}

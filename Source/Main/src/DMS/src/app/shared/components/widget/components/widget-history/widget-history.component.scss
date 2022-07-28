@@ -1,0 +1,168 @@
+@import 'src/sass_files/size.scss';
+
+.widget-history {
+    height: 100%;
+    padding: 15px;
+
+    .search-container {
+        text-align: center;
+        padding: 20px 0;
+        margin-bottom: 15px;
+        border-radius: 15px;
+
+        .search-text {
+            text-transform: uppercase;
+            font-size: 14px;
+        }
+
+        .search-box {
+            position: relative;
+            width: 100%;
+            text-align: center;
+
+            .search-input {
+                width: 70%;
+                padding: 5px 15px 5px 45px;
+                border: none;
+                border-radius: 35px;
+                font-size: large;
+            }
+            .search-icon {
+                position: absolute;
+                top: 6px;
+                left: 15.8%;
+                height: 22px;
+            }
+        }
+    }
+
+    .panel.panel-info {
+        border: none;
+        background-color: transparent;
+        height: calc(85vh - 105px);
+
+        @media (min-width: $sreen2K-size) {
+            height: calc(90vh - 105px);
+        }
+
+        .panel-body {
+            padding: 0;
+            height: 100%;
+
+            ::ng-deep xn-ag-grid {
+                ag-grid-angular.ag-theme-balham {
+                    .ag-root-wrapper-body.ag-layout-normal {
+                        height: 100%;
+
+                        .ag-root.ag-font-style.ag-layout-normal {
+                            border: none;
+                            border-radius: 15px;
+
+                            .ag-header {
+                                .ag-header-cell {
+                                    border: none;
+                                }
+                                .ag-header-cell::after,
+                                .ag-header-group-cell::after {
+                                    border-right: none;
+                                }
+                            }
+
+                            .ag-body.ag-layout-normal.ag-row-animation {
+                                height: 100%;
+                                width: 101%;
+
+                                .ag-row-even {
+                                    border: none;
+                                }
+
+                                .ag-row-odd {
+                                    border: none;
+                                }
+
+                                .history-syncstatus {
+                                    span {
+                                        color: #000000;
+                                        padding: 2px 20px;
+                                        border-radius: 4px;
+                                        font-weight: bold;
+                                    }
+
+                                    &.done {
+                                        span {
+                                            background-color: #9cddcc;
+                                        }
+                                    }
+                                    &.error {
+                                        span {
+                                            background-color: #dd9c9c;
+                                        }
+                                    }
+                                    &.loading {
+                                        span {
+                                            background-color: #7db7f7;
+                                        }
+                                    }
+                                }
+
+                                .history-devices {
+                                    background-repeat: no-repeat;
+                                    background-position: 0% 50%;
+                                    span {
+                                        padding-left: 25px;
+                                    }
+
+                                    &.mobile {
+                                        background-image: url(~/public/imgs/Phone.svg);
+                                    }
+                                    &.email {
+                                        background-image: url(~/public/imgs/mail.svg);
+                                    }
+                                    &.website {
+                                        background-image: url(~/public/imgs/earrth.svg);
+                                    }
+                                }
+
+                                .history-cloud {
+                                    background-repeat: no-repeat;
+                                    background-position: 0% 50%;
+                                    span {
+                                        padding-left: 25px;
+                                    }
+
+                                    &.onedrive {
+                                        background-image: url(~/public/imgs/onedirve.svg);
+                                    }
+                                    &.mycloud {
+                                        background-image: url(~/public/imgs/mycloud.svg);
+                                    }
+                                    &.googleDrive {
+                                        background-image: url(~/public/imgs/GoogleDrive.svg);
+                                    }
+                                    &.dropbox {
+                                        background-image: url(~/public/imgs/Dropbox.svg);
+                                    }
+                                }
+                            }
+                        }
+
+                        .ag-side-bar {
+                            border: none;
+                        }
+                    }
+                    .ag-status-bar {
+                        border: none;
+                    }
+                }
+
+                xn-pagination {
+                    display: none;
+                }
+            }
+
+            .result-heading {
+                display: none;
+            }
+        }
+    }
+}

@@ -1,0 +1,78 @@
+@import 'src/sass_files/color.scss';
+
+:host {
+    display: block;
+    height: 100%;
+    .icon-list-container {
+        height: 100%;
+        .icon-list-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-family: rbt_Bold;
+            font-weight: 500;
+            border-radius: 2px;
+            padding: 5px;
+            .header-label {
+                margin-left: 5px;
+                font-size: 16px;
+            }
+            & > div {
+                margin-right: -5px;
+                .icon {
+                    cursor: pointer;
+                    margin: 0 8px 0 0;
+                    font-size: 28px;
+                    color: #0091ff;
+                }
+            }
+        }
+        .icon-list-main {
+            height: calc(100% - 45px);
+            .item-row {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                height: 35px;
+                padding: 0 10px;
+                &:nth-child(even) {
+                    background-color: $selago;
+                }
+                &:hover {
+                    background-color: $blue-link-water2;
+                    .action {
+                        display: flex;
+                    }
+                }
+                &.selecting {
+                    background-color: $blue-link-water;
+                }
+                .content {
+                    display: flex;
+                    align-items: center;
+                    max-width: calc(100% - 56px);
+                    .icon {
+                        margin-right: 10px;
+                        width: 30px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        & > i {
+                            font-size: 20px;
+                        }
+                    }
+                    .name {
+                        font-size: 14px;
+                        white-space: nowrap;
+                        text-overflow: ellipsis;
+                        overflow: hidden;
+                    }
+                }
+                .action {
+                    display: none;
+                    align-items: center;
+                }
+            }
+        }
+    }
+}

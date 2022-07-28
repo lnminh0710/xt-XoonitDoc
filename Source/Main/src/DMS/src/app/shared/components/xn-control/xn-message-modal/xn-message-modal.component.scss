@@ -1,0 +1,83 @@
+@import 'src/sass_files/color.scss';
+
+.modal-header {
+    padding: 0 20px !important;
+    height: 51px;
+    display: flex;
+    align-items: center;
+    .header-icon {
+        font-size: 30px;
+        margin-right: 10px;
+    }
+
+    .header-text {
+        font-size: 16px;
+        flex: 1;
+        text-align: center;
+        font-family: 'rbt_Bold';
+    }
+
+    &.header-center {
+        .header-text {
+            margin-top: 5px;
+            text-align: center;
+            width: 100%;
+        }
+    }
+}
+
+.modal-footer button {
+    margin-bottom: 0;
+    margin-left: 5px;
+    min-width: 0px;
+}
+
+/*Message Modal close button*/
+.mat-btn-close-modal {
+    width: 40px;
+    position: absolute;
+    height: 61px;
+    top: 0;
+    right: 0;
+    background: none !important;
+    box-shadow: none !important;
+    min-width: 0px !important;
+    opacity: 1;
+
+    .mat-button-wrapper {
+        margin-left: -1px;
+    }
+}
+
+:host .mat-raised-button:focus ::ng-deep {
+    outline: 1px dotted #00588b !important;
+}
+
+.modal-content.notice {
+    box-shadow: 1px 1px 20px -1px rgba(0, 0, 0, 0.2);
+    color: black;
+    border: none;
+    border-radius: 4px;
+    width: 400px;
+
+    .modal-header {
+        & .header-icon {
+            font-size: 16px;
+            color: $white;
+            filter: contrast(0.5);
+            position: absolute;
+            top: 22px;
+            left: 137px;
+        }
+    }
+
+    .modal-footer {
+        border: none;
+        display: flex;
+        justify-content: center;
+
+        button {
+            width: 147px;
+        }
+    }
+}

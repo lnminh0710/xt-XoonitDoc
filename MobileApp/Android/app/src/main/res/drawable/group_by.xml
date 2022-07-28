@@ -1,0 +1,28 @@
+<vector android:height="64dp" android:viewportHeight="80"
+    android:viewportWidth="81" android:width="65dp"
+    xmlns:aapt="http://schemas.android.com/aapt" xmlns:android="http://schemas.android.com/apk/res/android">
+    <group>
+        <clip-path android:pathData="M0,0h76v76h-76z M 0,0"/>
+        <path android:fillColor="#0078E2" android:fillType="evenOdd"
+            android:pathData="M38,0.7953l37.2047,37.2047l-37.2047,37.2047l-37.2047,-37.2047z"
+            android:strokeColor="#00000000" android:strokeWidth="1"/>
+        <path android:fillAlpha="0.2" android:fillType="evenOdd"
+            android:pathData="M38,0.7953l37.2047,37.2047l-37.2047,37.2047l-37.2047,-37.2047z"
+            android:strokeColor="#00000000" android:strokeWidth="1">
+            <aapt:attr name="android:fillColor">
+                <gradient android:endX="47.426506"
+                    android:endY="47.434967" android:startX="0.7952957"
+                    android:startY="0.7953" android:type="linear">
+                    <item android:color="#7FFFFFFF" android:offset="0"/>
+                    <item android:color="#7F000000" android:offset="1"/>
+                </gradient>
+            </aapt:attr>
+        </path>
+        <group>
+            <clip-path android:pathData="M20.9,20.9h35.0769v35.0769h-35.0769z M 0,0"/>
+            <path android:fillColor="#FFFFFF" android:fillType="nonZero"
+                android:pathData="M53.0538,44.2846L53.0538,26.7462C53.0538,25.1385 51.7385,23.8231 50.1308,23.8231L32.5923,23.8231C30.9846,23.8231 29.6692,25.1385 29.6692,26.7462L29.6692,44.2846C29.6692,45.8923 30.9846,47.2077 32.5923,47.2077L50.1308,47.2077C51.7385,47.2077 53.0538,45.8923 53.0538,44.2846ZM36.9769,38.4385L39.9438,42.3992L44.2846,36.9769L50.1308,44.2846L32.5923,44.2846L36.9769,38.4385ZM23.8231,29.6692L23.8231,50.1308C23.8231,51.7385 25.1385,53.0538 26.7462,53.0538L47.2077,53.0538L47.2077,50.1308L26.7462,50.1308L26.7462,29.6692L23.8231,29.6692Z"
+                android:strokeColor="#00000000" android:strokeWidth="1"/>
+        </group>
+    </group>
+</vector>

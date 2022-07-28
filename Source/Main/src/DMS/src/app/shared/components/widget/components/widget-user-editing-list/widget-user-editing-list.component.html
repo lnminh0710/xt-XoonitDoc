@@ -1,0 +1,40 @@
+<div class="ue-w">
+	<div class="ue-h"
+		(click)="toggleUserList()">
+		<div class="ue-i">Updating:</div>
+		<div class="ue-i-e">&nbsp;{{userNameList}}</div>
+		<div class="ue-i" *ngIf="numberOfMore > 0">{{numberOfMore}}+</div>
+		<div class="ue-i-i">
+			<i class="fa {{commandIcon}}"></i>	
+		</div>
+	</div>
+	<div class="ue-b"
+		[ngStyle]="userBodyStyle"
+		[perfectScrollbar]="{suppressScrollX: true, suppressScrollY: false}"
+		[hidden]="!isShowUserList">
+		<div *ngFor="let item of userList"
+			class="u-i"
+			[ngStyle]="{'border-color': item.Color}">
+			<div class="ui-u"
+				[ngStyle]="{'background-color': item.Color}"
+				(click)="toggle(item)">
+				{{item.DisplayName}}
+			</div>
+			<div class="ui-b"
+				[ngStyle]="fieldBodyStyle"
+				[perfectScrollbar]="{suppressScrollX: true, suppressScrollY: false}"
+				[hidden]="item.hide">
+				<div class="ui-i">{{item.ClientIp}}</div>
+				<div *ngIf="item.Data && item.Data.length">
+					<div *ngFor="let field of item.Data"
+			            tooltip="{{field.text}}: {{field.value}}"
+			            placement="top"
+			            container="body"
+						class="ui-i">
+						{{field.text}}: <strong>{{field.value}}</strong>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

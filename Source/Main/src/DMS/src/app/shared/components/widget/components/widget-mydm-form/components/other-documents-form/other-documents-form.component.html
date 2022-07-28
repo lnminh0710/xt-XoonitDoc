@@ -1,0 +1,114 @@
+<div
+    class="other-documents-form-container h-100 position-relative d-flex flex-column flex-nowrap"
+    [perfectScrollbar]="{ suppressScrollX: false }"
+>
+    <div class="form-wrapper position-relative px-4 pt-2" *ngIf="formGroup" [formGroup]="formGroup">
+        <ng-container *ngFor="let controlConfig of controls">
+            <ng-container *ngIf="controlConfig.setting?.DisplayField?.GroupHeader === '1'">
+                <h4
+                    class="form-group-title"
+                    [class.hidden]="controlConfig.setting?.DisplayField?.Hidden === '1'"
+                    [ngStyle]="controlConfig?.style"
+                    *ngIf="controlConfig.formControlName !== 'ContactTitle'"
+                >
+                    <label-translation [keyword]="controlConfig.value"></label-translation>
+                </h4>
+                <div class="form-group" *ngIf="controlConfig.formControlName === 'ContactTitle'">
+                    <h4
+                        class="form-group-title"
+                        [class.hidden]="controlConfig.setting?.DisplayField?.Hidden === '1'"
+                        [ngStyle]="controlConfig?.style"
+                    >
+                        <label-translation [keyword]="controlConfig.value"></label-translation>
+                    </h4>
+                    <div>
+                        <button
+                            mat-icon-button
+                            class="btn-action icon-transform"
+                            (click)="enabledSubContactField()"
+                            #popEdit="bs-tooltip"
+                            container="body"
+                            data-placement="bottom"
+                            [tooltip]="tooltipEditButton"
+                            [attr.control-key]="'other-doc-form__edit-button'"
+                        >
+                            <mat-icon [style.height.px]="'28'" [style.width.px]="'28'" [svgIcon]="svgIconEdit"></mat-icon>
+                        </button>
+                    </div>
+                    <div>
+                        <button
+                            mat-icon-button
+                            class="btn-action icon-transform"
+                            (click)="clearAllContactField()"
+                            #popRefresh="bs-tooltip"
+                            container="body"
+                            data-placement="bottom"
+                            [tooltip]="tooltipRefreshButton"
+                            [attr.control-key]="'other-doc-form__refresh-button'"
+                        >
+                            <mat-icon [svgIcon]="svgIconClear"></mat-icon>
+                        </button>
+                    </div>
+                    <div>
+                        <button
+                            mat-icon-button
+                            class="btn-action icon-transform"
+                            (click)="resetAllContactField()"
+                            #popRefresh="bs-tooltip"
+                            container="body"
+                            data-placement="bottom"
+                            [tooltip]="tooltipUndoButton"
+                            [attr.control-key]="'other-doc-form__undo-button'"
+                        >
+                            <mat-icon [svgIcon]="svgIconUndo"></mat-icon>
+                        </button>
+                    </div>
+                </div>
+            </ng-container>
+
+            <ng-container *ngIf="controlConfig.setting?.DisplayField?.GroupHeader === '0'">
+                <xn-dynamic-material-control
+                    [config]="controlConfig"
+                    formControlName="{{ controlConfig.formControlName }}"
+                    [formGroup]="formGroup"
+                    [class.hidden]="controlConfig.setting?.DisplayField?.Hidden === '1'"
+                    (onControlFocus)="onFocusChanged($event)"
+                >
+                </xn-dynamic-material-control>
+            </ng-container>
+        </ng-container>
+    </div>
+
+    <div class="form-dynamic-wrapper position-relative px-4 mt-3" *ngIf="formDynamic" [formGroup]="formDynamic">
+        <ng-container *ngFor="let controlConfig of dynamicControlConfigList">
+            <xn-material-input-control
+                [config]="controlConfig"
+                [formGroup]="formDynamic"
+                [class.hidden]="controlConfig.setting?.DisplayField?.Hidden === '1'"
+                (onControlFocus)="onFocusChanged($event)"
+            >
+                <button
+                    *ngIf="controlConfig.showBtnRemove"
+                    additionalMatIcon
+                    mat-button
+                    mat-icon-button
+                    aria-label="Remove"
+                    tabIndex="-1"
+                    (mousedown)="removeDynamicField(controlConfig)"
+                >
+                    <mat-icon [style.font-size.px]="'18'" [style.color]="'red'">remove_circle</mat-icon>
+                </button>
+            </xn-material-input-control>
+        </ng-container>
+    </div>
+</div>
+
+<ng-template #tooltipEditButton>
+    <label-translation [keyword]="'TOOLTIP_TITLE__Edit'"></label-translation>
+</ng-template>
+<ng-template #tooltipRefreshButton>
+    <label-translation [keyword]="'TOOLTIP_TITLE__Refresh'"></label-translation>
+</ng-template>
+<ng-template #tooltipUndoButton>
+    <label-translation [keyword]="'TOOLTIP_TITLE__Undo'"></label-translation>
+</ng-template>

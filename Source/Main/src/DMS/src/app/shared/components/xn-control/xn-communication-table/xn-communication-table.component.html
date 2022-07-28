@@ -1,0 +1,18 @@
+<div class="table-container" [ngClass]="{'height-100-pc': isWidgetInfo}">
+    <xn-ag-grid *ngIf="dataSourceTable && dataSourceTable.columns && dataSourceTable.columns.length"
+                [id]="gridId"
+                [readOnly]="false"
+                [dataSource]="dataSourceTable"
+                [globalProperties]="globalProperties"
+                [isShowedHeader]="true"
+                [isShowedEditButtons]="true"
+                [allowAddNew]="true"
+                [allowDelete]="true"
+                [fitWidthColumn]="true"
+                [sheetName]="'Customer Communication'"
+                (hasValidationError)="hasValidationError($event)"
+                (onRowMarkedAsDelete)="onRowMarkedAsDeleteHandler($event)"
+                (cellEditingStopped)="onTableEditSuccess($event)"
+                (onDeletedRows)="onDeletedRowsSuccess($event)">
+    </xn-ag-grid>
+</div>

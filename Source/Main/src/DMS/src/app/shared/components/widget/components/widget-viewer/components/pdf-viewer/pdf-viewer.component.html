@@ -1,0 +1,13 @@
+<div class="full-width-height">
+    <div #pdfViewer></div>
+
+    <pdf-viewer
+        [render-text]="true"
+        [show-all]="true"
+        (after-load-complete)="loadCompletely($event)"
+        style="display: block"
+        (page-rendered)="pageRendered()"
+        class="height-100-pc"
+    >
+    </pdf-viewer>
+</div>

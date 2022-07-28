@@ -1,0 +1,62 @@
+<!--<div class="tab-header-container">
+    <xn-tab-header [data]="headerData"
+                   [setting]="tabSetting"
+                   [subTabSetting]="subTabSetting"
+                   class="xn-tab--general"
+                   [ngClass]="{'newTabSummary':newTabConfig, 'editTabSummary':formEditMode}"
+                   [selectedEntity]="selectedEntity"
+                   [editingTabData]="editingTabData"></xn-tab-header>
+</div>-->
+
+<div class="tab-content-container"
+     [ngStyle]="tabContainerStyle"
+     *ngIf="tabSetting"
+     [context-menu-directive]="contextMenuData"
+     [isShowMenu]="isShowContextMenu"
+     [wantToLeftClick]="false">
+
+    <!--Without Additional Info-->
+    <xn-tab-content *ngIf="!tabSetting.AdditionalInfo"
+                    [tabSummaryModels]="headerData"
+                    [setting]="tabSetting"
+                    [newTabConfig]="newTabConfig"
+                    class="xn-tab--general"
+                    (onMainFormChanged)="onMainFormChanged($event)"
+                    (onOtherFormChanged)="onOtherFormChanged($event)"></xn-tab-content>
+
+    <!--<app-xn-ai-main #additionalInformationMain
+                    [data]="tabSetting.AdditionalInfo"
+                    [config]="config"
+                    [configWidth]="configWidth"></app-xn-ai-main>-->
+    <!--With Additional Info-->
+    <as-split direction="horizontal"
+              *ngIf="tabSetting.AdditionalInfo"
+              (dragEnd)="dragEnd($event)"
+              [gutterSize]="5">
+        <as-split-area [size]="configWidth.left"
+                       [minSize]="50"
+                       class="xn__tab-content__split">
+            <xn-tab-content [tabSummaryModels]="headerData"
+                            [setting]="tabSetting"
+                            [newTabConfig]="newTabConfig"
+                            class="xn-tab--general"
+                            [hasSplitter]="true"></xn-tab-content>
+        </as-split-area>
+        <as-split-area [size]="configWidth.right"
+                       [maxSize]="50"
+                       [minSize]="10"
+                       class="additional-information__split"
+                       [perfectScrollbar]="perfectScrollbarConfigForAI">
+            <app-xn-ai-main #additionalInformationMain
+                            [data]="tabSetting.AdditionalInfo"
+                            [config]="config"
+                            [configWidth]="configWidth"></app-xn-ai-main>
+        </as-split-area>
+    </as-split>
+
+    <!--Golden Layout-->
+    <div *ngIf="editLayout" class="edit-layout-setting">
+        <div class="edit-layout-setting-stage"></div>
+    </div>
+</div>
+

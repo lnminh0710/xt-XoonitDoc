@@ -1,0 +1,47 @@
+$font-size: 12px;
+$line-height: 16px;
+$lines-to-show: 3;
+$max-line-width: 465px;
+
+.nav-grid {
+    height: calc(100% - 50px);
+}
+
+.nav-items {
+    padding: 0;
+    margin-top: 20px;
+}
+
+.nav-grid-item-title {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-weight: 700;
+    max-width: $max-line-width;
+
+    .date {
+        margin-right: 10px;
+        font-weight: normal;
+        font-size: smaller;
+    }
+}
+
+.nav-grid-item-content {
+    font-size: $font-size;
+    white-space: normal;
+    max-width: $max-line-width;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: $line-height;
+    max-height: $line-height*$lines-to-show;
+    -webkit-line-clamp: $lines-to-show;
+    display: -webkit-box;
+    display: box;
+    display: -moz-box;
+    -moz-box-orient: vertical;
+    -webkit-box-orient: vertical;
+    /* autoprefixer: off /
+	-webkit-box-orient: vertical;
+	/ autoprefixer: on */
+    box-orient: vertical;
+}

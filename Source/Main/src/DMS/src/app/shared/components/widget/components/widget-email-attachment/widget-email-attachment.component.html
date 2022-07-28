@@ -1,0 +1,71 @@
+<div class="widget-header w-100 d-flex flex-row flex-nowrap">
+    <div class="left w-100 d-flex flex-row flex-nowrap">
+        <button
+            mat-icon-button
+            *ngIf="documents?.length"
+            class="btn-action icon-transform color-blue"
+            style="top: -9px;"
+            #popUpload="bs-tooltip"
+            container="body"
+            data-placement="bottom"
+            [tooltip]="isFullScreen ? 'Minimize' : 'Full screen'"
+            (click)="expandWidget()"
+            [attr.control-key]="'email-attachment__fullscreen-minimize'"
+        >
+            <mat-icon
+                aria-hidden="false"
+                [svgIcon]="isFullScreen ? IconNamesEnum.FULL_SCREEN_MINIMIZE : IconNamesEnum.FULL_SCREEN"
+            ></mat-icon>
+        </button>
+        <label-translation [keyword]="'WIDGET_EMAIL_ATTACHMENT__Header'"></label-translation>
+    </div>
+    <div class="actions-list right w-100 d-flex flex-row flex-nowrap">
+        <button
+            mat-icon-button
+            class="btn-action icon-transform"
+            #popUpload="bs-tooltip"
+            container="body"
+            data-placement="bottom"
+            [tooltip]="labelDownload"
+            (click)="downloadAll()"
+            *ngIf="documents?.length"
+        >
+            <mat-icon aria-hidden="false" [svgIcon]="svgDownload"></mat-icon>
+        </button>
+        <button
+            mat-icon-button
+            *ngIf="documents?.length"
+            class="btn-action icon-transform"
+            #popUpload="bs-tooltip"
+            container="body"
+            data-placement="bottom"
+            [tooltip]="'Refresh'"
+            (click)="onChangedSelectedSearchResult()"
+            [attr.control-key]="'email-attachment__refresh'"
+        >
+            <mat-icon aria-hidden="false" [svgIcon]="IconNamesEnum.WIDGET_MYDM_FORM_Reset"></mat-icon>
+        </button>
+    </div>
+</div>
+<div class="widget-email-attach-container w-100">
+    <div class="email-attach-content">
+        <div
+            class="file-attach"
+            *ngFor="let document of documents"
+            (click)="viewDocument(document)"
+            [ngClass]="{ selected: document.isSelected }"
+        >
+            <div class="attach-icon" [ngClass]="document.docType"></div>
+            <div class="file-info">
+                <div class="file-name">{{ document.fileName }}</div>
+                <!--<div class="file-size">259 KB</div>-->
+            </div>
+            <button mat-icon-button class="btn-action icon-transform btn-download" (click)="download(document)">
+                <mat-icon aria-hidden="false" [svgIcon]="svgDownload"></mat-icon>
+            </button>
+        </div>
+    </div>
+</div>
+<ng-template #labelDownload>
+    <label-translation [keyword]="'WIDGET_EMAIL_VIEWER__Download'"></label-translation>
+</ng-template>

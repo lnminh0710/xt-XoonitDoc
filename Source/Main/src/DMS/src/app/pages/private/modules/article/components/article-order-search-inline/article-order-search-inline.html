@@ -1,0 +1,40 @@
+<div class="search-box">
+    <input #input type="text" class="form-control input-search" [(ngModel)]="value" placeholder="Search Article" />
+    <i class="fa fa-spinner fa-spin" *ngIf="isLoading"></i>
+    <i class="fa fa-search search-icon" (click)="openSearch()" *ngIf="!isLoading"></i>
+</div>
+
+<mat-checkbox color="primary" class="chk-ontop" [(ngModel)]="onTopChecked">
+    On Top
+</mat-checkbox>
+
+<button *ngIf="manualArticleNr"
+        mat-raised-button
+        class="mat-btn-small mat-btn-blue add-btn"
+        (click)="addManualArticleNr()">
+    Add
+</button>
+
+<wj-popup #popup
+          [owner]="input"
+          [showTrigger]="'None'"
+          [hideTrigger]="'None'"
+          (hidden)="popUpHidden()"
+          class="popover article-search">
+    <div class="popover-container file-detail">
+        <xn-ag-grid [dataSource]="dataResult" *ngIf="dataResult"
+                    [autoSelectFirstRow]="true"
+                    [hightlightKeywords]="value"
+                    (rowClick)="onRowClick($event)"
+                    (rowDoubleClicked)="onRowDoubleClickHandler($event)"
+                    (keyDown)="onGridKeyDown($event)">
+        </xn-ag-grid>
+        <div class="close-article">
+            <a mat-raised-button
+               class="mat-btn-red--icon  mat-tab-close-icon  mat-btn-small--icon"
+               (click)="closePopover()">
+                <i class="fa fa-times-circle"></i>
+            </a>
+        </div>
+    </div>
+</wj-popup>

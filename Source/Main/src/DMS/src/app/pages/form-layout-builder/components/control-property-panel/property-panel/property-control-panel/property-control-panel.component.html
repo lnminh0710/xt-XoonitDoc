@@ -1,0 +1,27 @@
+<div class="property-panel property-panel-expand">
+    <div>
+        <div class="property-panel-content  no-padding">
+            <div class="property-panel-header  padding-left">
+                <span class="padding-left--sm">Properties</span>
+                <!--<button mat-raised-button
+                        class="pull-right  mat-btn-small--icon--tool-bar  btn-hover-red"
+                        (click)="closePanel()">
+                    <i class="fa fa-times  font-size-16px"></i>
+                </button>-->
+                <button mat-raised-button
+                        class="pull-right  mat-btn-small--icon--tool-bar"
+                        (click)="savePanel()">
+                    <i class="fa fa-floppy-o  font-size-16px"></i>
+                </button>
+            </div>
+            <perfect-scrollbar>
+                <div><strong class="padding-left--sm">Control Setting</strong></div>
+                <div>
+                    <app-property-control-panel-grid [datasource]="properties"
+                                             (onPropertiesChange)="propertiesChange($event)"
+                                             (onPropertiesApply)="propertiesApply($event)"></app-property-control-panel-grid>
+                </div>
+            </perfect-scrollbar>
+        </div>
+    </div>
+</div>

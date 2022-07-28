@@ -1,0 +1,42 @@
+.popup-selection {
+    height: calc(100% - 50px);
+    padding: 16px;
+    &__title {
+        height: 20px;
+        color: #031829;
+        font-family: 'rbt_Regular';
+        font-size: 14px;
+        letter-spacing: 0.13px;
+        line-height: 16px;
+        margin-bottom: 10px;
+    }
+}
+
+.popup-user-chip {
+    height: 36px;
+    width: 146px;
+    border-radius: 2px;
+    background-color: #e2eaf5;
+    padding: 5px !important;
+    display: flex;
+    .toolbar-icon {
+        margin: 0;
+    }
+    &__title {
+        color: #030d3c;
+        font-family: 'rbt_Regular';
+        font-size: 16px;
+        margin: 5px;
+        flex: 1;
+        width: 90px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+    .fa-user {
+        font-size: 16px;
+    }
+    .fa-times-circle {
+        font-size: 16px;
+    }
+}

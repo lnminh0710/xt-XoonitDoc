@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/imageLogo"
+        android:layout_width="298dp"
+        android:layout_height="63dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="100dp"
+        android:src="@drawable/caminada_02" />
+
+    <EditText
+        android:id="@+id/textName"
+        android:layout_width="298dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="250dp"
+        android:ems="20"
+        android:inputType="textPersonName"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/imageLogo"
+        android:text="UserName" />
+
+    <EditText
+        android:id="@+id/editPassword"
+        android:layout_width="298dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textName"
+        android:layout_centerHorizontal="true"
+        android:ems="20"
+        android:inputType="textPassword"
+        android:text="PassWord" />
+
+    <Button
+        android:id="@+id/btnSignIn"
+        android:layout_width="137dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/editPassword"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        android:background="#FF1744"
+        android:text="Sign In"
+        android:textColor="#2FFF00" />
+
+
+</RelativeLayout>

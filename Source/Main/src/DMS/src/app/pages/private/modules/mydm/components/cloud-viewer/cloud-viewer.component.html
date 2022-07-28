@@ -1,0 +1,33 @@
+<div class="cloud-viewer" *ngIf="!isLoading && pdfSrc">
+    <app-image-toolbar
+        [toolbarConfig]="toolbarConfig"
+        [IdDocumentContainerScans]="IdDocumentContainerScans"
+        (viewActualSize)="viewActualSize()"
+        (rotateImage)="rotateImage($event)"
+        (zoomImage)="zoomImage($event)"
+        (openSharing)="openSharing()"
+    ></app-image-toolbar>
+    <div class="cloud-viewer__pdf scrollbar" mouseWheel (mouseWheel)="onMouseWhell($event)">
+        <pdf-viewer
+            [src]="pdfSrc"
+            [fit-to-page]="true"
+            [render-text]="true"
+            [show-all]="true"
+            style="display: block"
+            [zoom]="zoomVariable"
+            [rotation]="rotateVariable"
+        ></pdf-viewer>
+    </div>
+</div>
+<div class="loading-container" *ngIf="isLoading">
+    <img src="public/assets/img/loading-spinner.gif" />
+</div>
+<div class="loading-container" *ngIf="isEmpty">
+    Not found in cloud
+</div>
+<email-configuration
+    *ngIf="isShowSendMail"
+    (onClose)="isShowSendMail = false"
+    [pages]="pages"
+    [IdDocumentContainerScans]="IdDocumentContainerScans"
+></email-configuration>

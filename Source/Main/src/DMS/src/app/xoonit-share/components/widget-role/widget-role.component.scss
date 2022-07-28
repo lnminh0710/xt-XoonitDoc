@@ -1,0 +1,17 @@
+@import 'src/sass_files/color.scss';
+
+.role-management {
+    display: flex;
+    height: 100%;
+    .role {
+        flex: 1;
+    }
+    .tab-wrapper {
+        flex: 1;
+        margin-left: 0;
+    }
+}
+
+.tab-content {
+    border: none !important;
+}

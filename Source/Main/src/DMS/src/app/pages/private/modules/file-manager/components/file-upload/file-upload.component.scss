@@ -1,0 +1,179 @@
+.danger-color {
+  color: red;
+}
+.warning-color {
+  color: #fbc02d;
+}
+
+.upload-file-dialog {
+  border: unset !important  ;
+  &__header {
+    display: flex;
+    align-items: center;
+    color: black;
+    height: 100%;
+    &-title {
+      flex: 1;
+      text-align: center;
+      font-weight: bold;
+      font-size: larger;
+    }
+    &-icon {
+      cursor: pointer !important;
+      margin-right: 1em;
+    }
+  }
+}
+
+.my-drop-zone {
+  margin-bottom: 0;
+  display: grid;
+  font-size: medium;
+  &__icon {
+    font-size: xx-large;
+    text-align: center;
+    margin-bottom: 12px;
+    color: #4285f4;
+  }
+}
+
+.select-file-container {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: dashed 2px lightgray;
+  cursor: pointer;
+  background-color: #f5f5f5;
+  & input[type='file'] {
+    display: none;
+  }
+
+  &.nv-file-over {
+    border: dashed 2px green !important;
+  }
+}
+
+.upload-content-container {
+  height: 100%;
+}
+$actionHeight: 40px;
+.upload-action {
+  height: $actionHeight;
+  display: flex;
+  align-items: center;
+  &__info {
+    flex: 1;
+    font-weight: bold;
+    color: #4285f4;
+  }
+  &__button {
+    height: 25px;
+    width: 100px;
+    background-color: #fefefe;
+    border-radius: 5px;
+    margin-right: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    box-shadow: 0px 1px 3px #00000085;
+    &.disabled {
+      border: 1px solid #eee;
+      box-shadow: unset !important;
+      cursor: default;
+      color: #818181;
+    }
+    .fa {
+      margin-right: 4px;
+    }
+  }
+}
+
+.upload-content {
+  height: calc(100% - #{$actionHeight});
+  margin-bottom: 10px;
+  overflow: hidden;
+  border-top: 1px solid #efefef;
+  table td {
+    vertical-align: middle;
+  }
+
+  $itemWidth: 60px;
+
+  &__item {
+    height: $itemWidth;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #efefef;
+    position: relative;
+    &-progress {
+      background-color: #dce6f1;
+      position: absolute;
+      height: 100%;
+      left: 0px;
+      z-index: -1;
+      transition: all 0.3s ease-in-out;
+      font-size: 40px;
+      text-align: right;
+      color: #d7d8e7;
+    }
+    &-image {
+      height: 100%;
+      width: calc(#{$itemWidth} - 20px);
+      background-size: calc(#{$itemWidth} - 20px) !important;
+      margin-right: 10px;
+    }
+    &-detail {
+      flex: 1;
+      display: grid;
+      align-items: center;
+      span {
+        color: #808080;
+      }
+    }
+    &-name {
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+    }
+    &-action {
+      width: 20px;
+      display: grid;
+    }
+    &-icon {
+      cursor: pointer;
+    }
+    .success {
+      color: #03dac6;
+    }
+  }
+}
+
+tbody .status {
+  padding: 14px 0 0 0;
+}
+
+.select-file-title {
+  font-size: 14px;
+  font-weight: bold;
+  color: #3c8dbc;
+  padding-bottom: 10px;
+}
+
+.table thead {
+  .status {
+    text-align: center;
+  }
+}
+
+:host ::ng-deep {
+  .status {
+    .success {
+      color: green;
+    }
+  }
+}

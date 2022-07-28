@@ -1,0 +1,47 @@
+<div class="form-management-card" [ngClass]="{ 'show-field': isShowField }">
+  <div class="form-management-card__action">
+    <input
+      class="form-control textarea form-management-card__input"
+      [value]="inputValue"
+      (change)="changeInputValue($event)"
+    />
+
+    <div class="form-management-card__button-create" (click)="inputValue && addData()">
+      <div class="create-icon"></div>
+    </div>
+  </div>
+  <div
+    class="form-management-card__list"
+    [dragula]="name"
+    [dragulaModel]="dataSource"
+    [perfectScrollbar]="perfectScrollbarConfig"
+  >
+    <!-- [perfectScrollbar]="perfectScrollbarConfig" -->
+    <div
+      class="form-management-card__item"
+      *ngFor="let item of dataSource"
+      [ngClass]="{ selected: item.selected && !isAssignMode, card: isCardMode }"
+    >
+      <div
+        class="form-management-card__item-container"
+        (click)="onClickItem(item)"
+        [ngClass]="{ 'assign-mode': isAssignMode }"
+      >
+        <div class="form-management-card__item-drag" *ngIf="isSort">
+          <div class="drag-icon">
+            <div class="form-management-card__item-drag-line"></div>
+            <div class="form-management-card__item-drag-line"></div>
+          </div>
+        </div>
+        <span class="form-management-card__item__title text--ellipsis" aria-label="item.DefaultValue">{{
+          item.DefaultValue
+        }}</span>
+      </div>
+      <div class="form-switch" *ngIf="isAssignMode" (click)="onClickItem(item)">
+        <input type="checkbox" class="form-switch__input" [checked]="item.selected" />
+        <span class="form-slider round"></span>
+      </div>
+      <div *ngIf="isSort && !isAssignMode" class="order-icon"></div>
+    </div>
+  </div>
+</div>

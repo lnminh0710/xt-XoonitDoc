@@ -1,0 +1,181 @@
+%mailInput {
+    font-size: 18px;
+    background-color: transparent;
+    border: unset;
+}
+%displayCenter {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.email-configuration {
+    height: 100%;
+    width: 100%;
+    &__recipients {
+        border-bottom: 1px solid;
+        display: flex;
+        flex-wrap: wrap;
+        padding-bottom: 10px;
+        width: 100%;
+        &-title {
+            font-size: 18px;
+            margin-right: 5px;
+        }
+        &-chip {
+            @extend %displayCenter;
+            height: 30px;
+            border-radius: 15px;
+            margin-right: 5px;
+            margin-top: 5px;
+            padding-left: 10px;
+            &-title {
+            }
+            &-remove {
+                margin: 0 5px;
+                width: 24px;
+                height: 24px;
+                cursor: pointer;
+                background-size: 22px;
+            }
+        }
+        &-input {
+            @extend %mailInput;
+            min-width: 200px;
+            flex: 1;
+        }
+        &-error {
+            height: 10px;
+            color: red;
+            font-size: 10px;
+        }
+    }
+    &__subject {
+        height: 40px;
+        width: 100%;
+
+        border-bottom: 1px solid;
+
+        &-input {
+            @extend %mailInput;
+            width: 100%;
+            height: 100%;
+        }
+    }
+
+    &__content {
+        width: 100%;
+        border-bottom: 1px solid;
+        height: calc(100% - 530px);
+        &.no-attachment {
+            height: calc(100% - 200px);
+        }
+
+        &-input {
+            @extend %mailInput;
+            resize: none;
+            width: 100%;
+        }
+    }
+    &__attachment {
+        display: inline-flex;
+        justify-content: flex-start;
+        padding: 10px 0;
+        border-bottom: 1px solid;
+        flex-wrap: wrap;
+        height: 330px;
+        width: 100%;
+        overflow: auto;
+        &-item {
+            @extend %displayCenter;
+
+            position: relative;
+            height: 280px;
+            width: 180px;
+            margin-right: 30px;
+            margin-top: 15px;
+            border-radius: 10px;
+            border: 1px solid #31314d;
+            &.done {
+                border: unset;
+            }
+        }
+        &-image {
+            border-radius: 10px;
+            box-shadow: 0 4px 10px 0 rgba(16, 27, 79, 0.1);
+            border: 1px solid #e0e4e8;
+            box-sizing: border-box;
+        }
+    }
+
+    &__footer {
+        @extend %displayCenter;
+        height: 120px;
+        padding-left: 20px;
+        justify-content: flex-end;
+    }
+
+    &__button-send-mail {
+        @extend %displayCenter;
+
+        cursor: pointer;
+        height: 32px;
+        width: 135px;
+        border-radius: 3px;
+        background-color: #0049b0;
+        color: #fff;
+
+        &.disabled {
+            background-color: #bdbdbd;
+            cursor: unset;
+            user-select: none;
+        }
+    }
+
+    &__sending-email {
+        background: url('src/public/assets/img/loading-spinner.gif') center no-repeat;
+        background-size: 20px;
+        width: 20px;
+        height: 20px;
+    }
+}
+
+.email-configuration-dialog {
+    &__header {
+        @extend %displayCenter;
+        height: 100%;
+        width: 100%;
+        padding: 0 24px 0 32px;
+    }
+    &__title {
+        flex: 1;
+        height: 19px;
+        width: 91px;
+
+        font-family: 'rbt_Regular';
+        font-size: 14px;
+        font-weight: 500;
+        letter-spacing: 1px;
+        line-height: 19px;
+    }
+    &__control {
+        cursor: pointer;
+        height: 24px;
+        width: 24px;
+        margin-right: 10px;
+
+        &-maximize {
+            background: url('src/public/imgs/icons/fullscreen.svg') center no-repeat;
+            height: 100%;
+        }
+        &-minimize {
+            background: url('src/public/imgs/icons/fullscreen_minimize.svg') center no-repeat;
+            height: 100%;
+        }
+    }
+    &__close-button {
+        cursor: pointer;
+        height: 28px;
+        width: 28px;
+    }
+}

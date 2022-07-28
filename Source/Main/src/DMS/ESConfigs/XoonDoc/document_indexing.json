@@ -1,0 +1,13 @@
+{
+    "properties": {
+        "documentName": {
+            "type": "keyword"
+        },
+        "groupName": {
+            "type": "keyword"
+        },
+        "contentdocument": {
+            "type": "keyword"
+        }
+    }
+}

@@ -1,0 +1,79 @@
+.widget-elastic-search-container {
+    height: 100%;
+
+    & > .input-wrapper {
+        width: 250px;
+        position: absolute;
+        top: 0;
+
+        & ::ng-deep input {
+            height: 30px;
+        }
+    }
+
+    & > .gs-result-wrapper {
+        height: inherit;
+
+        & ::ng-deep .panel-body {
+            border-top-right-radius: 10px;
+            border-top-left-radius: 10px;
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        /*
+        :host ::ng-deep {
+            & .paging-grid {
+                position: absolute;
+                top: 0px;
+                left: 320px;
+
+                & .label-text,
+                & span.mat-button-wrapper > i {
+                    color: #fff;
+                }
+            }
+
+            & ag-grid-angular.ag-theme-balham, 
+            & ag-grid-angular.ag-theme-balham .ag-header,
+            & ag-grid-angular.ag-theme-balham .ag-body div[role=row] {
+                background-color: transparent;
+            }
+
+            & ag-grid-angular.ag-theme-balham {
+                color: #fff;
+
+                & .ag-root-wrapper-body {
+                    & .ag-root {
+                        border: none;
+            
+                        & .ag-header {
+                            & .ag-header-cell-text {
+                                color: #fff;
+                            }
+                        }
+                
+                        & .ag-body div[role=row] {
+                            &.ag-row-even {
+                                background: rgba(255, 255, 255, 0.5);
+                            }
+                
+                            &.ag-row-odd {
+                                background: rgba(118, 118, 118, 0.1);
+                            }
+                        }
+                    }
+            
+                    & .ag-side-bar {
+                        border-right: none;
+                        border-top: none;
+                    }
+                }
+                
+                & .ag-status-bar {
+                    border: none;
+                }
+            }
+        }
+        */
+    }
+}

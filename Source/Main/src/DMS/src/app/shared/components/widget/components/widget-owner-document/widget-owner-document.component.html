@@ -1,0 +1,19 @@
+<div class="owner-document">
+    <!-- <div
+        class="widget-header approval d-flex align-items-center justify-content-betwwen"
+        [ngClass]="{ 'container--disabled': !!idMainDocument || isEmpty }"
+    >
+        <div class="title">Owner Document</div>
+    </div> -->
+    <div class="mandant-overview__content mini-scrollbar" [ngClass]="{ 'container--disabled': isEmpty }">
+        <widget-dynamic-form
+            #ownerDocumentForm
+            [idMainDocument]="idMainDocument"
+            [object]="formObjectName"
+            [methodName]="formMethodName"
+            (onControlClick)="onControlClick($event)"
+        >
+        </widget-dynamic-form>
+    </div>
+</div>
+

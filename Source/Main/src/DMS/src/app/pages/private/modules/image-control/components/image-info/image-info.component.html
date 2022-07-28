@@ -1,0 +1,32 @@
+<div
+    class="image-info animated bounceInUp"
+    dnd-droppable
+    [dropZones]="['document-image-ocr']"
+    (onDropSuccess)="onDropImageThumbnails($event)"
+>
+    <div
+        class="image-info__content"
+        [ngClass]="{ loading: isLoading }"
+        [perfectScrollbar]="perfectScrollbarConfig"
+        [dragula]="'imageInfo'"
+        [dragulaModel]="pageList"
+    >
+        <image-slider-item
+            *ngFor="let image of pageList; let i = index"
+            [index]="i"
+            [image]="image"
+            [width]="150"
+            [height]="200"
+            [type]="ImageThumbnailType.info"
+            [isSelected]="false"
+            [isBase64]="isBase64"
+            [hideTitle]="true"
+            (deleteThumbnail)="onRemovePage($event)"
+            (dblClickItem)="onSelectImage($event)"
+            (clickItem)="onSelectImage($event)"
+        ></image-slider-item>
+    </div>
+    <div class="image-info__loading item--display-center" *ngIf="isLoading">
+        <img src="public/assets/img/loading-spinner.gif" />
+    </div>
+</div>

@@ -1,0 +1,178 @@
+<div class="toolbar-container">
+    <div class="d-flex left" [class.disabled]="isDisabledLeftIcons">
+        <button
+            mat-icon-button
+            class="btn-action icon-transform"
+            #popUpload="bs-tooltip"
+            container="body"
+            data-placement="bottom"
+            [tooltip]="isFullScreen ? 'Minimize' : 'Full screen'"
+            (click)="fullscreenAction()"
+        >
+            <mat-icon
+                aria-hidden="false"
+                [svgIcon]="isFullScreen ? IconNamesEnum.FULL_SCREEN_MINIMIZE : IconNamesEnum.FULL_SCREEN"
+            ></mat-icon>
+        </button>
+        <ng-container *ngIf="!isHideLeftIcon">
+            <button
+                mat-icon-button
+                *ngIf="!loading.share; else spinner"
+                class="btn-action icon-transform"
+                #popUpload="bs-tooltip"
+                container="body"
+                data-placement="bottom"
+                [tooltip]="labelShare"
+                (click)="share()"
+            >
+                <mat-icon aria-hidden="false" [svgIcon]="svgShare"></mat-icon>
+            </button>
+            <button
+                mat-icon-button
+                *ngIf="!loading.download; else spinner"
+                class="btn-action icon-transform"
+                #popUpload="bs-tooltip"
+                container="body"
+                data-placement="bottom"
+                [tooltip]="labelDownload"
+                (click)="download()"
+            >
+                <mat-icon aria-hidden="false" [svgIcon]="svgDownload"></mat-icon>
+            </button>
+        </ng-container>
+        <ng-container *ngIf="!isHidePrintIcon">
+            <button
+                mat-icon-button
+                *ngIf="!loading.print; else spinner"
+                class="btn-action icon-transform"
+                #popUpload="bs-tooltip"
+                container="body"
+                data-placement="bottom"
+                [tooltip]="labelPrint"
+                (click)="print()"
+            >
+                <mat-icon aria-hidden="false" [svgIcon]="svgPrint"></mat-icon>
+            </button>
+        </ng-container>
+
+        <ng-container *ngIf="isShowSearchIcon">
+            <button
+                mat-icon-button
+                class="btn-action icon-transform"
+                #popUpload="bs-tooltip"
+                container="body"
+                data-placement="bottom"
+                [tooltip]="'Search'"
+                (click)="openSearch()"
+            >
+                <mat-icon aria-hidden="false">search</mat-icon>
+            </button>
+        </ng-container>
+    </div>
+    <div id="document-viewer-loading">
+        <i class="fa fa-spinner fa-spin"></i>
+        Loading...
+    </div>
+    <ng-container *ngIf="isShowSwitchMode && isHideRightIcons">
+        <div class="d-flex align-items-center justify-content-center">
+            <div
+                [attr.control-key]="'document-viewer__ungroup'"
+                class="toolbar-icon icon-transform ungroup-icon"
+                #popUpload="bs-tooltip"
+                container="body"
+                data-placement="bottom"
+                (click)="switchMode()"
+                [tooltip]="'Switch mode'"
+            ></div>
+        </div>
+    </ng-container>
+    <div class="d-flex justify-content-end" *ngIf="!isHideRightIcons">
+        <ng-container *ngIf="isShowSwitchMode">
+            <div class="d-flex align-items-center justify-content-center">
+                <div
+                    [attr.control-key]="'document-viewer__ungroup'"
+                    class="toolbar-icon icon-transform ungroup-icon"
+                    #popUpload="bs-tooltip"
+                    container="body"
+                    data-placement="bottom"
+                    (click)="switchMode()"
+                    [tooltip]="'Switch mode'"
+                ></div>
+            </div>
+        </ng-container>
+        <div
+            mat-icon-button
+            class="toolbar-icon with-fa icon-transform rotate-left-icon"
+            container="body"
+            [tooltip]="labelRotateLeft"
+            data-placement="bottom"
+            (click)="rotate(-90)"
+            #popPrint="bs-tooltip"
+        ></div>
+        <div
+            mat-icon-button
+            class="toolbar-icon with-fa icon-transform rotate-right-icon"
+            container="body"
+            [tooltip]="labelRotateRight"
+            data-placement="bottom"
+            (click)="rotate(90)"
+            #popPrint="bs-tooltip"
+        ></div>
+        <div
+            mat-icon-button
+            class="toolbar-icon with-fa icon-transform view-actual-size-icon"
+            container="body"
+            [tooltip]="labelViewActualSize"
+            data-placement="bottom"
+            (click)="viewActualSize()"
+            #popPrint="bs-tooltip"
+        ></div>
+        <div
+            mat-icon-button
+            class="toolbar-icon with-fa icon-transform zoom-out-icon"
+            container="body"
+            [tooltip]="labelZoomOut"
+            data-placement="bottom"
+            (click)="zoomOut()"
+            #popPrint="bs-tooltip"
+        ></div>
+        <div
+            mat-icon-button
+            class="toolbar-icon with-fa icon-transform zoom-in-icon"
+            container="body"
+            [tooltip]="labelZoomIn"
+            data-placement="bottom"
+            (click)="zoomIn()"
+            #popPrint="bs-tooltip"
+        ></div>
+    </div>
+</div>
+
+<ng-template #spinner>
+    <img class="spinner" src="public/assets/img/loading-spinner.gif" />
+</ng-template>
+
+<ng-template #labelDownload>
+    <label-translation [keyword]="'WIDGET_ATTACHMENT_TOOLBAR__Download'"></label-translation>
+</ng-template>
+<ng-template #labelShare>
+    <label-translation [keyword]="'WIDGET_ATTACHMENT_TOOLBAR__Share'"></label-translation>
+</ng-template>
+<ng-template #labelPrint>
+    <label-translation [keyword]="'WIDGET_ATTACHMENT_TOOLBAR__Print'"></label-translation>
+</ng-template>
+<ng-template #labelRotateLeft>
+    <label-translation [keyword]="'WIDGET_ATTACHMENT_TOOLBAR__RotateLeft'"></label-translation>
+</ng-template>
+<ng-template #labelRotateRight>
+    <label-translation [keyword]="'WIDGET_ATTACHMENT_TOOLBAR__RotateRight'"></label-translation>
+</ng-template>
+<ng-template #labelViewActualSize>
+    <label-translation [keyword]="'WIDGET_ATTACHMENT_TOOLBAR__ViewActualSize'"></label-translation>
+</ng-template>
+<ng-template #labelZoomOut>
+    <label-translation [keyword]="'WIDGET_ATTACHMENT_TOOLBAR__ZoomOut'"></label-translation>
+</ng-template>
+<ng-template #labelZoomIn>
+    <label-translation [keyword]="'WIDGET_ATTACHMENT_TOOLBAR__ZoomIn'"></label-translation>
+</ng-template>

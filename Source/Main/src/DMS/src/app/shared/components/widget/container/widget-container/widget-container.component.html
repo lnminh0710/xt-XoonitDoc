@@ -1,0 +1,104 @@
+<div dnd-droppable
+     [attr.data-pageid]="pageId"
+     class="line-background"
+     [dropZones]="['widget-container']"
+     (onDropSuccess)="transferDataSuccess($event)"
+     (onDragOver)="dragOverNewWidget($event)"
+     (onDragLeave)="dragNewWidgetLeave($event)"
+     [ngGrid]="gridConfig"
+     [ngClass]="{'grid-read-only-mode':!allowDesignEdit, 'grid-design-mode':allowDesignEdit }"
+     (onInitializedGrid)="onInitializedGrid($event)">
+
+    <div [ngClass]="{ 'read-only-mode' : !allowDesignEdit,
+                      'widget-container-edit-mode':(box.data.idRepWidgetType === 13 && allowDesignEdit),
+                      'blank-widget': (box.data.idRepWidgetType === 24),
+                      'border-shadow_hover': (widgetMouseEvent === mouseEvent.Hover),
+                      'border-shadow': (widgetMouseEvent === mouseEvent.Always),
+                      'maximize-widget-mode' : box.data.isMaximizedWidget
+                    }"
+         class="widget-module-info-container"
+         *ngFor="let box of widgetBoxesView; let i = index; trackBy: trackWidget"
+         #gridItem=gridItem
+         [(ngGridItem)]="box.config"
+         (onChangeStop)="onChangeStop(box, $event)"
+         (onResizeStart)="onResizeStart(box, $event)"
+         (onResizeStop)="onResizeStop(box, $event)"
+         (onDragStart)="onDragStart(box, $event)"
+         (onDragStop)="onDragStop(box, $event)"
+         [ngSwitch]="box.data.idRepWidgetType">
+        <widget-module-info *ngSwitchDefault
+                            [pageId]="pageId"
+                            [widgetStates]="box.widgetStates"
+                            [gridItemConfig]="box.config"
+                            [payload]="box.payload"
+                            [reloadMode]="reloadMode"
+                            [allowDesignEdit]="allowDesignEdit"
+                            [columnFilter]="columnFilter"
+                            [currentModule]="ofModule"
+                            [toolbarSetting]="toolbarSetting"
+                            [selectedTabHeader]="selectedTabHeader"
+                            [activeSubModule]="activeSubModule"
+                            [widgetProperties]="box.properties"
+                            [columnsLayoutSettings]="box.columnsLayoutSettings"
+                            [resized]="onAfterChangeSize"
+                            [isDesignUpdatingStatus]="isDesignUpdating"
+                            [tabID]="tabID"
+                            [layoutPageInfo]="layoutPageInfo"
+                            [isSplitterDragging]="false"
+                            [isExpandedPropertyPanel]="isExpandedPropertyPanel"
+                            [rowDataChange]="rowDataChange"
+                            [isMaximized]="box.data.isMaximizedWidget"
+                            (onRemoveWidget)="onRemoveWidget($event)"
+                            (onRowTableClick)="onRowTableClick($event)"
+                            (onChangeFieldFilter)="onChangeFieldFilter($event)"
+                            (onEditingWidget)="onEditingWidget($event)"
+                            (onCancelEditingWidget)="onCancelEditingWidget($event)"
+                            (onUpdateTitle)="onUpdateTitle($event)"
+                            (onSaveSuccessWidget)="onSaveSuccessWidget($event)"
+                            (onResetWidgetTranslation)="onResetWidgetTranslation($event)"
+                            (onOpenTranslateWidget)="handleTranslateWidgetDialog($event)"
+                            (onEditWidgetInPopup)="onEditWidgetInPopupHandler($event, box.data)"
+                            (onSuccessLinkingWidget)="onSuccessLinkingWidget($event)"
+                            (onRemoveLinkingWidget)="onRemoveLinkingWidget($event)"
+                            (onLinkingWidgetClicked)="onLinkingWidgetClicked($event)"
+                            (onConnectedWidgetLinkHover)="onConnectedWidgetLinkHover($event)"
+                            (onConnectedWidgetLinkUnHover)="onConnectedWidgetLinkUnHover($event)"
+                            (onShowEmailPopup)="onShowEmailPopup($event)"
+                            (onClickOutsideWidget)="onClickOutsideWidget($event)"
+                            (onOpenPropertyPanel)="onOpenPropertyPanel($event)"
+                            (onResetWidget)="onResetWidget($event)"
+                            (reloadWidgets)="reloadWidgetsHandler($event)"
+                            (onMaximizeWidget)="maximizeWidget($event, box.data)">
+        </widget-module-info>
+
+        <widget-blank *ngSwitchCase="24"
+                      [data]="box.data"
+                      [currentModule]="ofModule"
+                      [allowDesignEdit]="allowDesignEdit"
+                      (onRemoveWidget)="onRemoveWidget($event)">
+        </widget-blank>
+
+        <div *ngIf="box.isLoading()">
+            <div class="block-ui-wrapper block-ui-main">
+                <div class="loading-bar"></div>
+            </div>
+        </div>
+
+        <div class="widget-info__resize_bottom xn-icon__resize icon-black" *ngIf="allowDesignEdit"></div>
+
+        <widget-edit-dialog #widgetEditDialog
+                            *ngIf="widgetEditInPopupId && widgetEditInPopupId == box.data.id"
+                            [widgetData]="box"
+                            [widgetStates]="box.widgetStates"
+                            [currentModule]="ofModule"
+                            [activeSubModule]="activeSubModule"
+                            (onSaveSuccessWidget)="onSaveSuccessWidget($event, widgetEditDialog)"
+                            (onHide)="onHideWidgetEditDialog($event)"></widget-edit-dialog>
+    </div>
+</div>
+
+
+<widget-communication-dialog *ngIf="displayConnectedWidgetDialog && communicationWidgetInfo"
+                             [communicationWidgetInfo]="communicationWidgetInfo"
+                             (onSuccessLinkingWidget)="onSuccessLinkingWidget($event)">
+</widget-communication-dialog>

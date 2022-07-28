@@ -1,0 +1,53 @@
+<div class="mandant-overview">
+    <div
+        class="widget-header approval d-flex align-items-center justify-content-betwwen">
+        <div class="title">
+            <label-translation [keyword]="'WIDGET_MANDANT_OVERVIEW__Title'"></label-translation>
+        </div>
+        <xn-search-table
+            [dataSource]="dataSource"
+            [id]="'2329bd79-e136-4642-8504-4550bd53c1a8'"
+            [title]="title"
+            [isHiddenSearchBox]="isApprovalModule"
+            [isShowAddNew]="isShowAddNew"
+            (onSearchChange)="search($event)"
+            (onClearSearch)="hideSearchBox($event)"
+            (onSelect)="select($event)"
+            (onAddNew)="addNew()"
+            [placeholder]="title"
+            [tooltipSearch]="title"
+            #searchTemp
+        >
+        </xn-search-table>
+        <div
+            class="toolbar-icon draw-icon transform-icon"
+            *ngIf="!isApprovalModule && !!IdPerson"
+            (click)="updateMandant()"
+            [ngClass]="{ disabled: !!IdPersonUpdate }"
+            container="body"
+            data-placement="bottom"
+            tooltip="Edit"
+        ></div>
+    </div>
+    <div class="mandant-overview__content mini-scrollbar">
+        <widget-dynamic-form
+            #mandantOverviewForm
+            [idMainDocument]="idMainDocument"
+            [object]="formObjectName"
+            [methodName]="formMethodName"
+            (onControlClick)="onControlClick($event)"
+            (formInitialized)="onInitialized($event)"
+        >
+        </widget-dynamic-form>
+    </div>
+</div>
+
+<ng-template #addNewPopup let-close="close">
+    <div class="popup-content mini-scrollbar">
+        <widget-dynamic-form #addMandantForm [dynamicFormGroupDef]="dynamicFormGroupDef"> </widget-dynamic-form>
+    </div>
+    <div class="popup-action">
+        <div class="popup-action__button" (click)="close()">Cancel</div>
+        <div class="popup-action__button primary" (click)="createUpdateMandant(close)">Save</div>
+    </div>
+</ng-template>

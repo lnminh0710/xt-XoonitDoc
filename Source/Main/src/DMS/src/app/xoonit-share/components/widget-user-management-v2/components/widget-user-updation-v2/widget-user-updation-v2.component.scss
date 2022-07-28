@@ -1,0 +1,70 @@
+@import 'src/sass_files/color.scss';
+
+form {
+    padding-top: 16px;
+
+    .active-control {
+        margin-top: 19px;
+        margin-bottom: 0 !important;
+        .text-name {
+            font-size: large;
+            margin-top: 5px;
+        }
+    }
+
+    .form-group.mb-0 {
+        margin-bottom: 0 !important;
+    }
+}
+
+.wrapper-button {
+    margin-top: 15px;
+    margin-bottom: 0px !important;
+    .btn-cmd {
+        margin-right: 0;
+        margin-left: 15px;
+    }
+}
+
+.tab-wrapper {
+    border-left: 0;
+    margin: 0px 32px 18px 32px;
+    height: 100%;
+
+    .header-label:first-child {
+        margin-left: 0;
+    }
+    .tab-content {
+        .content-item {
+            height: calc(100% - 90px);
+
+            &.permission-container {
+                border: 1px solid $blue-link-water2;
+                border-top: none;
+
+                .permission-group {
+                    // 22 is title
+                    // 20 is margin top-bottom 10
+                    height: 100%;
+                    border-right: 1px solid $blue-link-water2;
+
+                    &:last-child {
+                        border-right: none;
+                    }
+
+                    .title {
+                        font-size: 16px;
+                        color: $blue-4;
+                        margin-bottom: 10px;
+                        font-family: 'rbt_Medium';
+                        margin: 10px 0;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.content {
+    height: calc(100% - 42px);
+}

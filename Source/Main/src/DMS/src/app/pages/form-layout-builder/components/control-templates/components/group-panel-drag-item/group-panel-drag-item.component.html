@@ -1,0 +1,12 @@
+<div
+    class="group-panel-drag-item-wrapper"
+    cdkDropList
+    [cdkDropListData]="dragItem.children"
+    (cdkDropListDropped)="drop($event)"
+>
+    <div class="group-panel-content">
+        <ng-container *ngFor="let item of dragItem.children">
+            <row-drag-item [dragItem]="item" (dropped)="dropRowDone($event)"></row-drag-item>
+        </ng-container>
+    </div>
+</div>

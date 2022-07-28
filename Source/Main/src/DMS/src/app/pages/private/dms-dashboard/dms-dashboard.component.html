@@ -1,0 +1,30 @@
+<xn-tab-button></xn-tab-button>
+
+<div *ngIf="ofModuleLocal" class="h-100 w-100" [ofModule]="ofModule"
+    hotKeyProcessing
+    processingDocument
+    #xnFocus="xnFocusError"
+    [xnFocusError]="xnFocus"
+>
+    <div class="h-100 w-100">
+        <xn-tab *ngIf="ofModuleLocal.idSettingsGUI != menuModuleId.orderDataEntry"
+                class="xn-tab--general"
+                [headerData]="tabList"
+                [tabSetting]="tabSetting"></xn-tab>
+    </div>
+    <xn-context-menu></xn-context-menu>
+</div>
+
+<ng-template #confirmBeforeChangeNewDocument let-idDocumentContainerScanConfirm="idDocumentContainerScanConfirm" let-close="close">
+    <div class="wrapper-popup">
+        <div class="popup-content text-center">Do you want save current document?</div>
+        <div class="popup-footer d-flex">
+            <button mat-stroked-button (click)="close(); idDocumentContainerScanConfirm = null">Cancel</button>
+            
+            <div class="right-buttons">
+                <button mat-flat-button color="warn" (click)="saveDocument(close)">No</button>
+                <button mat-flat-button color="primary" (click)="saveDocument(close, true)">Yes</button>
+            </div>
+        </div>
+    </div>
+</ng-template>

@@ -1,0 +1,42 @@
+:host {
+    width: 100%;
+}
+
+.column-drag-item-wrapper {
+    --size-drag-handle: 12px;
+
+    height: 100%;
+
+    &.empty-control {
+        border-width: 1px;
+        border-style: dotted;
+        border-color: blue;
+    }
+}
+
+.column-content {
+    width: 100%;
+    height: 100%;
+    position: relative;
+
+    & .column-drag-handle {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: var(--size-drag-handle);
+        height: var(--size-drag-handle);
+        z-index: 1;
+    }
+
+    & .column-drag-preview {
+        box-sizing: border-box;
+        border-radius: 4px;
+        padding: 10px;
+        box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+        background-color: white;
+    }
+}
+
+.cdk-drop-list-dragging {
+    background: lightgreen;
+}

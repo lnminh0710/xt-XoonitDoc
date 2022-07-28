@@ -1,0 +1,1 @@
+export * from './widget-document-path.component';

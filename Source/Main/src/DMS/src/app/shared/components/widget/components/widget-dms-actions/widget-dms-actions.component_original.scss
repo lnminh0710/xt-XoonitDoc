@@ -1,0 +1,40 @@
+.custom-box-header + ::ng-deep .box-detail-container {
+    height: 100%;
+}
+
+.dms-actions-wrapper {
+    height: 100%;
+    max-width: 100%;
+    width: 100vw;
+    position: relative;
+    align-items: center;
+    justify-content: center;
+
+    & .box {
+        margin: 0 10px;
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        transition: transform 0.1s linear;
+
+        &:hover {
+            transform: scale(1.2);
+        }
+
+        &:active {
+            transform: scale(0.8);
+        }
+    }
+
+    & .btn-icon {
+        width: 28px;
+        height: 28px;
+        margin-top: auto;
+        padding: 0;
+        background: transparent;
+
+        &[disabled] {
+            cursor: not-allowed;
+        }
+    }
+}

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="720px" height="1015px" viewBox="0 0 720 1015" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: sketchtool 61.2 (101010) - https://sketch.com -->
+    <title></title>
+    <desc>Created with sketchtool.</desc>
+    <defs>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="linearGradient-1">
+            <stop stop-color="#082742" offset="0%"></stop>
+            <stop stop-color="#031829" offset="100%"></stop>
+        </linearGradient>
+        <rect id="path-2" x="0" y="0" width="720" height="1015"></rect>
+    </defs>
+    <g id="Page-3" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="0.1-Sign-In">
+            <g id="Group-40">
+                <mask id="mask-3" fill="white">
+                    <use xlink:href="#path-2"></use>
+                </mask>
+                <use id="Rectangle" fill="url(#linearGradient-1)" xlink:href="#path-2"></use>
+                <ellipse id="Oval" fill="#FFFFFF" opacity="0.0294131324" mask="url(#mask-3)" cx="457.195804" cy="349.5" rx="450.713287" ry="406.5"></ellipse>
+                <ellipse id="Oval" fill="#FFFFFF" opacity="0.0402018229" mask="url(#mask-3)" cx="-106.195804" cy="80" rx="450.713287" ry="406"></ellipse>
+                <ellipse id="Oval" fill="#FFFFFF" opacity="0.0258091518" mask="url(#mask-3)" cx="-106.195804" cy="642" rx="450.713287" ry="406"></ellipse>
+            </g>
+        </g>
+    </g>
+</svg>

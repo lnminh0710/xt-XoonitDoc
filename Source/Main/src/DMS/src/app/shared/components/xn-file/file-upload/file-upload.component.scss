@@ -1,0 +1,57 @@
+.my-drop-zone {
+    border: dotted 3px lightgray;
+    min-height: 126px;
+    height: calc(100% - 50px);
+    margin-bottom: 0;
+}
+
+.nv-file-over {
+    border: dotted 3px green;
+}
+
+.select-file-container {
+    max-height: 100%;
+
+    & input[type=file] {
+        display: none;
+    }
+}
+
+.upload-content-container {
+    height: 100%;
+}
+
+.upload-content {
+    max-height: calc(100% - 122px);
+    margin-bottom: 10px;
+    overflow: hidden;
+
+    table td {
+        vertical-align: middle;
+    }
+}
+
+tbody .status {
+    padding: 14px 0 0 0;
+}
+
+.select-file-title {
+    font-size: 14px;
+    font-weight: bold;
+    color: #3c8dbc;
+    padding-bottom: 10px;
+}
+
+.table thead {
+    .status {
+        text-align: center;
+    }
+}
+
+:host ::ng-deep {
+    .status {
+        .success {
+            color: green;
+        }
+    }
+}

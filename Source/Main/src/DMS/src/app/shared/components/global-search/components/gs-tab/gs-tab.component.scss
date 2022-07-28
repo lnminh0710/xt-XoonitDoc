@@ -1,0 +1,24 @@
+.gs__grid {
+    height: 100%;
+
+    ::ng-deep xn-pagination {
+        margin-right: 160px;
+    }
+}
+
+.gs__tab-footer {
+    height: 37px;
+    width: 100%;
+}
+
+:host ::ng-deep {
+    .module-children {
+        app-gs-module-item {
+            &:first-child {
+                .gs-dms-item {
+                    margin-right: 10px !important;
+                }
+            }
+        }
+    }
+}

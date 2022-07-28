@@ -1,0 +1,34 @@
+<!-- <div class="widget-header struct-tree d-flex flex-row justify-content-between">
+    <label-translation [keyword]="'COMMON_LABEL__Structure_Tree'"></label-translation>
+    <div class="w28px-h28px toggle-collapse-folders">
+        <i
+            class="fa fa-chevron-down icon-transform"
+            [ngStyle]="isCollapsed && { transform: 'rotate(180deg)' }"
+            #popHand="bs-tooltip"
+            container="body"
+            data-placement="bottom"
+            [tooltip]="isCollapsed ? 'Expand' : 'Collapse'"
+            (click)="toggleFolderTree($event)"
+        ></i>
+    </div>
+</div> -->
+<xn-document-tree-header
+    [hasCollaspeExpand]="false"
+    [hasBtnShowActive]="false"
+    (reloadTree)="reload()"
+></xn-document-tree-header>
+<div class="classified-folder-tree-wrapper">
+    <div class="tree-folder" *ngIf="docTreeList.length > 0">
+        <xn-document-tree
+            [dataTree]="docTreeList"
+            #xnDocumentTree
+            [shouldGetDocumentQuantity]="true"
+            [modeTree]="modeTree"
+            (onClickOnNode)="onClickOnNode($event)"
+            (onDblClickOnNode)="onDblClickOnNode($event)"
+            [config]="structureTreeConfig"
+            [hidden]="hiddenTree"
+        >
+        </xn-document-tree>
+    </div>
+</div>

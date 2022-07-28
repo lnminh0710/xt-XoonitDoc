@@ -1,0 +1,11 @@
+<div class="widget-header approval title w-100 d-flex flex-row flex-nowrap">   
+    <label-translation [keyword]="'Payment Information'"></label-translation>
+</div>
+<div class="widget_content mini-scrollbar">
+    <widget-dynamic-form #paymentInfoForm
+                         [object]="objectName"
+                         [methodName]="methodName"
+                         [idMainDocument]="idMainDocument"
+                         (formInitialized)="dynamicFormInitialized($event)">
+    </widget-dynamic-form>
+</div>

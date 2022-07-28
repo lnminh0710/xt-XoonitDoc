@@ -1,0 +1,656 @@
+<div class="user-management" *ngIf="userLogin">
+    <div class="header-wrapper">
+        <!-- website -->
+        <div
+            *ngIf="userLogin.encrypted !== USER_ROLES_ENUM.User"
+            class="hidden-xs hidden-sm header-content-wrapper display-flex"
+        >
+            <div class="flex-middle filter-block block-total row">
+                <div class="col-xs-6 d-flex total-text">
+                    <label-translation [keyword]="'WIDGET_USER_MANAGEMENT_Total'"></label-translation>:
+                </div>
+                <div class="col-xs-6 total-number text-right">
+                    <span *ngIf="dataSource && dataSource.totalResults" class="total">{{
+                        dataSource.totalResults
+                    }}</span>
+                </div>
+            </div>
+            <div class="flex-middle filter-block block-filter row">
+                <img
+                    *ngIf="
+                        filterOptionsParam.company.selected.IdValue ||
+                        filterOptionsParam.email.selected.IdValue ||
+                        filterOptionsParam.name.selected.IdValue
+                    "
+                    class="btn-clear-filter"
+                    (click)="clearFilter()"
+                    src="public/imgs/icon-erase.svg"
+                    alt="clear-filter"
+                />
+                <ng-container
+                    *ngIf="userLogin.encrypted === USER_ROLES_ENUM.MasterAdministration; else templateFilterOtherUser"
+                >
+                    <div class="col-xs-4 filter-box">
+                        <div class="title">
+                            <label-translation [keyword]="'WIDGET_USER_MANAGEMENT_Company'"></label-translation>
+                        </div>
+                        <div
+                            class="filter-control clear-wrapper"
+                            (mouseenter)="changeValueHoverFilter(FilterOptionsUserEnumData.Company, true)"
+                            (mouseleave)="changeValueHoverFilter(FilterOptionsUserEnumData.Company, false)"
+                        >
+                            <input
+                                type="text"
+                                class="form-control input-have-clear"
+                                [placeholder]="placeholder.company"
+                                [(ngModel)]="filterOptionsParam.company.selected"
+                                (ngModelChange)="
+                                    filterStates(filterOptionsParam.company.selected, FilterOptionsUserEnumData.Company)
+                                "
+                                [matAutocomplete]="auto_com"
+                                (blur)="focusOut(FilterOptionsUserEnumData.Company)"
+                                #textAutoCompleteControl
+                                (focus)="changeValueFocusFilter(FilterOptionsUserEnumData.Company, true)"
+                            />
+                            <img
+                                *ngIf="
+                                    filterOptionsParam.company.selected &&
+                                    filterOptionsParam.company.selected.IdValue &&
+                                    (filterOptionsParam.company.isFocus || filterOptionsParam.company.isHover)
+                                "
+                                class="clear-text-icon"
+                                src="public/imgs/standard_action_cross-circle.svg"
+                                alt="clear text"
+                                (click)="clearTextFilter(FilterOptionsUserEnumData.Company)"
+                            />
+                            <mat-autocomplete
+                                #auto_com="matAutocomplete"
+                                [displayWith]="displayFn"
+                                (optionSelected)="onSelectFilter(FilterOptionsUserEnumData.Company)"
+                            >
+                                <mat-option *ngFor="let item of filterOptionsParam.company.acOptions" [value]="item">
+                                    {{ item.TextValue }}
+                                </mat-option>
+                            </mat-autocomplete>
+                        </div>
+                    </div>
+                    <div class="col-xs-4 filter-box">
+                        <div class="title">
+                            <label-translation [keyword]="'WIDGET_USER_MANAGEMENT_Name'"></label-translation>
+                        </div>
+                        <div
+                            class="filter-control clear-wrapper"
+                            (mouseenter)="changeValueHoverFilter(FilterOptionsUserEnumData.FullName, true)"
+                            (mouseleave)="changeValueHoverFilter(FilterOptionsUserEnumData.FullName, false)"
+                        >
+                            <input
+                                type="text"
+                                class="form-control input-have-clear"
+                                [placeholder]="placeholder.name"
+                                [(ngModel)]="filterOptionsParam.name.selected"
+                                [matAutocomplete]="auto_name"
+                                (ngModelChange)="
+                                    filterStates(filterOptionsParam.name.selected, FilterOptionsUserEnumData.FullName)
+                                "
+                                (blur)="focusOut(FilterOptionsUserEnumData.FullName)"
+                                #textAutoCompleteControl
+                                (focus)="changeValueFocusFilter(FilterOptionsUserEnumData.FullName, true)"
+                            />
+                            <img
+                                *ngIf="
+                                    filterOptionsParam.name.selected &&
+                                    filterOptionsParam.name.selected.IdValue &&
+                                    (filterOptionsParam.name.isFocus || filterOptionsParam.name.isHover)
+                                "
+                                class="clear-text-icon"
+                                src="public/imgs/standard_action_cross-circle.svg"
+                                alt="clear text"
+                                (click)="clearTextFilter(FilterOptionsUserEnumData.FullName)"
+                            />
+                            <mat-autocomplete
+                                #auto_name="matAutocomplete"
+                                [displayWith]="displayFn"
+                                (optionSelected)="onSelectFilter(FilterOptionsUserEnumData.FullName)"
+                            >
+                                <mat-option *ngFor="let item of filterOptionsParam.name.acOptions" [value]="item">
+                                    {{ item.TextValue }}
+                                </mat-option>
+                            </mat-autocomplete>
+                        </div>
+                    </div>
+                    <div class="col-xs-4 filter-box">
+                        <div class="title">
+                            <label-translation [keyword]="'WIDGET_USER_MANAGEMENT_Email'"></label-translation>
+                        </div>
+                        <div
+                            class="filter-control clear-wrapper"
+                            (mouseenter)="changeValueHoverFilter(FilterOptionsUserEnumData.Email, true)"
+                            (mouseleave)="changeValueHoverFilter(FilterOptionsUserEnumData.Email, false)"
+                        >
+                            <input
+                                type="text"
+                                class="form-control input-have-clear"
+                                [placeholder]="placeholder.email"
+                                [(ngModel)]="filterOptionsParam.email.selected"
+                                [matAutocomplete]="auto_email"
+                                (ngModelChange)="
+                                    filterStates(filterOptionsParam.email.selected, FilterOptionsUserEnumData.Email)
+                                "
+                                (blur)="focusOut(FilterOptionsUserEnumData.Email)"
+                                #textAutoCompleteControl
+                                (focus)="changeValueFocusFilter(FilterOptionsUserEnumData.Email, true)"
+                            />
+                            <img
+                                *ngIf="
+                                    filterOptionsParam.email.selected &&
+                                    filterOptionsParam.email.selected.IdValue &&
+                                    (filterOptionsParam.email.isFocus || filterOptionsParam.email.isHover)
+                                "
+                                class="clear-text-icon"
+                                src="public/imgs/standard_action_cross-circle.svg"
+                                alt="clear text"
+                                (click)="clearTextFilter(FilterOptionsUserEnumData.Email)"
+                            />
+                            <mat-autocomplete
+                                #auto_email="matAutocomplete"
+                                [displayWith]="displayFn"
+                                (optionSelected)="onSelectFilter(FilterOptionsUserEnumData.Email)"
+                            >
+                                <mat-option *ngFor="let item of filterOptionsParam.email.acOptions" [value]="item">
+                                    {{ item.TextValue }}
+                                </mat-option>
+                            </mat-autocomplete>
+                        </div>
+                    </div>
+                </ng-container>
+            </div>
+            <div class="flex-middle filter-block block-panation">
+                <xn-paginator
+                    [page]="userFilterModel.pageIndex"
+                    [pageSize]="userFilterModel.pageSize"
+                    [totalPages]="userFilterModel.totalPages"
+                    (pageChangedEvent)="onPaginatorChanged($event)"
+                >
+                </xn-paginator>
+            </div>
+            <div class="flex-middle filter-block btn-wrapper">
+                <button class="btn-cmd btn-cmd-grey" (click)="showDialogAddNewUser()">
+                    <img class="img-plus" src="public/imgs/icon_add.svg" alt="add-icon" />
+                    <span>
+                        <label-translation [keyword]="'WIDGET_USER_MANAGEMENT_AddNew'"></label-translation>
+                    </span>
+                </button>
+                <button class="btn-cmd btn-cmd-grey" (click)="getUsersWithFilter()">
+                    <img class="img-plus" src="public/imgs/iconspace_Rotate Copy 2.svg" alt="refresh-icon" />
+                    <span> Reload </span>
+                </button>
+            </div>
+        </div>
+
+        <!-- mobile -->
+        <div
+            *ngIf="userLogin.encrypted !== USER_ROLES_ENUM.User"
+            class="hidden-md hidden-lg header-content-wrapper mobile-wrapper"
+        >
+            <div class="dropdown">
+                <button
+                    class="btn btn-default dropdown-toggle"
+                    type="button"
+                    id="user-filter"
+                    data-toggle="dropdown"
+                    aria-haspopup="true"
+                    aria-expanded="true"
+                >
+                    <span class="total-text">
+                        <label-translation [keyword]="'WIDGET_USER_MANAGEMENT_Total'"></label-translation>:
+                    </span>
+                    <span *ngIf="dataSource && dataSource.totalResults" class="total-number">{{
+                        dataSource?.totalResults || 0
+                    }}</span>
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="user-filter">
+                    <div class="filter-block block-filter row">
+                        <img
+                            *ngIf="
+                                filterOptionsParam.company.selected.IdValue ||
+                                filterOptionsParam.email.selected.IdValue ||
+                                filterOptionsParam.name.selected.IdValue
+                            "
+                            class="btn-clear-filter"
+                            (click)="clearFilter()"
+                            src="public/imgs/icon-erase.svg"
+                            alt="clear-filter"
+                        />
+                        <ng-container
+                            *ngIf="
+                                userLogin.encrypted === USER_ROLES_ENUM.MasterAdministration;
+                                else templateFilterOtherUser
+                            "
+                        >
+                            <div class="col-xs-12 filter-box">
+                                <div class="title">
+                                    <label-translation [keyword]="'WIDGET_USER_MANAGEMENT_Company'"></label-translation>
+                                </div>
+                                <div
+                                    class="filter-control clear-wrapper"
+                                    (mouseenter)="changeValueHoverFilter(FilterOptionsUserEnumData.Company, true)"
+                                    (mouseleave)="changeValueHoverFilter(FilterOptionsUserEnumData.Company, false)"
+                                >
+                                    <input
+                                        type="text"
+                                        class="form-control input-have-clear"
+                                        [placeholder]="placeholder.company"
+                                        [(ngModel)]="filterOptionsParam.company.selected"
+                                        (ngModelChange)="
+                                            filterStates(
+                                                filterOptionsParam.company.selected,
+                                                FilterOptionsUserEnumData.Company
+                                            )
+                                        "
+                                        [matAutocomplete]="auto_com"
+                                        (blur)="focusOut(FilterOptionsUserEnumData.Company)"
+                                        #textAutoCompleteControl
+                                        (focus)="changeValueFocusFilter(FilterOptionsUserEnumData.Company, true)"
+                                    />
+                                    <img
+                                        *ngIf="
+                                            filterOptionsParam.company.selected &&
+                                            filterOptionsParam.company.selected.IdValue &&
+                                            (filterOptionsParam.company.isFocus || filterOptionsParam.company.isHover)
+                                        "
+                                        class="clear-text-icon"
+                                        src="public/imgs/standard_action_cross-circle.svg"
+                                        alt="clear text"
+                                        (click)="clearTextFilter(FilterOptionsUserEnumData.Company)"
+                                    />
+                                    <mat-autocomplete
+                                        #auto_com="matAutocomplete"
+                                        [displayWith]="displayFn"
+                                        (optionSelected)="onSelectFilter(FilterOptionsUserEnumData.Company)"
+                                    >
+                                        <mat-option
+                                            *ngFor="let item of filterOptionsParam.company.acOptions"
+                                            [value]="item"
+                                        >
+                                            {{ item.TextValue }}
+                                        </mat-option>
+                                    </mat-autocomplete>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 filter-box">
+                                <div class="title">
+                                    <label-translation [keyword]="'WIDGET_USER_MANAGEMENT_Name'"></label-translation>
+                                </div>
+                                <div
+                                    class="filter-control clear-wrapper"
+                                    (mouseenter)="changeValueHoverFilter(FilterOptionsUserEnumData.FullName, true)"
+                                    (mouseleave)="changeValueHoverFilter(FilterOptionsUserEnumData.FullName, false)"
+                                >
+                                    <input
+                                        type="text"
+                                        class="form-control input-have-clear"
+                                        [placeholder]="placeholder.name"
+                                        [(ngModel)]="filterOptionsParam.name.selected"
+                                        [matAutocomplete]="auto_name"
+                                        (ngModelChange)="
+                                            filterStates(
+                                                filterOptionsParam.name.selected,
+                                                FilterOptionsUserEnumData.FullName
+                                            )
+                                        "
+                                        (blur)="focusOut(FilterOptionsUserEnumData.FullName)"
+                                        #textAutoCompleteControl
+                                        (focus)="changeValueFocusFilter(FilterOptionsUserEnumData.FullName, true)"
+                                    />
+                                    <img
+                                        *ngIf="
+                                            filterOptionsParam.name.selected &&
+                                            filterOptionsParam.name.selected.IdValue &&
+                                            (filterOptionsParam.name.isFocus || filterOptionsParam.name.isHover)
+                                        "
+                                        class="clear-text-icon"
+                                        src="public/imgs/standard_action_cross-circle.svg"
+                                        alt="clear text"
+                                        (click)="clearTextFilter(FilterOptionsUserEnumData.FullName)"
+                                    />
+                                    <mat-autocomplete
+                                        #auto_name="matAutocomplete"
+                                        [displayWith]="displayFn"
+                                        (optionSelected)="onSelectFilter(FilterOptionsUserEnumData.FullName)"
+                                    >
+                                        <mat-option
+                                            *ngFor="let item of filterOptionsParam.name.acOptions"
+                                            [value]="item"
+                                        >
+                                            {{ item.TextValue }}
+                                        </mat-option>
+                                    </mat-autocomplete>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 filter-box">
+                                <div class="title">
+                                    <label-translation [keyword]="'WIDGET_USER_MANAGEMENT_Email'"></label-translation>
+                                </div>
+                                <div
+                                    class="filter-control clear-wrapper"
+                                    (mouseenter)="changeValueHoverFilter(FilterOptionsUserEnumData.Email, true)"
+                                    (mouseleave)="changeValueHoverFilter(FilterOptionsUserEnumData.Email, false)"
+                                >
+                                    <input
+                                        type="text"
+                                        class="form-control input-have-clear"
+                                        [placeholder]="placeholder.email"
+                                        [(ngModel)]="filterOptionsParam.email.selected"
+                                        [matAutocomplete]="auto_email"
+                                        (ngModelChange)="
+                                            filterStates(
+                                                filterOptionsParam.email.selected,
+                                                FilterOptionsUserEnumData.Email
+                                            )
+                                        "
+                                        (blur)="focusOut(FilterOptionsUserEnumData.Email)"
+                                        #textAutoCompleteControl
+                                        (focus)="changeValueFocusFilter(FilterOptionsUserEnumData.Email, true)"
+                                    />
+                                    <img
+                                        *ngIf="
+                                            filterOptionsParam.email.selected &&
+                                            filterOptionsParam.email.selected.IdValue &&
+                                            (filterOptionsParam.email.isFocus || filterOptionsParam.email.isHover)
+                                        "
+                                        class="clear-text-icon"
+                                        src="public/imgs/standard_action_cross-circle.svg"
+                                        alt="clear text"
+                                        (click)="clearTextFilter(FilterOptionsUserEnumData.Email)"
+                                    />
+                                    <mat-autocomplete
+                                        #auto_email="matAutocomplete"
+                                        [displayWith]="displayFn"
+                                        (optionSelected)="onSelectFilter(FilterOptionsUserEnumData.Email)"
+                                    >
+                                        <mat-option
+                                            *ngFor="let item of filterOptionsParam.email.acOptions"
+                                            [value]="item"
+                                        >
+                                            {{ item.TextValue }}
+                                        </mat-option>
+                                    </mat-autocomplete>
+                                </div>
+                            </div>
+                        </ng-container>
+                    </div>
+                </ul>
+            </div>
+            <div class="pagnation-button-group display-flex">
+                <div class="flex-middle filter-block block-panation">
+                    <xn-paginator
+                        [page]="userFilterModel.pageIndex"
+                        [pageSize]="userFilterModel.pageSize"
+                        [totalPages]="userFilterModel.totalPages"
+                        (pageChangedEvent)="onPaginatorChanged($event)"
+                    >
+                    </xn-paginator>
+                </div>
+                <div class="flex-middle filter-block btn-wrapper">
+                    <button class="btn-cmd btn-cmd-grey" (click)="showDialogAddNewUser()">
+                        <img class="img-plus" src="public/imgs/icon_add.svg" alt="add-icon" />
+                        <span>
+                            <label-translation [keyword]="'WIDGET_USER_MANAGEMENT_AddNew'"></label-translation>
+                        </span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div
+        *ngIf="dataSource.data.length"
+        class="grid-panel xoonit-grid user-management-grid"
+        [style.height.px]="heightUserGrid"
+        [class.user-grid]="userLogin.encrypted === USER_ROLES_ENUM.User"
+    >
+        <xn-ag-grid
+            #xnAgGrid
+            [id]="'3b9523c5-497d-4bff-bee2-d3528ac5dede'"
+            [globalProperties]="globalProperties"
+            [serverPaging]="false"
+            [suppressContextMenu]="false"
+            [dataSource]="dataSource"
+            [readOnly]="true"
+            [autoSelectCurrentRowAfterChangingData]="false"
+            [rowHeight]="40"
+            (editClick)="showModalConfirm($event)"
+            (forceActiveClick)="showConfirmForceActive($event)"
+            (resendEmailActivationClick)="resendEmailConfirm($event)"
+            (deleteUser)="deleteUser($event)"
+            (editUser)="editUser($event)"
+            (resetPass)="showModalResetPass($event)"
+        >
+        </xn-ag-grid>
+    </div>
+</div>
+
+<!-- (rowClick)="onResultSelect($event)" (rowDoubleClicked)="onRowDoubleClick($event)"
+            
+             (mousedown)="gridMouseDown($event)"
+            (mouseup)="gridMouseUp($event)" -->
+
+<div *ngIf="isLoading" class="xn-loading">
+    <i class="fa fa-spinner fa-spin fa-2x"></i>
+</div>
+
+<ng-template #templateFilterOtherUser>
+    <div class="col-xs-6 filter-box">
+        <div class="title">
+            <label-translation [keyword]="'WIDGET_USER_MANAGEMENT_Name'"></label-translation>
+        </div>
+        <div
+            class="filter-control clear-wrapper"
+            (mouseenter)="changeValueHoverFilter(FilterOptionsUserEnumData.FullName, true)"
+            (mouseleave)="changeValueHoverFilter(FilterOptionsUserEnumData.FullName, false)"
+        >
+            <input
+                type="text"
+                class="form-control input-have-clear"
+                [placeholder]="placeholder.name"
+                [(ngModel)]="filterOptionsParam.name.selected"
+                [matAutocomplete]="auto_name"
+                (ngModelChange)="filterStates(filterOptionsParam.name.selected, FilterOptionsUserEnumData.FullName)"
+                (blur)="focusOut(FilterOptionsUserEnumData.FullName)"
+                #textAutoCompleteControl
+                (focus)="changeValueFocusFilter(FilterOptionsUserEnumData.FullName, true)"
+            />
+            <img
+                *ngIf="
+                    filterOptionsParam.name.selected &&
+                    filterOptionsParam.name.selected.IdValue &&
+                    (filterOptionsParam.name.isFocus || filterOptionsParam.name.isHover)
+                "
+                class="clear-text-icon"
+                src="public/imgs/standard_action_cross-circle.svg"
+                alt="clear text"
+                (click)="clearTextFilter(FilterOptionsUserEnumData.FullName)"
+            />
+            <mat-autocomplete
+                #auto_name="matAutocomplete"
+                [displayWith]="displayFn"
+                (optionSelected)="onSelectFilter(FilterOptionsUserEnumData.FullName)"
+            >
+                <mat-option *ngFor="let item of filterOptionsParam.name.acOptions" [value]="item">
+                    {{ item.TextValue }}
+                </mat-option>
+            </mat-autocomplete>
+        </div>
+    </div>
+    <div class="col-xs-6 filter-box">
+        <div class="title">
+            <label-translation [keyword]="'WIDGET_USER_MANAGEMENT_Email'"></label-translation>
+        </div>
+        <div
+            class="filter-control clear-wrapper"
+            (mouseenter)="changeValueHoverFilter(FilterOptionsUserEnumData.Email, true)"
+            (mouseleave)="changeValueHoverFilter(FilterOptionsUserEnumData.Email, false)"
+        >
+            <input
+                type="text"
+                class="form-control input-have-clear"
+                [placeholder]="placeholder.email"
+                [(ngModel)]="filterOptionsParam.email.selected"
+                [matAutocomplete]="auto_email"
+                (ngModelChange)="filterStates(filterOptionsParam.email.selected, FilterOptionsUserEnumData.Email)"
+                (blur)="focusOut(FilterOptionsUserEnumData.Email)"
+                #textAutoCompleteControl
+                (focus)="changeValueFocusFilter(FilterOptionsUserEnumData.Email, true)"
+            />
+            <img
+                *ngIf="
+                    filterOptionsParam.email.selected &&
+                    filterOptionsParam.email.selected.IdValue &&
+                    (filterOptionsParam.email.isFocus || filterOptionsParam.email.isHover)
+                "
+                class="clear-text-icon"
+                src="public/imgs/standard_action_cross-circle.svg"
+                alt="clear text"
+                (click)="clearTextFilter(FilterOptionsUserEnumData.Email)"
+            />
+            <mat-autocomplete
+                #auto_email="matAutocomplete"
+                [displayWith]="displayFn"
+                (optionSelected)="onSelectFilter(FilterOptionsUserEnumData.Email)"
+            >
+                <mat-option *ngFor="let item of filterOptionsParam.email.acOptions" [value]="item">
+                    {{ item.TextValue }}
+                </mat-option>
+            </mat-autocomplete>
+        </div>
+    </div>
+</ng-template>
+
+<ng-container *ngIf="isShowDialogConfirmStatus">
+    <p-dialog
+        [(visible)]="isShowDialogConfirmStatus"
+        [styleClass]="dialogConfirmStatusClass"
+        appendTo="body"
+        modal="true"
+        [draggable]="false"
+        [resizable]="false"
+        responsive="true"
+        [width]="dialogConfirmStatusWidth"
+    >
+        <div class="h-100 w-100">
+            <div class="row amd-header">
+                <div class="col-xs-2">
+                    <img class="img-warning" src="public/imgs/warning.svg" alt="close-icon" />
+                </div>
+                <div class="col-xs-8 text-content">
+                    <label-translation [keyword]="'WIDGET_USER_MANAGEMENT_Confirm'"></label-translation>
+                </div>
+                <div class="col-xs-2">
+                    <img
+                        class="img-close"
+                        src="public/imgs/icon_close.svg"
+                        alt="close-icon"
+                        (click)="closeDialogConfirmStatus()"
+                        #popClose="bs-tooltip"
+                        container="body"
+                        data-placement="bottom"
+                        [tooltip]="Close"
+                    />
+                </div>
+            </div>
+            <div class="amd-body">
+                <p>
+                    <label-translation
+                        [keyword]="'WIDGET_USER_MANAGEMENT_DoYouWantToLogin'"
+                        [params]="{ statusText: userStatus.statusText }"
+                    ></label-translation>
+                </p>
+                <p class="user-info">
+                    <span>{{ userStatus.firstName }} {{ userStatus.lastName }}</span
+                    ><br />
+                    <span>{{ userStatus.email }}</span
+                    ><br />
+                    <span>{{ userStatus.company }}</span
+                    ><br />
+                </p>
+                <div class="button-wrapper">
+                    <button class="btn-cmd btn-cmd-default" (click)="closeDialogConfirmStatus()">
+                        <label-translation [keyword]="'Cancel'"></label-translation>
+                    </button>
+                    <button
+                        class="btn-cmd"
+                        [ngClass]="userStatus.statusText === 'inactive' ? 'btn-cmd-danger' : 'btn-cmd-success'"
+                        (click)="changeStatusUser()"
+                    >
+                        <span class="text-button">
+                            <label-translation [keyword]="userStatus.statusText"></label-translation>
+                        </span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div *ngIf="isLoading" class="xn-loading">
+            <i class="fa fa-spinner fa-spin fa-2x"></i>
+        </div>
+    </p-dialog>
+</ng-container>
+
+<ng-container *ngIf="isShowDialogConfirmDelete">
+    <p-dialog
+        header=""
+        [(visible)]="isShowDialogConfirmDelete"
+        [styleClass]="'prime-dialog ui-dialog-flat'"
+        appendTo="body"
+        modal="true"
+        [width]="400"
+        [draggable]="true"
+        [resizable]="true"
+        responsive="true"
+    >
+        <p-header>
+            <div class="confirm-dialog__header">
+                <div class="image-icon warning-icon"></div>
+                <span class="confirm-dialog__title">
+                    <label-translation [keyword]="'WIDGET_USER_MANAGEMENT_Confirm'"></label-translation>
+                </span>
+                <div
+                    class="toolbar-icon icon-transform close-dialog-icon"
+                    #popClose="bs-tooltip"
+                    container="body"
+                    data-placement="bottom"
+                    [tooltip]="Close"
+                    aria-label="Close"
+                    (click)="closeDialogConfirmStatus()"
+                ></div>
+            </div>
+        </p-header>
+        <div class="confirm-dialog__content">
+            <p>
+                <label-translation [keyword]="'WIDGET_USER_MANAGEMENT_DoYouDelete'"></label-translation>
+            </p>
+            <p class="user-info">
+                <span>{{ userDelete.fullName }}</span
+                ><br />
+                <span>{{ userDelete.email }}</span
+                ><br />
+                <span>{{ userDelete.company }}</span
+                ><br />
+            </p>
+        </div>
+        <div class="confirm-dialog__footer">
+            <div class="confirm-dialog__space"></div>
+            <div class="confirm-dialog__button-cancel" (click)="closeDialogConfirmStatus()">
+                <label-translation [keyword]="'Cancel'"></label-translation>
+            </div>
+            <div class="confirm-dialog__button-no-save" (click)="confirmDeleteUser()">
+                <label-translation [keyword]="'Delete'"></label-translation>
+            </div>
+            <div class="confirm-dialog__space"></div>
+        </div>
+    </p-dialog>
+</ng-container>
+
+<ng-template #Close>
+    <label-translation [keyword]="'Close'"></label-translation>
+</ng-template>

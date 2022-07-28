@@ -1,0 +1,247 @@
+:host ::ng-deep {
+
+    .menu-hide {
+        display: none;
+    }
+
+    ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        font-size: 13px;
+        text-align: left;
+        line-height: normal;
+        z-index: 1000;
+    }
+
+    ul li {
+        position: relative;
+    }
+    /* sub navigation */
+    ul {
+        background-color: white;
+        width: auto;
+        min-width: 165px;
+        border: 1px solid #d3d3d3;
+        box-shadow: 0 2px 4px -1px rgba(0,0,0,.2), 0 4px 5px 0 rgba(0,0,0,.14), 0 1px 10px 0 rgba(0,0,0,.12);
+        border-radius: 4px;
+    }
+
+    ul.right {
+        right: 0;
+        left: auto;
+    }
+
+    li {
+        position: relative;
+        margin: 0;
+        /*display: block;*/
+        padding: 4px 1px 0px 1px;
+    }
+
+    li ul {
+        position: absolute;
+        top: 0;
+        left: 230px;
+        margin: 0;
+    }
+    /* style all links */
+    a {
+        line-height: 40px;
+        padding: 0 12px;
+        margin: 0 12px;
+    }
+
+    a {
+        color: #000 !important;
+        text-decoration: none;
+        display: block;
+    }
+    /* icon header */
+    li > a > .header-icon {
+        padding: 5px;
+    }
+
+    li:hover, li:focus, li:active {
+        background-color: #f5f5f5;
+    }
+
+    a:hover, a:focus, a:active {
+        text-decoration: none;
+        color: #000;
+    }
+    /* style sub level links */
+    li a {
+        margin: 0 10px;
+        padding: 0;
+    }
+
+    li:last-child a {
+        border-bottom: none;
+    }
+    /* hide sub menu links */
+    /*ul.sub-menu {
+        display: none;
+    }*/
+    li ul.sub-menu {
+        display: none;
+    }
+
+    ul.sub-menu .divider {
+        height: 1px;
+        overflow: hidden;
+        background-color: #dcdcdc;
+        padding: 0;
+        border-bottom: 1px solid #bababa;
+        border-top: 1px solid #ececec;
+        line-height: 1.2;
+    }
+
+    a > .fa-angle-right {
+        position: absolute;
+        top: 50%;
+        right: 10px;
+        margin-top: -8px;
+    }
+
+    a.main-setting > .fa-angle-right {
+        position: inherit;
+        top: auto;
+        margin-top: 3px;
+    }
+
+    a.main-setting > span {
+        position: relative;
+        display: inline-block;
+    }
+
+    .radio {
+        margin: 0 0 0 5px;
+    }
+
+    .checkbox {
+        margin: 0 0 0 5px;
+    }
+
+    .radio label::after {
+        width: 7px;
+        height: 7px;
+        left: 5px;
+        top: 4px;
+        margin-left: -20px;
+    }
+
+    .radio label::before {
+        width: 15px;
+        height: 15px;
+        left: 0;
+        margin-left: -19px;
+        outline: none;
+    }
+
+    .checkbox label::before {
+        outline: none;
+    }
+
+    .checkbox label::after {
+        top: 3px;
+    }
+
+    li .radio label,
+    li .checkbox label {
+        width: 100%;
+        padding-left: 5px;
+    }
+
+    li .hidden-checkbox {
+        display: none;
+    }
+
+    .field-filter {
+        overflow-y: auto;
+        max-height: 300px;
+        padding-bottom: 5px;
+    }
+
+    .custom-filter__icon {
+        padding-right: 9px;
+    }
+
+    .menu-list a {
+        margin: 3px 8px;
+        line-height: inherit;
+    }
+
+    .display-field {
+        padding-top: 2px;
+        padding-bottom: 2px;
+    }
+}
+
+/*:host-context(.open) > ul.sub-menu {
+    display: block;
+}
+
+:host-context(.open) li ul.sub-menu {
+    display: none;
+}*/
+.sub-menu {
+    li.disabled a {
+        color: #bbb !important;
+        cursor: not-allowed;
+    }
+}
+
+ul.filter-menu li:first-child, .display-field ul.sub-menu li:first-child {
+    margin-left: 0 !important;
+    padding: 4px 2px 2px 0 !important;
+}
+
+ul.filter-menu li:first-child .radio {
+    margin-left: 6px;
+}
+
+ul.filter-menu li p {
+    margin: 0;
+}
+
+.display-field ul {
+    width: auto !important;
+    min-width: 130px;
+}
+
+.display-field ul.sub-menu-level-1-1, .display-field ul.sub-menu-level-1-2 {
+    min-width: 138px;
+}
+
+.display-field ul.menu-widget-column-setting {
+    min-width: 160px;
+}
+
+.display-field ul.menu-widget-column-setting {
+    min-width: 160px;
+}
+
+.display-field ul.menu-form-type {
+    min-width: 83px;
+}
+
+.display-field ul.sub-menu li.field-filter-item {
+    padding: 2px 1px 2px 1px;
+}
+
+.display-field ul.sub-menu li:first-child .checkbox {
+    margin-left: 6px;
+    padding-bottom: 2px;
+}
+
+.display-field ul.sub-menu.filter-menu.widget-setting-filter li:first-child,
+.filter-menu .widget-setting-filter {
+    li.display-field:first-child {
+        padding-bottom: 2px !important;
+
+        & .fa-angle-right {
+            margin-top: -5px !important;
+        }
+    }
+}

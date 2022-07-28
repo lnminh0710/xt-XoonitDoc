@@ -1,0 +1,71 @@
+@import '../../styles/common.scss';
+@import 'src/sass_files/color.scss';
+
+.cloud-configuration {
+    padding: 28px;
+    &__title {
+        margin-bottom: 15px;
+
+        &-text {
+            height: 19px;
+            font-family: 'rbt_Medium';
+            font-size: 14px;
+            text-transform: uppercase;
+            line-height: 19px;
+            color: $blue-4;
+        }
+        &-buttonWrapper {
+            text-align: right;
+
+            .btn-xoonit {
+                font-size: 16px;
+                font-family: 'rbt_Medium';
+                line-height: 19px;
+                border-radius: 8px;
+                position: relative;
+                height: 40px;
+
+                .img-plus {
+                    position: relative;
+                    margin-right: 10px;
+                    top: -2px;
+                }
+            }
+        }
+    }
+
+    &__notification {
+        @extend %displayCenter;
+        width: calc(100% - 24px);
+        height: 40px;
+        position: absolute;
+        top: -1000px;
+        left: 12px;
+        border-radius: 4px;
+        box-shadow: 0 2px 4px 1px #e8fad5;
+        transition: top 1s ease-in-out;
+        &.success {
+            background-color: #59911d;
+        }
+        &.error {
+            background-color: #bf2600;
+        }
+        &.show-notification {
+            top: 10px;
+        }
+        &-title {
+            color: #fff;
+            font-family: 'rbt_Regular';
+            font-size: 14px;
+            letter-spacing: 0;
+            line-height: 19px;
+        }
+    }
+}
+
+::ng-deep .ui-dialog {
+    z-index: 1051 !important;
+}
+::ng-deep .ui-widget-overlay {
+    z-index: 1050 !important;
+}

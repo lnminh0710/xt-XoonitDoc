@@ -1,0 +1,30 @@
+.plus, .remove {
+    font-size: 18px;
+    padding-right: 1px;
+    cursor: pointer;
+}
+
+.plus {
+    color: green;
+}
+
+.remove {
+    color: darkred;
+}
+
+.input_value {
+    width: 100%;
+    padding-left: 2px;
+    line-height: 1.67;
+}
+
+
+.value ::ng-deep {
+    xn-date-picker {
+        height: 26px;
+    }
+
+    .xn-date-picker-icon-btn {
+        padding: 2px 10px;
+    }
+}

@@ -1,0 +1,1016 @@
+<div class="xn-widget-menu-status flip-container" [ngClass]="{ 'edit-template-mode': settings.class.editTemplateMode }">
+  <div class="flipper" [ngClass]="{ 'show-tool-buttons': settings.class.showToolButtons }">
+    <div class="menu-and-setting-container front" [ngClass]="{ 'visibility-hidden': settings.class.visibilityHidden }">
+      <div *ngIf="!settings.btnSettingForEditMode">
+        <ng-container *ngTemplateOutlet="btnSettingTemplate"></ng-container>
+      </div>
+
+      <!-- Menu Toolbar Button-->
+      <a
+        mat-raised-button
+        *ngIf="settings.btnToolbar.enable"
+        class="box-header-btns wg-menu pull-right no-padding-left no-padding-right no-margin-left no-margin-right"
+        tooltip="Toolbar"
+        placement="top"
+        container="body"
+      >
+        <input
+          type="image"
+          class="dropdown-toggle xn-margin--sm"
+          src="public/imgs/widget-toolbar.png"
+          alt="Widget Menu"
+          width="24"
+          height="24"
+          (click)="toggleToolButtons(true)"
+        />
+      </a>
+
+      <ng-container *ngTemplateOutlet="editStatusSettingTemplate"></ng-container>
+      <ng-container *ngTemplateOutlet="editUserRoleTemplate"></ng-container>
+
+      <!-- Menu Refresh Button-->
+      <a
+        mat-raised-button
+        *ngIf="settings.btnRefresh.enable"
+        class="box-header-btns wg-menu pull-right blue-color"
+        tooltip="Refresh"
+        placement="top"
+        container="body"
+        (click)="refreshWidget()"
+      >
+        <i class="fa fa-undo"></i>
+      </a>
+    </div>
+
+    <div class="box-header-btns-container-outer back">
+      <div
+        class="box-header-btns-container"
+        [ngClass]="{ 'move-up': !showToolButtons && !showInDialog && !isShowToolButtonsWihoutClick }"
+      >
+        <a mat-raised-button class="box-header-btns wg-menu pull-right">
+          <a
+            *ngIf="settings.btnToggleToolButtons.enable"
+            title="Toggle"
+            (click)="toggleToolButtons(false)"
+            class="dropdown-toggle no-padding red-color"
+          >
+            <i class="fa fa-reply"></i>
+          </a>
+        </a>
+
+        <div *ngIf="settings.btnSettingForEditMode">
+          <ng-container *ngTemplateOutlet="btnSettingTemplate"></ng-container>
+        </div>
+        <ng-container *ngTemplateOutlet="editUserRoleTemplate"></ng-container>
+        <ng-container *ngTemplateOutlet="editStatusSettingTemplate"></ng-container>
+        <div *ngIf="showToolButtons && isFolderManagement">
+          <ng-container *ngTemplateOutlet="folderManagementSetting"></ng-container>
+        </div>
+
+        <!-- Edit Form Button-->
+        <a
+          mat-raised-button
+          class="box-header-btns edit-widget pull-left"
+          *ngIf="settings.btnEditForm.enable"
+          [ngClass]="{
+            'opening-edit-dropdown': isOpeningEditDropdown,
+            'hidden-widget-btn': !isShowedEditFormButton || isSwitchedFromGridToForm,
+            'xn-disabled': disableButtonEditWidget
+          }"
+          (mouseleave)="manageEditFormDropdown($event, true, 'form')"
+          [attr.disabled]="disableButtonEditWidget"
+        >
+          <a
+            tooltip="Edit Widget"
+            placement="top"
+            container="body"
+            (click)="editWidget('form')"
+            class="dropdown-toggle"
+            [ngClass]="{ 'gray-color': disableButtonEditWidget, 'orange-color': !disableButtonEditWidget }"
+          >
+            <i class="fa fa-pencil"></i>
+          </a>
+          <a
+            tooltip="Edit Widget Options"
+            placement="top"
+            container="body"
+            class="show-down-toggle"
+            [ngClass]="{ 'gray-color': disableButtonEditWidget, 'orange-color': !disableButtonEditWidget }"
+            (click)="toggleEditDropdown(true)"
+            id="btnEditFormDropdown{{ randomNumb }}"
+          >
+            <i class="fa fa-caret-down"></i>
+          </a>
+          <wj-popup
+            *ngIf="!showInDialog"
+            #editFormDropdown
+            class="edit-widget-ddl"
+            [ngClass]="{ hidden: !isShowEditDropdown }"
+          >
+            <edit-dropdown
+              (editInPopupClick)="editWidgetInPopup(1)"
+              (editInlineClick)="editWidgetInline(1)"
+            ></edit-dropdown>
+          </wj-popup>
+        </a>
+
+        <!-- Edit Editable Table Button-->
+        <a
+          mat-raised-button
+          class="box-header-btns edit-widget pull-left"
+          *ngIf="settings.btnEditEditableTable.enable && isShowedEditRowTableButton"
+          [ngClass]="{
+            'opening-edit-dropdown': isOpeningEditDropdown,
+            'hidden-widget-btn': !isShowedEditTableButton || showInDialog,
+            'xn-disabled': disableButtonEditWidget
+          }"
+          (mouseleave)="manageEditFormDropdown($event, true, 'table')"
+          [attr.disabled]="disableButtonEditWidget"
+        >
+          <a
+            tooltip="Edit widget"
+            placement="top"
+            container="body"
+            (click)="editWidget('table')"
+            class="dropdown-toggle"
+            [ngClass]="{ 'gray-color': disableButtonEditWidget, 'orange-color': !disableButtonEditWidget }"
+          >
+            <i class="fa fa-pencil"></i>
+          </a>
+          <a
+            *ngIf="settings.btnEditWidgetOptions.enable"
+            tooltip="Edit Widget Options"
+            placement="top"
+            container="body"
+            class="show-down-toggle"
+            [ngClass]="{ 'gray-color': disableButtonEditWidget, 'orange-color': !disableButtonEditWidget }"
+            (click)="toggleEditDropdown(true)"
+            id="btnEditTableDropdown{{ randomNumb }}"
+          >
+            <i class="fa fa-caret-down"></i>
+          </a>
+          <wj-popup
+            *ngIf="!showInDialog"
+            #editTableDropdown
+            [ngClass]="{ hidden: !isShowEditDropdown }"
+            class="edit-widget-ddl"
+          >
+            <edit-dropdown
+              (editInPopupClick)="editWidgetInPopup(2)"
+              (editInlineClick)="editWidgetInline(2)"
+            ></edit-dropdown>
+          </wj-popup>
+        </a>
+
+        <!-- Edit Country Widget Button-->
+        <a
+          mat-raised-button
+          class="box-header-btns edit-widget pull-left"
+          *ngIf="settings.btnEditCountryWidget.enable"
+          [ngClass]="{
+            'opening-edit-dropdown': isOpeningEditDropdown,
+            'hidden-widget-btn': !isShowedEditButtonsForCountry || showInDialog,
+            'xn-disabled': disableButtonEditWidget
+          }"
+          (mouseleave)="manageEditFormDropdown($event, true, 'country')"
+          [attr.disabled]="disableButtonEditWidget"
+        >
+          <a
+            tooltip="Edit widget"
+            placement="top"
+            container="body"
+            (click)="editWidget('country')"
+            class="dropdown-toggle"
+            [ngClass]="{ 'gray-color': disableButtonEditWidget, 'orange-color': !disableButtonEditWidget }"
+          >
+            <i class="fa fa-pencil"></i>
+          </a>
+          <a
+            tooltip="Edit Widget Options"
+            placement="top"
+            container="body"
+            class="show-down-toggle"
+            [ngClass]="{ 'gray-color': disableButtonEditWidget, 'orange-color': !disableButtonEditWidget }"
+            (click)="toggleEditDropdown(true)"
+            id="btnEditCountryDropdown{{ randomNumb }}"
+          >
+            <i class="fa fa-caret-down"></i>
+          </a>
+          <wj-popup
+            *ngIf="!showInDialog"
+            #editCountryDropdown
+            [ngClass]="{ hidden: !isShowEditDropdown }"
+            class="edit-widget-ddl"
+          >
+            <edit-dropdown
+              (editInPopupClick)="editWidgetInPopup(3)"
+              (editInlineClick)="editWidgetInline(3)"
+            ></edit-dropdown>
+          </wj-popup>
+        </a>
+
+        <!-- Edit TreeView Widget Button-->
+        <a
+          mat-raised-button
+          class="box-header-btns edit-widget pull-left"
+          *ngIf="settings.btnEditTreeViewWidget.enable"
+          [ngClass]="{
+            'opening-edit-dropdown': isOpeningEditDropdown,
+            'hidden-widget-btn': !isShowedEditButtonsForTreeView || showInDialog,
+            'xn-disabled': disableButtonEditWidget
+          }"
+          (mouseleave)="manageEditFormDropdown($event, true, 'treeview')"
+          [attr.disabled]="disableButtonEditWidget"
+        >
+          <a
+            tooltip="Edit widget"
+            placement="top"
+            container="body"
+            (click)="editWidget('treeview')"
+            class="dropdown-toggle"
+            [ngClass]="{ 'gray-color': disableButtonEditWidget, 'orange-color': !disableButtonEditWidget }"
+          >
+            <i class="fa fa-pencil"></i>
+          </a>
+          <a
+            tooltip="Edit Widget Options"
+            placement="top"
+            container="body"
+            class="show-down-toggle"
+            [ngClass]="{ 'gray-color': disableButtonEditWidget, 'orange-color': !disableButtonEditWidget }"
+            (click)="toggleEditDropdown(true)"
+            id="btnEditTreeviewDropdown{{ randomNumb }}"
+          >
+            <i class="fa fa-caret-down"></i>
+          </a>
+          <wj-popup #editTreeviewDropdown [ngClass]="{ hidden: !isShowEditDropdown }" class="edit-widget-ddl">
+            <edit-dropdown
+              (editInPopupClick)="editWidgetInPopup(4)"
+              (editInlineClick)="editWidgetInline(4)"
+            ></edit-dropdown>
+          </wj-popup>
+        </a>
+
+        <!-- Upload File Widget Button-->
+        <a
+          mat-raised-button
+          class="box-header-btns save-reset-widget pull-left"
+          *ngIf="settings.btnUploadFileWidget.enable && isShowedUploadFiles"
+        >
+          <a
+            tooltip="Upload file"
+            placement="top"
+            container="body"
+            class="green-color"
+            (click)="clickUploadFiles($event)"
+          >
+            <i aria-hidden="true" class="fa fa-cloud-upload"></i>
+          </a>
+        </a>
+        <!-- Delete File Widget Button-->
+        <a
+          mat-raised-button
+          class="box-header-btns save-reset-widget pull-left"
+          *ngIf="settings.btnDeleteFileWidget.enable && isShowedDeleteFiles"
+        >
+          <a tooltip="Delete file" placement="top" container="body" class="red-color" (click)="clickDeleteFiles()">
+            <i aria-hidden="true" class="fa fa-trash-o"></i>
+          </a>
+        </a>
+
+        <!-- Save Country Widget Button-->
+        <a
+          mat-raised-button
+          class="box-header-btns save-reset-widget widget-save-btn pull-left"
+          *ngIf="settings.btnSaveCountryWidget.enable && isShowedEditButtonsForCountry"
+        >
+          <a tooltip="Save widget" placement="top" container="body" class="green-color" (click)="saveCountryWidget()">
+            <i class="fa fa-floppy-o"></i>
+          </a>
+        </a>
+
+        <!-- Save TreeView Widget Button-->
+        <a
+          mat-raised-button
+          class="box-header-btns save-reset-widget widget-save-btn pull-left"
+          *ngIf="isShowedEditButtonsForTreeView"
+        >
+          <a tooltip="Save widget" placement="top" container="body" class="green-color" (click)="saveTreeViewWidget()">
+            <i class="fa fa-floppy-o"></i>
+          </a>
+        </a>
+
+        <!-- Save Form Button-->
+        <a
+          mat-raised-button
+          class="box-header-btns save-reset-widget widget-save-btn pull-left"
+          [ngClass]="{ 'hidden-widget-btn': !isShowedEditButtonsForTreeView || showInDialog }"
+          *ngIf="settings.btnSaveWidgetForm.enable"
+        >
+          <a tooltip="Save widget" placement="top" container="body" class="green-color" (click)="saveFormWidget()">
+            <i class="fa fa-floppy-o"></i>
+          </a>
+        </a>
+        <!-- Save File Explorer Button-->
+        <a
+          mat-raised-button
+          class="box-header-btns save-reset-widget widget-save-btn pull-left"
+          [ngClass]="{ 'disabled-btn': isDisableSaveTableButton }"
+          *ngIf="isShowedSaveFileExplorer"
+        >
+          <!-- Disable Button-->
+          <a
+            *ngIf="isDisableSaveTableButton"
+            tooltip="Save widget"
+            placement="top"
+            container="body"
+            class="disabled-color"
+          >
+            <i class="fa fa-floppy-o" aria-hidden="true"></i>
+          </a>
+          <!-- Active button-->
+          <a
+            *ngIf="!isDisableSaveTableButton"
+            tooltip="Save widget"
+            placement="top"
+            container="body"
+            class="green-color"
+            (click)="saveFileExplorerWidget()"
+          >
+            <i class="fa fa-floppy-o"></i>
+          </a>
+        </a>
+
+        <!-- Save Editable Table Button-->
+        <a
+          mat-raised-button
+          class="box-header-btns save-reset-widget  widget-save-btn pull-left"
+          [ngClass]="{ 'disabled-btn': isDisableSaveTableButton }"
+          *ngIf="settings.btnSaveWidgetTable.enable"
+        >
+          <!-- Disable Button-->
+          <a
+            *ngIf="isDisableSaveTableButton"
+            tooltip="Save widget"
+            placement="top"
+            container="body"
+            class="disabled-color"
+          >
+            <i class="fa fa-floppy-o" aria-hidden="true"></i>
+          </a>
+          <!-- Active button-->
+          <a
+            *ngIf="!isDisableSaveTableButton"
+            tooltip="Save widget"
+            placement="top"
+            container="body"
+            class="green-color"
+            (click)="saveEditableTableWidget()"
+          >
+            <i class="fa fa-floppy-o"></i>
+          </a>
+        </a>
+
+        <!-- Reset button for Form Widget-->
+        <a
+          mat-raised-button
+          class="box-header-btns save-reset-widget widget-reset-btn pull-right"
+          *ngIf="settings.btnResetWidget.enable"
+        >
+          <a tooltip="Reset widget" placement="top" container="body" class="red-color" (click)="resetWidget()">
+            <i class="fa fa-reply"></i>
+          </a>
+        </a>
+
+        <a class="widget-save-btn pull-right">
+          <ng-container *ngTemplateOutlet="editStatusSettingTemplate"></ng-container>
+        </a>
+
+        <!-- Translate Button-->
+        <ng-container *ngTemplateOutlet="translateCombinationTemplate"></ng-container>
+
+        <a
+          mat-raised-button
+          class="box-header-btns save-reset-widget translation-widget pull-left"
+          *ngIf="settings.btnWidgetTranslation.enable"
+        >
+          <a
+            tooltip="Widget translation"
+            dropdownToggle
+            placement="top"
+            container="body"
+            class="gray-color"
+            (click)="openTranslateWidget()"
+          >
+            <i class="fa fa-language"></i>
+          </a>
+        </a>
+
+        <!-- Delete Row button for Editable Table Widget-->
+        <a
+          mat-raised-button
+          class="box-header-btns save-reset-widget widget-del-row-btn pull-left"
+          [ngClass]="{ 'disabled-btn': isDisableDeleteRowTableButton }"
+          *ngIf="isShowedDeleteRowTableButton"
+        >
+          <!-- Disable Button-->
+          <a
+            *ngIf="isDisableDeleteRowTableButton"
+            tooltip="Delete Rows"
+            placement="top"
+            container="body"
+            class="disabled-color"
+          >
+            <i class="fa fa-trash-o" aria-hidden="true"></i>
+          </a>
+          <!-- Active button-->
+          <a
+            *ngIf="!isDisableDeleteRowTableButton"
+            tooltip="Delete Rows"
+            placement="top"
+            container="body"
+            class="red-color"
+            (click)="deleteRowEditableTable()"
+          >
+            <i class="fa fa-trash-o" aria-hidden="true"></i>
+          </a>
+        </a>
+
+        <!-- Add Row for Editable Table Widget-->
+        <a
+          mat-raised-button
+          class="box-header-btns save-reset-widget widget-add-row-btn pull-left"
+          [ngClass]="{ 'disabled-btn': isDisableAddRowTableButton }"
+          *ngIf="settings.btnAddRowForEditableTableWidget.enable && isShowedAddNewRowTableButton"
+        >
+          <!-- Disable Button-->
+          <a
+            *ngIf="isDisableAddRowTableButton"
+            tooltip="Add New Row"
+            placement="top"
+            container="body"
+            class="disabled-color"
+          >
+            <i class="fa fa-plus" aria-hidden="true"></i>
+          </a>
+          <!-- Active button-->
+          <a
+            *ngIf="!isDisableAddRowTableButton"
+            tooltip="Add New Row"
+            placement="top"
+            container="body"
+            class="green-color"
+            (click)="addRowEditableTable()"
+          >
+            <i class="fa fa-plus" aria-hidden="true"></i>
+          </a>
+        </a>
+
+        <!-- Add Row for Editable Table Widget-->
+        <!-- Collapse button-->
+        <a
+          mat-raised-button
+          class="box-header-btns save-reset-widget pull-left"
+          *ngIf="isShowedExpandForTreeView"
+          (click)="treeViewExpandAll(false)"
+        >
+          <!-- Collapse Button-->
+          <a tooltip="Collapse All" placement="top" container="body" class="blue-color">
+            <i class="fa fa-caret-square-o-up"></i>
+          </a>
+        </a>
+
+        <!-- Expand button-->
+        <a
+          mat-raised-button
+          class="box-header-btns save-reset-widget pull-left"
+          *ngIf="isShowedExpandForTreeView"
+          (click)="treeViewExpandAll(true)"
+        >
+          <!-- Expand button-->
+          <a tooltip="Expand All" placement="top" container="body" class="blue-color">
+            <i class="fa fa-caret-square-o-down"></i>
+          </a>
+        </a>
+
+        <!-- icon editable table-->
+        <!-- Print widget Button-->
+        <a
+          mat-raised-button
+          class="box-header-btns pull-left print-box"
+          *ngIf="settings.btnPrintWidget.enable && !allowEdit && supportPrint"
+        >
+          <a tooltip="Print widget" placement="top" container="body" class="blue-color" (click)="printWidget()">
+            <i class="fa fa-print"></i>
+          </a>
+        </a>
+
+        <!--Article Name Translation-->
+        <a
+          mat-raised-button
+          class="box-header-btns pull-left print-box"
+          *ngIf="settings.btnArticleNameTranslation.enable && !allowEdit && allowColTranslation"
+        >
+          <a
+            tooltip="Article Name Translation"
+            placement="top"
+            container="body"
+            class="blue-color"
+            (click)="openArticleTranslate()"
+          >
+            <i class="fa fa-globe"></i>
+          </a>
+        </a>
+
+        <!--Go to next column/row-->
+        <a
+          mat-raised-button
+          class="box-header-btns pull-left"
+          tooltip="Go to next column/row"
+          placement="top"
+          container="body"
+          *ngIf="settings.btnGoToNextcolumnOrRow.enable"
+        >
+          <input
+            type="image"
+            class="dropdown-toggle xn-margin--sm"
+            [ngClass]="{ 'rotate-left': isCellMoveForward }"
+            src="public/imgs/cell-move.png"
+            alt="Widget Menu"
+            width="20"
+            height="20"
+            (click)="onClickCellMoveBtn($event)"
+          />
+        </a>
+
+        <ng-template [ngIf]="settings.btnEditTemplate.enable">
+          <!--Edit Template-->
+          <a
+            mat-raised-button
+            class="box-header-btns save-reset-widget translation-widget pull-right"
+            [ngClass]="{ 'xn-disabled': disableButtonEditWidget }"
+          >
+            <a
+              tooltip="Edit Template"
+              placement="top"
+              container="body"
+              [ngClass]="{ 'gray-color': disableButtonEditWidget, 'blue-color': !disableButtonEditWidget }"
+              (click)="toggleEditTemplateMode(true)"
+            >
+              <i class="fa fa-edit-template"></i>
+            </a>
+          </a>
+
+          <span class="box-header-btns widget-template-combobox pull-left no-padding">
+            <wj-combo-box
+              #templateCombo
+              class="form-control no-padding template-combobox custom-wj-input-control"
+              *ngIf="widgetTemplates && widgetTemplates.length >= 0"
+              [itemsSource]="widgetTemplates"
+              [displayMemberPath]="'textValue'"
+              [selectedValuePath]="'idValue'"
+              [(selectedItem)]="selectedTemplate"
+              (selectedIndexChanged)="templateComboboxChanged(templateCombo)"
+              [isRequired]="false"
+              [isDisabled]="!widgetTemplates.length"
+              placeholder="Select a template"
+              (gotFocus)="templateCombo.isDroppedDown = true; templateComboFocused = true"
+              (lostFocus)="templateComboFocused = false"
+            >
+            </wj-combo-box>
+          </span>
+
+          <a
+            mat-raised-button
+            *ngIf="isShowedEditTableButton && isEditTemplateMode"
+            class="box-header-btns save-reset-widget pull-left"
+          >
+            <a
+              tooltip="Add Template"
+              placement="top"
+              container="body"
+              class="green-color"
+              (click)="openAddWidgetTemplateDialog()"
+            >
+              <i class="fa fa-plus-template"></i>
+            </a>
+          </a>
+        </ng-template>
+
+        <ng-template [ngIf]="settings.boxSearchArticle.enable">
+          <!--Box Search Article-->
+          <article-search-inline
+            #articleSearchInlineMenu
+            [globalProperties]="globalProperties"
+            [componentParent]="gridWidgetComponent"
+          >
+          </article-search-inline>
+        </ng-template>
+
+        <!-- Table Fields Translate Button-->
+        <a
+          mat-raised-button
+          class="box-header-btns save-reset-widget translation-widget pull-left"
+          *ngIf="settings.btnTableFieldsTranslate.enable && showFieldsTranslation"
+        >
+          <a
+            tooltip="Fields Translation"
+            placement="top"
+            container="body"
+            class="gray-color"
+            (click)="openFieldTranslateWidget()"
+          >
+            <i class="fa fa-tasks"></i>
+          </a>
+        </a>
+        <div *ngIf="settings.txtFilterTable.enable && showFilterTable" class="toolbar-filter pull-right">
+          <div class="col-xs-12 no-padding">
+            <div class="right-inner-addon">
+              <i class="fa fa-filter" aria-hidden="true"></i>
+              <input
+                type="text"
+                class="form-control input-sm"
+                [ngClass]="{ 'has-data': !!toolbarFilterValue }"
+                [(ngModel)]="toolbarFilterValue"
+                (ngModelChange)="onFilterValueChanged()"
+                placeholder="Filter"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #editStatusSettingTemplate>
+  <a
+    mat-raised-button
+    *ngIf="settings.btnSaveSettings.enable && settingChanged"
+    class="box-header-btns wg-menu pull-right no-padding-left no-padding-right no-margin-left no-margin-right save-config"
+    (click)="filterMenuForTable && filterMenuForTable.applyFilter()"
+  >
+    <i class="fa fa-save-config xn-margin--sm"></i>
+  </a>
+</ng-template>
+
+<ng-template #editUserRoleTemplate>
+  <a
+    mat-raised-button
+    *ngIf="settings.btnOpenUserRoleDialog.enable && selectedNodes && selectedNodes.length"
+    class="box-header-btns wg-menu pull-right no-padding-left no-padding-right no-margin-left no-margin-right user-roles"
+    (click)="openUserRoleDialog()"
+  >
+    <i class="fa fa-users xn-margin--sm"></i>
+  </a>
+</ng-template>
+
+<!-- Translate Button-->
+<ng-template #translateCombinationTemplate>
+  <div
+    class="btn-group widget-combination-translation"
+    dropdown
+    container="body"
+    [autoClose]="true"
+    *ngIf="settings.btnOpenTranslateWidget.enable"
+  >
+    <a mat-raised-button dropdownToggle class="box-header-btns save-reset-widget translation-widget pull-left">
+      <a tooltip="Widget translation" placement="top" container="body" class="gray-color" (click)="(false)">
+        <i class="fa fa-language"></i>
+      </a>
+    </a>
+    <ul *dropdownMenu class="dropdown-menu widget-combination-translation" role="menu">
+      <li>
+        <a class="dropdown-item cursor-pointer" (click)="openTranslateWidget('form')">For Form</a>
+      </li>
+      <li>
+        <a class="dropdown-item cursor-pointer" (click)="openTranslateWidget('table')">For Table</a>
+      </li>
+    </ul>
+  </div>
+</ng-template>
+
+<dialog-add-widget-template
+  *ngIf="isEditTemplateMode && showDialogAddWidgetTemplate"
+  (onSave)="onSaveWidgetTemplateDialog($event)"
+  (onClose)="onCloseWidgetTemplateDialog()"
+>
+</dialog-add-widget-template>
+
+<ng-template #btnSettingTemplate>
+  <a
+    mat-raised-button
+    class="box-header-btns pull-right no-padding-left no-padding-right no-margin-left no-margin-right"
+    [ngClass]="{ 'wg-menu': !settings.btnSettingForEditMode }"
+    *ngIf="settings.btnSetting1.enable"
+    tooltip="Setting"
+    placement="top"
+    container="body"
+  >
+    <input
+      type="image"
+      class="dropdown-toggle xn-margin--sm"
+      src="public/imgs/widget-menu.png"
+      alt="Widget Menu"
+      width="24"
+      height="24"
+      (click)="onclickDDMainMenu($event)"
+      id="btnMenuWidgetStatus1{{ randomNumb }}"
+    />
+    <wj-popup #menuWidgetStatus1 class="menu-widget-status-ddl" (hidden)="wjPopupHidden($event, menuWidgetStatus1)">
+      <filter-menu
+        #filterMenuForTable
+        [accessRight]="accessRight"
+        [ngClass]="{ isEditing: allowEdit }"
+        [menuWidgetStatus]="menuWidgetStatus1"
+        [isHidden]="dropdownStatus.isHidden"
+        [isTableField]="false"
+        [filterModes]="filterModes"
+        [position]="position"
+        [fieldFilters]="fieldFilters"
+        [widgetFormTypes]="widgetFormTypes"
+        [isShowWidgetSetting]="isShowWidgetSetting"
+        [widgetType]="data.idRepWidgetType"
+        [currentModule]="currentModule"
+        [widgetProperties]="widgetProperties"
+        [globalProperties]="globalProperties"
+        [gridLayoutSettings]="gridLayoutSettings"
+        [isShowToolPanelSetting]="isShowToolPanelSetting"
+        (onChangeSelectedFields)="changeSelectedFields($event)"
+        (onChangeDisplayMode)="changeDisplayMode($event)"
+        (onChangeFieldFilter)="changeFieldFilter($event)"
+        (onChangeWidgetFormType)="changeWidgetFormType($event)"
+        (onPropertiesItemClick)="onPropertiesItemClickHandler($event)"
+        (onSettingMenuChanged)="settingMenuChanged($event)"
+        (onChangeRowSetting)="changeRowSetting($event)"
+        (onChangeColumnLayoutsetting)="changeColumnLayoutsetting($event)"
+        [columnLayoutsetting]="columnLayoutsetting"
+        [rowSetting]="rowSetting"
+      >
+      </filter-menu>
+    </wj-popup>
+  </a>
+
+  <a
+    mat-raised-button
+    class="box-header-btns pull-right no-padding-left no-padding-right no-margin-left no-margin-right"
+    [ngClass]="{ 'wg-menu': !settings.btnSettingForEditMode }"
+    *ngIf="settings.btnSetting2.enable"
+    tooltip="Setting"
+    placement="top"
+    container="body"
+  >
+    <input
+      type="image"
+      class="dropdown-toggle xn-margin--sm"
+      src="public/imgs/widget-menu.png"
+      alt="Widget Menu"
+      width="24"
+      height="24"
+      (click)="onclickDDMainMenu($event)"
+      id="btnMenuWidgetStatus2{{ randomNumb }}"
+    />
+    <wj-popup #menuWidgetStatus2 class="menu-widget-status-ddl" (hidden)="wjPopupHidden($event, menuWidgetStatus2)">
+      <filter-menu
+        #filterMenuForTable
+        [accessRight]="accessRight"
+        [ngClass]="{ isEditing: allowEdit }"
+        [menuWidgetStatus]="menuWidgetStatus2"
+        [isHidden]="dropdownStatus.isHidden"
+        [isTableField]="false"
+        [filterModes]="filterModes"
+        [position]="position"
+        [fieldFilters]="fieldFilters"
+        [groupFieldFilters]="groupFieldFilters"
+        [widgetFormTypes]="widgetFormTypes"
+        [isShowWidgetSetting]="isShowWidgetSetting"
+        [widgetType]="data ? data.idRepWidgetType : null"
+        [currentModule]="currentModule"
+        [widgetProperties]="widgetProperties"
+        [globalProperties]="globalProperties"
+        [gridLayoutSettings]="gridLayoutSettings"
+        [isShowToolPanelSetting]="isShowToolPanelSetting"
+        (onChangeSelectedFields)="changeSelectedFields($event)"
+        (onChangeDisplayMode)="changeDisplayMode($event)"
+        (onChangeFieldFilter)="changeFieldFilter($event)"
+        (onChangeWidgetFormType)="changeWidgetFormType($event)"
+        (onPropertiesItemClick)="onPropertiesItemClickHandler($event)"
+        (onSettingMenuChanged)="settingMenuChanged($event)"
+        (onChangeRowSetting)="changeRowSetting($event)"
+        (onChangeColumnLayoutsetting)="changeColumnLayoutsetting($event)"
+        [isShowProperties]="isShowProperties && data && data.idRepWidgetType != WidgetTypeView.OrderDataEntry"
+      >
+      </filter-menu>
+    </wj-popup>
+  </a>
+
+  <a
+    mat-raised-button
+    class="box-header-btns pull-right no-padding-left no-padding-right no-margin-left no-margin-right"
+    [ngClass]="{ 'wg-menu': !settings.btnSettingForEditMode }"
+    *ngIf="settings.btnSetting3.enable"
+    tooltip="Setting"
+    placement="top"
+    container="body"
+  >
+    <input
+      type="image"
+      class="dropdown-toggle xn-margin--sm dropdown-toggle-combination-mode"
+      src="public/imgs/widget-menu.png"
+      alt="Widget Menu"
+      width="24"
+      height="24"
+      (click)="onclickDDMainMenu($event)"
+      id="btnMenuWidgetStatus3{{ randomNumb }}"
+    />
+    <wj-popup
+      #menuWidgetStatus3
+      class="menu-widget-status-ddl"
+      (hidden)="
+        wjPopupHidden($event, menuWidgetStatus3); showFirstCombinationMenu = false; showSecondCombinationMenu = false
+      "
+    >
+      <ul class="widget-toolbar-combination-menu">
+        <li class="menu-list">
+          <a (mouseenter)="handleSubMenu($event, true, false)" class="main-setting cursor-pointer">
+            <i class="fa fa-cog custom-filter__icon" aria-hidden="true"></i>
+            <span>Detail</span>
+            <i class="fa fa-angle-right pull-right"></i>
+          </a>
+          <filter-menu
+            name="firstCombinationMenu"
+            [accessRight]="accessRight"
+            [hidden]="!showFirstCombinationMenu"
+            [ngClass]="{ isEditing: allowEdit }"
+            [menuWidgetStatus]="menuWidgetStatus1"
+            [isHidden]="false"
+            [isTableField]="false"
+            [filterModes]="filterModes"
+            [position]="position"
+            [fieldFilters]="fieldFilters"
+            [widgetFormTypes]="widgetFormTypes"
+            [isShowWidgetSetting]="isShowWidgetSetting"
+            [widgetType]="data.idRepWidgetType"
+            [currentModule]="currentModule"
+            [widgetProperties]="widgetProperties"
+            [globalProperties]="globalProperties"
+            [gridLayoutSettings]="gridLayoutSettings"
+            [isShowToolPanelSetting]="isShowToolPanelSetting"
+            (onChangeSelectedFields)="changeSelectedFields($event)"
+            (onChangeDisplayMode)="changeDisplayMode($event)"
+            (onChangeFieldFilter)="changeFieldFilter($event)"
+            (onChangeWidgetFormType)="changeWidgetFormType($event)"
+            (onPropertiesItemClick)="onPropertiesItemClickHandler($event)"
+            (onSettingMenuChanged)="settingMenuChanged($event)"
+            (onChangeRowSetting)="changeRowSetting($event)"
+            (onChangeColumnLayoutsetting)="changeColumnLayoutsetting($event)"
+          >
+          </filter-menu>
+        </li>
+
+        <li class="menu-list">
+          <a (mouseenter)="handleSubMenu($event, false, true)" class="main-setting cursor-pointer">
+            <i class="fa fa-cog custom-filter__icon" aria-hidden="true"></i>
+            <span>Table</span>
+            <i class="fa fa-angle-right pull-right"></i>
+          </a>
+          <filter-menu
+            #filterMenuForTable
+            [accessRight]="accessRight"
+            name="secondCombinationMenu"
+            [hidden]="!showSecondCombinationMenu"
+            [ngClass]="{ isEditing: allowEdit }"
+            class="dropdown-menu-combination-mode"
+            [menuWidgetStatus]="menuWidgetStatus3"
+            [isHidden]="false"
+            [isTableField]="hasSubMenu.has"
+            [isSubDisplay]="hasSubMenu.has"
+            [filterModes]="subFilterModes"
+            [position]="position"
+            [fieldFilters]="_copiedFieldFilter"
+            [columnLayoutsetting]="columnLayoutsetting"
+            [rowSetting]="rowSetting"
+            [isShowWidgetSetting]="isShowWidgetSetting"
+            [currentModule]="currentModule"
+            [widgetProperties]="widgetProperties"
+            [globalProperties]="globalProperties"
+            [gridLayoutSettings]="gridLayoutSettings"
+            [isShowToolPanelSetting]="isShowToolPanelSetting"
+            (onChangeSelectedFields)="changeSelectedFields($event)"
+            (onChangeDisplayMode)="changeDisplayMode($event)"
+            (onChangeFieldFilter)="changeFieldFilter($event)"
+            (onPropertiesItemClick)="onPropertiesItemClickHandler($event)"
+            (onSettingMenuChanged)="settingMenuChanged($event)"
+            (onChangeRowSetting)="changeRowSetting($event)"
+            (onChangeColumnLayoutsetting)="changeColumnLayoutsetting($event)"
+          ></filter-menu>
+        </li>
+      </ul>
+    </wj-popup>
+  </a>
+</ng-template>
+<ng-template #folderManagementSetting>
+  <div
+    class="box-header-btns wg-menu pull-left no-padding-left no-padding-right no-margin-left margin-right folder-toolbar"
+    (click)="clickFolderManagerAction(7)"
+  >
+    <input
+      type="image"
+      class="dropdown-toggle xn-margin--sm folder-toolbar"
+      src="public/assets/img/file-explorer/add.png"
+      alt="Widget Menu"
+      width="20"
+      height="20"
+    />
+  </div>
+  <div class=" wg-menu pull-left margin-right margin-left split-toolbar"></div>
+  <div
+    class="box-header-btns wg-menu pull-left no-padding-left no-padding-right no-margin-left margin-right folder-toolbar"
+    (click)="clickFolderManagerAction(0)"
+  >
+    <input
+      type="image"
+      class="dropdown-toggle xn-margin--sm folder-toolbar"
+      src="public/assets/img/file-explorer/tree-folder.png"
+      alt="Widget Menu"
+      width="20"
+      height="20"
+    />
+  </div>
+  <div class=" wg-menu pull-left margin-right margin-left split-toolbar"></div>
+
+  <div
+    class="box-header-btns wg-menu pull-left no-padding-left no-padding-right no-margin-left folder-toolbar"
+    [ngClass]="{ selected: isFileExplorerDetailView }"
+    (click)="clickFolderManagerAction(1)"
+  >
+    <input
+      type="image"
+      class="dropdown-toggle xn-margin--sm folder-toolbar"
+      src="public/assets/img/file-explorer/list-view.png"
+      alt="Widget Menu"
+      width="20"
+      height="20"
+    />
+  </div>
+  <div
+    class="box-header-btns wg-menu pull-left no-padding-left no-padding-right no-margin-left margin-right folder-toolbar"
+    [ngClass]="{ selected: !isFileExplorerDetailView }"
+    (click)="clickFolderManagerAction(2)"
+  >
+    <input
+      type="image"
+      class="dropdown-toggle xn-margin--sm folder-toolbar"
+      src="public/assets/img/file-explorer/thumbnail-view.png"
+      alt="Widget Menu"
+      width="20"
+      height="20"
+    />
+  </div>
+  <div
+    *ngIf="itemSelectedInFolderManagement.length > 0"
+    class=" wg-menu pull-left margin-right margin-left split-toolbar"
+  ></div>
+  <div
+    *ngIf="!isSelectFolder && itemSelectedInFolderManagement.length > 0"
+    class="box-header-btns wg-menu pull-left no-padding-left no-padding-right margin-right folder-toolbar red-color"
+    (click)="clickFolderManagerAction(3)"
+  >
+    <i class="fa fa-trash xn-margin--sm folder-toolbar"></i>
+  </div>
+  <div
+    *ngIf="itemSelectedInFolderManagement.length === 1"
+    class="box-header-btns wg-menu pull-left no-padding-left no-padding-right margin-right folder-toolbar"
+    (click)="clickFolderManagerAction(4)"
+  >
+    <input
+      type="image"
+      class="dropdown-toggle xn-margin--sm folder-toolbar"
+      src="public/assets/img/file-explorer/rename.png"
+      alt="Widget Menu"
+      width="20"
+      height="20"
+    />
+  </div>
+  <div
+    *ngIf="!isSelectFolder && itemSelectedInFolderManagement.length > 0"
+    class="box-header-btns wg-menu pull-left no-padding-left no-padding-right margin-right folder-toolbar"
+    (click)="clickFolderManagerAction(5)"
+  >
+    <i class="fa fa-download xn-margin--sm folder-toolbar"></i>
+  </div>
+  <div
+    *ngIf="itemSelectedInFolderManagement.length > 0"
+    class="box-header-btns wg-menu pull-left no-padding-left no-padding-right margin-right folder-toolbar"
+    (click)="clickFolderManagerAction(6)"
+  >
+    <input
+      type="image"
+      class="dropdown-toggle xn-margin--sm folder-toolbar"
+      src="public/assets/img/file-explorer/move-file.png"
+      alt="Widget Menu"
+      width="20"
+      height="20"
+    />
+  </div>
+</ng-template>

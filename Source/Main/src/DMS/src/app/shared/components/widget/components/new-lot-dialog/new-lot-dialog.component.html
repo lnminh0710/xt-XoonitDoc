@@ -1,0 +1,50 @@
+<p-dialog
+    header=""
+    [(visible)]="showDialog"
+    [styleClass]="'prime-dialog'"
+    appendTo="body"
+    modal="true"
+    [draggable]="true"
+    [resizable]="false"
+    responsive="true"
+    [width]="400"
+    [height]="210"
+>
+    <p-header>
+        <div class="modal-header--confirm">
+            <span class="fa fa-question-circle header-icon pull-left"></span>
+            <span class="header-text pull-left">New lot name</span>
+            <div class="toolbar-icon close-dialog-icon" (click)="close()"></div>
+        </div>
+    </p-header>
+    <form *ngIf="showDialog" class="margin-top--md selection-input-customize">
+        <div class="group">
+            <input type="text" required />
+            <span class="text-highlight"></span>
+            <span class="bar"></span>
+            <label>Lot Name</label>
+        </div>
+    </form>
+    <p-footer>
+        <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+            <button
+                label="Cancel"
+                type="button"
+                mat-raised-button
+                class="ui-widget ui-state-default ui-corner-all ui-button-text-only new-size"
+                (click)="cancel()"
+            >
+                <span class="ui-button-text ui-c">Cancel</span>
+            </button>
+            <button
+                label="OK"
+                type="button"
+                mat-raised-button
+                class="mat-btn-blue ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only new-size"
+                (click)="ok()"
+            >
+                <span class="ui-button-text ui-c">OK</span>
+            </button>
+        </div>
+    </p-footer>
+</p-dialog>

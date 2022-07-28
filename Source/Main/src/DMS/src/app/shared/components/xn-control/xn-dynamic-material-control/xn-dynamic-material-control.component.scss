@@ -1,0 +1,62 @@
+:host {
+    ::ng-deep {
+        xn-material-slide-toggle-control {
+            mat-slide-toggle {
+                .mat-slide-toggle-content {
+                    font-size: 1.2rem;
+                }
+            }
+        }
+
+        .form-control-wrapper {
+            padding: 3px 0 0 0;
+            &.ng-invalid mat-error,
+            mat-error.translateY {
+                transform: translateY(-15px);
+            }
+            mat-form-field {
+                .mat-form-field-infix {
+                    border: 0;
+                    & > input {
+                        font-family: 'rbt_Regular';
+                        font-size: 1.35rem;
+                        margin-top: 3px;
+                    }
+
+                    .mat-form-field-label-wrapper {
+                        top: -1em;
+
+                        mat-label {
+                            font-size: 1.5rem;
+                        }
+                    }
+                }
+
+                .mat-form-field-empty {
+                    transform: scale(0.75) perspective(100px);
+                }
+            }
+        }
+
+        xn-material-input-control {
+            & > .form-control-wrapper {
+                mat-form-field {
+                    .mat-form-field-infix {
+                        border: 0;
+                        & > input {
+                            margin-top: 3px;
+                        }
+                    }
+                }
+            }
+        }
+
+        textarea {
+            height: inherit;
+
+            &.non-resize {
+                resize: none;
+            }
+        }
+    }
+}

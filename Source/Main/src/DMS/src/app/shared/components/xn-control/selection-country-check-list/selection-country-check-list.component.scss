@@ -1,0 +1,100 @@
+.xn-check-box {
+    width: 15px;
+    height: 20px;
+    float: left;
+    margin-top: 0px;
+    margin-right: 4px;
+}
+
+.country-check-list {
+    .colum-item {
+        float: left;
+        margin-right: 10px;
+    }
+
+    .row-item {
+        padding-bottom: 3px !important;
+        white-space: nowrap;
+    }
+
+    .flag-container {
+        float: left;
+        padding: 8px 0 0 8px;
+        width: 100%;
+    }
+
+    .sub-list {
+        //display:none;
+        max-height: 0;
+        position: relative;
+        transition: max-height 0.5s ease-out;
+    }
+
+    .main-list {
+        max-height: 250px !important;
+        position: relative;
+        transition: max-height 0.5s ease-out;
+        padding-bottom: 16px !important;
+    }
+
+    .fa-chevron-circle-down, .fa-chevron-circle-up {
+        font-size: 20px;
+    }
+
+    .checkbox {
+        min-height: 0;
+    }
+}
+
+.view-mode {
+    .main-list {
+        max-height: inherit !important;
+    }
+
+    .row-item {
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+}
+
+.edit-mode {
+    .row-item {
+        padding-left: 25px !important;
+    }
+}
+
+.showed-sub-list {
+    .sub-list {
+        max-height: 250px !important;
+        transition: max-height 0.8s ease-out !important;
+    }
+
+    .sub-list-container {
+        padding-bottom: 15px;
+    }
+}
+
+.checkbox .no-checkbox {
+    margin-left: -10px !important;
+}
+
+.checkbox .no-checkbox::before, .radio .no-checkbox::before {
+    display: none !important;
+}
+
+.radio label::before {
+    width: 15px;
+    height: 15px;
+    margin-top: 1px;
+}
+
+.radio label::after {
+    width: 9px;
+    height: 9px;
+    left: 3px;
+    top: 4px;
+}
+
+/*!
+ * Generated with CSS Flag Sprite generator (https://www.flag-sprites.com/)
+ */

@@ -1,0 +1,37 @@
+<div class="captured-page-container h-100 w-100">
+    <as-split #verticalSplit direction="vertical" [gutterSize]="0" [ngStyle]="tabContainerStyle">
+        <as-split-area [size]="9"
+                       [minSize]="3"
+                       id="capture-common-section">
+            <div class="capture-common-section-wrapper h-100" [ngStyle]="captureCommonSectionWrapperStyle">
+                <widget-container [pageId]="'cedf9bb2-265c-45fb-9a97-2f3c091ff83c'" [tabID]="'CaptureCommon'">
+                </widget-container>
+            </div>
+        </as-split-area>
+        <as-split-area [size]="91"
+                       [minSize]="3"
+                       id="capture-document-section">
+            <div class="capture-dococment-section-wrapper h-100">
+                <as-split #horizontalSplit direction="horizontal" [gutterSize]="gutterSize" (dragEnd)="dragEnd($event)">
+                    <as-split-area [size]="splitterConfig.subRightLeftHorizontal"
+                                   [minSize]="3"
+                                   id="capture-form-section">
+                        <div class="position-relative h-100">
+                            <widget-container [pageId]="'1e972ef6-17eb-4966-8fc8-a24df226ede7'" [tabID]="'MyDM Form'">
+                            </widget-container>
+                        </div>
+                    </as-split-area>
+                    <as-split-area [size]="splitterConfig.subRightRightHorizontal"
+                                   [minSize]="3"
+                                   id="capture-document-section">
+                        <ng-container *ngIf="idDocumentContainerScans && idDocumentTree">
+                            <widget-container [pageId]="'04ea72c0-2687-4138-b876-3173d7bd3820'"
+                                [tabID]="'DocumentViewer'">
+                            </widget-container>
+                        </ng-container>
+                    </as-split-area>
+                </as-split>
+            </div>
+        </as-split-area>
+    </as-split>
+</div>
