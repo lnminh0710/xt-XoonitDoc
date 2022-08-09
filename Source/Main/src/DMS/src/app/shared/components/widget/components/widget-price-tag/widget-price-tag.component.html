@@ -44,181 +44,6 @@
     </div>
 </ng-template>
 
-<ng-template #dataInfo let-previewMode="previewMode">
-    <div
-        class="price-tag"
-        [ngClass]="{ 'd-none': !data, 'transform--center': zoom < 1, 'transform--top': zoom > 1 }"
-        style.transform="scale({{ previewMode ? 1 : zoom }})"
-    >
-        <div class="price-tag__row">
-            <div class="price-tag__title" style="font-size: 40px; font-weight: 500">Occasion</div>
-            <div class="price-tag__value" style="font-size: 50px" [ngClass]="{ bold: true }">
-                {{ getUIValue('car.name') }}
-            </div>
-        </div>
-        <div class="price-tag__line"></div>
-        <div class="price-tag__row">
-            <div class="price-tag__title">
-                <span style="font-size: 24px"> Zulassung:</span>
-                <span style="font-size: 20px">
-                    {{ getUIDate('InitialRegistration') }}
-                </span>
-            </div>
-            <div class="d-flex">
-                <div class="price-tag__value">
-                    <span style="font-size: 24px"> Motor:</span>
-                    {{ getUINumber('EnginePowerHP') }} PS / {{ getUINumber('EnginePowerKW') }} kW
-                </div>
-                <div class="mx-5"></div>
-                <div class="mx-4"></div>
-                <div class="price-tag__value">
-                    <span style="font-size: 24px"> {{ getUINumber('EngineCylinder') }} Zylinder / Hubraum: </span>
-                    {{ getUINumber('EngineCapacity') }} ccm
-                </div>
-            </div>
-        </div>
-        <div class="price-tag__row">
-            <div class="price-tag__title">
-                <span style="font-size: 24px">km:</span>
-                <span style="font-size: 20px">
-                    {{ getUINumber('Milage') }}
-                </span>
-            </div>
-            <div class="price-tag__value">
-                <div>
-                    <div class="price-tag__value">
-                        <span style="font-size: 24px">Getriebe:</span>
-                        {{ getUIValue('GearType') }}
-                    </div>
-                    <div class="d-flex align-items-baseline" style="font-size: 24px">
-                        Farbe:
-                        <span style="font-size: 20px; margin-left: 10px; margin-right: 8px; text-transform: capitalize">
-                            {{ getUIValue('BodyColor') }}
-                        </span>
-                        Polster:
-                        <span style="font-size: 20px; margin-left: 10px; text-transform: capitalize">
-                            {{ getUIValue('Covering') }}
-                        </span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="price-tag__row">
-            <div class="price-tag__title"></div>
-            <div class="price-tag__value">
-                <div>
-                    <div class="price-tag__value">
-                        <span style="font-size: 24px"> Verbrauch,CO2-Emissionen: </span>
-                        {{ getUIValue('ConsumptionLiquidExtraCombined', 0) }}
-                        l
-                    </div>
-                    <div class="value mx-1">
-                        {{ getUIValue('EmissionCo2Liquid') }}
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="price-tag__row">
-            <div class="price-tag__title"></div>
-            <div class="price-tag__value">
-                <div>
-                    <div class="price-tag__value">
-                        <div>
-                            <div>
-                                {{ getUIValue('PrimaryFuelType') }}
-                            </div>
-                            <div style="text-align: center">Gesamt</div>
-                        </div>
-                    </div>
-                    <div class="value mx-2">
-                        {{ getUIValue('EmissionClass') }}
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="price-tag__line"></div>
-        <div class="price-tag__row">
-            <div class="price-tag__title">Ausstattung</div>
-        </div>
-        <div class="price-tag__row" mt="0px">
-            <div class="price-tag__title"></div>
-            <div class="price-tag__value">
-                {{ getValuePropertyField('StandardEquipment') }},
-                {{ getValuePropertyField('SpecialEquipment') }}
-            </div>
-        </div>
-        <div class="price-tag__action-row" *ngIf="!previewMode">
-            <div class="price-tag__icon-button" (click)="openEditPropertyDialog()">
-                <i class="fa fa-pencil"></i>
-            </div>
-        </div>
-        <div class="price-tag__line"></div>
-        <div class="price-tag__row" mt="4px">
-            <div class="price-tag__title" [ngClass]="{ bold: true }">Leasing ab:</div>
-            <div class="price-tag__value" [ngClass]="{ bold: true }" style="font-size: 40px">
-                <div>
-                    <div class="price-tag__value" [ngClass]="{ bold: true }" style="font-size: 52px">
-                        Fr. {{ getUIPrice('LeasingRate') }}
-                        <span>/Monat</span>
-                    </div>
-                    <div class="price-tag__value" [ngClass]="{ bold: true }" style="font-size: 52px">
-                        <span>Preis: </span>
-                        Fr. {{ getUIPrice('PublicPriceValue') }}
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="price-tag__row" mt="0">
-            <div class="price-tag__title" [ngClass]="{ bold: true }"></div>
-            <div class="price-tag__value" [ngClass]="{ bold: true }" style="font-size: 50px">
-                <div>
-                    <div class="price-tag__value"></div>
-                    <div class="value d-flex" [ngClass]="{ bold: true }" style="font-size: 24px">
-                        <span style="visibility: hidden"> Preis: </span>
-                        (Neupreis Fr.
-                        <span class="me-1"></span>
-                        {{ getUIPrice('ListPriceValue') }})
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="price-tag__action-row" *ngIf="!previewMode">
-            <div class="price-tag__icon-button" (click)="openEditPriceDialog()">
-                <i class="fa fa-pencil"></i>
-            </div>
-        </div>
-        <div class="price-tag__line"></div>
-        <div class="price-tag__row">
-            <div class="price-tag__title">Garantie</div>
-            <div class="price-tag__value">
-                <div>
-                    <div class="price-tag__value" style="font-size: 24px">
-                        {{ getUIValue('WarrantyText', '     a         ') }}
-                    </div>
-                    <div class="price-tag__value" style="font-size: 24px">
-                        {{ getUINumber('WarrantyDuration') }}
-                        Monate oder
-                        {{ getUINumber('WarrantyMilage') }}
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="price-tag__row" mt="6px">
-            <div class="price-tag__title">Leasingkonditionen</div>
-            <div class="price-tag__value" style="font-size: 18px; font-weight: 300">
-                Anzahlung: {{ getUIPrice('LeasingInitialPayment') }}
-                - CHF Laufrzeit:
-                {{ getUINumber('LeasingDuration', 0) }} Monate
-                <span class="mx-4"></span>
-                km-Leistung:
-                {{ getUINumber('LeasingExcessMileageCosts') }} km/Jahr Nur in Verbindung mit Allianz!
-            </div>
-        </div>
-        <div class="price-tag__line"></div>
-    </div>
-</ng-template>
-
 <ng-template #dataInfoNew let-previewMode="previewMode">
     <div
         class="price-tag"
@@ -238,36 +63,38 @@
             </div>
         </div>
         <div class="price-tag__row">
-            <div class="price-tag__title">Ausstattung</div>
-            <div class="price-tag__action-row" *ngIf="!previewMode">
-                <div class="price-tag__icon-button" (click)="openEditPropertyDialog()">
-                    <i class="fa fa-pencil"></i>
+            <div class="price-tag__title">
+                Ausstattung
+                <div class="price-tag__action-row" *ngIf="!previewMode">
+                    <div class="price-tag__icon-button" (click)="openEditPropertyDialog()">
+                        <i class="fa fa-pencil"></i>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="price-tag__row" mt="0px">
-            <div class="price-tag__title"></div>
             <div class="price-tag__value">
                 {{ getValuePropertyField('StandardEquipment') }},
                 {{ getValuePropertyField('SpecialEquipment') }}
             </div>
         </div>
-        <div class="price-tag__action-row" *ngIf="!previewMode">
-            <div class="price-tag__icon-button" (click)="openEditPriceDialog()">
-                <i class="fa fa-pencil"></i>
-            </div>
-        </div>
+
         <div class="price-tag__row" mt="4px">
-            <div class="price-tag__title" [ngClass]="{ bold: true }">Leasing ab:</div>
+            <div class="price-tag__title" [ngClass]="{ bold: true }">
+                Leasing ab:
+                <div class="price-tag__action-row" *ngIf="!previewMode">
+                    <div class="price-tag__icon-button" (click)="openEditPriceDialog()">
+                        <i class="fa fa-pencil"></i>
+                    </div>
+                </div>
+            </div>
             <div class="price-tag__value" [ngClass]="{ bold: true }" style="font-size: 40px">
                 <div>
                     <div class="price-tag__value" [ngClass]="{ bold: true }" style="font-size: 52px">
-                        Fr. {{ getUIPrice('LeasingRate') }}
+                        CHF. {{ getUIPrice('LeasingRate') }}
                         <span>/Monat</span>
                     </div>
                     <div class="price-tag__value" [ngClass]="{ bold: true }" style="font-size: 52px">
                         <span>Preis: </span>
-                        Fr. {{ getUIPrice('PublicPriceValue') }}
+                        CHF. {{ getUIPrice('PublicPriceValue') }}
                     </div>
                 </div>
             </div>
@@ -280,7 +107,7 @@
                     <div class="price-tag__value"></div>
                     <div class="value d-flex" [ngClass]="{ bold: true }" style="font-size: 24px">
                         <span style="visibility: hidden"> Preis: </span>
-                        (Neupreis Fr.
+                        (Neupreis CHF.
                         <span class="me-1"></span>
                         {{ getUIPrice('ListPriceValue') }})
                     </div>
@@ -298,9 +125,7 @@
             <div class="price-tag__title">Leasingkonditionen</div>
             <div class="price-tag__value" style="font-size: 18px; font-weight: 300">
                 Anzahlung: {{ getUIPrice('LeasingInitialPayment') }}
-                - CHF Laufrzeit: 48 Monate
-                <span class="mx-1"></span>
-                km-Leistung: 10'000 km/Jahr nur mit Vollkasko!
+                - CHF Laufrzeit: 48 Monate / 10'000 km pro Jahr Volkasko Obligatorisch
             </div>
         </div>
     </div>
@@ -383,7 +208,7 @@
         <div class="row custom-row px-4 py-2 mb-4">
             <ng-container *ngTemplateOutlet="inputControl; context: { control: priceFields.FUEL }"> </ng-container>
             <ng-container *ngTemplateOutlet="checkboxControl; context: { control: priceFields.AB_MFK }"> </ng-container>
-            <ng-container *ngTemplateOutlet="dateControl; context: { control: priceFields.LAST_CHECK }"> </ng-container>
+            <!-- <ng-container *ngTemplateOutlet="dateControl; context: { control: priceFields.LAST_CHECK }"> </ng-container> -->
             <ng-container
                 *ngTemplateOutlet="selectControl; context: { control: priceFields.CURRENCY, dataList: currencyOptions }"
             >
@@ -395,20 +220,22 @@
             <ng-container *ngTemplateOutlet="inputNumberControl; context: { control: priceFields.NEU_PRICE }">
             </ng-container>
             <ng-container *ngTemplateOutlet="inputControl; context: { control: priceFields.GARANTIE }"> </ng-container>
-            <!-- <ng-container
-                *ngTemplateOutlet="
-                    inputNumberControl;
-                    context: { control: priceFields.LEASING_DURATION, thousandsSeparator: '.' }
-                "
-            >
+            <ng-container *ngTemplateOutlet="inputNumberControl; context: { control: priceFields.LEASING_DURATION }">
             </ng-container>
-            <ng-container
-                *ngTemplateOutlet="
-                    inputNumberControl;
-                    context: { control: priceFields.LEASING_MILEAGE_COSTS, thousandsSeparator: '.' }
-                "
-            >
-            </ng-container> -->
+            <!-- <ng-container
+              *ngTemplateOutlet="
+                  inputNumberControl;
+                  context: { control: priceFields.LEASING_DURATION }
+              "
+          >
+          </ng-container>
+          <ng-container
+              *ngTemplateOutlet="
+                  inputNumberControl;
+                  context: { control: priceFields.LEASING_MILEAGE_COSTS, thousandsSeparator: '.' }
+              "
+          >
+          </ng-container> -->
         </div>
     </form>
 </ng-template>

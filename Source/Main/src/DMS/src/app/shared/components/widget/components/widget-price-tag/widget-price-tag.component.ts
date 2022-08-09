@@ -85,29 +85,29 @@ export class WidgetPriceTag extends BaseComponent implements OnInit, AfterViewIn
     public priceFields = {
         AB_MFK: <ControlData>{ controlName: 'AbMFK', displayName: 'Ab MFK', order: 0, defaultValue: 0 },
         FUEL: <ControlData>{ controlName: 'Fuel', displayName: 'Treibstoff', order: 2, defaultValue: '' },
-        LAST_CHECK: <ControlData>{
-            controlName: 'LastCheck',
-            displayName: 'Letzte Prüfung',
-            order: 3,
-            defaultValue: '',
-        },
+        // LAST_CHECK: <ControlData>{
+        //     controlName: 'LastCheck',
+        //     displayName: 'Letzte Prüfung',
+        //     order: 3,
+        //     defaultValue: '',
+        // },
         CURRENCY: <ControlData>{
             controlName: 'currency',
             displayName: 'Währung',
             isRequired: true,
             order: 4,
-            defaultValue: 'Fr',
+            defaultValue: 'CHF',
         },
         LEASING_AB: <ControlData>{ controlName: 'LeasingRate', displayName: 'Leasing ab', order: 5, defaultValue: '' },
         PRICE: <ControlData>{ controlName: 'PublicPriceValue', displayName: 'Preis', order: 6, defaultValue: '' },
         NEU_PRICE: <ControlData>{ controlName: 'ListPriceValue', displayName: 'Neupreis', order: 7, defaultValue: '' },
         GARANTIE: <ControlData>{ controlName: 'WarrantyText', displayName: 'Garantie', order: 8, defaultValue: '' },
-        // LEASING_DURATION: <ControlData>{
-        //     controlName: 'LeasingDuration',
-        //     displayName: 'Leasing Duration',
-        //     order: 8,
-        //     defaultValue: '',
-        // },
+        LEASING_DURATION: <ControlData>{
+            controlName: 'LeasingInitialPayment',
+            displayName: 'Leasing Initial Payment',
+            order: 9,
+            defaultValue: '',
+        },
         // LEASING_MILEAGE_COSTS: <ControlData>{
         //     controlName: 'LeasingExcessMileageCosts',
         //     displayName: 'Leasing Mileage Cost',
@@ -335,7 +335,7 @@ export class WidgetPriceTag extends BaseComponent implements OnInit, AfterViewIn
                                                 IdPriceTag: null,
                                                 Fuel: get(_d, 'property.Fuel', ''),
                                                 AbMFK: get(_d, 'property.AbMFK') ? 1 : 0,
-                                                LastCheck: this.parseValueToDate(get(_d, 'property.LastCheck', '')),
+                                                // LastCheck: this.parseValueToDate(get(_d, 'property.LastCheck', '')),
                                                 LeasingAsof: get(_d, 'property.LeasingRate', 0),
                                                 Price: get(_d, 'property.PublicPriceValue', 0),
                                                 NewPrice: get(_d, 'property.ListPriceValue', 0),
@@ -362,8 +362,8 @@ export class WidgetPriceTag extends BaseComponent implements OnInit, AfterViewIn
                                                 // set(_d, 'property.LeasingExcessMileageCosts', info.LeasingMileageCosts);
                                                 set(_d, 'property.Fuel', info.Fuel);
                                                 set(_d, 'property.AbMFK', info.AbMFK == 1 ? true : false);
-                                                set(_d, 'property.LastCheck', info.LastCheck);
-
+                                                // set(_d, 'property.LastCheck', info.LastCheck);
+                                                set(_d, 'property.LeasingInitialPayment', info.LeasingInitialPayment);
                                                 set(_d, 'property.ListPriceValue', info.NewPrice);
                                                 set(_d, 'property.WarrantyText', info.Garantie);
 
@@ -400,19 +400,19 @@ export class WidgetPriceTag extends BaseComponent implements OnInit, AfterViewIn
         popupWin = window.open('', '_blank', 'top=0,left=0,height=100%,width=auto');
         popupWin.document.open();
         popupWin.document.write(`
-        <html>
-          <head>
-            <title>Print tab</title>
-            <style>
-            ${linksHtml}
-            ${stylesHtml}
-            <style>
-            @font-face {font-family: "rbt_Regular"; src: url("${origin}/SFProDisplay-Regular.d09549c1ab4a5947a007.ttf") format("truetype"); };
-            </style>
-            </style>
-          </head>
-      <body onload="window.print();setTimeout(() => { window.close();},100);">${printContents}</body>
-        </html>`);
+      <html>
+        <head>
+          <title>Print tab</title>
+          <style>
+          ${linksHtml}
+          ${stylesHtml}
+          <style>
+          @font-face {font-family: "rbt_Regular"; src: url("${origin}/SFProDisplay-Regular.d09549c1ab4a5947a007.ttf") format("truetype"); };
+          </style>
+          </style>
+        </head>
+    <body onload="window.print();setTimeout(() => { window.close();},100);">${printContents}</body>
+      </html>`);
         popupWin.document.close();
     }
 
@@ -458,7 +458,7 @@ export class WidgetPriceTag extends BaseComponent implements OnInit, AfterViewIn
         }
     };
     private parseValueToNumber(value) {
-        return value.toLocaleString('de-DE');
+        return value.toLocaleString('de-DE').split('.').join("'").replace(',', '.');
     }
 
     public getUIDate = (field, defaultValue = '') => {
@@ -516,7 +516,7 @@ export class WidgetPriceTag extends BaseComponent implements OnInit, AfterViewIn
         }
     };
     private parseValueToPrice(value) {
-        return value.toLocaleString('de-DE').split('.').join("'").replace(',', '.');
+        return value.toLocaleString('de-DE').split('.').join("'").replace(',', '.') + '.-';
     }
 
     private parseData(data) {
@@ -613,6 +613,10 @@ export class WidgetPriceTag extends BaseComponent implements OnInit, AfterViewIn
                                 tempValue = this.parseValueToNumber(tempValue);
                                 break;
                             case 'LeasingExcessMileageCosts':
+                            case 'LeasingInitialPayment':
+                            case 'PublicPriceValue':
+                            case 'ListPriceValue':
+                            case 'LeasingRate':
                                 // currency seperate with (' - thousand) and (. - decimal)
                                 tempValue = Number(tempValue) || 0;
                                 tempValue = this.parseValueToPrice(tempValue);
@@ -828,7 +832,7 @@ export class WidgetPriceTag extends BaseComponent implements OnInit, AfterViewIn
                         IdPriceTag: this.data.info?.IdPriceTag || null,
                         Fuel: get(this.dataList, [this.currentIndex, 'property', 'Fuel'], ''),
                         AbMFK: get(this.dataList, [this.currentIndex, 'property', 'AbMFK'], false) ? 1 : 0,
-                        LastCheck: get(this.dataList, [this.currentIndex, 'property', 'LastCheck'], ''),
+                        // LastCheck: get(this.dataList, [this.currentIndex, 'property', 'LastCheck'], ''),
                         LeasingAsof: get(this.dataList, [this.currentIndex, 'property', 'LeasingRate'], 0),
                         Price: get(this.dataList, [this.currentIndex, 'property', 'PublicPriceValue'], 0),
                         NewPrice: get(this.dataList, [this.currentIndex, 'property', 'ListPriceValue'], 0),
@@ -935,7 +939,8 @@ export class WidgetPriceTag extends BaseComponent implements OnInit, AfterViewIn
                         // set(_d, 'property.LeasingExcessMileageCosts', data.LeasingMileageCosts);
                         set(_d, 'property.Fuel', data.Fuel);
                         set(_d, 'property.AbMFK', data.AbMFK == 1 ? true : false);
-                        set(_d, 'property.LastCheck', data.LastCheck);
+                        // set(_d, 'property.LastCheck', data.LastCheck);
+                        set(_d, 'property.LeasingInitialPayment', data.LeasingInitialPayment);
 
                         set(_d, 'property.ListPriceValue', data.NewPrice);
                         set(_d, 'property.WarrantyText', data.Garantie);
@@ -1040,9 +1045,9 @@ export class WidgetPriceTag extends BaseComponent implements OnInit, AfterViewIn
             label: 'Ab MFK',
             value: () => this.getUIBoolean('AbMFK'),
         },
-        {
-            label: 'Letzte Prüfung',
-            value: () => this.getUIDate2('LastCheck'),
-        },
+        // {
+        //     label: 'Letzte Prüfung',
+        //     value: () => this.getUIDate2('LastCheck'),
+        // },
     ];
 }

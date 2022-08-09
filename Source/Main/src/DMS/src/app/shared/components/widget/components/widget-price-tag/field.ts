@@ -52,5 +52,5 @@ export const mappingFields = [
     { xml: 'SONDER.0.SAPOS', xlsx: 'SpecialEquipment', type: 'array' },
     { xml: 'EMPTY_NEED_WRITE', xlsx: 'AbMFK' },
     { xml: 'EMPTY_NEED_WRITE', xlsx: 'Fuel' },
-    { xml: 'EMPTY_NEED_WRITE', xlsx: 'LastCheck' },
+    // { xml: 'EMPTY_NEED_WRITE', xlsx: 'LastCheck' },
 ];
