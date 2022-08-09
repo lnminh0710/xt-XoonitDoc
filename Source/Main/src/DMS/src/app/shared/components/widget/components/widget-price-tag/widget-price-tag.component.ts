@@ -116,7 +116,7 @@ export class WidgetPriceTag extends BaseComponent implements OnInit, AfterViewIn
         // },
     };
 
-    public currencyOptions = [{ idValue: 'Fr', textValue: 'Fr' }];
+    public currencyOptions = [{ idValue: 'CHF', textValue: 'CHF' }];
     isHover: any = {};
     isFocus: any = {};
     controlDataList: any = [];
