@@ -13,7 +13,8 @@
         "test": "ng test",
         "test-coverage": "ng test --no-watch --code-coverage",
         "lint": "ng lint",
-        "e2e": "ng e2e"
+        "e2e": "ng e2e",
+        "build_deploy": "npm run client_aot && dotnet restore DMS.csproj && dotnet build DMS.csproj --configuration Release && dotnet publish DMS.csproj --configuration Release"
     },
     "private": true,
     "dependencies": {

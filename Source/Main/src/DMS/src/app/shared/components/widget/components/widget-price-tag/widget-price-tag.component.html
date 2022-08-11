@@ -89,12 +89,12 @@
             <div class="price-tag__value" [ngClass]="{ bold: true }" style="font-size: 40px">
                 <div>
                     <div class="price-tag__value" [ngClass]="{ bold: true }" style="font-size: 52px">
-                        CHF. {{ getUIPrice('LeasingRate') }}
+                        CHF {{ getUIPrice('LeasingRate') }}
                         <span>/Monat</span>
                     </div>
                     <div class="price-tag__value" [ngClass]="{ bold: true }" style="font-size: 52px">
                         <span>Preis: </span>
-                        CHF. {{ getUIPrice('PublicPriceValue') }}
+                        CHF {{ getUIPrice('PublicPriceValue') }}
                     </div>
                 </div>
             </div>
@@ -107,8 +107,8 @@
                     <div class="price-tag__value"></div>
                     <div class="value d-flex" [ngClass]="{ bold: true }" style="font-size: 24px">
                         <span style="visibility: hidden"> Preis: </span>
-                        (Neupreis CHF.
-                        <span class="me-1"></span>
+                        (Neupreis CHF
+                        <span class="mx-1"></span>
                         {{ getUIPrice('ListPriceValue') }})
                     </div>
                 </div>
@@ -125,7 +125,7 @@
             <div class="price-tag__title">Leasingkonditionen</div>
             <div class="price-tag__value" style="font-size: 18px; font-weight: 300">
                 Anzahlung: {{ getUIPrice('LeasingInitialPayment') }}
-                CHF Laufrzeit: 48 Monate / 10'000 km pro Jahr Volkasko Obligatorisch
+                CHF Laufrzeit: 48 Monate / 10'000 km pro Jahr Vollkasko obligatorisch
             </div>
         </div>
     </div>

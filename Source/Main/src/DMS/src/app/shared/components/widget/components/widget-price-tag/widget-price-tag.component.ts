@@ -104,7 +104,7 @@ export class WidgetPriceTag extends BaseComponent implements OnInit, AfterViewIn
         GARANTIE: <ControlData>{ controlName: 'WarrantyText', displayName: 'Garantie', order: 8, defaultValue: '' },
         LEASING_DURATION: <ControlData>{
             controlName: 'LeasingInitialPayment',
-            displayName: 'Leasing Initial Payment',
+            displayName: 'Anzahlung',
             order: 9,
             defaultValue: '',
         },
