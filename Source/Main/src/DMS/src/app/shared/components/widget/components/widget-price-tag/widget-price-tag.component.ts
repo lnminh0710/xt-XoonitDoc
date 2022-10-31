@@ -97,8 +97,8 @@ export class WidgetPriceTag extends BaseComponent implements OnInit, AfterViewIn
 
     public priceFields = {
         AB_MFK: <ControlData>{ controlName: 'AbMFK', displayName: 'Ab MFK', order: 0, defaultValue: 0 },
-        FUEL: <ControlData>{ controlName: 'Fuel', displayName: 'Treibstoff', order: 2, defaultValue: '' },
-        GEAR: <ControlData>{ controlName: 'Getriebe', displayName: 'Gear', order: 3, defaultValue: '' },
+        FUEL: <ControlData>{ controlName: 'IdRepPriceTagFuel', displayName: 'Treibstoff', order: 2, defaultValue: '' },
+        GEAR: <ControlData>{ controlName: 'IdRepPriceTagGears', displayName: 'Gear', order: 3, defaultValue: '' },
         // LAST_CHECK: <ControlData>{
         //     controlName: 'LastCheck',
         //     displayName: 'Letzte Prüfung',
@@ -115,10 +115,10 @@ export class WidgetPriceTag extends BaseComponent implements OnInit, AfterViewIn
         LEASING_AB: <ControlData>{ controlName: 'LeasingRate', displayName: 'Leasing ab', order: 5, defaultValue: '' },
         PRICE: <ControlData>{ controlName: 'PublicPriceValue', displayName: 'Preis', order: 6, defaultValue: '' },
         NEU_PRICE: <ControlData>{ controlName: 'ListPriceValue', displayName: 'Neupreis', order: 7, defaultValue: '' },
-        GARANTIE: <ControlData>{ controlName: 'WarrantyText', displayName: 'Garantie', order: 8, defaultValue: '' },
-        MAX: <ControlData>{
-            controlName: 'Max',
-            displayName: 'Max',
+        GARANTIE: <ControlData>{ controlName: 'Garantie', displayName: 'Garantie', order: 8, defaultValue: '' },
+        GARANTIE_2: <ControlData>{
+            controlName: 'Garantie2',
+            displayName: 'Garantie Text',
             order: 9,
             defaultValue: '',
         },
@@ -189,8 +189,14 @@ export class WidgetPriceTag extends BaseComponent implements OnInit, AfterViewIn
     ngOnInit() {
         this.onSubscribe();
         this.commonService.getListComboBox('PriceTagFuel,PriceTagGears').subscribe((res) => {
-            this.fuelOptions = get(res, ['item', 'PriceTagFuel'], []);
-            this.gearOptions = get(res, ['item', 'PriceTagGears'], []);
+            this.fuelOptions = get(res, ['item', 'PriceTagFuel'], []).map((_r) => ({
+                ..._r,
+                idValue: parseInt(_r.idValue),
+            }));
+            this.gearOptions = get(res, ['item', 'PriceTagGears'], []).map((_r) => ({
+                ..._r,
+                idValue: parseInt(_r.idValue),
+            }));
         });
     }
 
@@ -361,12 +367,17 @@ export class WidgetPriceTag extends BaseComponent implements OnInit, AfterViewIn
                                                 IdPriceTagEditFields: null,
                                                 IdPriceTag: null,
                                                 Fuel: get(_d, 'property.Fuel', ''),
+                                                IdRepPriceTagFuel: get(_d, 'property.IdRepPriceTagFuel', ''),
+                                                IdRepPriceTagGears: get(_d, 'property.IdRepPriceTagGears', ''),
+
                                                 AbMFK: get(_d, 'property.AbMFK') ? 1 : 0,
                                                 // LastCheck: this.parseValueToDate(get(_d, 'property.LastCheck', '')),
                                                 LeasingAsof: get(_d, 'property.LeasingRate', 0),
                                                 Price: get(_d, 'property.PublicPriceValue', 0),
                                                 NewPrice: get(_d, 'property.ListPriceValue', 0),
-                                                Garantie: get(_d, 'property.WarrantyText', ''),
+                                                Garantie: get(_d, 'property.Garantie', ''),
+                                                Garantie2: get(_d, 'property.Garantie2', ''),
+
                                                 LeasingInitialPayment: get(_d, 'property.LeasingInitialPayment', 0),
                                                 // LeasingDuration: get(_d, 'property.LeasingDuration', 0),
                                                 // LeasingMileageCosts: get(_d, 'property.LeasingExcessMileageCosts', 0),
@@ -388,11 +399,15 @@ export class WidgetPriceTag extends BaseComponent implements OnInit, AfterViewIn
                                                 // set(_d, 'property.LeasingDuration', info.LeasingDuration);
                                                 // set(_d, 'property.LeasingExcessMileageCosts', info.LeasingMileageCosts);
                                                 set(_d, 'property.Fuel', info.Fuel);
+                                                set(_d, 'property.IdRepPriceTagFuel', info.IdRepPriceTagFuel);
+                                                set(_d, 'property.IdRepPriceTagGears', info.IdRepPriceTagGears);
+
                                                 set(_d, 'property.AbMFK', info.AbMFK == 1 ? true : false);
                                                 // set(_d, 'property.LastCheck', info.LastCheck);
                                                 set(_d, 'property.LeasingInitialPayment', info.LeasingInitialPayment);
                                                 set(_d, 'property.ListPriceValue', info.NewPrice);
-                                                set(_d, 'property.WarrantyText', info.Garantie);
+                                                set(_d, 'property.Garantie', info.Garantie);
+                                                set(_d, 'property.Garantie2', info.Garantie2);
 
                                                 set(_d, 'property.PublicPriceValue', info.Price);
                                                 parseString(info.XML, (err, text) => {
@@ -630,10 +645,10 @@ export class WidgetPriceTag extends BaseComponent implements OnInit, AfterViewIn
                                 tempValue = get(_d, ['info', 'IdPriceTag']);
                                 break;
                             case 'GearType':
-                                tempValue = this.getGearValue('Getriebe');
+                                tempValue = this.getGearValue('IdRepPriceTagGears');
                                 break;
                             case 'PrimaryFuelType':
-                                tempValue = this.getFuelValue('Treibstoff');
+                                tempValue = this.getFuelValue('IdRepPriceTagFuel');
                                 break;
                             case 'AbMFK':
                                 // date DD.MM.YYYY
@@ -668,10 +683,10 @@ export class WidgetPriceTag extends BaseComponent implements OnInit, AfterViewIn
                                 tempValue = Number(tempValue) || 0;
                                 break;
                             case 'WarrantyMilage':
-                                tempValue = this.getUIValue('WarrantyText', '');
+                                tempValue = this.getUIValue('Garantie', '');
                                 break;
                             case 'WarrantyText':
-                                tempValue = 'Max ' + this.getUINumber('Max');
+                                tempValue = this.getUIValue('Garantie2', '');
                                 break;
                             case 'BodyColor':
                             case 'Covering':
@@ -877,12 +892,20 @@ export class WidgetPriceTag extends BaseComponent implements OnInit, AfterViewIn
                         IdPriceTagEditFields: this.data.info?.IdPriceTagEditFields || null,
                         IdPriceTag: this.data.info?.IdPriceTag || null,
                         Fuel: get(this.dataList, [this.currentIndex, 'property', 'Fuel'], ''),
+                        IdRepPriceTagFuel: get(this.dataList, [this.currentIndex, 'property', 'IdRepPriceTagFuel'], ''),
+                        IdRepPriceTagGears: get(
+                            this.dataList,
+                            [this.currentIndex, 'property', 'IdRepPriceTagGears'],
+                            '',
+                        ),
+
                         AbMFK: get(this.dataList, [this.currentIndex, 'property', 'AbMFK'], false) ? 1 : 0,
                         // LastCheck: get(this.dataList, [this.currentIndex, 'property', 'LastCheck'], ''),
                         LeasingAsof: get(this.dataList, [this.currentIndex, 'property', 'LeasingRate'], 0),
                         Price: get(this.dataList, [this.currentIndex, 'property', 'PublicPriceValue'], 0),
                         NewPrice: get(this.dataList, [this.currentIndex, 'property', 'ListPriceValue'], 0),
-                        Garantie: get(this.dataList, [this.currentIndex, 'property', 'WarrantyText'], ''),
+                        Garantie: get(this.dataList, [this.currentIndex, 'property', 'Garantie'], ''),
+                        Garantie2: get(this.dataList, [this.currentIndex, 'property', 'Garantie2'], ''),
                         LeasingInitialPayment: get(
                             this.dataList,
                             [this.currentIndex, 'property', 'LeasingInitialPayment'],
@@ -984,12 +1007,15 @@ export class WidgetPriceTag extends BaseComponent implements OnInit, AfterViewIn
                         // set(_d, 'property.LeasingDuration', data.LeasingDuration);
                         // set(_d, 'property.LeasingExcessMileageCosts', data.LeasingMileageCosts);
                         set(_d, 'property.Fuel', data.Fuel);
+                        set(_d, 'property.IdRepPriceTagFuel', data.IdRepPriceTagFuel);
+                        set(_d, 'property.IdRepPriceTagGears', data.IdRepPriceTagGears);
                         set(_d, 'property.AbMFK', data.AbMFK == 1 ? true : false);
                         // set(_d, 'property.LastCheck', data.LastCheck);
                         set(_d, 'property.LeasingInitialPayment', data.LeasingInitialPayment);
 
                         set(_d, 'property.ListPriceValue', data.NewPrice);
-                        set(_d, 'property.WarrantyText', data.Garantie);
+                        set(_d, 'property.Garantie', data.Garantie);
+                        set(_d, 'property.Garantie2', data.Garantie2);
                         set(_d, 'property.PublicPriceValue', data.Price);
                         count += 1;
 
@@ -1062,40 +1088,6 @@ export class WidgetPriceTag extends BaseComponent implements OnInit, AfterViewIn
     private getInformation(info) {
         return pick(info, ['IdPriceTag', 'IdPriceTagEditFields', 'IdPriceTagEquipment', 'IdPriceTagXML']);
     }
-
-    public fields = [
-        {
-            label: 'Inverkehrsetzung',
-            value: () => this.getUIDate('InitialRegistration'),
-        },
-        {
-            label: 'km',
-            value: () => this.getUINumber('Milage'),
-        },
-        {
-            label: 'Motor',
-            value: () =>
-                `${this.getUINumber('EnginePowerHP')} PS | ${this.getUINumber('EnginePowerKW')} kW | ${this.getUINumber(
-                    'EngineCylinder',
-                )} Zylinder | Hubraum: ${this.getUINumber('EngineCapacity')} ccm`,
-        },
-        {
-            label: 'AussenFarbe',
-            value: () => this.getUIValue('BodyColor'),
-        },
-        {
-            label: 'Treibstoff',
-            value: () => this.getUIValue('Fuel'),
-        },
-        {
-            label: 'Ab MFK',
-            value: () => this.getUIBoolean('AbMFK'),
-        },
-        // {
-        //     label: 'Letzte Prüfung',
-        //     value: () => this.getUIDate2('LastCheck'),
-        // },
-    ];
 
     getProperty() {
         const standard: string[] = this.getValuePropertyField('StandardEquipment').split(',');
