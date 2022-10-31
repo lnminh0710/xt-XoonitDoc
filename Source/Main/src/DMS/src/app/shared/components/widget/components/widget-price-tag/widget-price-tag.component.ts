@@ -12,9 +12,22 @@ import {
 import { ActivatedRoute, Router } from '@angular/router';
 import { BaseComponent } from '@app/pages/private/base';
 import { ReducerManagerDispatcher, Store } from '@ngrx/store';
-import { every, filter as filterLodash, find, findIndex, get, map, pick, set, some, uniqBy, values } from 'lodash-es';
+import {
+    every,
+    filter as filterLodash,
+    find,
+    findIndex,
+    get,
+    map,
+    pick,
+    set,
+    some,
+    uniqBy,
+    valuesIn,
+    values,
+} from 'lodash-es';
 import { DocumentImageOcrService } from '@app/pages/private/modules/image-control/services';
-import { DownloadFileService, PreissChildService } from '@app/services';
+import { CommonService, DownloadFileService, PreissChildService } from '@app/services';
 import { Uti, XnErrorMessageHelper } from '@app/utilities';
 import { mappingFields } from './field';
 import { parseString, Builder } from 'xml2js';
@@ -85,6 +98,7 @@ export class WidgetPriceTag extends BaseComponent implements OnInit, AfterViewIn
     public priceFields = {
         AB_MFK: <ControlData>{ controlName: 'AbMFK', displayName: 'Ab MFK', order: 0, defaultValue: 0 },
         FUEL: <ControlData>{ controlName: 'Fuel', displayName: 'Treibstoff', order: 2, defaultValue: '' },
+        GEAR: <ControlData>{ controlName: 'Getriebe', displayName: 'Gear', order: 3, defaultValue: '' },
         // LAST_CHECK: <ControlData>{
         //     controlName: 'LastCheck',
         //     displayName: 'Letzte Prüfung',
@@ -102,10 +116,16 @@ export class WidgetPriceTag extends BaseComponent implements OnInit, AfterViewIn
         PRICE: <ControlData>{ controlName: 'PublicPriceValue', displayName: 'Preis', order: 6, defaultValue: '' },
         NEU_PRICE: <ControlData>{ controlName: 'ListPriceValue', displayName: 'Neupreis', order: 7, defaultValue: '' },
         GARANTIE: <ControlData>{ controlName: 'WarrantyText', displayName: 'Garantie', order: 8, defaultValue: '' },
+        MAX: <ControlData>{
+            controlName: 'Max',
+            displayName: 'Max',
+            order: 9,
+            defaultValue: '',
+        },
         LEASING_DURATION: <ControlData>{
             controlName: 'LeasingInitialPayment',
             displayName: 'Anzahlung',
-            order: 9,
+            order: 10,
             defaultValue: '',
         },
         // LEASING_MILEAGE_COSTS: <ControlData>{
@@ -117,6 +137,8 @@ export class WidgetPriceTag extends BaseComponent implements OnInit, AfterViewIn
     };
 
     public currencyOptions = [{ idValue: 'CHF', textValue: 'CHF' }];
+    public fuelOptions = [];
+    public gearOptions = [];
     isHover: any = {};
     isFocus: any = {};
     controlDataList: any = [];
@@ -142,6 +164,7 @@ export class WidgetPriceTag extends BaseComponent implements OnInit, AfterViewIn
         private popupService: PopupService,
         private preissChildAction: PreissChildActions,
         private activatedRoute: ActivatedRoute,
+        private commonService: CommonService,
     ) {
         super(router);
         this.buildForm();
@@ -165,6 +188,10 @@ export class WidgetPriceTag extends BaseComponent implements OnInit, AfterViewIn
 
     ngOnInit() {
         this.onSubscribe();
+        this.commonService.getListComboBox('PriceTagFuel,PriceTagGears').subscribe((res) => {
+            this.fuelOptions = get(res, ['item', 'PriceTagFuel'], []);
+            this.gearOptions = get(res, ['item', 'PriceTagGears'], []);
+        });
     }
 
     ngOnDestroy() {
@@ -579,6 +606,11 @@ export class WidgetPriceTag extends BaseComponent implements OnInit, AfterViewIn
         }
         response.unshift(header);
         this.dataList.forEach((_d) => {
+            console.log(
+                `Author:minh.lam , file: widget-price-tag.component.ts , line 610 , WidgetPriceTag , this.dataList.forEach , _d`,
+                _d,
+            );
+
             const row = [];
             for (const key in mappingFields) {
                 if (Object.hasOwnProperty.call(mappingFields, key)) {
@@ -594,6 +626,15 @@ export class WidgetPriceTag extends BaseComponent implements OnInit, AfterViewIn
                         let tempValue = get(_d, ['property', element.xlsx]) || '';
 
                         switch (element.xlsx) {
+                            case 'car.external_id':
+                                tempValue = get(_d, ['info', 'IdPriceTag']);
+                                break;
+                            case 'GearType':
+                                tempValue = this.getGearValue('Getriebe');
+                                break;
+                            case 'PrimaryFuelType':
+                                tempValue = this.getFuelValue('Treibstoff');
+                                break;
                             case 'AbMFK':
                                 // date DD.MM.YYYY
                                 tempValue = this.getUIBoolean(tempValue);
@@ -626,7 +667,12 @@ export class WidgetPriceTag extends BaseComponent implements OnInit, AfterViewIn
                                 // int
                                 tempValue = Number(tempValue) || 0;
                                 break;
+                            case 'WarrantyMilage':
+                                tempValue = this.getUIValue('WarrantyText', '');
+                                break;
                             case 'WarrantyText':
+                                tempValue = 'Max ' + this.getUINumber('Max');
+                                break;
                             case 'BodyColor':
                             case 'Covering':
                                 // string
@@ -1050,4 +1096,30 @@ export class WidgetPriceTag extends BaseComponent implements OnInit, AfterViewIn
         //     value: () => this.getUIDate2('LastCheck'),
         // },
     ];
+
+    getProperty() {
+        const standard: string[] = this.getValuePropertyField('StandardEquipment').split(',');
+        const special: string[] = this.getValuePropertyField('SpecialEquipment').split(',');
+
+        return [...standard, ...special];
+    }
+
+    getCurrentEditProperty() {
+        if (!this.formData) return 0;
+        const rawValues = this.formData.getRawValue();
+
+        return valuesIn(rawValues)?.filter((_r) => _r).length;
+    }
+
+    getFuelValue(field) {
+        const value = get(this.data, ['property', field]);
+        if (!value) return '';
+        return find(this.fuelOptions, ['idValue', value])?.textValue;
+    }
+
+    getGearValue(field) {
+        const value = get(this.data, ['property', field]);
+        if (!value) return '';
+        return find(this.gearOptions, ['idValue', value])?.textValue;
+    }
 }

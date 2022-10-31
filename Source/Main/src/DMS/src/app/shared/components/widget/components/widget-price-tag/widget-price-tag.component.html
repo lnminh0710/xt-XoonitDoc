@@ -37,95 +37,121 @@
 
 <ng-template #content>
     <div id="preview-section" #previewContent>
-        <ng-container *ngTemplateOutlet="dataInfoNew; context: { previewMode: false }"></ng-container>
+        <ng-container *ngTemplateOutlet="dataInfo; context: { previewMode: false }"></ng-container>
     </div>
     <div id="print-section" class="d-none">
-        <ng-container *ngTemplateOutlet="dataInfoNew; context: { previewMode: true }"></ng-container>
+        <ng-container *ngTemplateOutlet="dataInfo; context: { previewMode: true }"></ng-container>
     </div>
 </ng-template>
 
-<ng-template #dataInfoNew let-previewMode="previewMode">
+<ng-template #dataInfo let-previewMode="previewMode">
     <div
         class="price-tag"
         [ngClass]="{ 'd-none': !data, 'transform--center': zoom < 1, 'transform--top': zoom > 1 }"
         style.transform="scale({{ previewMode ? 1 : zoom }})"
     >
-        <div class="price-tag__row">
-            <div class="price-tag__title" style="font-size: 40px; font-weight: 500">Occasion</div>
-            <div class="price-tag__value" style="font-size: 50px" [ngClass]="{ bold: true }">
-                {{ getUIValue('car.name') }}
-            </div>
+        <div class="col-12 text--large">
+            {{ getUIValue('car.name') }}
         </div>
-        <div class="price-tag__row" *ngFor="let item of fields; let index = i">
-            <div class="price-tag__title">{{ item.label }}</div>
-            <div class="price-tag__value">
-                {{ item.value() }}
-            </div>
+        <div class="col-12">
+            {{ getFuelValue('Treibstoff') }}
         </div>
-        <div class="price-tag__row">
-            <div class="price-tag__title">
-                Ausstattung
-                <div class="price-tag__action-row" *ngIf="!previewMode">
-                    <div class="price-tag__icon-button" (click)="openEditPropertyDialog()">
-                        <i class="fa fa-pencil"></i>
+        <div class="split-zone">
+            <div>
+                <div class="split-row">
+                    <div class="d-flex justify-content-between">
+                        <div>Kilometer:</div>
+                        <div class="text-right">{{ getUINumber('Milage') }}</div>
                     </div>
-                </div>
-            </div>
-            <div class="price-tag__value">
-                {{ getValuePropertyField('StandardEquipment') }},
-                {{ getValuePropertyField('SpecialEquipment') }}
-            </div>
-        </div>
+                    <div class="d-flex justify-content-between">
+                        <div>Zulassung:</div>
+                        <div class="text-right">01.09.2021</div>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <div>Motor:</div>
+                        <div class="text-right">
+                            {{ getUINumber('EnginePowerHP') }}PS | {{ getUINumber('EnginePowerKW') }} kW
+                        </div>
+                    </div>
 
-        <div class="price-tag__row" mt="4px">
-            <div class="price-tag__title" [ngClass]="{ bold: true }">
-                Leasing ab:
-                <div class="price-tag__action-row" *ngIf="!previewMode">
-                    <div class="price-tag__icon-button" (click)="openEditPriceDialog()">
-                        <i class="fa fa-pencil"></i>
+                    <div class="d-flex justify-content-between">
+                        <div>Farbe:</div>
+                        <div class="text-right">{{ getUIValue('BodyColor') }}</div>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <div>Hubraum:</div>
+                        <div class="text-right">{{ getUINumber('EngineCapacity') }} ccm</div>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <div>Innenraum:</div>
+                        <div class="text-right">Leder Schwarz</div>
+                    </div>
+                    <div class="d-flex justify-content-between w-100">
+                        <div>Zylinder:</div>
+                        <div class="text-right">{{ getUIValue('EngineCylinder') }}</div>
+                    </div>
+                    <div></div>
+                </div>
+                <div class="d-flex w-100 my-3">
+                    <div>Getriebe:</div>
+                    <div class="me-3">{{ getGearValue('Getriebe') }}</div>
+                </div>
+
+                <div class="d-flex w-100 my-3 align-items-center">
+                    <div class="text--medium">Ausstattung</div>
+                    <div class="mx-3"></div>
+                    <div>(zusätzliche Ausstattung auf Anfrage)</div>
+                    <div class="price-tag__action-row" *ngIf="!previewMode">
+                        <div class="price-tag__icon-button" (click)="openEditPropertyDialog()">
+                            <i class="fa fa-pencil"></i>
+                        </div>
                     </div>
                 </div>
+                <div *ngFor="let item of getProperty()" class="mb-1">
+                    {{ item }}
+                </div>
             </div>
-            <div class="price-tag__value" [ngClass]="{ bold: true }" style="font-size: 40px">
+            <div class="line-break"></div>
+            <div>
+                <div class="text--medium w-100">
+                    Preis
+                    <div class="price-tag__action-row" *ngIf="!previewMode">
+                        <div class="price-tag__icon-button" (click)="openEditPriceDialog()">
+                            <i class="fa fa-pencil"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="text--large">CHF {{ getUIPrice('PublicPriceValue') }}</div>
+                <div class="mb-5">
+                    (Neupreis: <span class="mx-1"></span>CHF
+                    <span class="mx-1"></span>
+                    {{ getUIPrice('ListPriceValue') }})
+                </div>
+
+                <div class="text--medium mt-5">Leasing ab</div>
+                <div class="text--large mb-4">CHF {{ getUIPrice('PublicPriceValue') }}/Monat</div>
+                <div class="text--medium mt-5">Leasingkonditionen</div>
+                <div class="text--small mb-5">Vollkasko obligatorisch</div>
+                <div class="d-flex justify-content-between mb-3">
+                    <div>Anzahlung:</div>
+                    <div class="text-right">CHF {{ getUIPrice('LeasingInitialPayment') }}</div>
+                </div>
+
+                <div class="d-flex justify-content-between mb-3">
+                    <div>Laufzeit:</div>
+                    <div class="text-right">48 Monate</div>
+                </div>
+
+                <div class="d-flex justify-content-between mb-5">
+                    <div>Km-Leistung:</div>
+                    <div class="text-right">10'000 km</div>
+                </div>
+
+                <div class="text--medium mb-2">Garantie</div>
                 <div>
-                    <div class="price-tag__value" [ngClass]="{ bold: true }" style="font-size: 52px">
-                        CHF {{ getUIPrice('LeasingRate') }}
-                        <span>/Monat</span>
-                    </div>
-                    <div class="price-tag__value" [ngClass]="{ bold: true }" style="font-size: 52px">
-                        <span>Preis: </span>
-                        CHF {{ getUIPrice('PublicPriceValue') }}
-                    </div>
+                    {{ getUIValue('WarrantyText', '') }}
                 </div>
-            </div>
-        </div>
-
-        <div class="price-tag__row" mt="0">
-            <div class="price-tag__title" [ngClass]="{ bold: true }"></div>
-            <div class="price-tag__value" [ngClass]="{ bold: true }" style="font-size: 50px">
-                <div>
-                    <div class="price-tag__value"></div>
-                    <div class="value d-flex" [ngClass]="{ bold: true }" style="font-size: 24px">
-                        <span style="visibility: hidden"> Preis: </span>
-                        (Neupreis CHF
-                        <span class="mx-1"></span>
-                        {{ getUIPrice('ListPriceValue') }})
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="price-tag__row">
-            <div class="price-tag__title">Garantie</div>
-            <div class="price-tag__value">
-                {{ getUIValue('WarrantyText', '') }}
-            </div>
-        </div>
-        <div class="price-tag__row" mt="6px">
-            <div class="price-tag__title">Leasingkonditionen</div>
-            <div class="price-tag__value" style="font-size: 18px; font-weight: 300">
-                Anzahlung: {{ getUIPrice('LeasingInitialPayment') }}
-                CHF Laufrzeit: 48 Monate / 10'000 km pro Jahr Vollkasko obligatorisch
+                <div>Max {{ getUINumber('Max', 0) }} Km</div>
             </div>
         </div>
     </div>
@@ -206,11 +232,19 @@
 <ng-template #popupPrice>
     <form [formGroup]="formData" autocomplete="off" class="form-wrapper" [perfectScrollbar]>
         <div class="row custom-row px-4 py-2 mb-4">
-            <ng-container *ngTemplateOutlet="inputControl; context: { control: priceFields.FUEL }"> </ng-container>
+            <ng-container
+                *ngTemplateOutlet="selectControl; context: { control: priceFields.FUEL, dataList: fuelOptions }"
+            ></ng-container>
+            <ng-container
+                *ngTemplateOutlet="selectControl; context: { control: priceFields.GEAR, dataList: gearOptions }"
+            ></ng-container>
             <ng-container *ngTemplateOutlet="checkboxControl; context: { control: priceFields.AB_MFK }"> </ng-container>
             <!-- <ng-container *ngTemplateOutlet="dateControl; context: { control: priceFields.LAST_CHECK }"> </ng-container> -->
             <ng-container
-                *ngTemplateOutlet="selectControl; context: { control: priceFields.CURRENCY, dataList: currencyOptions }"
+                *ngTemplateOutlet="
+                    selectControl;
+                    context: { control: priceFields.CURRENCY, dataList: currencyOptions, disabled: true }
+                "
             >
             </ng-container>
             <ng-container *ngTemplateOutlet="inputNumberControl; context: { control: priceFields.LEASING_AB }">
@@ -220,6 +254,7 @@
             <ng-container *ngTemplateOutlet="inputNumberControl; context: { control: priceFields.NEU_PRICE }">
             </ng-container>
             <ng-container *ngTemplateOutlet="inputControl; context: { control: priceFields.GARANTIE }"> </ng-container>
+            <ng-container *ngTemplateOutlet="inputNumberControl; context: { control: priceFields.MAX }"> </ng-container>
             <ng-container *ngTemplateOutlet="inputNumberControl; context: { control: priceFields.LEASING_DURATION }">
             </ng-container>
             <!-- <ng-container
@@ -243,7 +278,7 @@
 <ng-template #popupProperty>
     <form [formGroup]="formData" autocomplete="off" class="form-wrapper" [perfectScrollbar]>
         <div class="row custom-row mx-4 my-2" style="max-height: 600px">
-            <div class="form-control-wrapper">
+            <!-- <div class="form-control-wrapper">
                 <mat-checkbox
                     color="primary"
                     [checked]="isCheckAll"
@@ -252,7 +287,8 @@
                 >
                     <label-translation [keyword]="'All'"></label-translation>
                 </mat-checkbox>
-            </div>
+            </div> -->
+            <div class="mb-2">{{ getCurrentEditProperty() }} / 15</div>
             <div
                 class="form-control-wrapper"
                 *ngFor="let item of controlDataList"
@@ -263,6 +299,7 @@
                     attr.control-key="{{ item.controlName }}"
                     color="primary"
                     [formControlName]="item.controlName"
+                    [disabled]="!formData.controls[item.controlName].value && getCurrentEditProperty() >= 15"
                 >
                     <label-translation [keyword]="item.displayName"></label-translation>
                 </mat-checkbox>
@@ -388,7 +425,13 @@
     </div>
 </ng-template>
 
-<ng-template #selectControl let-control="control" let-customClass="customClass" let-dataList="dataList">
+<ng-template
+    #selectControl
+    let-control="control"
+    let-customClass="customClass"
+    let-dataList="dataList"
+    let-disabled="disabled"
+>
     <div class="form-group col-xs-12 {{ customClass }}">
         <form [formGroup]="formData">
             <mat-form-field class="dms-custom-control">
@@ -401,7 +444,7 @@
                     [attr.name]="control.controlName"
                     #selectControl
                     [required]="control.isRequired"
-                    [disabled]="true"
+                    [disabled]="disabled"
                 >
                     <mat-option *ngFor="let item of dataList" [value]="item.idValue">
                         {{ item.textValue }}

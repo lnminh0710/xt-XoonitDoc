@@ -20,6 +20,7 @@ import { MatSliderModule } from '@xn-control/light-material-ui/slider';
 import { MatIconModule } from '@xn-control/light-material-ui/icon';
 import { MatButtonModule } from '@xn-control/light-material-ui/button';
 import { MatDatepickerModule } from '@xn-control/light-material-ui/datepicker';
+import { CommonService } from '@app/services';
 
 @NgModule({
     imports: [
@@ -46,6 +47,6 @@ import { MatDatepickerModule } from '@xn-control/light-material-ui/datepicker';
     ],
     exports: [WidgetPriceTag, XnTranslationModule],
     declarations: [WidgetPriceTag],
-    providers: [],
+    providers: [CommonService],
 })
 export class WidgetPriceTagModule {}
