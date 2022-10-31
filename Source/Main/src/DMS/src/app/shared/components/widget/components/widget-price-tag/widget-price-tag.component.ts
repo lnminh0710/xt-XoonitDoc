@@ -645,10 +645,18 @@ export class WidgetPriceTag extends BaseComponent implements OnInit, AfterViewIn
                                 tempValue = get(_d, ['info', 'IdPriceTag']);
                                 break;
                             case 'GearType':
-                                tempValue = this.getGearValue('IdRepPriceTagGears');
+                                const value = get(_d, ['property', 'IdRepPriceTagGears']);
+                                if (value) tempValue = find(this.gearOptions, ['idValue', value])?.textValue;
+                                else tempValue = '';
+
                                 break;
+
                             case 'PrimaryFuelType':
-                                tempValue = this.getFuelValue('IdRepPriceTagFuel');
+                            case 'Fuel':
+                                const valueFuel = get(_d, ['property', 'IdRepPriceTagFuel']);
+                                if (valueFuel) tempValue = find(this.fuelOptions, ['idValue', value])?.textValue;
+                                else tempValue = '';
+
                                 break;
                             case 'AbMFK':
                                 // date DD.MM.YYYY
@@ -682,11 +690,11 @@ export class WidgetPriceTag extends BaseComponent implements OnInit, AfterViewIn
                                 // int
                                 tempValue = Number(tempValue) || 0;
                                 break;
-                            case 'WarrantyMilage':
-                                tempValue = this.getUIValue('Garantie', '');
-                                break;
                             case 'WarrantyText':
-                                tempValue = this.getUIValue('Garantie2', '');
+                                tempValue = get(_d, ['property', 'Garantie']) || '';
+                                break;
+                            case 'WarrantyMilage':
+                                tempValue = get(_d, ['property', 'Garantie2']) || '';
                                 break;
                             case 'BodyColor':
                             case 'Covering':
