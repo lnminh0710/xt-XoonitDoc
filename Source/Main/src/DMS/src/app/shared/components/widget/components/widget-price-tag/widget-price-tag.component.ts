@@ -97,37 +97,38 @@ export class WidgetPriceTag extends BaseComponent implements OnInit, AfterViewIn
 
     public priceFields = {
         AB_MFK: <ControlData>{ controlName: 'AbMFK', displayName: 'Ab MFK', order: 0, defaultValue: 0 },
-        FUEL: <ControlData>{ controlName: 'IdRepPriceTagFuel', displayName: 'Treibstoff', order: 2, defaultValue: '' },
-        GEAR: <ControlData>{ controlName: 'IdRepPriceTagGears', displayName: 'Gear', order: 3, defaultValue: '' },
+        GEAR: <ControlData>{ controlName: 'IdRepPriceTagGears', displayName: 'Getriebe', order: 2, defaultValue: '' },
+        FUEL: <ControlData>{ controlName: 'IdRepPriceTagFuel', displayName: 'Treibstoff', order: 3, defaultValue: '' },
         // LAST_CHECK: <ControlData>{
         //     controlName: 'LastCheck',
         //     displayName: 'Letzte Prüfung',
         //     order: 3,
         //     defaultValue: '',
         // },
-        CURRENCY: <ControlData>{
-            controlName: 'currency',
-            displayName: 'Währung',
-            isRequired: true,
-            order: 4,
-            defaultValue: 'CHF',
-        },
-        LEASING_AB: <ControlData>{ controlName: 'LeasingRate', displayName: 'Leasing ab', order: 5, defaultValue: '' },
-        PRICE: <ControlData>{ controlName: 'PublicPriceValue', displayName: 'Preis', order: 6, defaultValue: '' },
-        NEU_PRICE: <ControlData>{ controlName: 'ListPriceValue', displayName: 'Neupreis', order: 7, defaultValue: '' },
-        GARANTIE: <ControlData>{ controlName: 'Garantie', displayName: 'Garantie', order: 8, defaultValue: '' },
-        GARANTIE_2: <ControlData>{
-            controlName: 'Garantie2',
-            displayName: 'Garantie Text',
-            order: 9,
-            defaultValue: '',
-        },
+        // CURRENCY: <ControlData>{
+        //     controlName: 'currency',
+        //     displayName: 'Währung',
+        //     isRequired: true,
+        //     order: 4,
+        //     defaultValue: 'CHF',
+        // },
+        PRICE: <ControlData>{ controlName: 'PublicPriceValue', displayName: 'Preis', order: 4, defaultValue: '' },
+        NEU_PRICE: <ControlData>{ controlName: 'ListPriceValue', displayName: 'Neupreis', order: 5, defaultValue: '' },
+        LEASING_AB: <ControlData>{ controlName: 'LeasingRate', displayName: 'Leasing ab', order: 6, defaultValue: '' },
         LEASING_DURATION: <ControlData>{
             controlName: 'LeasingInitialPayment',
             displayName: 'Anzahlung',
-            order: 10,
+            order: 7,
             defaultValue: '',
         },
+        GARANTIE: <ControlData>{ controlName: 'Garantie', displayName: 'Garantie', order: 8, defaultValue: '' },
+        GARANTIE_2: <ControlData>{
+            controlName: 'Garantie2',
+            displayName: '',
+            order: 9,
+            defaultValue: '',
+        },
+
         // LEASING_MILEAGE_COSTS: <ControlData>{
         //     controlName: 'LeasingExcessMileageCosts',
         //     displayName: 'Leasing Mileage Cost',
@@ -453,7 +454,7 @@ export class WidgetPriceTag extends BaseComponent implements OnInit, AfterViewIn
           </style>
           </style>
         </head>
-    <body onload="window.print();setTimeout(() => { window.close();},100);">${printContents}</body>
+    <body onload="setTimeout(() => {window.print(); window.close();},350);">${printContents}</body>
       </html>`);
         popupWin.document.close();
     }
@@ -487,7 +488,7 @@ export class WidgetPriceTag extends BaseComponent implements OnInit, AfterViewIn
     };
 
     public getValuePropertyField = (name) => {
-        return map(filterLodash(get(this.data, ['property', name], []), 'checked'), 'value').join(', ');
+        return map(filterLodash(get(this.data, ['property', name], []), 'checked'), 'value');
     };
 
     public getUINumber = (field) => {
@@ -563,6 +564,7 @@ export class WidgetPriceTag extends BaseComponent implements OnInit, AfterViewIn
 
     private parseData(data) {
         const property = {};
+        let totalArr = 0;
         for (const key in mappingFields) {
             if (Object.hasOwnProperty.call(mappingFields, key)) {
                 const field = mappingFields[key];
@@ -580,10 +582,13 @@ export class WidgetPriceTag extends BaseComponent implements OnInit, AfterViewIn
                     case 'array':
                         property[field.xlsx] = filterLodash(
                             uniqBy(
-                                map(get(data, field.xml, []), 'SAPTEXT.0._').map((_t) => ({
-                                    value: _t,
-                                    checked: true,
-                                })),
+                                map(get(data, field.xml, []), 'SAPTEXT.0._').map((_t) => {
+                                    totalArr += 1;
+                                    return {
+                                        value: _t,
+                                        checked: totalArr <= 15,
+                                    };
+                                }),
                                 'value',
                             ),
                             (_d) => !!_d.value,
@@ -621,28 +626,17 @@ export class WidgetPriceTag extends BaseComponent implements OnInit, AfterViewIn
         }
         response.unshift(header);
         this.dataList.forEach((_d) => {
-            console.log(
-                `Author:minh.lam , file: widget-price-tag.component.ts , line 610 , WidgetPriceTag , this.dataList.forEach , _d`,
-                _d,
-            );
-
             const row = [];
             for (const key in mappingFields) {
                 if (Object.hasOwnProperty.call(mappingFields, key)) {
                     const element = mappingFields[key];
                     if (element.hidden) continue;
-                    if (element.type === 'array') {
-                        row.push(
-                            `"${map(filterLodash(get(_d, ['property', element.xlsx], []), 'checked'), 'value').join(
-                                '\n',
-                            )}"`,
-                        );
-                    } else if (element.xlsx) {
+                    if (element.xlsx) {
                         let tempValue = get(_d, ['property', element.xlsx]) || '';
 
                         switch (element.xlsx) {
                             case 'car.external_id':
-                                tempValue = get(_d, ['info', 'IdPriceTag']);
+                                tempValue = get(_d, ['info', 'IdPriceTag']) || '';
                                 break;
                             case 'GearType':
                                 const value = get(_d, ['property', 'IdRepPriceTagGears']);
@@ -654,7 +648,7 @@ export class WidgetPriceTag extends BaseComponent implements OnInit, AfterViewIn
                             case 'PrimaryFuelType':
                             case 'Fuel':
                                 const valueFuel = get(_d, ['property', 'IdRepPriceTagFuel']);
-                                if (valueFuel) tempValue = find(this.fuelOptions, ['idValue', value])?.textValue;
+                                if (valueFuel) tempValue = find(this.fuelOptions, ['idValue', valueFuel])?.textValue;
                                 else tempValue = '';
 
                                 break;
@@ -685,6 +679,23 @@ export class WidgetPriceTag extends BaseComponent implements OnInit, AfterViewIn
                                 tempValue = Number(tempValue) || 0;
                                 tempValue = this.parseValueToPrice(tempValue);
                                 break;
+                            case 'StandardEquipment':
+                                let specialEquipment = map(
+                                    filterLodash(get(_d, ['property', 'SpecialEquipment'], []), 'checked'),
+                                    'value',
+                                ).join('\n');
+                                if (specialEquipment.length) specialEquipment = '\n' + specialEquipment;
+                                tempValue = `"${map(
+                                    filterLodash(get(_d, ['property', 'StandardEquipment'], []), 'checked'),
+                                    'value',
+                                ).join('\n')}${specialEquipment}"`;
+                                break;
+                            case 'SpecialEquipment':
+                                tempValue = `"${map(
+                                    filterLodash(get(_d, ['property', 'SpecialEquipment'], []), 'checked'),
+                                    'value',
+                                ).join('\n')}"`;
+                                break;
                             case 'LeasingDuration':
                             case 'WarrantyDuration':
                                 // int
@@ -699,7 +710,7 @@ export class WidgetPriceTag extends BaseComponent implements OnInit, AfterViewIn
                             case 'BodyColor':
                             case 'Covering':
                                 // string
-                                tempValue = tempValue?.toString();
+                                tempValue = tempValue?.toString() || '';
                                 break;
                             default:
                                 break;
@@ -750,7 +761,7 @@ export class WidgetPriceTag extends BaseComponent implements OnInit, AfterViewIn
             width: 600,
             hasBackdrop: true,
             header: {
-                title: 'Preis bearbeiten',
+                title: 'Daten bearbeiten',
                 iconClose: true,
             },
             footer: {
@@ -785,7 +796,7 @@ export class WidgetPriceTag extends BaseComponent implements OnInit, AfterViewIn
     public openEditPropertyDialog() {
         const initForm = this.formBuilder.group({});
         this.controlDataList = [];
-        this.isCheckAll = true;
+        let count = 0;
         this.data?.property.StandardEquipment.forEach((element) => {
             const name = 'StandardEquipment.' + this.controlDataList.length;
             this.controlDataList.push({
@@ -794,10 +805,10 @@ export class WidgetPriceTag extends BaseComponent implements OnInit, AfterViewIn
                 defaultValue: element.checked,
                 type: 1,
             });
-            if (!element.checked) this.isCheckAll = false;
+            if (element.checked) count += 1;
             const control = new FormControl(element.checked);
             control.valueChanges.subscribe(() => {
-                this.isCheckAll = every(values(this.formData.getRawValue()), Boolean);
+                this.isCheckAll = this.getCurrentEditProperty() >= 15;
                 this.indeterminate = !this.isCheckAll && some(values(this.formData.getRawValue()), Boolean);
             });
             initForm.addControl(name, control);
@@ -811,15 +822,17 @@ export class WidgetPriceTag extends BaseComponent implements OnInit, AfterViewIn
                 defaultValue: element.checked,
                 type: 2,
             });
-            if (!element.checked) this.isCheckAll = false;
+            if (element.checked) count += 1;
             const control = new FormControl(element.checked);
             control.valueChanges.subscribe(() => {
-                this.isCheckAll = every(values(this.formData.getRawValue()), Boolean);
+                this.isCheckAll = this.getCurrentEditProperty() >= 15;
                 this.indeterminate = !this.isCheckAll && some(values(this.formData.getRawValue()), Boolean);
             });
             initForm.addControl(name, control);
         });
 
+        this.isCheckAll = count >= 15;
+        this.indeterminate = !this.isCheckAll && count > 0;
         this.formData = initForm;
         const popoverRef = this.popupService.open({
             content: this.popupProperty,
@@ -858,13 +871,20 @@ export class WidgetPriceTag extends BaseComponent implements OnInit, AfterViewIn
             },
             disableCloseOutside: true,
         });
+        this.ref.detectChanges();
     }
 
     public setAll(checked: boolean) {
         this.isCheckAll = checked;
-        this.controlDataList.forEach((control) => {
-            this.formData.controls[control.controlName].setValue(checked);
-        });
+        if (checked) {
+            this.controlDataList.forEach((control) => {
+                let current = this.getCurrentEditProperty();
+                if (current < 15) this.formData.controls[control.controlName].setValue(checked);
+            });
+        } else
+            this.controlDataList.forEach((control) => {
+                this.formData.controls[control.controlName].setValue(checked);
+            });
     }
 
     private _updatePriceTagProperty() {
@@ -1098,8 +1118,8 @@ export class WidgetPriceTag extends BaseComponent implements OnInit, AfterViewIn
     }
 
     getProperty() {
-        const standard: string[] = this.getValuePropertyField('StandardEquipment').split(',');
-        const special: string[] = this.getValuePropertyField('SpecialEquipment').split(',');
+        const standard: string[] = this.getValuePropertyField('StandardEquipment');
+        const special: string[] = this.getValuePropertyField('SpecialEquipment');
 
         return [...standard, ...special];
     }
