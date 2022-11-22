@@ -408,6 +408,7 @@ export class WidgetIndexingFileComponent extends BaseComponent implements OnInit
             this.isLoading = false;
             this.searchText = '';
             const resData = get(res, ['item', 1], []);
+            this.store.dispatch(this.administrationActions.setSelectedDocument(null));
             if (!resData || !resData.length) {
                 // load out of documents;
                 this.allowLoadFilesMore = false;

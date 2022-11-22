@@ -12,7 +12,7 @@ export abstract class AttachmentViewer {
     private static readonly imageExtensions = 'png|jpg|jpeg|svg|ico';
     private static readonly pdfExtensions = 'pdf';
     private static readonly officeExtensions = 'doc|docx|xls|xlsx|xlsm|ppt|pptx';
-    private static readonly txtJsonExtensions = 'txt|json|xml|csv|text|js|jsx|ts|tsx|xaml|xsl|xslt|xsml';
+    private static readonly txtJsonExtensions = 'txt|json|xml|csv|text|js|jsx|ts|tsx|xaml|xsl|xslt|xsml|url';
     private static readonly mediaExtensions = 'mp3|mp4';
     private static readonly htmlExtensions = 'htm|html';
 
