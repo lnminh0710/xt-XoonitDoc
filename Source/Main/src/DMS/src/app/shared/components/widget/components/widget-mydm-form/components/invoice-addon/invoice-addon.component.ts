@@ -1,26 +1,50 @@
-import { AfterViewInit, Component, ElementRef, EmbeddedViewRef, HostListener, Inject, Injector, OnDestroy, OnInit, TemplateRef, ViewChild, ViewContainerRef } from "@angular/core";
-import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
-import { ActivatedRoute, Router } from "@angular/router";
-import { DocumentTreeModel } from "@app/models/administration-document/document-tree.payload.model";
-import { ColumnDefinition } from "@app/models/common/column-definition.model";
-import { DocumentService } from "@app/services";
-import { AppState } from "@app/state-management/store";
-import { AdministrationDocumentActionNames, AdministrationDocumentActions, CustomAction, LayoutInfoActions } from "@app/state-management/store/actions";
-import { AdministrationDocumentSelectors } from "@app/state-management/store/reducer";
-import { FormHasContactHandler, IFormHasContactHandler } from "@app/xoonit-share/processing-form/handlers/form-has-contact-handler.service";
-import { FORM_HANDLER, IFormHandler } from "@app/xoonit-share/processing-form/handlers/mydm-form-handler.interface";
-import { IMyDMForm, IToolbarForm } from "@app/xoonit-share/processing-form/interfaces/mydm-form.interface";
-import { ISaveFormHandler } from "@app/xoonit-share/processing-form/interfaces/save-form-handler.interface";
-import { ReducerManagerDispatcher, Store } from "@ngrx/store";
-import { auditTime, debounceTime, filter, switchMap, takeUntil } from "rxjs/operators";
+import {
+    AfterViewInit,
+    Component,
+    ElementRef,
+    EmbeddedViewRef,
+    HostListener,
+    Inject,
+    Injector,
+    OnDestroy,
+    OnInit,
+    TemplateRef,
+    ViewChild,
+    ViewContainerRef,
+} from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { DocumentTreeModel } from '@app/models/administration-document/document-tree.payload.model';
+import { ColumnDefinition } from '@app/models/common/column-definition.model';
+import { DocumentService } from '@app/services';
+import { AppState } from '@app/state-management/store';
+import {
+    AdministrationDocumentActionNames,
+    AdministrationDocumentActions,
+    CustomAction,
+    LayoutInfoActions,
+} from '@app/state-management/store/actions';
+import { AdministrationDocumentSelectors } from '@app/state-management/store/reducer';
+import {
+    FormHasContactHandler,
+    IFormHasContactHandler,
+} from '@app/xoonit-share/processing-form/handlers/form-has-contact-handler.service';
+import { FORM_HANDLER, IFormHandler } from '@app/xoonit-share/processing-form/handlers/mydm-form-handler.interface';
+import { IMyDMForm, IToolbarForm } from '@app/xoonit-share/processing-form/interfaces/mydm-form.interface';
+import { ISaveFormHandler } from '@app/xoonit-share/processing-form/interfaces/save-form-handler.interface';
+import { ReducerManagerDispatcher, Store } from '@ngrx/store';
+import { auditTime, debounceTime, filter, switchMap, takeUntil } from 'rxjs/operators';
 import { cloneDeep } from 'lodash-es';
-import { CommonXoonitFormComponent } from "../common-xoonit-form.component";
-import { AddonOriginalColumnName, DocumentMyDMType } from "@app/app.constants";
-import { AppSelectors } from "@app/state-management/store/reducer/app";
-import { AppActionNames } from "@app/state-management/store/actions/app/app.actions";
-import { combineLatest, Subject } from "rxjs";
+import { CommonXoonitFormComponent } from '../common-xoonit-form.component';
+import { AddonOriginalColumnName, DocumentMyDMType } from '@app/app.constants';
+import { AppSelectors } from '@app/state-management/store/reducer/app';
+import { AppActionNames } from '@app/state-management/store/actions/app/app.actions';
+import { combineLatest, Subject } from 'rxjs';
 import * as moment from 'moment';
-import { FormStatus, IWidgetIsAbleToSave } from "@app/state-management/store/models/app-global/widget-is-able-to-save.payload.model";
+import {
+    FormStatus,
+    IWidgetIsAbleToSave,
+} from '@app/state-management/store/models/app-global/widget-is-able-to-save.payload.model';
 
 @Component({
     selector: 'invoice-addon',
@@ -28,8 +52,9 @@ import { FormStatus, IWidgetIsAbleToSave } from "@app/state-management/store/mod
     styleUrls: ['invoice-addon.component.scss'],
     providers: [{ provide: FORM_HANDLER, useClass: FormHasContactHandler }],
 })
-export class InvoiceAddonComponent extends CommonXoonitFormComponent implements IMyDMForm<IToolbarForm>, ISaveFormHandler,
-    IWidgetIsAbleToSave, OnInit, AfterViewInit, OnDestroy 
+export class InvoiceAddonComponent
+    extends CommonXoonitFormComponent
+    implements IMyDMForm<IToolbarForm>, ISaveFormHandler, IWidgetIsAbleToSave, OnInit, AfterViewInit, OnDestroy
 {
     public readonly AddonOriginalColumnName = AddonOriginalColumnName;
 
@@ -48,9 +73,9 @@ export class InvoiceAddonComponent extends CommonXoonitFormComponent implements 
     };
 
     public viewRef: {
-        embeddedViewRef: EmbeddedViewRef<any>,
-        templateRef: TemplateRef<any>,
-        node: HTMLElement
+        embeddedViewRef: EmbeddedViewRef<any>;
+        templateRef: TemplateRef<any>;
+        node: HTMLElement;
     } = {} as any;
 
     private destroy$: Subject<void> = new Subject<void>();
@@ -88,7 +113,7 @@ export class InvoiceAddonComponent extends CommonXoonitFormComponent implements 
     ngOnInit() {
         this.activatedRoute.queryParamMap
             .pipe(
-                filter(param => !!param['params']?.['idDocument']),
+                filter((param) => !!param['params']?.['idDocument']),
                 switchMap((param) => {
                     const params = param?.['params'];
                     if (params?.['idDocumentType'] !== undefined) {
@@ -109,7 +134,7 @@ export class InvoiceAddonComponent extends CommonXoonitFormComponent implements 
                                 break;
                         }
                         this.reset();
-                        return this.documentService[methodName]?.(this.idDocument, {addOnFields: 'AddOnFields'});
+                        return this.documentService[methodName]?.(this.idDocument, { addOnFields: 'AddOnFields' });
                     }
                 }),
                 takeUntil(this.getUnsubscriberNotifier()),
@@ -118,7 +143,7 @@ export class InvoiceAddonComponent extends CommonXoonitFormComponent implements 
                 const payload = res;
                 const columnSettings = payload as ColumnDefinition[];
                 if (!columnSettings || !columnSettings.length) return;
-            
+
                 this.columnSettings.push(...columnSettings);
                 const { controlConfigs, formGroup } = this.formHandler.buildForm(columnSettings);
 
@@ -135,7 +160,7 @@ export class InvoiceAddonComponent extends CommonXoonitFormComponent implements 
                     return action.type === LayoutInfoActions.RESIZE_SPLITTER;
                 }),
                 auditTime(100),
-                takeUntil(this.getUnsubscriberNotifier())
+                takeUntil(this.getUnsubscriberNotifier()),
             )
             .subscribe((action: CustomAction) => {
                 // this.destroyNoteForm();
@@ -147,19 +172,17 @@ export class InvoiceAddonComponent extends CommonXoonitFormComponent implements 
         this.destroy$.next();
     }
 
-    public save(): void {
-
-    }
+    public save(): void {}
 
     validateBeforeSave() {
-        return this.formGroup.valid; 
+        return this.formGroup.valid;
     }
 
     validateForm() {
         return <FormStatus>{
             isValid: this.formGroup.valid,
             formTitle: 'Widget Addon',
-            errorMessages: ['Please check again, something errors']
+            errorMessages: ['Please check again, something errors'],
         };
     }
 
@@ -168,22 +191,22 @@ export class InvoiceAddonComponent extends CommonXoonitFormComponent implements 
         const dataSave = {} as any;
 
         Object.keys(data).forEach((k: string) => {
-            dataSave[k === AddonOriginalColumnName.IS_TODO ? 'isTodo'
-                : k === AddonOriginalColumnName.B07MAINDOCUMENT_TODO_NOTES
-                ? 'toDoNotes'
-                : k.charAt(0).toLowerCase() + k.slice(1)
-            ]
-                = data[k] === true ? '1' : data[k] === false ? '0' : data[k];
+            dataSave[
+                k === AddonOriginalColumnName.IS_TODO
+                    ? 'isTodo'
+                    : k === AddonOriginalColumnName.B07MAINDOCUMENT_TODO_NOTES
+                    ? 'toDoNotes'
+                    : k.charAt(0).toLowerCase() + k.slice(1)
+            ] = data[k] === true ? '1' : data[k] === false ? '0' : data[k];
         });
         return {
             mainDocument: {
-                ...dataSave
-            }
+                ...dataSave,
+            },
         };
     }
 
-    public applyQRCode() {
-    }
+    public applyQRCode() {}
 
     protected registerSubscriptions() {
         this.onFormInitialized$
@@ -234,7 +257,7 @@ export class InvoiceAddonComponent extends CommonXoonitFormComponent implements 
                 break;
         }
 
-        this.documentService[methodName]?.({addOnFields: 'AddOnFields'}).subscribe((res) => {
+        this.documentService[methodName]?.({ addOnFields: 'AddOnFields' }).subscribe((res) => {
             const payload = res.item;
             const columnSettings = payload as ColumnDefinition[];
             if (!columnSettings || !columnSettings.length) return;
@@ -305,8 +328,8 @@ export class InvoiceAddonComponent extends CommonXoonitFormComponent implements 
         this.inited = false;
         const isGuaranteeCtrl = this.formGroup.controls[AddonOriginalColumnName.IS_GUARANTEE] as FormControl;
         const isTodoCtrl = this.formGroup.controls[AddonOriginalColumnName.IS_TODO] as FormControl;
-        const todoNoteCtrl = (this.formGroup.controls[AddonOriginalColumnName.TODO_NOTES]
-            || this.formGroup.controls[AddonOriginalColumnName.B07MAINDOCUMENT_TODO_NOTES]) as FormControl;
+        const todoNoteCtrl = (this.formGroup.controls[AddonOriginalColumnName.TODO_NOTES] ||
+            this.formGroup.controls[AddonOriginalColumnName.B07MAINDOCUMENT_TODO_NOTES]) as FormControl;
         const guaranteeExpiryDateCtrl = this.formGroup.controls[
             AddonOriginalColumnName.GUARANTEEE_EXPIRY_DATE
         ] as FormControl;
@@ -315,33 +338,36 @@ export class InvoiceAddonComponent extends CommonXoonitFormComponent implements 
         );
         const guaranteeExpiryDateValidators = this.dynamicMaterialHelper.getValidators(guaranteeExpiryDateConfig);
 
-        this.appSelectors.isGuarantee$
-            .pipe(
-                takeUntil(this.destroy$)
-            )
-            .subscribe((isGuarentee: boolean) => {
-                if (!guaranteeExpiryDateCtrl) return;
-                if (isGuarentee) {
-                    guaranteeExpiryDateCtrl.setValidators([Validators.required, ...guaranteeExpiryDateValidators]);
-                    this._setCtrlShow(guaranteeExpiryDateConfig);
-                    this._setCtrlReadonly(guaranteeExpiryDateCtrl, false);
-                    this.cdRef.detectChanges();
-                    this.cdRef.markForCheck();
-                    this.inited && setTimeout(() => ((this.elementRef.nativeElement as HTMLElement).querySelector(`[control-key=${AddonOriginalColumnName.GUARANTEEE_EXPIRY_DATE}] input`) as HTMLInputElement)?.focus());
-                } else {
-                    this._resetDefaultValidators(guaranteeExpiryDateCtrl, guaranteeExpiryDateConfig);
-                    this._setCtrlHidden(guaranteeExpiryDateConfig);
-                    this.cdRef.detectChanges();
-                    this.cdRef.markForCheck();
-                }
-            });
+        this.appSelectors.isGuarantee$.pipe(takeUntil(this.destroy$)).subscribe((isGuarentee: boolean) => {
+            if (!guaranteeExpiryDateCtrl) return;
+            if (isGuarentee) {
+                guaranteeExpiryDateCtrl.setValidators([Validators.required, ...guaranteeExpiryDateValidators]);
+                this._setCtrlShow(guaranteeExpiryDateConfig);
+                this._setCtrlReadonly(guaranteeExpiryDateCtrl, false);
+                this.cdRef.detectChanges();
+                this.cdRef.markForCheck();
+                this.inited &&
+                    setTimeout(() =>
+                        (
+                            (this.elementRef.nativeElement as HTMLElement).querySelector(
+                                `[control-key=${AddonOriginalColumnName.GUARANTEEE_EXPIRY_DATE}] input`,
+                            ) as HTMLInputElement
+                        )?.focus(),
+                    );
+            } else {
+                this._resetDefaultValidators(guaranteeExpiryDateCtrl, guaranteeExpiryDateConfig);
+                this._setCtrlHidden(guaranteeExpiryDateConfig);
+                this.cdRef.detectChanges();
+                this.cdRef.markForCheck();
+            }
+        });
 
         isGuaranteeCtrl?.valueChanges.pipe(takeUntil(this.destroy$)).subscribe((value: boolean) => {
             this.store.dispatch({
                 type: AppActionNames.TOGGLE_IS_GUARANTEE,
                 payload: {
-                    isGuarantee: value
-                }
+                    isGuarantee: value,
+                },
             });
         });
 
@@ -366,19 +392,20 @@ export class InvoiceAddonComponent extends CommonXoonitFormComponent implements 
             this.store.dispatch(this.administrationActions.setDocumentTodo(value));
         });
 
-        this.formGroup.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(allAddons => {
-            this.store.dispatch(this.administrationActions.setAllAddons({...this.formGroup?.controls}));
+        this.formGroup.valueChanges.pipe(takeUntil(this.destroy$)).subscribe((allAddons) => {
+            this.store.dispatch(this.administrationActions.setAllAddons({ ...this.formGroup?.controls }));
         });
 
         this.store.dispatch({
             type: AppActionNames.TOGGLE_IS_GUARANTEE,
             payload: {
-                isGuarantee: isGuaranteeCtrl?.value
-            }
+                isGuarantee: isGuaranteeCtrl?.value,
+            },
         });
         this.isTodo = isTodoCtrl?.value;
+        this.store.dispatch(this.administrationActions.setDocumentIsTodo(this.isTodo));
         this.note.patchValue(todoNoteCtrl?.value);
         if (this.isTodo) this.toggleNote();
-        setTimeout(() => this.inited = true);
+        setTimeout(() => (this.inited = true));
     }
 }

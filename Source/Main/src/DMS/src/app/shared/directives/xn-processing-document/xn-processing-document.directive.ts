@@ -206,7 +206,6 @@ export class XnProcessingDocumentDirective implements OnInit, AfterViewInit, OnD
 
     private getMainDocumentData() {
         const searchKey = (this._widgetInstancesToSave[0] as any)?._documentMetadata?.keyword;
-        console.log(searchKey);
         return {
             mainDocument: {
                 idMainDocument: this.idDocument,
@@ -216,6 +215,8 @@ export class XnProcessingDocumentDirective implements OnInit, AfterViewInit, OnD
                     oldFolder: null,
                     newFolder: null,
                 },
+                toDoNotes: (this._widgetInstancesToSave[0] as any)?._documentMetadata?.toDos,
+                isTodo: (this._widgetInstancesToSave[0] as any)?._documentMetadata?.isTodo,
                 searchKeyWords: searchKey,
             },
             documentTreeMedia: {

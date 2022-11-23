@@ -1,9 +1,9 @@
 <div
     class="image-toolbar-secondary"
-    [ngClass]="{ 'show-container': isShowKeyword, disabled: isDisabled }"
+    [ngClass]="{ 'show-container': isShowKeyword || isShowTodo, disabled: isDisabled }"
     *ngIf="isShow"
 >
-    <div class="image-toolbar-secondary__document-keyword" *ngIf="isShowKeyword">
+    <div class="image-toolbar-secondary__document-keyword" *ngIf="isShowKeyword || isShowTodo">
         <div class="keyword-icon" *ngIf="isShowKeyword"></div>
         <input
             *ngIf="isShowKeyword"
@@ -13,19 +13,21 @@
             (ngModelChange)="changeKeyword($event)"
         />
         <div class="space" *ngIf="isShowKeyword"></div>
-        <!-- <div class="todo-icon" *ngIf="isShowTodo"></div>
+        <div class="todo-icon" *ngIf="isShowTodo"></div>
         <input
             *ngIf="isShowTodo"
             class="image-toolbar-secondary__input"
             placeholder="Leave what you should do later"
             [ngModel]="documentTodos"
             (ngModelChange)="changeTodo($event)"
-        /> -->
+        />
     </div>
     <!-- <div class="image-toolbar-secondary__document-todo" *ngIf="isShowTodo"></div> -->
     <div class="image-toolbar-secondary__page-number show-container">
         <div class="image-toolbar-secondary__info">
-            <div class="image-toolbar-secondary__info-title"><label-translation [keyword]="'IMAGE_TOOLBAR__DocumentName'"></label-translation>:</div>
+            <div class="image-toolbar-secondary__info-title">
+                <label-translation [keyword]="'IMAGE_TOOLBAR__DocumentName'"></label-translation>:
+            </div>
             <input
                 class="image-toolbar-secondary__info-value"
                 [readonly]="readonly"
@@ -38,7 +40,9 @@
             [ngClass]="{ small: totalPage > 1 }"
             *ngIf="documentPath"
         >
-            <div class="image-toolbar-secondary__info-title"><label-translation [keyword]="'IMAGE_TOOLBAR__DocumentPath'"></label-translation>:</div>
+            <div class="image-toolbar-secondary__info-title">
+                <label-translation [keyword]="'IMAGE_TOOLBAR__DocumentPath'"></label-translation>:
+            </div>
             <div class="image-toolbar-secondary__info-value">{{ documentPath }}</div>
         </div>
         <div

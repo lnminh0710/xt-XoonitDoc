@@ -3,7 +3,6 @@ import { BehaviorSubject } from 'rxjs';
 
 @Injectable()
 export class DocumentManagementHandlerService {
-
     private _documentContainerOcrComponentCreated$ = new BehaviorSubject<boolean>(null);
     private _mydmFolderTreeComponentCreated$ = new BehaviorSubject<boolean>(null);
 
