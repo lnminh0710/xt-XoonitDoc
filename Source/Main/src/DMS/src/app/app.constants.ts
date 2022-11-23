@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { environment } from 'src/environments/environment';
 
 @Injectable()
 export class Configuration {
@@ -38,7 +39,7 @@ export class Configuration {
     public externalLoginCallbackUrl = Configuration.rootPublicUrl + '/externalLoginCallback';
 
     // Api URL
-    public refreshTokenUrl = '/api/authenticate/RefreshToken';
+    public refreshTokenUrl = environment.fakeServer + '/api/authenticate/RefreshToken';
 
     // URL parameters
     public urlPramToken = 'accesstoken';
@@ -152,10 +153,10 @@ export class Configuration {
 
 @Injectable()
 export class ServiceUrl {
-    public apiUrl = '/api/';
+    public apiUrl = environment.fakeServer + '/api/';
 
     // User Control Api URL
-    public serviceAuthenticateUrl = '/api/authenticate';
+    public serviceAuthenticateUrl = environment.fakeServer + '/api/authenticate';
     public serviceForgotPasswordUrl = this.serviceAuthenticateUrl + '/fogotPassword';
     public serviceUpdatePasswordUrl = this.serviceAuthenticateUrl + '/updatepassword';
     public changePasswordUrl = this.serviceAuthenticateUrl + '/changepassword';

@@ -65,12 +65,12 @@ export class ImageToolbarSecondaryComponent implements OnInit, OnChanges, OnDest
         private administrationDocumentSelectors: AdministrationDocumentSelectors,
         private administrationDocumentActions: AdministrationDocumentActions,
     ) {
-        // this._txtToDosChanged
-        //     .pipe(debounceTime(300), distinctUntilChanged(), takeUntil(this._untilDestroyed.asObservable()))
-        //     .subscribe((val) => {
-        //         this.documentTodos = val;
-        //         this.store.dispatch(this.administrationDocumentActions.setDocumentTodo(val));
-        //     });
+        this._txtToDosChanged
+            .pipe(debounceTime(300), distinctUntilChanged(), takeUntil(this._untilDestroyed.asObservable()))
+            .subscribe((val) => {
+                this.documentTodos = val;
+                this.store.dispatch(this.administrationDocumentActions.setDocumentTodo(val));
+            });
 
         this._txtKeywordChanged
             .pipe(debounceTime(300), distinctUntilChanged(), takeUntil(this._untilDestroyed.asObservable()))

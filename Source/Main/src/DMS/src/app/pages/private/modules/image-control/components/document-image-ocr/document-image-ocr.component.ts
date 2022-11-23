@@ -780,6 +780,12 @@ export class DocumentImageOcrComponent extends BaseComponent implements OnInit, 
 
             this.resetState();
         });
+
+        this.administrationDocumentSelectors.isToDo$
+            .pipe(takeUntil(this.getUnsubscriberNotifier()))
+            .subscribe((isToDo: boolean) => {
+                this.isShowTodo = isToDo;
+            });
     }
 
     private loadAttachmentFile(action: CustomAction) {
@@ -1071,6 +1077,7 @@ export class DocumentImageOcrComponent extends BaseComponent implements OnInit, 
                         imageSrc += '&t=' + new Date().getTime();
                     }
                     const imageEle = new Image();
+                    imageEle.crossOrigin = '*';
                     imageEle.onload = function () {
                         if (this._destroy) return;
                         const canvas = document.createElement('canvas');

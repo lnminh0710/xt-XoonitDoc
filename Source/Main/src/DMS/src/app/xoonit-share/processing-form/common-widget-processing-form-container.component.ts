@@ -33,7 +33,8 @@ import { IOpenFormParamsAction } from './interfaces/open-form-params-action.inte
 @Directive()
 export abstract class CommonWidgetProcessingFormContainer
     extends BaseProcessingFormContainer
-    implements OnInit, OnDestroy, AfterViewInit {
+    implements OnInit, OnDestroy, AfterViewInit
+{
     protected viewFormContainerRef: ViewContainerRef;
 
     @Input() tabID: string;
@@ -267,9 +268,8 @@ export abstract class CommonWidgetProcessingFormContainer
         if (!componentType) {
             return null;
         }
-        const factoryComponennt = this.componentFactoryResolver.resolveComponentFactory<IMyDMForm<IToolbarForm>>(
-            componentType,
-        );
+        const factoryComponennt =
+            this.componentFactoryResolver.resolveComponentFactory<IMyDMForm<IToolbarForm>>(componentType);
 
         const componentRef = this.viewFormContainerRef.createComponent<IMyDMForm<IToolbarForm>>(factoryComponennt);
         this._setCacheComponentRef(documentType, componentRef);
@@ -460,10 +460,7 @@ export abstract class CommonWidgetProcessingFormContainer
      */
     private _subscribeIsToDoChanged() {
         this.administrationSelectors.isToDo$
-            .pipe(
-                filter((data) => data !== null),
-                takeUntil(this.getUnsubscriberNotifier()),
-            )
+            .pipe(takeUntil(this.getUnsubscriberNotifier()))
             .subscribe((isToDo: boolean) => {
                 this.didIsToDoChanged(isToDo);
             });

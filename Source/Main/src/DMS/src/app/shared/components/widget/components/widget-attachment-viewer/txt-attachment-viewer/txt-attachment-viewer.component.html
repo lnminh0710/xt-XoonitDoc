@@ -1,3 +1,4 @@
-<div class="text-render" [perfectScrollbar]>
-    {{content}}
+<div class="text-render" [perfectScrollbar] *ngIf="!isUrlFile">
+    {{ content }}
 </div>
+<div class="text-render" [perfectScrollbar] *ngIf="isUrlFile" [innerHTML]="content"></div>

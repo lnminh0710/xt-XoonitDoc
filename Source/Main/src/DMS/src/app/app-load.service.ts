@@ -9,6 +9,7 @@ import { Uti } from './utilities';
 import { take } from 'rxjs/operators';
 import sha512 from 'crypto-js/sha512';
 import { Router } from '@angular/router';
+import { environment } from 'src/environments/environment';
 
 @Injectable()
 export class AppLoadService {
@@ -19,7 +20,7 @@ export class AppLoadService {
         private authService: AuthenticationService,
         private uti: Uti,
         private router: Router,
-    ) { }
+    ) {}
     checkCookie() {
         var cookieEnabled = navigator.cookieEnabled;
         if (!cookieEnabled) {
@@ -37,7 +38,7 @@ export class AppLoadService {
         return new Promise((resolve, reject) => {
             // console.log(`initializeApp:: inside promise`);
             this.httpClient
-                .get('/api/common/GetPublicSetting')
+                .get(environment.fakeServer + '/api/common/GetPublicSetting')
                 .toPromise()
                 .then((settings) => {
                     // success

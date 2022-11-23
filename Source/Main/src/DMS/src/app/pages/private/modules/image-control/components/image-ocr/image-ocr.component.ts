@@ -83,7 +83,7 @@ export class ImageOcrComponent implements OnInit, OnDestroy, OnChanges, AfterVie
             isShowPrinter: true,
             isShowSendMail: false,
             isShowShare: true,
-            isShowTodo: false,
+            isShowTodo: true,
             isShowClean: true,
 
             isShowOCRManually: true,

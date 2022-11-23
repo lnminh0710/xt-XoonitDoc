@@ -6,7 +6,7 @@ export class MainDocumentModel {
     idDocumentContainerScans: string;
     searchKeyWords: string;
     toDoNotes: string;
-    isTodo: string;
+    isTodo: any;
 }
 
 export class MainDocumentTreeModel {

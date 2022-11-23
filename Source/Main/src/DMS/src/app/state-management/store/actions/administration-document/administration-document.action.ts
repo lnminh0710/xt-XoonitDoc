@@ -774,7 +774,7 @@ export class AdministrationDocumentActions {
         };
     }
 
-    public setSelectedDocument(payload: AttachDocument) {
+    public setSelectedDocument(payload: AttachDocument | null) {
         return {
             type: AdministrationDocumentActionNames.GET_SELECTED_DOCUMENT,
             payload,
