@@ -603,41 +603,71 @@ export class WidgetUserUpdationV2Component extends BaseComponent implements OnDe
         let nodes = [event.node];
         let indeterminate = false;
         if (includes(event.node.id, 'parent')) {
-            indeterminate =
-                this.treePermission.descendantsPartiallySelected(event.node) ||
-                this.treePermission.descendantsAllSelected(event.node);
+            indeterminate = this.treePermission.descendantsPartiallySelected(event.node);
+
             nodes = this.treePermission.treeControl.getDescendants(event.node);
         }
         const request = [];
-        for (const key in nodes) {
-            if (Object.prototype.hasOwnProperty.call(nodes, key)) {
-                const element = nodes[key];
-                const currentItem = find(this._originalPermission, ['IdPermission', element.id]);
-                if (!event.isSelected || indeterminate)
-                    request.push(
-                        omit(
-                            {
-                                ...currentItem,
-                                IdLogin: this.idLogin,
-                                IsActive: '0',
-                                IsDeleted: '1',
-                            },
-                            ['IsSelected', 'IsDeleted', 'IsReadOnly'],
-                        ),
-                    );
-                else
-                    request.push(
-                        omit(
-                            {
-                                ...currentItem,
-                                IdLogin: this.idLogin,
-                                IsActive: '1',
-                            },
-                            ['IsSelected', 'IsDeleted', 'IsReadOnly'],
-                        ),
-                    );
+        if (includes(event.node.id, 'parent'))
+            for (const key in nodes) {
+                if (Object.prototype.hasOwnProperty.call(nodes, key)) {
+                    const element = nodes[key];
+                    const currentItem = find(this._originalPermission, ['IdPermission', element.id]);
+                    if (!event.isSelected || indeterminate)
+                        request.push(
+                            omit(
+                                {
+                                    ...currentItem,
+                                    IdLogin: this.idLogin,
+                                    IsActive: '0',
+                                    IsDeleted: '1',
+                                },
+                                ['IsSelected', 'IsDeleted', 'IsReadOnly'],
+                            ),
+                        );
+                    else
+                        request.push(
+                            omit(
+                                {
+                                    ...currentItem,
+                                    IdLogin: this.idLogin,
+                                    IsActive: '1',
+                                },
+                                ['IsSelected', 'IsDeleted', 'IsReadOnly'],
+                            ),
+                        );
+                }
             }
-        }
+        else
+            for (const key in nodes) {
+                if (Object.prototype.hasOwnProperty.call(nodes, key)) {
+                    const element = nodes[key];
+                    const currentItem = find(this._originalPermission, ['IdPermission', element.id]);
+                    if (event.isSelected)
+                        request.push(
+                            omit(
+                                {
+                                    ...currentItem,
+                                    IdLogin: this.idLogin,
+                                    IsActive: '0',
+                                    IsDeleted: '1',
+                                },
+                                ['IsSelected', 'IsDeleted', 'IsReadOnly'],
+                            ),
+                        );
+                    else
+                        request.push(
+                            omit(
+                                {
+                                    ...currentItem,
+                                    IdLogin: this.idLogin,
+                                    IsActive: '1',
+                                },
+                                ['IsSelected', 'IsDeleted', 'IsReadOnly'],
+                            ),
+                        );
+                }
+            }
         this._userPermission = unionBy(this._userPermission, request, 'IdPermission');
     }
 
@@ -726,6 +756,15 @@ export class WidgetUserUpdationV2Component extends BaseComponent implements OnDe
         for (const key in data) {
             if (Object.prototype.hasOwnProperty.call(data, key)) {
                 const item = data[key];
+                if (item.PermissionType === 'Setting') {
+                    permission.push({
+                        id: item.IdPermission,
+                        editable: true,
+                        name: item.PermissionName,
+                        isActive: item.IsSelected == 1,
+                    });
+                    continue;
+                }
                 const permissionItem = find(permission, ['name', item.PermissionType]);
                 if (permissionItem) {
                     if (!item.IsSelected || item.IsSelected == 0) permissionItem.isActive = false;

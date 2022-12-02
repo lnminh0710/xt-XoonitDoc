@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { Uti } from '@app/utilities';
 import { environment } from 'src/environments/environment';
-
+import { replace } from 'lodash-es';
 @Component({
     selector: 'txt-attachment-viewer',
     templateUrl: './txt-attachment-viewer.component.html',
@@ -35,7 +35,11 @@ export class TxtAttachmentViewerComponent {
                 if (txtFile.status === 200) {
                     if (this.isUrlFile) {
                         const splitVal = txtFile.responseText?.split('URL=');
-                        this.content = `${splitVal[0]}URL=<a href="${splitVal[1]}" target="_blank">${splitVal[1]}</a>`;
+                        this.content = `<b>${replace(
+                            splitVal[0],
+                            '[InternetShortcut]',
+                            'Please click link to open URL',
+                        )}</b><a href="${splitVal[1]}" target="_blank">${splitVal[1]}</a>`;
                     } else this.content = txtFile.responseText;
                 }
             }
