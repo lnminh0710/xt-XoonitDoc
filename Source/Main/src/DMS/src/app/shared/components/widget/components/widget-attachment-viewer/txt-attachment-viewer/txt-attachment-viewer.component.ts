@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { Uti } from '@app/utilities';
+import { environment } from 'src/environments/environment';
 
 @Component({
     selector: 'txt-attachment-viewer',
@@ -28,7 +29,7 @@ export class TxtAttachmentViewerComponent {
         const extension = Uti.getFileExtension(this.src);
         this.isUrlFile = extension.includes('url');
 
-        txtFile.open('GET', this.src.replace('http://localhost:5000', 'https://dms.xoontec.ch'), true);
+        txtFile.open('GET', this.src.replace('http://localhost:5000', environment.fakeServer), true);
         txtFile.onreadystatechange = () => {
             if (txtFile.readyState === 4) {
                 if (txtFile.status === 200) {

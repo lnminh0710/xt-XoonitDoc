@@ -1,4 +1,4 @@
-<div class="container">
+<div class="price-tag-container">
     <ng-container *ngTemplateOutlet="action"></ng-container>
     <div class="drop-files" [ngClass]="{ 'd-none': !!data }" dnd-droppable (onDropSuccess)="dropFiles($event)">
         <form
@@ -45,11 +45,7 @@
 </ng-template>
 
 <ng-template #dataInfo let-previewMode="previewMode">
-    <div
-        class="price-tag"
-        [ngClass]="{ 'd-none': !data, 'transform--center': zoom < 1, 'transform--top': zoom > 1 }"
-        style.transform="scale({{ previewMode ? 1 : zoom }})"
-    >
+    <div class="price-tag" [ngClass]="{ 'd-none': !data }" style.transform="scale({{ previewMode ? 1 : zoom }})">
         <div class="col-12 text--large">
             {{ getUIValue('car.name') }}
         </div>

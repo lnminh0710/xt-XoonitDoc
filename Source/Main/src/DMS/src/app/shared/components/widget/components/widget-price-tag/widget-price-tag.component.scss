@@ -1,11 +1,14 @@
 @import 'src/sass_files/color.scss';
-.container {
+.price-tag-container {
     height: 100%;
     width: 100%;
     background-color: #c2c2c2;
     overflow: auto;
     position: relative;
     padding-top: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .price-tag {

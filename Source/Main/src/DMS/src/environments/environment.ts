@@ -6,5 +6,5 @@
 export const environment = {
     production: true,
     silent: false,
-    fakeServer: 'https://dms.xoontec.ch',
+    fakeServer: 'http://pricetag.xoontec.ch',
 };

@@ -10,16 +10,19 @@ import { BaseComponent, ModuleList } from '@app/pages/private/base';
 import { Router } from '@angular/router';
 import { MenuModuleId } from '@app/app.constants';
 import { HttpClient } from '@angular/common/http';
-import { switchMap, take } from 'rxjs/operators';
+import { switchMap, take, takeUntil } from 'rxjs/operators';
 import { MatIconRegistry } from '@xn-control/light-material-ui/icon';
 import { DomSanitizer } from '@angular/platform-browser';
+import { UserV2Selectors } from '@app/pages/user-v2/user-v2.statemanagement/user-v2.selectors';
+import { UserV2ActionNames } from '@app/pages/user-v2/user-v2.statemanagement/user-v2.actions';
+import { CustomAction } from '@app/state-management/store/actions';
 
 @Component({
     selector: 'app-gs-module-item',
     styleUrls: ['./gs-module-item.component.scss'],
     templateUrl: './gs-module-item.component.html',
 })
-export class GlobalSeachModuleItemComponent implements OnInit, OnDestroy {
+export class GlobalSeachModuleItemComponent extends BaseComponent implements OnInit, OnDestroy {
     public moduleItem: GlobalSearchModuleModel;
     public resultValue: number;
     public globalNumberFormat = '';
@@ -29,6 +32,7 @@ export class GlobalSeachModuleItemComponent implements OnInit, OnDestroy {
     private globalPropertiesState: Observable<any>;
 
     private _prefixResourceCache = 'RESOURCE_CACHE';
+    hasPermission: boolean;
 
     @Input()
     set moduleItemConfig(moduleItemConfig: GlobalSearchModuleModel) {
@@ -45,7 +49,10 @@ export class GlobalSeachModuleItemComponent implements OnInit, OnDestroy {
         private httpClient: HttpClient,
         private matIconRegistry: MatIconRegistry,
         private sanitizer: DomSanitizer,
+        protected router: Router,
+        protected userManagementSelectors: UserV2Selectors,
     ) {
+        super(router);
         this.globalPropertiesState = store.select(
             (state) =>
                 propertyPanelReducer.getPropertyPanelState(state, ModuleList.Base.moduleNameTrim).globalProperties,
@@ -54,6 +61,32 @@ export class GlobalSeachModuleItemComponent implements OnInit, OnDestroy {
 
     public ngOnInit() {
         this.subscribeGlobalProperties();
+
+        this.userManagementSelectors
+            .actionSuccessOfSubtype$(UserV2ActionNames.USER_GET_BY_IDLOGIN)
+            .pipe(takeUntil(this.getUnsubscriberNotifier()))
+            .subscribe(
+                (action: CustomAction) => {
+                    const res = action.payload?.item;
+                    if (!res?.length || !this.moduleItem?.accessRight?.read) {
+                        return;
+                    }
+                    const permissionsString = res[0]?.[0]?.UserPermission;
+                    if (!permissionsString) {
+                        return;
+                    }
+                    const permissions = JSON.parse(permissionsString);
+
+                    const validPermission = permissions.find(
+                        (x) => x.PermissionName === this.moduleItem.moduleName && x.PermissionType === 'Module',
+                    );
+
+                    this.hasPermission = validPermission?.IsSelected == 1;
+                },
+                (error) => {
+                    this.hasPermission = false;
+                },
+            );
     }
 
     public ngOnDestroy() {

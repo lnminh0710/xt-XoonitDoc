@@ -619,7 +619,8 @@ export class WidgetUserUpdationV2Component extends BaseComponent implements OnDe
                             {
                                 ...currentItem,
                                 IdLogin: this.idLogin,
-                                IsActive: '1',
+                                IsActive: '0',
+                                IsDeleted: '1',
                             },
                             ['IsSelected', 'IsDeleted', 'IsReadOnly'],
                         ),
@@ -630,8 +631,7 @@ export class WidgetUserUpdationV2Component extends BaseComponent implements OnDe
                             {
                                 ...currentItem,
                                 IdLogin: this.idLogin,
-                                IsActive: '0',
-                                IsDeleted: '1',
+                                IsActive: '1',
                             },
                             ['IsSelected', 'IsDeleted', 'IsReadOnly'],
                         ),

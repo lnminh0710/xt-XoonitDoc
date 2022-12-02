@@ -8,11 +8,12 @@ import {
     Output,
     ViewChild,
 } from '@angular/core';
-import { Router } from '@angular/router';
-import { BaseComponent } from '@app/pages/private/base';
+import { ActivatedRoute, Router } from '@angular/router';
+import { BaseComponent, ModuleList } from '@app/pages/private/base';
 import {
     AdministrationDocumentActionNames,
     CustomAction,
+    GlobalSearchActions,
     LayoutInfoActions,
 } from '@app/state-management/store/actions';
 import { ReducerManagerDispatcher } from '@ngrx/store';
@@ -28,6 +29,7 @@ import { get, replace } from 'lodash-es';
 import { DocumentImageOcrService } from '@app/pages/private/modules/image-control/services';
 import { ImageOcrComponent } from '@app/pages/private/modules/image-control/components/image-ocr';
 import { DownloadFileService } from '@app/services';
+import { Actions, ofType } from '@ngrx/effects';
 
 const headerToolbar = 50;
 
@@ -70,6 +72,8 @@ export class WidgetDocumentViewer extends BaseComponent implements OnInit, After
 
         private _downloadFileService: DownloadFileService,
         private documentService: DocumentImageOcrService,
+        private activatedRoute: ActivatedRoute,
+        private action$: Actions,
     ) {
         super(router);
         this._imgSearchChanged
@@ -90,6 +94,19 @@ export class WidgetDocumentViewer extends BaseComponent implements OnInit, After
 
     ngOnInit() {
         this.parseConfigToWidthHeight();
+        this.action$
+            .pipe(ofType(GlobalSearchActions.ROW_DOUBLE_CLICK), takeUntil(super.getUnsubscriberNotifier()))
+            .subscribe((action: CustomAction) => {
+                const idDocumentContainerScans = get(action, 'payload.data.idDocumentContainerScans');
+                if (!idDocumentContainerScans) return;
+
+                this._setDocumentViewer({
+                    fileName: get(action, 'payload.data.documentName'),
+                    scannedPath: get(action, 'payload.data.documentFilePath'),
+                    idDocumentContainerScans,
+                    idDocumentContainerFiles: get(action, 'payload.data.idDocumentContainerFiles'),
+                });
+            });
     }
 
     ngOnDestroy() {
@@ -118,72 +135,7 @@ export class WidgetDocumentViewer extends BaseComponent implements OnInit, After
                 takeUntil(this.destroy$),
             )
             .subscribe((payload: any) => {
-                // idDocumentContainerOcr, idDocumentContainerScans
-                const highlight = localStorage.getItem(LocalStorageKey.LocalStorageGSCaptureSearchText);
-
-                this.openSearchBar = !!highlight;
-                this.switchXoonitMode = true;
-                this.showXoonitMode = 0;
-                this.hiddenSwitchMode = this.ofModule.idSettingsGUI === MenuModuleId.preissChild;
-                if (!payload) {
-                    this.src = '';
-                    this.type = null;
-                    return;
-                }
-                this.name = payload.fileName;
-                this.extension = Uti.getFileExtension(payload.fileName);
-                const type = AttachmentViewer.getAttachmentType(this.extension);
-                this.documentPath = `${payload.scannedPath}\\${payload.fileName}`;
-
-                if (type === AttachmentType.OFFICE || type === AttachmentType.HTML) {
-                    const reg = new RegExp(`(.*?)${Configuration.PublicSettings.publicFolder}`, 'ig');
-                    let scannedPath = payload.scannedPath.replace(reg, '');
-                    scannedPath = `${scannedPath}\\${payload.fileName}`;
-                    scannedPath = scannedPath.replace(/\\/g, '/');
-                    this.src = Configuration.PublicSettings.publicFileURL + scannedPath;
-                    // this.src = 'https://xoonit.xoontec.vn/files' + scannedPath;
-                    if (this.extension.match(/(doc|docx)/i) || this.extension.match(/(ppt|pptx)/i)) {
-                        this.showXoonitMode = 1;
-                        this.htmlSrc =
-                            window.location.origin + Uti.getFileUrl(`${this.documentPath}`, UploadFileMode.Path);
-                        this.htmlSrc = this.htmlSrc.replace(this.extension, 'pdf');
-                    } else if (this.extension.match(/(xls|xlsx|xlsm)/i)) {
-                        this.htmlSrc = this.src.replace(this.extension, 'html');
-                        this.showXoonitMode = 2;
-                    } else {
-                        this.showXoonitMode = 0;
-                    }
-                    this.type = type;
-                } else {
-                    if (type === AttachmentType.IMAGE) {
-                        this.documentService
-                            ?.getOCRJsonOfImage(payload.idDocumentContainerFiles)
-                            .subscribe((response) => {
-                                this.imageInfo = {
-                                    OCRJson: get(response, [0, 'OCRJson']),
-                                    IdDocumentContainerScans: payload.idDocumentContainerScans,
-                                };
-                                this.documentPath = `${payload.scannedPath}\\${payload.fileName}`;
-                                this.src =
-                                    location.origin + Uti.getFileUrl(`${this.documentPath}`, UploadFileMode.Path);
-                                const searchText = localStorage.getItem(
-                                    LocalStorageKey.LocalStorageGSCaptureSearchText,
-                                );
-                                this.type = type;
-                                if (!!searchText && searchText !== '*') {
-                                    this.changeSearchValue(searchText);
-                                    this.openSearchBar = true;
-
-                                    setTimeout(() => {
-                                        this.inputSearchBar?.nativeElement?.focus();
-                                    });
-                                }
-                            });
-                        return;
-                    }
-                    this.src = location.origin + Uti.getFileUrl(`${this.documentPath}`, UploadFileMode.Path);
-                    this.type = type;
-                }
+                this._setDocumentViewer(payload);
             });
     }
 
@@ -194,6 +146,68 @@ export class WidgetDocumentViewer extends BaseComponent implements OnInit, After
         } catch (error) {
             this.width = 0;
             this.height = 0;
+        }
+    }
+
+    private _setDocumentViewer(payload: any) {
+        const highlight = localStorage.getItem(LocalStorageKey.LocalStorageGSCaptureSearchText);
+
+        this.openSearchBar = !!highlight;
+        this.switchXoonitMode = true;
+        this.showXoonitMode = 0;
+        this.hiddenSwitchMode = this.ofModule.idSettingsGUI === MenuModuleId.preissChild;
+        if (!payload) {
+            this.src = '';
+            this.type = null;
+            return;
+        }
+        this.name = payload.fileName;
+        this.extension = Uti.getFileExtension(payload.fileName);
+        const type = AttachmentViewer.getAttachmentType(this.extension);
+        this.documentPath = `${payload.scannedPath}\\${payload.fileName}`;
+
+        if (type === AttachmentType.OFFICE || type === AttachmentType.HTML) {
+            const reg = new RegExp(`(.*?)${Configuration.PublicSettings.publicFolder}`, 'ig');
+            let scannedPath = payload.scannedPath.replace(reg, '');
+            scannedPath = `${scannedPath}\\${payload.fileName}`;
+            scannedPath = scannedPath.replace(/\\/g, '/');
+            this.src = Configuration.PublicSettings.publicFileURL + scannedPath;
+            // this.src = 'https://xoonit.xoontec.vn/files' + scannedPath;
+            if (this.extension.match(/(doc|docx)/i) || this.extension.match(/(ppt|pptx)/i)) {
+                this.showXoonitMode = 1;
+                this.htmlSrc = window.location.origin + Uti.getFileUrl(`${this.documentPath}`, UploadFileMode.Path);
+                this.htmlSrc = this.htmlSrc.replace(this.extension, 'pdf');
+            } else if (this.extension.match(/(xls|xlsx|xlsm)/i)) {
+                this.htmlSrc = this.src.replace(this.extension, 'html');
+                this.showXoonitMode = 2;
+            } else {
+                this.showXoonitMode = 0;
+            }
+            this.type = type;
+        } else {
+            if (type === AttachmentType.IMAGE) {
+                this.documentService?.getOCRJsonOfImage(payload.idDocumentContainerFiles).subscribe((response) => {
+                    this.imageInfo = {
+                        OCRJson: get(response, [0, 'OCRJson']),
+                        IdDocumentContainerScans: payload.idDocumentContainerScans,
+                    };
+                    this.documentPath = `${payload.scannedPath}\\${payload.fileName}`;
+                    this.src = location.origin + Uti.getFileUrl(`${this.documentPath}`, UploadFileMode.Path);
+                    const searchText = localStorage.getItem(LocalStorageKey.LocalStorageGSCaptureSearchText);
+                    this.type = type;
+                    if (!!searchText && searchText !== '*') {
+                        this.changeSearchValue(searchText);
+                        this.openSearchBar = true;
+
+                        setTimeout(() => {
+                            this.inputSearchBar?.nativeElement?.focus();
+                        });
+                    }
+                });
+                return;
+            }
+            this.src = Uti.getFileUrl(`${this.documentPath}`, UploadFileMode.Path);
+            this.type = type;
         }
     }
 

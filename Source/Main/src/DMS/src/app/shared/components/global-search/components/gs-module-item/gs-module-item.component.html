@@ -1,5 +1,5 @@
 <div
-    *ngIf="moduleItem.accessRight && moduleItem.accessRight.read"
+    *ngIf="moduleItem.accessRight && moduleItem.accessRight.read && hasPermission"
     class="gs-dms-item {{ moduleItem.mainClassName }}  col-xs-12  col-sm-4  col-md-2  col-lg-1"
     (click)="globalItemClicked()"
     (dblclick)="globalItemDoubleClicked()"
