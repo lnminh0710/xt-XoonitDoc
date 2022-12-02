@@ -984,8 +984,9 @@ namespace DMS.Business
                 IdDocumentContainerScans = saveResult.IdDocumentContainerScans
             });
 
-            /// has input toDo => isToDo = 1
-            if (!string.IsNullOrWhiteSpace(document.MainDocument.IsToDo) && document.MainDocument.IsToDo == "1")
+            _logger.Debug("Data saved " + JsonConvert.SerializeObject(document.MainDocument));
+            /// has input toDo => isToDo = 1 or true
+            if (!string.IsNullOrWhiteSpace(document.MainDocument.IsToDo) && (document.MainDocument.IsToDo == "1" || document.MainDocument.IsToDo == "true"))
             {
                 await _elasticSearchSync.SyncESAfterSaveDocument(new ElasticSyncSaveDocument
                 {
