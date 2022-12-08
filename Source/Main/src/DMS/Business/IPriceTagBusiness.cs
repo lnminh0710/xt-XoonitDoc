@@ -18,6 +18,8 @@ namespace DMS.Business
         Task<WSEditReturn> SaveDocumentFile(ImportPriceTagDocumentSessionModel sess, List<IFormFile> files, CancellationToken cancellationToken);
 
         Task<object> GetAttachmentsOfPriceTag(Dictionary<string, object> values);
+
+        Task<object> DeletePriceTag(Dictionary<string, object> data);
     }
 }
 

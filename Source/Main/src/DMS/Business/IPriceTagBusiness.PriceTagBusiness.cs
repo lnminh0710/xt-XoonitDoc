@@ -1,18 +1,17 @@
 using DMS.Models;
+using DMS.Models.DMS;
 using DMS.Service;
 using DMS.ServiceModels;
 using DMS.Utils;
 using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
-using System.Reflection;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
-using System.IO;
-using System;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using DMS.Models.DMS;
 
 namespace DMS.Business
 {
@@ -59,6 +58,30 @@ namespace DMS.Business
                 SpObject = "PriceTag"
             };
             return await _dynamicDataService.SaveFormData(saveData);
+        }
+
+        public async Task<object> DeletePriceTag(Dictionary<string, object> data)
+        {
+            if (data == null || !data.ContainsKey("IdPriceTag"))
+            {
+                _logger.Error("DeletePriceTag  data request is undefined" );
+                throw new Exception("id is undefined");
+            }
+            try {
+                Data baseData = (Data)ServiceDataRequest.ConvertToRelatedType(typeof(Data));
+                SaveDynamicData saveData = new SaveDynamicData
+                {
+                    BaseData = baseData,
+                    Data = data,
+                    SpMethodName = "SpCallPriceTag",
+                    SpObject = "PriceTagDelete"
+                };
+                return await _dynamicDataService.SaveFormData(saveData);
+            } catch(Exception e)
+            {
+                _logger.Error("DeletePriceTag: " + JsonConvert.SerializeObject(data), e);
+                throw e;
+            }            
         }
 
         public async Task<WSEditReturn> SaveDocumentFile(ImportPriceTagDocumentSessionModel sess, List<IFormFile> files, CancellationToken cancellationToken)

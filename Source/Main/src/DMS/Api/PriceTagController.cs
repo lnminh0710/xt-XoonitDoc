@@ -44,6 +44,15 @@ namespace DMS.Api
         }
 
         [HttpPost]
+        [Route("remove")]
+        [Authorize]
+        public async Task<object> DeletePriceTag([FromBody] Dictionary<string, object> data)
+        {
+
+            return await _priceTagBusiness.DeletePriceTag(data);
+        }
+
+        [HttpPost]
         [Route("attachments")]
         public async Task<object> UploadDocuments(string type, CancellationToken cancellationToken)
         {
