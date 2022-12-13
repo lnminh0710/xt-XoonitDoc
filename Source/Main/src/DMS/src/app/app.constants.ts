@@ -638,6 +638,7 @@ export class ServiceUrl {
 
     public getBranchByHeadquarter = this.apiUrl + 'headquarter/branch';
     public priceTag = this.apiUrl + 'pricetag';
+    public deletePriceTag = this.apiUrl + 'pricetag/remove';
     public priceTagAttachment = this.apiUrl + 'pricetag/attachments';
 
     // headQuarter

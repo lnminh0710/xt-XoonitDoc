@@ -330,6 +330,7 @@ export class WidgetPriceTag extends BaseComponent implements OnInit, AfterViewIn
                                             {
                                                 IdPriceTag: null,
                                                 ChassisNr: _d.property.ChassisNr,
+                                                TYPFZGNR: _d.property['car.vin'],
                                                 CarName: _d.property['car.name'],
                                                 IsActive: 1,
                                                 IsDelete: 0,
@@ -609,7 +610,7 @@ export class WidgetPriceTag extends BaseComponent implements OnInit, AfterViewIn
 
     public onChangeIndex(newIndex) {
         this.currentIndex = this.dataList.length ? Math.min(Math.max(newIndex, 0), this.dataList.length - 1) : 0;
-        this.data = this.dataList[newIndex];
+        this.data = this.dataList[this.currentIndex];
 
         this.store.dispatch(this.preissChildAction.selectItem(this.data));
     }
@@ -896,6 +897,7 @@ export class WidgetPriceTag extends BaseComponent implements OnInit, AfterViewIn
                     {
                         IdPriceTag: this.data.info?.IdPriceTag || null,
                         ChassisNr: get(this.dataList, [this.currentIndex, 'property', 'ChassisNr'], ''),
+                        TYPFZGNR: get(this.dataList, [this.currentIndex, 'property', 'car.vin'], ''),
                         CarName: get(this.dataList, [this.currentIndex, 'property', 'car.name'], ''),
                         IsActive: 1,
                         IsDelete: 0,
@@ -1141,5 +1143,41 @@ export class WidgetPriceTag extends BaseComponent implements OnInit, AfterViewIn
         const value = get(this.data, ['property', field]);
         if (!value) return '';
         return find(this.gearOptions, ['idValue', value])?.textValue;
+    }
+
+    deletePriceTag() {
+        if (!this.data?.info?.IdPriceTag) return;
+        const popoverRef = this.popupService.open({
+            content: `Are you sure you want delete this car?`,
+            width: 600,
+            hasBackdrop: true,
+            header: {
+                title: 'Confirmation',
+                iconClose: true,
+            },
+            footer: {
+                justifyContent: 'full',
+                buttons: [
+                    { color: '', text: 'No', buttonType: 'flat', onClick: () => popoverRef.close() },
+                    {
+                        color: 'primary',
+                        text: 'Yes',
+                        buttonType: 'flat',
+                        onClick: (() => {
+                            this.preisssChildService
+                                .deletePriceTag({ IdPriceTag: this.data?.info?.IdPriceTag })
+                                .subscribe((res) => {
+                                    this.dataList = this.dataList.filter(
+                                        (_d) => _d.info?.IdPriceTag !== this.data?.info?.IdPriceTag,
+                                    );
+                                    this.onChangeIndex(this.currentIndex);
+                                    popoverRef.close();
+                                });
+                        }).bind(this),
+                    },
+                ],
+            },
+            disableCloseOutside: true,
+        });
     }
 }

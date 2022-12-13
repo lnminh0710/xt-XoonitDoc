@@ -186,6 +186,13 @@
             >
                 <div class="toolbar-icon icon-transform print-icon"></div>
             </div>
+            <div
+                class="price-tag-action__contained-button"
+                [ngClass]="{ disabled: !data?.info?.IdPriceTag }"
+                (click)="deletePriceTag()"
+            >
+                <div class="toolbar-icon icon-transform delete-icon"></div>
+            </div>
         </div>
         <div class="price-tag-action__block">
             <mat-slider
