@@ -97,6 +97,7 @@ export class WidgetPriceTag extends BaseComponent implements OnInit, AfterViewIn
 
     public priceFields = {
         AB_MFK: <ControlData>{ controlName: 'AbMFK', displayName: 'Ab MFK', order: 0, defaultValue: 0 },
+        KILOMETER: <ControlData>{ controlName: 'Milage', displayName: 'Kilometer', order: 1, defaultValue: '' },
         GEAR: <ControlData>{ controlName: 'IdRepPriceTagGears', displayName: 'Getriebe', order: 2, defaultValue: '' },
         FUEL: <ControlData>{ controlName: 'IdRepPriceTagFuel', displayName: 'Treibstoff', order: 3, defaultValue: '' },
         // LAST_CHECK: <ControlData>{
@@ -371,6 +372,7 @@ export class WidgetPriceTag extends BaseComponent implements OnInit, AfterViewIn
                                                 Fuel: get(_d, 'property.Fuel', ''),
                                                 IdRepPriceTagFuel: get(_d, 'property.IdRepPriceTagFuel', ''),
                                                 IdRepPriceTagGears: get(_d, 'property.IdRepPriceTagGears', ''),
+                                                Kilometer: get(_d, 'property.Milage', ''),
 
                                                 AbMFK: get(_d, 'property.AbMFK') ? 1 : 0,
                                                 // LastCheck: this.parseValueToDate(get(_d, 'property.LastCheck', '')),
@@ -403,6 +405,7 @@ export class WidgetPriceTag extends BaseComponent implements OnInit, AfterViewIn
                                                 set(_d, 'property.Fuel', info.Fuel);
                                                 set(_d, 'property.IdRepPriceTagFuel', info.IdRepPriceTagFuel);
                                                 set(_d, 'property.IdRepPriceTagGears', info.IdRepPriceTagGears);
+                                                set(_d, 'property.Milage', info.Kilometer);
 
                                                 set(_d, 'property.AbMFK', info.AbMFK == 1 ? true : false);
                                                 // set(_d, 'property.LastCheck', info.LastCheck);
@@ -653,6 +656,13 @@ export class WidgetPriceTag extends BaseComponent implements OnInit, AfterViewIn
                                 else tempValue = '';
 
                                 break;
+
+                            case 'Milage':
+                                tempValue = get(_d, ['property', 'Kilometer']) || 0;
+                                tempValue = Number(tempValue) || 0;
+                                tempValue = this.parseValueToNumber(tempValue);
+                                break;
+
                             case 'AbMFK':
                                 // date DD.MM.YYYY
                                 tempValue = this.getUIBoolean(tempValue);
@@ -665,7 +675,6 @@ export class WidgetPriceTag extends BaseComponent implements OnInit, AfterViewIn
                                 // date DD.MM.YYYY
                                 tempValue = this.parseValueToDate(tempValue);
                                 break;
-                            case 'Milage':
                             case 'EngineCapacity':
                                 // number seperate with (.  - thousand
                                 tempValue = Number(tempValue) || 0;
@@ -928,6 +937,7 @@ export class WidgetPriceTag extends BaseComponent implements OnInit, AfterViewIn
                             [this.currentIndex, 'property', 'IdRepPriceTagGears'],
                             '',
                         ),
+                        Kilometer: get(this.dataList, [this.currentIndex, 'property', 'Milage'], ''),
 
                         AbMFK: get(this.dataList, [this.currentIndex, 'property', 'AbMFK'], false) ? 1 : 0,
                         // LastCheck: get(this.dataList, [this.currentIndex, 'property', 'LastCheck'], ''),
@@ -1039,6 +1049,7 @@ export class WidgetPriceTag extends BaseComponent implements OnInit, AfterViewIn
                         set(_d, 'property.Fuel', data.Fuel);
                         set(_d, 'property.IdRepPriceTagFuel', data.IdRepPriceTagFuel);
                         set(_d, 'property.IdRepPriceTagGears', data.IdRepPriceTagGears);
+                        set(_d, 'property.Milage', data.Kilometer);
                         set(_d, 'property.AbMFK', data.AbMFK == 1 ? true : false);
                         // set(_d, 'property.LastCheck', data.LastCheck);
                         set(_d, 'property.LeasingInitialPayment', data.LeasingInitialPayment);

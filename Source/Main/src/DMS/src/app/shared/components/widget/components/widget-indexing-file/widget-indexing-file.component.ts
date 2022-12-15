@@ -591,6 +591,7 @@ export class WidgetIndexingFileComponent extends BaseComponent implements OnInit
             }
             this.files = [];
             resData.forEach((data) => {
+                data.DocumentName = data.DocumentName || data.FileName;
                 data.isActive = isBoolean(data.isActive)
                     ? data.isActive
                     : data.isActive && data.isActive.toLowerCase() === 'true'
