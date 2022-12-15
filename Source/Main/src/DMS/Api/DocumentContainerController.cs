@@ -317,7 +317,7 @@ namespace DMS.Api
         [HttpGet("GetEmailData")]
         public async Task<object> GetEmailData()
         {
-            var model = Common.ParseQueryStringToDictionary(Request.QueryString.Value);
+            var model = Common.ParseQueryStringToDictionary(Request.QueryString.Value, StringComparer.OrdinalIgnoreCase);
             return await _documentContainerBusiness.GetEmailData(model);
         }
 
@@ -328,20 +328,20 @@ namespace DMS.Api
         [HttpGet("GetEmailAttachements")]
         public async Task<object> GetEmailAttachements()
         {
-            var model = Common.ParseQueryStringToDictionary(Request.QueryString.Value);
+            var model = Common.ParseQueryStringToDictionary(Request.QueryString.Value, StringComparer.OrdinalIgnoreCase);
             return await _documentContainerBusiness.GetEmailAttachements(model);
         }
 
         [HttpGet("DocumentsOfTree")]
         public async Task<object> DocumentsOfTree()
         {
-            var model = Common.ParseQueryStringToDictionary(Request.QueryString.Value);
+            var model = Common.ParseQueryStringToDictionary(Request.QueryString.Value, StringComparer.OrdinalIgnoreCase);
             return await _documentContainerBusiness.GetDocumentsOfTree(model);
         }
         [HttpGet("DocumentsOfEmailTree")]
         public async Task<object> DocumentsOfEmailTree()
         {
-            var model = Common.ParseQueryStringToDictionary(Request.QueryString.Value);
+            var model = Common.ParseQueryStringToDictionary(Request.QueryString.Value, StringComparer.OrdinalIgnoreCase);
             return await _documentContainerBusiness.GetDocumentsOfEmailTree(model);
         }
     }

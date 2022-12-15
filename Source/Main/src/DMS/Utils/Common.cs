@@ -556,7 +556,7 @@ namespace DMS.Utils
             return base64String;
         }
 
-        public static Dictionary<string, object> ParseQueryStringToDictionary(string queryString)
+        public static Dictionary<string, object> ParseQueryStringToDictionary(string queryString, StringComparer comparer = null)
         {
             var model = new Dictionary<string, object>();
             try
@@ -568,6 +568,10 @@ namespace DMS.Utils
                 }
             }
             catch { }
+            if (comparer != null)
+            {
+                return new Dictionary<string, object>(model, comparer);
+            }
             return model;
         }
 

@@ -678,6 +678,7 @@ namespace DMS.Business
 
         public async Task<object> GetDocumentsOfTree(Dictionary<string, object> values)
         {
+            values = SetCommonInfoToRequest(values);
             DynamicData dynamicData = new DynamicData(ServiceDataRequest);
             dynamicData.Data.MethodName = "SpB06GetDocumentContainer";
             dynamicData.Data.Object = "GetFolderFiles";
@@ -688,6 +689,7 @@ namespace DMS.Business
 
         public async Task<object> GetDocumentsOfEmailTree(Dictionary<string, object> values)
         {
+            values = SetCommonInfoToRequest(values);
             DynamicData dynamicData = new DynamicData(ServiceDataRequest);
             dynamicData.Data.MethodName = "SpB06GetDocumentContainer";
             dynamicData.Data.Object = "GetEmailsByTree";
@@ -707,5 +709,20 @@ namespace DMS.Business
             var data = await _dynamicDataService.GetDynamicDataFormTable(dynamicData, returnType: Constants.EDynamicDataGetReturnType.Datatable);
             return data;
         }
+
+        private Dictionary<string, object> SetCommonInfoToRequest(Dictionary<string, object> dataRequest)
+        {
+            if (dataRequest.ContainsKey("PageIndex"))
+            {
+                string pageIndex = dataRequest.GetValueOrDefault("PageIndex").ToString();
+                if (!string.IsNullOrEmpty(pageIndex) && pageIndex != "0")
+                {
+                    dataRequest.Remove("PageIndex");
+                    dataRequest.Add("PageIndex", int.Parse(pageIndex) - 1);
+                }
+            }
+            return dataRequest;
+        }
+
     }
 }
