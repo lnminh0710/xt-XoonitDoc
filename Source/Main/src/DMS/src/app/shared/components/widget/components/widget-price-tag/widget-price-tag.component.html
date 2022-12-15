@@ -186,6 +186,13 @@
             >
                 <div class="toolbar-icon icon-transform print-icon"></div>
             </div>
+            <div
+                class="price-tag-action__contained-button"
+                [ngClass]="{ disabled: !data?.info?.IdPriceTag }"
+                (click)="deletePriceTag()"
+            >
+                <div class="toolbar-icon icon-transform delete-icon"></div>
+            </div>
         </div>
         <div class="price-tag-action__block">
             <mat-slider
@@ -229,6 +236,8 @@
     <form [formGroup]="formData" autocomplete="off" class="form-wrapper" [perfectScrollbar]>
         <div class="row custom-row px-4 py-2 mb-4">
             <div class="col-xs-12 mt-3 mb-3 section-label">Allgemein</div>
+            <ng-container *ngTemplateOutlet="inputNumberControl; context: { control: priceFields.KILOMETER }">
+            </ng-container>
             <ng-container
                 *ngTemplateOutlet="selectControl; context: { control: priceFields.FUEL, dataList: fuelOptions }"
             ></ng-container>

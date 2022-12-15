@@ -593,6 +593,7 @@ export class XnAgGridComponent implements OnInit, OnDestroy, AfterViewInit {
     @Output() resetPass = new EventEmitter<any>();
     @Output() moreAction = new EventEmitter<any>();
     @Output() dropAction = new EventEmitter<any>();
+    @Output() deleteCar = new EventEmitter<any>();
 
     public detailCellRenderer;
     private successSavedSubscription: Subscription;
@@ -2533,6 +2534,10 @@ export class XnAgGridComponent implements OnInit, OnDestroy, AfterViewInit {
         this.onRowClicked({ data });
     }
 
+    private deleteSelectedCar(data) {
+        this.deleteCar.emit(data);
+    }
+
     private addAllCar() {
         const data = this.getAllCurentData();
         const item = cloneDeep(data[0]);
@@ -2749,6 +2754,15 @@ export class XnAgGridComponent implements OnInit, OnDestroy, AfterViewInit {
         }
         const rowData = this.getRowDataByCellFocus();
         if (rowData?.idPriceTag) {
+            contextMenuItems.splice(contextMenuItems.length - 2, 0, {
+                name: `<span class="pull-left">Delete car</span>`, //Ctrl+P
+                action: (event) => {
+                    this.deleteSelectedCar(rowData);
+                },
+                cssClasses: [''],
+                icon: `<i class="fa fa fa-remove  red-color  ag-context-icon"/>`,
+                key: 'DeleteCar',
+            });
             contextMenuItems.unshift('separator');
             contextMenuItems.unshift({
                 name: `<span class="pull-left">Add all car</span>`, //Ctrl+P

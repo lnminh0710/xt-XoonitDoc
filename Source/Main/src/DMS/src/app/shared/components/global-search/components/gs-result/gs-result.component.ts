@@ -12,7 +12,13 @@ import {
     ViewChild,
 } from '@angular/core';
 import { Module, TabModel } from '@app/models';
-import { SearchService, DatatableService, PropertyPanelService, AppErrorHandler } from '@app/services';
+import {
+    SearchService,
+    DatatableService,
+    PropertyPanelService,
+    AppErrorHandler,
+    PreissChildService,
+} from '@app/services';
 import { IPageChangedEvent } from '@app/shared/components/xn-pager';
 import camelCase from 'lodash-es/camelCase';
 import cloneDeep from 'lodash-es/cloneDeep';
@@ -35,6 +41,7 @@ import { AdministrationDocumentSelectors } from '@app/state-management/store/red
 import { GlobalSearchFilterModel } from '@app/models/global-search-filter.model';
 import { filter, finalize } from 'rxjs/operators';
 import { Uti } from '@app/utilities';
+import { PopupService } from '@app/xoonit-share/components/global-popup/services/popup.service';
 
 @Component({
     selector: 'gs-result',
@@ -144,6 +151,8 @@ export class GlobalSearchResultComponent implements OnInit, OnChanges, OnDestroy
         private toasterService: ToasterService,
         private administrationDocumentActions: AdministrationDocumentActions,
         private administrationDocumentSelectors: AdministrationDocumentSelectors,
+        private popupService: PopupService,
+        private preissChildService: PreissChildService,
     ) {
         this.that = this;
         this.subscribeFilterSearch();
@@ -540,6 +549,38 @@ export class GlobalSearchResultComponent implements OnInit, OnChanges, OnDestroy
                 this.deferResultSelect = null;
                 break;
         }
+    }
+
+    deleteCar(data) {
+        const popoverRef = this.popupService.open({
+            content: `Are you sure you want delete this car?`,
+            width: 600,
+            hasBackdrop: true,
+            header: {
+                title: 'Confirmation',
+                iconClose: true,
+            },
+            footer: {
+                justifyContent: 'full',
+                buttons: [
+                    { color: '', text: 'No', buttonType: 'flat', onClick: () => popoverRef.close() },
+                    {
+                        color: 'primary',
+                        text: 'Yes',
+                        buttonType: 'flat',
+                        onClick: (() => {
+                            this.preissChildService.deletePriceTag({ IdPriceTag: data.idPriceTag }).subscribe((res) => {
+                                popoverRef.close();
+                                setTimeout(() => {
+                                    this.search();
+                                }, 500);
+                            });
+                        }).bind(this),
+                    },
+                ],
+            },
+            disableCloseOutside: true,
+        });
     }
 
     onResultSelect(data: Array<any>) {

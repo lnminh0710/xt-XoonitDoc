@@ -178,6 +178,12 @@
         width: 22px;
         margin: 0px 6px;
     }
+
+    &--size-small {
+        height: 18px !important;
+        width: 18px !important;
+        background-size: 18px !important;
+    }
 }
 
 .image-icon {

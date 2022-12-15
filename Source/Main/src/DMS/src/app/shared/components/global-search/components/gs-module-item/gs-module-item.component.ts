@@ -68,7 +68,12 @@ export class GlobalSeachModuleItemComponent extends BaseComponent implements OnI
             .subscribe(
                 (action: CustomAction) => {
                     const res = action.payload?.item;
-                    if (!res?.length || !this.moduleItem?.accessRight?.read) {
+                    if (
+                        !res?.length ||
+                        !this.moduleItem?.accessRight?.read ||
+                        (this.moduleItem.moduleName !== 'Indexing' && this.moduleItem.moduleName !== 'Preisschild ')
+                    ) {
+                        this.hasPermission = true;
                         return;
                     }
                     const permissionsString = res[0]?.[0]?.UserPermission;

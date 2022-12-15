@@ -58,6 +58,7 @@
             [zoom-scale]="'page-fit'"
             style="display: block; height: 100%"
             (page-rendered)="pageRendered()"
+            [show-borders]="true"
             [autoresize]="true"
             (after-load-complete)="afterLoadComplete($event)"
             (error)="setLoading(false)"

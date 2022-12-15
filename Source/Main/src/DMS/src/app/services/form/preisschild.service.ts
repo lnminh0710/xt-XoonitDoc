@@ -19,5 +19,8 @@ export class PreissChildService extends BaseService {
     public getAttachmentByPriceTag(IdPriceTag: any): Observable<any> {
         return this.get<any>(this.serUrl.priceTagAttachment, { IdPriceTag });
     }
-    
+
+    public deletePriceTag(params: any): Observable<any> {
+        return this.post<any>(this.serUrl.deletePriceTag, params);
+    }
 }

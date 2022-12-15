@@ -19,6 +19,7 @@
             [rowHeight]="38"
             [headerHeight]="40"
             (rowClick)="onResultSelect($event)"
+            (deleteCar)="deleteCar($event)"
             (rowDoubleClicked)="onRowDoubleClick($event)"
             [paginationFromPopup]="paginationFromPopup"
             (pageChanged)="onPageChanged($event)"
@@ -32,8 +33,8 @@
     <div class="result-heading">
         <label class="result-summary" *ngIf="globalNumberFormat == 'N'">
             <label-translation [keyword]="'Gs_Result__N_of_entries'"></label-translation>:
-            {{ numberOfEntries | number: 0 }} <label-translation [keyword]="'Gs_Result__of'"></label-translation>
-            {{ totalResults | number: 0 }}
+            {{ numberOfEntries | number : 0 }} <label-translation [keyword]="'Gs_Result__of'"></label-translation>
+            {{ totalResults | number : 0 }}
         </label>
         <label class="result-summary" *ngIf="globalNumberFormat != 'N'">
             <label-translation [keyword]="'Gs_Result__N_of_entries'"></label-translation>: {{ numberOfEntries }}

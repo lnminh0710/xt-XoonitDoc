@@ -211,6 +211,7 @@ export class XnDocumentTreeComponent extends BaseComponent implements OnInit, Af
             .pipe(takeUntil(this.getUnsubscriberNotifier()))
             .subscribe((settings) => {
                 this.structureTreeSettings = settings;
+                this._initializedTreeSubject.next(true);
             });
 
         // react from event tree initialized done
@@ -224,7 +225,6 @@ export class XnDocumentTreeComponent extends BaseComponent implements OnInit, Af
                 this._applySettingsFirstLoad();
             });
 
-        this._initializedTreeSubject.next(true);
         this.config && this.config.afterInitTree($event.treeModel);
     }
 
