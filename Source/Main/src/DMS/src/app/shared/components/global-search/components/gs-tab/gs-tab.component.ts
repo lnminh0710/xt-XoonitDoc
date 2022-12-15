@@ -362,7 +362,7 @@ export class GlobalSearchTabComponent extends BaseComponent implements OnInit, O
                         trees.push(element.data);
                     }
 
-                    this.store.dispatch(this.globalSearchActions.updateTreeListStorageAction(trees));
+                    // this.store.dispatch(this.globalSearchActions.updateTreeListStorageAction(trees));
                     this._makeChildrenSummaryForAllDocumentModule(trees);
                 },
                 (error) => {
@@ -717,7 +717,8 @@ export class GlobalSearchTabComponent extends BaseComponent implements OnInit, O
                             }
 
                             const setting = JSON.parse(found.jsonSettings);
-                            this.store.dispatch(new SaveStructureTreeSettingsGlobalAction(setting));
+                            if (!!setting?.nodeState?.length)
+                                this.store.dispatch(new SaveStructureTreeSettingsGlobalAction(setting));
                         }
                     });
                     return;
