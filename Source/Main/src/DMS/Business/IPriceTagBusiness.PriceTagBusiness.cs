@@ -67,21 +67,60 @@ namespace DMS.Business
                 _logger.Error("DeletePriceTag  data request is undefined" );
                 throw new Exception("id is undefined");
             }
-            try {
-                Data baseData = (Data)ServiceDataRequest.ConvertToRelatedType(typeof(Data));
-                SaveDynamicData saveData = new SaveDynamicData
-                {
-                    BaseData = baseData,
-                    Data = data,
-                    SpMethodName = "SpCallPriceTag",
-                    SpObject = "PriceTagDelete"
-                };
-                return await _dynamicDataService.SaveFormData(saveData);
-            } catch(Exception e)
+            try
             {
-                _logger.Error("DeletePriceTag: " + JsonConvert.SerializeObject(data), e);
-                throw e;
+                object deleted = null;
+                List<int> ids = JsonConvert.DeserializeObject<List<int>>(data.GetValueOrDefault("IdPriceTag").ToString());
+                if (ids != null && ids.Count > 0)
+                {
+                    data.Remove("IdPriceTag");                    
+                    foreach (int id in ids)
+                    {
+                        data.Add("IdPriceTag", id);
+                        try
+                        {
+
+                            Data baseData = (Data)ServiceDataRequest.ConvertToRelatedType(typeof(Data));
+                            SaveDynamicData saveData = new SaveDynamicData
+                            {
+                                BaseData = baseData,
+                                Data = data,
+                                SpMethodName = "SpCallPriceTag",
+                                SpObject = "PriceTagDelete"
+                            };
+                            deleted = await _dynamicDataService.SaveFormData(saveData);
+                        }
+                        catch (Exception e)
+                        {
+                            _logger.Error("DeletePriceTag: " + JsonConvert.SerializeObject(data), e);
+                        }
+                        data.Remove("IdPriceTag");
+                    }
+                }
+                return deleted;
+            }
+            catch(Exception err)
+            {
+                _logger.Error("DeletePriceTag: " + JsonConvert.SerializeObject(data), err);
+                try
+                {
+                    Data baseData = (Data)ServiceDataRequest.ConvertToRelatedType(typeof(Data));
+                    SaveDynamicData saveData = new SaveDynamicData
+                    {
+                        BaseData = baseData,
+                        Data = data,
+                        SpMethodName = "SpCallPriceTag",
+                        SpObject = "PriceTagDelete"
+                    };
+                    return await _dynamicDataService.SaveFormData(saveData);
+                }
+                catch (Exception e)
+                {
+                    _logger.Error("DeletePriceTag: " + JsonConvert.SerializeObject(data), e);
+                    throw e;
+                }
             }            
+                   
         }
 
         public async Task<WSEditReturn> SaveDocumentFile(ImportPriceTagDocumentSessionModel sess, List<IFormFile> files, CancellationToken cancellationToken)
