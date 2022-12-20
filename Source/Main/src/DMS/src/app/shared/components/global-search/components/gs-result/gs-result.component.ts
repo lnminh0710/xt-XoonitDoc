@@ -553,7 +553,7 @@ export class GlobalSearchResultComponent implements OnInit, OnChanges, OnDestroy
 
     deleteCar(data) {
         const popoverRef = this.popupService.open({
-            content: `Are you sure you want delete this car?`,
+            content: `Are you sure you want delete these cars?`,
             width: 600,
             hasBackdrop: true,
             header: {
@@ -569,8 +569,9 @@ export class GlobalSearchResultComponent implements OnInit, OnChanges, OnDestroy
                         text: 'Yes',
                         buttonType: 'flat',
                         onClick: (() => {
-                            this.preissChildService.deletePriceTag({ IdPriceTag: data.idPriceTag }).subscribe((res) => {
+                            this.preissChildService.deletePriceTag({ IdPriceTag: data.IdPriceTag }).subscribe((res) => {
                                 popoverRef.close();
+                                this.onResultSelect(data.data);
                                 setTimeout(() => {
                                     this.search();
                                 }, 500);

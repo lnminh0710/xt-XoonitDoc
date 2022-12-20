@@ -69,9 +69,16 @@
             alt="view-grid"
             (click)="changeViewMode(VIEW_TYPE_CONSTANT.GRID)"
         />
+        <div class="me-3" *ngIf="!!totalItem">{{ totalItem }} items</div>
     </div>
     <div
         class="widget-file-explorer-container mini-scrollbar drop-files"
+        #gridContainer
+        infiniteScroll
+        [infiniteScrollDistance]="2"
+        [infiniteScrollThrottle]="150"
+        [scrollWindow]="false"
+        (scrolled)="onScroll()"
         dnd-droppable
         [dropZones]="['upload-document']"
     >
@@ -123,32 +130,25 @@
                     </ng-container>
                 </ng-container>
                 <ng-container *ngSwitchCase="VIEW_TYPE_CONSTANT.LIST">
-                    <!-- <ng-container *ngFor="let file of filesDisplay">
-                            <div
-                                class="file view-list cursor-pointer display-flex"
-                                [class.selected-file]="
-                                    selectedFile &&
-                                    selectedFile.IdDocumentContainerFiles === file.IdDocumentContainerFiles
-                                "
-                                (click)="onClickFile(file)"
-                                title="{{ file.FileName }}"
-                            >
-                                <div class="file-icon {{ file.extension }}"></div>
-                                <div class="file-name flex-middle">{{ file.FileName }}</div>
-                            </div>
-                        </ng-container> -->
-                    <div *ngIf="fileList?.columns?.length && selectedFolder?.canRead" class="file-list xoonit-grid">
+                    <div
+                        *ngIf="fileList?.columns?.length && selectedFolder?.canRead"
+                        class="file-list xoonit-grid"
+                        infiniteScroll
+                        [infiniteScrollDistance]="2"
+                        [infiniteScrollThrottle]="150"
+                        [scrollWindow]="true"
+                        [infiniteScrollContainer]="'.ag-body-viewport'"
+                        (scrolled)="onScroll()"
+                    >
                         <xn-ag-grid
                             #xnAgGrid
                             [id]="'7a3916cf-adb0-4c55-b8e7-8e8ca6fc92cc'"
                             [globalProperties]="globalProperties"
-                            [serverPaging]="false"
-                            [suppressContextMenu]="false"
                             [dataSource]="fileList"
                             [rowHeight]="36"
                             [readOnly]="true"
                             [autoSelectCurrentRowAfterChangingData]="true"
-                            [rowSelection]="'multiple'"
+                            [suppressScrollOnNewData]="true"
                             [suppressRowClickSelection]="false"
                             (rowClick)="onRowClick($event, false)"
                             (rowDoubleClicked)="onRowClick($event, true)"

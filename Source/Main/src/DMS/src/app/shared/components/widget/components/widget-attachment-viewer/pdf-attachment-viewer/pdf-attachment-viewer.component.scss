@@ -1,6 +1,7 @@
-:host {
-    height: 100%;
-    display: block;
+:host ::ng-deep {
+    .canvasWrapper {
+        border: 5px solid #c2c2c2;
+    }
     .pdf-viewer-container {
         height: 100%;
         .page {
@@ -33,6 +34,7 @@
             ::ng-deep {
                 .textLayer {
                     opacity: 0.7;
+                    border: 5px solid transparent;
                     .highlight {
                         background-color: #ffeb3b !important;
                         color: transparent;

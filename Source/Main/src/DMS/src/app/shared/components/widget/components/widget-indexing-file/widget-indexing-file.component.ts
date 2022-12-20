@@ -8,6 +8,8 @@ import {
     OnInit,
     OnDestroy,
     TemplateRef,
+    ElementRef,
+    HostListener,
 } from '@angular/core';
 import { BaseComponent, ModuleList } from '@app/pages/private/base';
 import { Router } from '@angular/router';
@@ -22,7 +24,7 @@ import { ReducerManagerDispatcher, Store } from '@ngrx/store';
 import { AppState } from '@app/state-management/store';
 import { DocumentTreeModel } from '@app/models/administration-document/document-tree.payload.model';
 import { WidgetDetail, TabSummaryModel, GlobalSettingModel, ModuleSettingModel, ControlGridModel } from '@app/models';
-import { isBoolean, find, findIndex, get } from 'lodash-es';
+import { concat, isBoolean, find, findIndex, get, set } from 'lodash-es';
 import {
     AdministrationDocumentActions,
     TabSummaryActions,
@@ -74,6 +76,7 @@ const VIEW_TYPE = {
     GRID: 'grid',
     LIST: 'list',
 };
+var timeoutSave;
 @Component({
     selector: 'widget-indexing-file',
     templateUrl: './widget-indexing-file.component.html',
@@ -88,12 +91,12 @@ export class WidgetIndexingFileComponent extends BaseComponent implements OnInit
     public isFullScreen = false;
     @Output() onMaximizeWidget = new EventEmitter<any>();
 
-    @ViewChild(PerfectScrollbarDirective) scrollbar: PerfectScrollbarDirective;
     @ViewChild(InfiniteScrollDirective) infiniteScroll: InfiniteScrollDirective;
 
     @ViewChild('horizontalSplit') horizontalSplit: any;
     @ViewChild('confirmDelete') confirmDelete: TemplateRef<any>;
     @ViewChild('xnAgGrid') xnAgGrid: XnAgGridComponent;
+    @ViewChild('gridContainer') gridContainer: ElementRef;
 
     // TODO: set Page size by screen width, current version will load all
     // private PAGE_SIZE_DEFAULT = 16;
@@ -123,7 +126,22 @@ export class WidgetIndexingFileComponent extends BaseComponent implements OnInit
     searchText = '';
     searchTextChanged: Subject<string> = new Subject<string>();
     public VIEW_TYPE_CONSTANT = VIEW_TYPE;
-    public currentViewType = VIEW_TYPE.GRID;
+    public currentViewType = VIEW_TYPE.LIST;
+    //#endregion
+
+    //#region infinite load
+    public noMoreData = true;
+    pageIndex: number = 1;
+    private _tableDataSource: any = [];
+    globalSetting: any;
+    onScroll() {
+        if (!this.isLoading && !this.noMoreData) {
+            this.isLoading = true;
+            this.pageIndex += 1;
+            this.cdRef.detectChanges();
+            this.getFiles(this.selectedFolder);
+        }
+    }
     //#endregion
 
     /* Edit document*/
@@ -139,14 +157,7 @@ export class WidgetIndexingFileComponent extends BaseComponent implements OnInit
         subRightLeftHorizontal: 0,
         subRightRightHorizontal: 100,
     };
-    public tabList: TabSummaryModel[];
-    public tabSetting: any;
-    private _isChangedFolder: boolean;
-    private _updatedData: {
-        data: any[];
-        previousDocumentType: DocumentMyDMType;
-        currentDocumentType: DocumentMyDMType;
-    };
+    public totalItem = 0;
 
     idMainDocument: number;
     idDocumentTypeEnum: number;
@@ -198,7 +209,6 @@ export class WidgetIndexingFileComponent extends BaseComponent implements OnInit
 
     ngOnInit(): void {
         this.getModuleSetting();
-        this.subcribeModuleSettingState();
     }
 
     public ngOnDestroy() {
@@ -342,46 +352,6 @@ export class WidgetIndexingFileComponent extends BaseComponent implements OnInit
 
                 this.cdRef.detectChanges();
             });
-
-        this.store
-            .select(
-                (state) =>
-                    moduleSettingReducer.getModuleSettingState(state, ModuleList.Processing.moduleNameTrim)
-                        .moduleSetting,
-            )
-            .pipe(takeUntil(this.getUnsubscriberNotifier()))
-            .subscribe((moduleSettingState: ModuleSettingModel[]) => {
-                this.appErrorHandler.executeAction(() => {
-                    if (!isEmpty(moduleSettingState) && moduleSettingState.length) {
-                        if (!isEqual(moduleSettingState, this.moduleSetting)) {
-                            this.moduleSetting = cloneDeep(moduleSettingState);
-                            const jsonSettings = this.moduleSettingService.parseJsonSettings(this.moduleSetting);
-                            if (jsonSettings) {
-                                this.tabSetting = jsonSettings;
-                            }
-                        }
-                    } else {
-                        this.moduleSetting = [];
-                        this.tabSetting = null;
-                    }
-                });
-            });
-
-        this.store
-            .select((state) => tabSummaryReducer.getTabSummaryState(state, ModuleList.Processing.moduleNameTrim).tabs)
-            .pipe(takeUntil(this.getUnsubscriberNotifier()))
-            .subscribe((tabHeaderDataModel: TabSummaryModel[]) => {
-                this.appErrorHandler.executeAction(() => {
-                    if (this.tabList && this.tabList.length) {
-                        this.tabList.forEach((tab) => tab.badgeColorChanged && tab.badgeColorChanged.unsubscribe());
-                    }
-                    this.tabList = tabHeaderDataModel;
-
-                    if (this._isChangedFolder && this.tabList && this.tabList.length) {
-                        this.fillUpdatedDataWhenChangeFolder();
-                    }
-                });
-            });
     }
 
     private loadDocumentByFolder(folder: DocumentTreeModel) {
@@ -398,9 +368,18 @@ export class WidgetIndexingFileComponent extends BaseComponent implements OnInit
         this.selectedFolder = cloneDeep(folder);
         this.currentPage = 1;
         this.isLoading = true;
-        this.getFiles(this.selectedFolder);
+        this.refreshListData();
 
         this.cdRef.detectChanges();
+    }
+
+    private _buildTableConfig(data) {
+        const config = this.datatableService.buildEditableDataSource(data);
+        config.columns = config.columns.filter(
+            (_c) => get(_c, ['setting', 'Setting', 0, 'DisplayField', 'Hidden']) != '1',
+        );
+
+        return config;
     }
 
     private getAttachmentOfCar() {
@@ -576,20 +555,30 @@ export class WidgetIndexingFileComponent extends BaseComponent implements OnInit
         this.selectedFiles = [];
         this.selectedFilesKey = [];
 
-        this.documentImageOcrService.getDocumentOfTree(folder.idDocument + '').subscribe((res) => {
+        this.documentImageOcrService.getDocumentOfTree(folder.idDocument + '', this.pageIndex).subscribe((res) => {
             this.isLoading = false;
             this.searchText = '';
             const resData = get(res, [1], []);
-            this.fileList = this.datatableService.buildEditableDataSource(res);
+            if (this.fileList.data.length) {
+                const fileList = this._buildTableConfig(res);
+                if (this.currentViewType === VIEW_TYPE.LIST)
+                    this.xnAgGrid.api.applyTransaction({
+                        add: fileList.data,
+                    });
+                this._tableDataSource = concat(this._tableDataSource, fileList.data);
+            } else {
+                const fileList = this._buildTableConfig(res);
+                this._tableDataSource = fileList.data;
+                this.fileList = fileList;
+            }
+            this.noMoreData = false;
             if (!resData || !resData.length) {
                 // load out of documents;
+                this.noMoreData = true;
                 this.allowLoadFilesMore = false;
-                this.files = [];
-                this.filesDisplay = [];
                 this.cdRef.detectChanges();
                 return;
             }
-            this.files = [];
             resData.forEach((data) => {
                 data.DocumentName = data.DocumentName || data.FileName;
                 data.isActive = isBoolean(data.isActive)
@@ -610,13 +599,37 @@ export class WidgetIndexingFileComponent extends BaseComponent implements OnInit
 
             this.filesDisplay = this.files;
             this.cdRef.detectChanges();
+            setTimeout(() => {
+                this._checkContainerHeight();
+            }, 500);
         });
 
         this.cdRef.detectChanges();
     }
+    private _checkContainerHeight() {
+        const container = this.gridContainer.nativeElement;
+        if (this.currentViewType === VIEW_TYPE.GRID) {
+            if (container.clientHeight >= container.scrollHeight) {
+                this.onScroll();
+            }
+        } else {
+            const selector = container.querySelector('.ag-body-viewport');
+            if (selector && selector.clientHeight >= selector.scrollHeight) {
+                this.onScroll();
+            }
+        }
+    }
 
     public refreshListData() {
         this.filesUpload = [];
+        this.files = [];
+        this.pageIndex = 1;
+        this._tableDataSource = [];
+        this.fileList = {
+            data: [],
+            columns: [],
+            totalResults: 0,
+        };
         if (this.ofModule.idSettingsGUI === MenuModuleId.preissChild) this.getAttachmentOfCar();
         else this.getFiles(this.selectedFolder);
     }
@@ -660,116 +673,9 @@ export class WidgetIndexingFileComponent extends BaseComponent implements OnInit
         return extension;
     }
 
-    public doScrollUp($event) {
-        this.allowLoadFilesMore = false;
-    }
-
-    public doScrollDown($event) {
-        this.allowLoadFilesMore = true;
-    }
-
-    public doScrollReachEnd($event: Event) {
-        if (!this.allowLoadFilesMore || !this.filesDisplay || !this.filesDisplay.length) {
-            return;
-        }
-        this.loadFilesMore();
-    }
-
-    public loadFilesMore() {
-        if (!this.allowLoadFilesMore) return;
-
-        if (this.isLoading && this.allowLoadFilesMore) return;
-
-        this.currentPage += 1;
-        this.getFiles(this.selectedFolder);
-        this.appendHeight();
-    }
-
-    public appendHeight() {
-        this.heightPercentFileListSelector += 10;
-        this.scrollbar.scrollToTop(20);
-    }
-
     onSearchFile(text: string) {
         this.searchTextChanged.next(text);
     }
-
-    public dragEnd(event: any) {
-        this.splitterConfig = {
-            ...this.splitterConfig,
-            leftHorizontal: this.horizontalSplit.displayedAreas[0].size,
-            rightHorizontal: this.horizontalSplit.displayedAreas[1].size,
-        };
-
-        this.saveSplitterSettings();
-    }
-
-    private saveSplitterSettings() {
-        this.globalSettingService
-            .getAllGlobalSettings(ModuleList.Processing.idSettingsGUI)
-            .subscribe((getAllGlobalSettings) => {
-                let verticalTabSplitterSettings = getAllGlobalSettings.find(
-                    (x) => x.globalName == 'VerticalTabSplitter',
-                );
-                if (
-                    !verticalTabSplitterSettings ||
-                    !verticalTabSplitterSettings.idSettingsGlobal ||
-                    !verticalTabSplitterSettings.globalName
-                ) {
-                    verticalTabSplitterSettings = new GlobalSettingModel({
-                        globalName: 'VerticalTabSplitter',
-                        globalType: 'VerticalTabSplitter',
-                        description: 'Vertical Tab Splitter',
-                        isActive: true,
-                    });
-                }
-                verticalTabSplitterSettings.idSettingsGUI = ModuleList.Processing.idSettingsGUI;
-                verticalTabSplitterSettings.jsonSettings = JSON.stringify(this.splitterConfig);
-                verticalTabSplitterSettings.isActive = true;
-
-                this.globalSettingService.saveGlobalSetting(verticalTabSplitterSettings).subscribe((data) => {
-                    this.globalSettingService.saveUpdateCache(
-                        ModuleList.Processing.idSettingsGUI.toString(),
-                        verticalTabSplitterSettings,
-                        data,
-                    );
-                });
-            });
-    }
-
-    private getDocumentDetailByType() {
-        switch (this.idDocumentTypeEnum) {
-            case DocumentMyDMType.Invoice:
-                this.store.dispatch(this.administrationActions.getCapturedInvoiceDocumentDetail(this.idMainDocument));
-                break;
-
-            case DocumentMyDMType.Contract:
-                this.store.dispatch(this.administrationActions.getCapturedContractDocumentDetail(this.idMainDocument));
-                break;
-
-            case DocumentMyDMType.OtherDocuments:
-                this.store.dispatch(this.administrationActions.getCapturedOtherDocumentDetail(this.idMainDocument));
-                break;
-
-            default:
-                return;
-        }
-    }
-
-    private fillUpdatedDataWhenChangeFolder() {
-        this._isChangedFolder = false;
-        this.store.dispatch(this.administrationActions.fillUpdatedDataAfterFolder({ data: this._updatedData.data }));
-    }
-
-    // private loadTabsByDocumentType() {
-    //     const param = {
-    //         module: ModuleList.Capture,
-    //         idObject: this.idMainDocument,
-    //         idRepDocumentType: this.idDocumentTypeEnum,
-    //         documentType: DocumentHelper.parseDocumentTypeToDocumentProcessingTypeEnum(this.idDocumentTypeEnum),
-    //     };
-    //     this.store.dispatch(this.tabSummaryActions.loadTabsByIdDocumentType(param));
-    // }
 
     public changeViewMode(viewType: string) {
         if (this.selectedFiles?.length) {
@@ -788,34 +694,16 @@ export class WidgetIndexingFileComponent extends BaseComponent implements OnInit
                 }
             }, 0);
         }
+        if (viewType === VIEW_TYPE.LIST && this._tableDataSource.length) {
+            this.fileList.data = this._tableDataSource;
+        }
         this.currentViewType = viewType;
+        this.saveGlobalSetting(viewType);
+        this._checkContainerHeight();
     }
 
     private needToSaveCacheGlobalSetting: boolean = false;
     private getModuleSetting() {
-        let isGetData = true;
-
-        switch (this.ofModule.idSettingsGUIParent) {
-            case MenuModuleId.tools:
-            case MenuModuleId.statistic:
-            case MenuModuleId.briefe:
-            case MenuModuleId.logistic:
-            case MenuModuleId.selection:
-                break;
-            default:
-                switch (this.ofModule.idSettingsGUI) {
-                    case MenuModuleId.briefe:
-                    case MenuModuleId.logistic:
-                        //do nothing
-                        isGetData = false;
-                        break;
-                    default:
-                        break;
-                }
-                break;
-        } //switch
-
-        if (!isGetData) return;
         zip(
             this.moduleSettingService.getModuleSetting(
                 null,
@@ -829,6 +717,7 @@ export class WidgetIndexingFileComponent extends BaseComponent implements OnInit
                 this.appErrorHandler.executeAction(() => {
                     const moduleSettingDefault = response[0];
                     const allModuleSettings = response[1] as any;
+
                     let isLoadModuleSetting = true;
                     if (allModuleSettings && allModuleSettings.length > 0) {
                         const globalSettingName = String.Format(
@@ -839,6 +728,8 @@ export class WidgetIndexingFileComponent extends BaseComponent implements OnInit
                         let moduleSettingItem = allModuleSettings.find(
                             (x) => x.globalName && x.idSettingsGlobal && x.globalName === globalSettingName,
                         );
+                        this.globalSetting = cloneDeep(moduleSettingItem);
+
                         if (moduleSettingItem && moduleSettingItem.idSettingsGlobal && moduleSettingItem.globalName) {
                             moduleSettingItem = JSON.parse(moduleSettingItem.jsonSettings);
                             if (moduleSettingItem) {
@@ -847,6 +738,10 @@ export class WidgetIndexingFileComponent extends BaseComponent implements OnInit
                                     moduleSettingDefault['item'],
                                     moduleSettingItem['item'],
                                 );
+                                this.globalSetting.jsonSettings = moduleSettingItem;
+
+                                // this.moduleSetting[0].jsonSettings = JSON.parse(this.moduleSetting[0].jsonSettings);
+                                this._applySettingModule(afterMergeModule);
                                 this.store.dispatch(
                                     this.moduleSettingActions.loadModuleSettingSuccess(afterMergeModule, this.ofModule),
                                 );
@@ -875,28 +770,43 @@ export class WidgetIndexingFileComponent extends BaseComponent implements OnInit
         );
     }
 
-    private subcribeModuleSettingState() {
-        this.moduleSettingStateSubscription = this.moduleSettingState.subscribe(
-            (moduleSettingState: ModuleSettingModel[]) => {
-                this.appErrorHandler.executeAction(() => {
-                    if (!isEmpty(moduleSettingState) && moduleSettingState.length) {
-                        if (!isEqual(moduleSettingState, this.moduleSetting)) {
-                            this.moduleSetting = cloneDeep(moduleSettingState);
-                            const jsonSettingObj = this.moduleSettingService.getValidJsonSetting(this.moduleSetting);
-                            if (jsonSettingObj) {
-                                //If load from GlobalSettings no result -> get from ModuleSettings and save cache for GlobalSettings
-                                this.updateCacheGlobalSetting(this.moduleSetting[0]);
+    private _applySettingModule(afterMergeModule: any) {
+        try {
+            let jsonSetting = get(afterMergeModule, [0, 'jsonSettings'], '{}');
+            jsonSetting = JSON.parse(jsonSetting);
+            this.currentViewType = jsonSetting.ViewMode || VIEW_TYPE.LIST;
+        } catch (error) {}
+    }
 
-                                this.tabSetting = Uti.tryParseJson(jsonSettingObj.jsonSettings);
-                            }
-                        }
-                    } else {
-                        this.moduleSetting = [];
-                        this.tabSetting = null;
-                    }
+    private saveGlobalSetting(viewType) {
+        if (timeoutSave) clearTimeout(timeoutSave);
+        timeoutSave = setTimeout(() => {
+            this.globalSettingService.getAllGlobalSettings(this.ofModule.idSettingsGUI).subscribe((response) => {
+                const globalSettingName = String.Format(
+                    '{0}_{1}',
+                    this.globalSettingConstant.moduleLayoutSetting,
+                    String.hardTrimBlank(this.ofModule.moduleName),
+                );
+                let globalSetting: any = response.find(
+                    (x) => x.globalName && x.idSettingsGlobal && x.globalName === globalSettingName,
+                );
+                const globalSettingJson = JSON.parse(globalSetting.jsonSettings);
+                const jsonSettings = JSON.parse(get(globalSettingJson, ['item', 0, 'jsonSettings']));
+                jsonSettings.ViewMode = viewType;
+                set(globalSettingJson, ['item', 0, 'jsonSettings'], JSON.stringify(jsonSettings));
+                globalSetting.idSettingsGUI = this.ofModule.idSettingsGUI;
+                globalSetting.jsonSettings = JSON.stringify(globalSettingJson);
+                globalSetting.isActive = true;
+
+                this.globalSettingService.saveGlobalSetting(globalSetting).subscribe((data) => {
+                    this.globalSettingService.saveUpdateCache(
+                        this.ofModule.idSettingsGUI.toString(),
+                        globalSetting,
+                        data,
+                    );
                 });
-            },
-        );
+            });
+        }, 1000);
     }
 
     private updateCacheGlobalSetting(moduleSetting: any) {

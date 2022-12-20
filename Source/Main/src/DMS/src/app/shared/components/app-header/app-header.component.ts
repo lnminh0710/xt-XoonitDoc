@@ -955,6 +955,7 @@ export class AppHeaderComponent extends BaseComponent implements OnInit, AfterVi
                     queryParams: {
                         idPriceTag: data.idPriceTag || '',
                         isAdd: data.add ? '1' : '',
+                        isDelete: data.delete ? '1' : '',
                         t: new Date().getTime(),
                     },
                 });

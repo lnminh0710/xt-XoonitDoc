@@ -173,6 +173,13 @@ export class WidgetPriceTag extends BaseComponent implements OnInit, AfterViewIn
         this.activatedRoute.queryParams.pipe(takeUntil(this.getUnsubscriberNotifier())).subscribe((param) => {
             this._params = param;
             if (param?.idPriceTag) {
+                if (param.isDelete) {
+                    const idPriceTags = param.idPriceTag.split(',');
+                    this.dataList = this.dataList.filter((_d) => idPriceTags.includes(_d.info?.IdPriceTag));
+                    this.onChangeIndex(this.currentIndex);
+
+                    return;
+                }
                 // Incase user want add more car to UI. The list will not reset
                 if (!param.isAdd) {
                     this.dataList = [];

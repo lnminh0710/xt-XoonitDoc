@@ -62,7 +62,7 @@
                 ></image-ocr>
             </div>
             <div class="pdf-viewer" *ngSwitchCase="AttachmentType.PDF">
-                <pdf-attachment-viewer #pdf [src]="src"></pdf-attachment-viewer>
+                <pdf-attachment-viewer #pdf [src]="src" [initialZoom]="initialPdfZoom"></pdf-attachment-viewer>
             </div>
             <div class="office-viewer" *ngSwitchCase="AttachmentType.OFFICE">
                 <ng-container *ngIf="!switchXoonitMode || hiddenSwitchMode">

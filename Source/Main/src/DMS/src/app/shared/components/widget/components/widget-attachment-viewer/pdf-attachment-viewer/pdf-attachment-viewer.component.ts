@@ -43,6 +43,7 @@ export class PdfAttachmentViewerComponent extends BaseComponent implements OnCha
         return this._src;
     }
     @Input() currentPage: number = 1;
+    @Input() initialZoom;
 
     constructor(protected router: Router, private cdRef: ChangeDetectorRef) {
         super(router);
@@ -91,6 +92,7 @@ export class PdfAttachmentViewerComponent extends BaseComponent implements OnCha
     }
 
     public afterLoadComplete(pdf: any) {
+        if (this.initialZoom) this.zoom = this.initialZoom;
         this.pdfComponent.pdfViewer.eventBus.on('updatefindmatchescount', (data) => {
             this.setLoading(false);
             this.currentFound = data.matchesCount.current;
@@ -152,8 +154,9 @@ export class PdfAttachmentViewerComponent extends BaseComponent implements OnCha
 
     public setLoading(loading) {
         const ele = document.getElementById('document-viewer-loading');
-        if (!ele) return;
-        if (loading) ele.style.display = 'unset';
-        else ele.style.display = 'none';
+        if (ele) {
+            if (loading) ele.style.display = 'unset';
+            else ele.style.display = 'none';
+        }
     }
 }

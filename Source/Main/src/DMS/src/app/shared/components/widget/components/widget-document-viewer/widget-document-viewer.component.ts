@@ -18,21 +18,28 @@ import {
 } from '@app/state-management/store/actions';
 import { ReducerManagerDispatcher } from '@ngrx/store';
 import { debounceTime, distinctUntilChanged, filter, map, takeUntil } from 'rxjs/operators';
-import { Configuration, LocalStorageKey, MenuModuleId, UploadFileMode } from '@app/app.constants';
-import { Uti } from '@app/utilities';
+import {
+    Configuration,
+    GlobalSettingConstant,
+    LocalStorageKey,
+    MenuModuleId,
+    UploadFileMode,
+} from '@app/app.constants';
+import { String, Uti } from '@app/utilities';
 import { Subject } from 'rxjs';
 import { AttachmentToolbarComponent } from '../widget-attachment-viewer/attachment-toolbar';
 import { ImageAttachmentViewerComponent } from '../widget-attachment-viewer/image-attachment-viewer';
 import { PdfAttachmentViewerComponent } from '../widget-attachment-viewer/pdf-attachment-viewer';
 import { AttachmentType, AttachmentViewer } from '../widget-attachment-viewer/models';
-import { get, replace } from 'lodash-es';
+import { cloneDeep, get, set } from 'lodash-es';
 import { DocumentImageOcrService } from '@app/pages/private/modules/image-control/services';
 import { ImageOcrComponent } from '@app/pages/private/modules/image-control/components/image-ocr';
-import { DownloadFileService } from '@app/services';
+import { AppErrorHandler, DownloadFileService, GlobalSettingService } from '@app/services';
 import { Actions, ofType } from '@ngrx/effects';
+import { delay } from 'rxjs-compat/operator/delay';
 
 const headerToolbar = 50;
-
+var timeout;
 @Component({
     selector: 'widget-document-viewer',
     templateUrl: 'widget-document-viewer.component.html',
@@ -65,6 +72,8 @@ export class WidgetDocumentViewer extends BaseComponent implements OnInit, After
     htmlSrc: string;
     showXoonitMode = 0;
     hiddenSwitchMode: boolean;
+    globalSetting: any;
+    initialPdfZoom: any;
     constructor(
         protected router: Router,
         private element: ElementRef,
@@ -74,6 +83,9 @@ export class WidgetDocumentViewer extends BaseComponent implements OnInit, After
         private documentService: DocumentImageOcrService,
         private activatedRoute: ActivatedRoute,
         private action$: Actions,
+        private globalSettingService: GlobalSettingService,
+        private appErrorHandler: AppErrorHandler,
+        private globalSettingConstant: GlobalSettingConstant,
     ) {
         super(router);
         this._imgSearchChanged
@@ -94,6 +106,7 @@ export class WidgetDocumentViewer extends BaseComponent implements OnInit, After
 
     ngOnInit() {
         this.parseConfigToWidthHeight();
+
         this.action$
             .pipe(ofType(GlobalSearchActions.ROW_DOUBLE_CLICK), takeUntil(super.getUnsubscriberNotifier()))
             .subscribe((action: CustomAction) => {
@@ -137,6 +150,30 @@ export class WidgetDocumentViewer extends BaseComponent implements OnInit, After
             .subscribe((payload: any) => {
                 this._setDocumentViewer(payload);
             });
+
+        this.globalSettingService.getAllGlobalSettings(this.ofModule.idSettingsGUI).subscribe((response) => {
+            this.appErrorHandler.executeAction(() => {
+                if (response && response.length > 0) {
+                    const globalSettingName = String.Format(
+                        '{0}_{1}',
+                        this.globalSettingConstant.moduleLayoutSetting,
+                        String.hardTrimBlank(this.ofModule.moduleName),
+                    );
+                    let moduleSettingItem: any = response.find(
+                        (x) => x.globalName && x.idSettingsGlobal && x.globalName === globalSettingName,
+                    );
+                    this.globalSetting = cloneDeep(moduleSettingItem);
+
+                    if (moduleSettingItem && moduleSettingItem.idSettingsGlobal && moduleSettingItem.globalName) {
+                        moduleSettingItem = JSON.parse(moduleSettingItem.jsonSettings);
+                        if (moduleSettingItem) {
+                            this.globalSetting.jsonSettings = moduleSettingItem;
+                        }
+                        this._applySettingModule(moduleSettingItem.item);
+                    }
+                }
+            });
+        });
     }
 
     private parseConfigToWidthHeight() {
@@ -243,6 +280,8 @@ export class WidgetDocumentViewer extends BaseComponent implements OnInit, After
             this.image.zoomImage(1.2);
         } else if (this.pdf) {
             this.pdf.zoom += 0.2;
+            this.initialPdfZoom = this.pdf.zoom;
+            this.saveGlobalSetting();
         }
     }
 
@@ -251,6 +290,8 @@ export class WidgetDocumentViewer extends BaseComponent implements OnInit, After
             this.image.zoomImage(0.8);
         } else if (this.pdf?.zoom > 0.25) {
             this.pdf.zoom += -0.2;
+            this.initialPdfZoom = this.pdf.zoom;
+            this.saveGlobalSetting();
         }
     }
 
@@ -285,5 +326,47 @@ export class WidgetDocumentViewer extends BaseComponent implements OnInit, After
         this.onMaximizeWidget.emit({
             isMaximized: event,
         });
+    }
+
+    private saveGlobalSetting() {
+        if (timeout) clearTimeout(timeout);
+        timeout = setTimeout(() => {
+            this.globalSettingService.getAllGlobalSettings(this.ofModule.idSettingsGUI).subscribe((response) => {
+                const globalSettingName = String.Format(
+                    '{0}_{1}',
+                    this.globalSettingConstant.moduleLayoutSetting,
+                    String.hardTrimBlank(this.ofModule.moduleName),
+                );
+                let globalSetting: any = response.find(
+                    (x) => x.globalName && x.idSettingsGlobal && x.globalName === globalSettingName,
+                );
+                const globalSettingJson = JSON.parse(globalSetting.jsonSettings);
+                const jsonSettings = JSON.parse(get(globalSettingJson, ['item', 0, 'jsonSettings']));
+                jsonSettings.PdfZoom = this.pdf.zoom;
+                set(globalSettingJson, ['item', 0, 'jsonSettings'], JSON.stringify(jsonSettings));
+                globalSetting.idSettingsGUI = this.ofModule.idSettingsGUI;
+                globalSetting.jsonSettings = JSON.stringify(globalSettingJson);
+                globalSetting.isActive = true;
+
+                this.globalSettingService.saveGlobalSetting(globalSetting).subscribe((data) => {
+                    this.globalSettingService.saveUpdateCache(
+                        this.ofModule.idSettingsGUI.toString(),
+                        globalSetting,
+                        data,
+                    );
+                });
+            });
+        }, 1000);
+    }
+
+    private _applySettingModule(afterMergeModule: any) {
+        try {
+            let jsonSetting = get(afterMergeModule, [0, 'jsonSettings'], '{}');
+            jsonSetting = JSON.parse(jsonSetting);
+            this.initialPdfZoom = jsonSetting.PdfZoom || 1;
+            if (this.pdf) {
+                this.pdf.zoom = this.initialPdfZoom;
+            }
+        } catch (error) {}
     }
 }

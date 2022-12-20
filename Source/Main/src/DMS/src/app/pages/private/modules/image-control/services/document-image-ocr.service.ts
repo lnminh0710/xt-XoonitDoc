@@ -43,8 +43,8 @@ export class DocumentImageOcrService extends BaseService {
         return this.get<any>(url, params);
     }
 
-    public getDocumentOfTree(IdDocumentTree: string): Observable<any> {
-        const params: any = { IdDocumentTree };
+    public getDocumentOfTree(IdDocumentTree: string, PageNumber = 1): Observable<any> {
+        const params: any = { IdDocumentTree, PageNumber };
         const url = this.serUrl.getDocumentOfTree;
 
         return this.get<any>(url, params);

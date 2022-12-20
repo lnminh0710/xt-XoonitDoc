@@ -163,6 +163,7 @@ export class XnAgGridComponent implements OnInit, OnDestroy, AfterViewInit {
     @Input() totalRowMode: string = 'top'; // 'top' - 'bottom' - 'both'
     @Input() autoSaveColumnsLayout: boolean = true;
     @Input() id: string;
+    @Input() suppressScrollOnNewData: boolean = true;
 
     // tree
     @Input() treeData: boolean = false;
@@ -438,8 +439,9 @@ export class XnAgGridComponent implements OnInit, OnDestroy, AfterViewInit {
             },
         };
 
-        // When chaging new datasource, we need to remove all data rows of previous datasource.
-        this.removeAllRowNodes();
+        if (!this.suppressMoveWhenRowDragging)
+            // When chaging new datasource, we need to remove all data rows of previous datasource.
+            this.removeAllRowNodes();
 
         if (this.showTotalRow) {
             this.calculatePinnedRowBottomData();
@@ -2531,11 +2533,18 @@ export class XnAgGridComponent implements OnInit, OnDestroy, AfterViewInit {
         const selected = this.getSelectedNodes();
         if (Array.isArray(selected) && selected.length) data.IdPriceTag = map(selected, 'data.IdPriceTag').join(',');
         data.add = true;
-        this.onRowClicked({ data });
+        this.rowDoubleClicked.emit(data);
     }
 
     private deleteSelectedCar(data) {
-        this.deleteCar.emit(data);
+        const selected = this.getSelectedNodes();
+        if (Array.isArray(selected) && selected.length) data.IdPriceTag = map(selected, 'data.IdPriceTag').join(',');
+        data.delete = true;
+
+        this.deleteCar.emit({
+            IdPriceTag: map(selected, 'data.IdPriceTag'),
+            data: this.parseObjectSelectedToArray(data),
+        });
     }
 
     private addAllCar() {

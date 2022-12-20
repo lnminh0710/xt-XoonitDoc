@@ -32,6 +32,7 @@
         'has-search': !isShowedHeader && (isShowedEditButtons || hasSearch || hasFilterBox),
         'has-search-n-header': isShowedHeader && (isShowedEditButtons || hasSearch || hasFilterBox)
     }"
+    [suppressScrollOnNewData]="suppressScrollOnNewData"
     [gridOptions]="gridOptions"
     [columnDefs]="gridOptions.columnDefs"
     [rowData]="gridOptions.rowData"
