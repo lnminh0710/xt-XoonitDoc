@@ -68,6 +68,7 @@ namespace DMS.Api
                 return new List<IndexSearchSummary>();
 
             keyword = string.IsNullOrEmpty(keyword) ? "*" : keyword;
+            keyword = keyword.ToLower();
             if (keyword != "*")
             {
                 if (!keyword.StartsWith("*"))
@@ -229,6 +230,7 @@ namespace DMS.Api
             searchWithStarPattern = "";
 
             keyword = string.IsNullOrEmpty(keyword) ? "*" : keyword;
+            keyword = keyword.ToLower();
             if (keyword != "*")
             {
                 if (!keyword.StartsWith("*"))
