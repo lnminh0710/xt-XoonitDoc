@@ -167,10 +167,12 @@
                 data-placement="bottom"
                 [tooltip]="isFullScreen ? 'Minimize' : 'Full screen'"
             ></div>
+            <div class="price-tag-action__line"></div>
             <div class="price-tag-action__primary-button" (click)="openFilesDialog($event)">
                 <div class="toolbar-icon icon-transform upload-icon"></div>
                 XML
             </div>
+            <div class="price-tag-action__line"></div>
             <div
                 class="price-tag-action__primary-button"
                 [ngClass]="{ disabled: !dataList.length }"
@@ -179,6 +181,7 @@
                 <div class="toolbar-icon icon-transform download-icon"></div>
                 CSV
             </div>
+            <div class="price-tag-action__line"></div>
             <div
                 class="price-tag-action__contained-button"
                 [ngClass]="{ disabled: !dataList.length }"
@@ -186,6 +189,7 @@
             >
                 <div class="toolbar-icon icon-transform print-icon"></div>
             </div>
+            <div class="price-tag-action__line"></div>
             <div
                 class="price-tag-action__contained-button"
                 [ngClass]="{ disabled: !data?.info?.IdPriceTag }"

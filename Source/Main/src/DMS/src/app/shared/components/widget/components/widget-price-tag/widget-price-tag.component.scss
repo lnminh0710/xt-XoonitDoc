@@ -12,6 +12,7 @@
 }
 
 .price-tag {
+    color: #000;
     background-color: #fff;
     width: 1300px;
     min-width: 1300px;
@@ -253,6 +254,13 @@
         .toolbar-icon {
             margin-right: 8px;
         }
+    }
+
+    &__line {
+        width: 2px;
+        background-color: #ccc;
+        margin: 0 4px;
+        height: 14px;
     }
 }
 

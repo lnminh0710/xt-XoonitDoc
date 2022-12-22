@@ -1209,7 +1209,7 @@ export const defaultLanguage = {
     AddToParkedItems: 'Add To Parked Items',
     AddSelectedCar: 'Add selected car',
     AddAllCars: 'Add all cars',
-    DeleteCar: 'Delete car',
+    DeleteCar: 'Delete',
     RemoveFromParkedItems: 'Remove From Parked Items',
 
     // Filter Mod

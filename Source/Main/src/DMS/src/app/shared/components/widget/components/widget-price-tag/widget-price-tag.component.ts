@@ -665,7 +665,7 @@ export class WidgetPriceTag extends BaseComponent implements OnInit, AfterViewIn
                                 break;
 
                             case 'Milage':
-                                tempValue = get(_d, ['property', 'Kilometer']) || 0;
+                                tempValue = get(_d, ['property', 'Milage']) || 0;
                                 tempValue = Number(tempValue) || 0;
                                 tempValue = this.parseValueToNumber(tempValue);
                                 break;

@@ -1,15 +1,25 @@
-<div *ngIf="isSignedIn"
+<div
+    *ngIf="isSignedIn"
     [ngClass]="{ hidden: showFakedHeading, 'height-pc-100': showFullPage, 'gs-transparent': isPinGroup }"
-    class="panel-group global-search xoonit-gs" [ngStyle]="!isCollapsed ? mainContainerStyle : ''"
-    id="global-search-container" mwlResizable [enableGhostResize]="allowResize"
-    [resizeEdges]="{ bottom: false, right: false, top: true, left: false }" (resizeEnd)="onResizeEnd($event)">
+    class="panel-group global-search xoonit-gs"
+    [ngStyle]="!isCollapsed ? mainContainerStyle : ''"
+    id="global-search-container"
+    mwlResizable
+    [enableGhostResize]="allowResize"
+    [resizeEdges]="{ bottom: false, right: false, top: true, left: false }"
+    (resizeEnd)="onResizeEnd($event)"
+>
     <div class="xoonit-gs__header" [ngClass]="{ 'cursor-ns-resize': !isCollapsed && !showFullPage }">
-        <div *ngFor="let tabz of tabs" class="xoonit-gs__header-tab {{ tabz.tabClass || '' }}"
-            (click)="selectTab($event, tabz)" [ngClass]="{
+        <div
+            *ngFor="let tabz of tabs"
+            class="xoonit-gs__header-tab {{ tabz.tabClass || '' }}"
+            (click)="selectTab($event, tabz)"
+            [ngClass]="{
                 activate: tabz.active,
                 'contact-tab': tabz.title == moduleList.Contact.moduleName,
                 'all-document-tab': tabz.title == moduleList.AllDocumentGlobalSearch.moduleName
-            }">
+            }"
+        >
             <div class="xoonit-gs__header-tab-title" *ngIf="!tabz.titleSecondary">
                 {{ tabz.title }}
             </div>
@@ -18,23 +28,34 @@
                 <div class="xoonit-gs__header-tab-attachment-secondary-title">[ {{ tabz.titleSecondary || '' }} ]</div>
             </div>
 
-            <div class="xoonit-gs__header-tab-delete icon-transform" *ngIf="tabz.removable && tabz.active"
-                (click)="removeTabHandler(tabz)"></div>
+            <div
+                class="xoonit-gs__header-tab-delete icon-transform"
+                *ngIf="tabz.removable && tabz.active"
+                (click)="removeTabHandler(tabz)"
+            ></div>
         </div>
         <div class="xoonit-gs__header-space"></div>
-        <app-xn-input-debounce delayTimer="400" [placeholder]="tabSelected?.title" [hasIndicator]="true"
-            [hasSearchButton]="false" [hasClearText]="true" [isSearchBoxControl]="true"
-            [value]="tabSelected?.textSearch" (onValueChanged)="search(tabSelected, globalSearchTabFormRef, $event)"
+        <app-xn-input-debounce
+            delayTimer="400"
+            [placeholder]="tabSelected?.title"
+            [hasIndicator]="true"
+            [hasSearchButton]="false"
+            [hasClearText]="true"
+            [isSearchBoxControl]="true"
+            [value]="tabSelected?.textSearch"
+            (onValueChanged)="search(tabSelected, globalSearchTabFormRef, $event)"
             (onSearchButtonClicked)="search(tabSelected, globalSearchTabForm, tabSelected.textSearch)"
-            cssClass="xoonit-gs__search-input" [isLoading]="tabSelected?.isLoading">
+            cssClass="xoonit-gs__search-input"
+            [isLoading]="tabSelected?.isLoading"
+        >
         </app-xn-input-debounce>
         <div class="xoonit-gs__header-space"></div>
-        <advance-search-icon
+        <!-- <advance-search-icon
             class="advance_search"
             *ngIf="tabSelected.module"
             [module]="tabSelected.module"
             [activeSearch]="tabSelected.activeAdvanceSearchStatus"
-        ></advance-search-icon>
+        ></advance-search-icon> -->
         <a
             *ngIf="!showFullPage"
             class="xoonit-gs__header-button icon-transform"
@@ -46,28 +67,50 @@
         >
             <div class="close-all-tab-button__icon"></div>
         </a>
-        <a *ngIf="enableGSNewWindow && !showFullPage" class="xoonit-gs__header-button icon-transform"
-            #popOpen="bs-tooltip" container="body" data-placement="bottom" tooltip="Open new window"
-            (click)="openNewWindow($event)">
+        <a
+            *ngIf="enableGSNewWindow && !showFullPage"
+            class="xoonit-gs__header-button icon-transform"
+            #popOpen="bs-tooltip"
+            container="body"
+            data-placement="bottom"
+            tooltip="Open new window"
+            (click)="openNewWindow($event)"
+        >
             <div class="new-window-button__icon"></div>
         </a>
-        <a *ngIf="!showFullPage" class="xoonit-gs__header-button icon-transform"
-            (click)="showFullPage ? false : pinGlobalSearchGroup()" #popOpen="bs-tooltip" container="body"
-            data-placement="bottom" [tooltip]="isPinGroup ? 'Unpin' : 'Pin'">
+        <a
+            *ngIf="!showFullPage"
+            class="xoonit-gs__header-button icon-transform"
+            (click)="showFullPage ? false : pinGlobalSearchGroup()"
+            #popOpen="bs-tooltip"
+            container="body"
+            data-placement="bottom"
+            [tooltip]="isPinGroup ? 'Unpin' : 'Pin'"
+        >
             <div class="{{ pinIconClassName }}  pull-right"></div>
         </a>
     </div>
     <div class="xoonit-gs__content" [ngStyle]="showFullPage ? { height: 'calc(100vh - 37px)' } : mainContentStyle">
         <tabset>
             <tab *ngFor="let tabz of tabs; let i = index" [active]="tabz.active">
-                <gs-tab #globalSearchTabFormRef [type]="tabz.title" [active]="tabz.active" [tabs]="tabs" [tabz]="tabz"
-                    [isWithStar]="isWithStar" [showFullPage]="showFullPage"
+                <gs-tab
+                    #globalSearchTabFormRef
+                    [type]="tabz.title"
+                    [active]="tabz.active"
+                    [tabs]="tabs"
+                    [tabz]="tabz"
+                    [isWithStar]="isWithStar"
+                    [showFullPage]="showFullPage"
                     [searchWithStarPattern]="searchWithStarPattern"
-                    (onGlobalSearchItemClicked)="globalSearchItemClicked($event)" (onMarkForCheck)="markForCheck()"
+                    (onGlobalSearchItemClicked)="globalSearchItemClicked($event)"
+                    (onMarkForCheck)="markForCheck()"
                     (onSearchResultCompleted)="onSearchResultCompleted(tabz, $event)"
-                    [mainModules]="mainModulesState | async" [subModules]="subModulesState | async"
-                    [activeModule]="activeModuleState | async" [activeSubModule]="activeSubModuleState | async"
-                    [ofModule]="tabz.module"></gs-tab>
+                    [mainModules]="mainModulesState | async"
+                    [subModules]="subModulesState | async"
+                    [activeModule]="activeModuleState | async"
+                    [activeSubModule]="activeSubModuleState | async"
+                    [ofModule]="tabz.module"
+                ></gs-tab>
             </tab>
         </tabset>
     </div>
@@ -75,6 +118,8 @@
 
 <div [hidden]="!showFakedHeading" class="faked-heading" *ngIf="isSignedIn">
     <h4>
-        <a mat-button (click)="collapseClick()" [class.disabled]="!(isViewModeState | async)"> <label-translation [keyword]="'Gs_main__Global_Search'"></label-translation> </a>
+        <a mat-button (click)="collapseClick()" [class.disabled]="!(isViewModeState | async)">
+            <label-translation [keyword]="'Gs_main__Global_Search'"></label-translation>
+        </a>
     </h4>
 </div>

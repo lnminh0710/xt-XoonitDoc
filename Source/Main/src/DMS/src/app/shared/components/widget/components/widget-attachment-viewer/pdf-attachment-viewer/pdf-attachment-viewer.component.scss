@@ -42,6 +42,10 @@
                             background-color: #ff9800 !important;
                         }
                     }
+
+                    ::selection {
+                        background: #3298fd;
+                    }
                 }
             }
         }
