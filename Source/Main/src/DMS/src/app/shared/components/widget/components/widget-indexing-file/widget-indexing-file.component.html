@@ -103,7 +103,7 @@
             <div>DROP A FILE TO UPLOAD</div>
         </div>
 
-        <div class="files-list" *ngIf="files && files.length && selectedFolder?.canRead">
+        <div class="files-list" *ngIf="selectedFolder?.canRead">
             <ng-container [ngSwitch]="currentViewType">
                 <ng-container *ngSwitchCase="VIEW_TYPE_CONSTANT.GRID">
                     <ng-container *ngFor="let file of filesDisplay">
@@ -143,9 +143,12 @@
                         <xn-ag-grid
                             #xnAgGrid
                             [id]="'7a3916cf-adb0-4c55-b8e7-8e8ca6fc92cc'"
+                            [showMenuDelete]="true"
                             [globalProperties]="globalProperties"
+                            (deleteCar)="showConfirmDeleteFile($event)"
                             [dataSource]="fileList"
                             [rowHeight]="36"
+                            [rowSelection]="'multiple'"
                             [readOnly]="true"
                             [autoSelectCurrentRowAfterChangingData]="true"
                             [suppressScrollOnNewData]="true"

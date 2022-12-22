@@ -24,7 +24,7 @@ import { ReducerManagerDispatcher, Store } from '@ngrx/store';
 import { AppState } from '@app/state-management/store';
 import { DocumentTreeModel } from '@app/models/administration-document/document-tree.payload.model';
 import { WidgetDetail, TabSummaryModel, GlobalSettingModel, ModuleSettingModel, ControlGridModel } from '@app/models';
-import { concat, isBoolean, find, findIndex, get, set } from 'lodash-es';
+import { concat, isBoolean, find, findIndex, get, set, upperFirst } from 'lodash-es';
 import {
     AdministrationDocumentActions,
     TabSummaryActions,
@@ -559,7 +559,7 @@ export class WidgetIndexingFileComponent extends BaseComponent implements OnInit
             this.isLoading = false;
             this.searchText = '';
             const resData = get(res, [1], []);
-            if (this.fileList.data.length) {
+            if (this.fileList.columns.length) {
                 const fileList = this._buildTableConfig(res);
                 if (this.currentViewType === VIEW_TYPE.LIST)
                     this.xnAgGrid.api.applyTransaction({
@@ -624,12 +624,11 @@ export class WidgetIndexingFileComponent extends BaseComponent implements OnInit
         this.filesUpload = [];
         this.files = [];
         this.pageIndex = 1;
+        if (this.xnAgGrid?.api) {
+            this.xnAgGrid.api.setRowData([]);
+        }
         this._tableDataSource = [];
-        this.fileList = {
-            data: [],
-            columns: [],
-            totalResults: 0,
-        };
+        this.fileList.data = [];
         if (this.ofModule.idSettingsGUI === MenuModuleId.preissChild) this.getAttachmentOfCar();
         else this.getFiles(this.selectedFolder);
     }
@@ -844,7 +843,25 @@ export class WidgetIndexingFileComponent extends BaseComponent implements OnInit
         this.globalSettingService.saveUpdateCache(this.ofModule.idSettingsGUI, globalSettingItem);
     }
 
-    public showConfirmDeleteFile() {
+    public showConfirmDeleteFile(data?: any) {
+        if (data) {
+            this.selectedFiles = this.xnAgGrid.api.getSelectedRows();
+            if (
+                !this.selectedFiles.find(
+                    (_selected) => _selected.IdDocumentContainerFiles === data.idDocumentContainerFiles,
+                )
+            ) {
+                const row = {};
+                for (const key in data) {
+                    if (Object.prototype.hasOwnProperty.call(data, key)) {
+                        const element = data[key];
+                        row[upperFirst(key)] = element;
+                    }
+                }
+                this.selectedFiles.push(row);
+            }
+        }
+
         this.popupService.open({
             content: this.confirmDelete,
             hasBackdrop: true,

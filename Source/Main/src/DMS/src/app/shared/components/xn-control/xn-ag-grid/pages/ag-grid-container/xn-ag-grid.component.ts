@@ -164,6 +164,7 @@ export class XnAgGridComponent implements OnInit, OnDestroy, AfterViewInit {
     @Input() autoSaveColumnsLayout: boolean = true;
     @Input() id: string;
     @Input() suppressScrollOnNewData: boolean = true;
+    @Input() showMenuDelete: boolean = false;
 
     // tree
     @Input() treeData: boolean = false;
@@ -2537,6 +2538,10 @@ export class XnAgGridComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
     private deleteSelectedCar(data) {
+        if (!data.IdPriceTag) {
+            this.deleteCar.emit(data);
+            return;
+        }
         const selected = this.getSelectedNodes();
         if (Array.isArray(selected) && selected.length) data.IdPriceTag = map(selected, 'data.IdPriceTag').join(',');
         data.delete = true;
@@ -2763,15 +2768,6 @@ export class XnAgGridComponent implements OnInit, OnDestroy, AfterViewInit {
         }
         const rowData = this.getRowDataByCellFocus();
         if (rowData?.idPriceTag) {
-            contextMenuItems.splice(contextMenuItems.length - 2, 0, {
-                name: `<span class="pull-left">Delete car</span>`, //Ctrl+P
-                action: (event) => {
-                    this.deleteSelectedCar(rowData);
-                },
-                cssClasses: [''],
-                icon: `<i class="fa fa fa-remove  red-color  ag-context-icon"/>`,
-                key: 'DeleteCar',
-            });
             contextMenuItems.unshift('separator');
             contextMenuItems.unshift({
                 name: `<span class="pull-left">Add all car</span>`, //Ctrl+P
@@ -2791,6 +2787,25 @@ export class XnAgGridComponent implements OnInit, OnDestroy, AfterViewInit {
                 icon: `<i class="fa fa-plus  green-color  ag-context-icon"/>`,
                 key: 'AddSelectedCar',
             });
+        }
+
+        if (this.showMenuDelete) {
+            if (!contextMenuItems.find((_item) => _item.key === 'DeleteCar'))
+                contextMenuItems.splice(contextMenuItems.length - 2, 0, {
+                    name: `<span class="pull-left">Delete</span>`, //Ctrl+P
+                    action: (event) => {
+                        this.deleteSelectedCar(rowData);
+                    },
+                    cssClasses: [''],
+                    icon: `<div class="toolbar-icon toolbar-icon--size-small icon-transform delete-icon"></div>`,
+                    key: 'DeleteCar',
+                });
+            else {
+                const item = contextMenuItems.find((_item) => _item.key === 'DeleteCar');
+                item.action = (event) => {
+                    this.deleteSelectedCar(rowData);
+                };
+            }
         }
 
         return contextMenuItems;
